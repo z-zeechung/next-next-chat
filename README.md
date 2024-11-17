@@ -1,4 +1,4 @@
-# <span style="font-family:serif;"><i>N</i><sup>2</sup></span>CHAT (Next-Next-CHAT)
+# <i>N</i><sup>2</sup>CHAT (Next-Next-CHAT)
 
 ## Roadmap
 
