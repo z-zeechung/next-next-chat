@@ -1,0 +1,16 @@
+.carousel-inner > .fade-enter {
+    opacity: 0.01;
+    transition: opacity 0.5s ease-in;
+  }
+  .carousel-inner > .fade-enter-active {
+    opacity: 1;
+  }
+  .carousel-inner > .fade-exit {
+    display: none;
+  }
+  .carousel-inner > .fade-exit-active {
+    display: none;
+  }
+  .carousel-inner > .fade-exit-done {
+    display: none;
+  }

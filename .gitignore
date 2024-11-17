@@ -1,0 +1,5 @@
+/node_modules
+/.next
+/.vscode
+/out
+/next-env.d.ts

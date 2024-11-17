@@ -1,0 +1,279 @@
+{
+    "entities": [
+        {
+            "name": "夏空彼方",
+            "type": "ITEM",
+            "description": "A visual novel game developed by YUZU SOFT"
+        },
+        {
+            "name": "萌娘百科",
+            "type": "ORG",
+            "description": "An encyclopedia that covers a wide range of topics"
+        },
+        {
+            "name": "夏空カナタ",
+            "type": "PERSON",
+            "description": "Original name for 夏空彼方"
+        },
+        {
+            "name": "Windows",
+            "type": "ITEM",
+            "description": "Operating system platform"
+        },
+        {
+            "name": "EOCS R18.gif",
+            "type": "ITEM",
+            "description": "Rating indicator for viewers aged 18 and above"
+        },
+        {
+            "name": "YUZU SOFT",
+            "type": "ORG",
+            "description": "Developer of 夏空彼方"
+        },
+        {
+            "name": "天宫リツ",
+            "type": "PERSON",
+            "description": "Scriptwriter for 夏空彼方"
+        },
+        {
+            "name": "玉泽圆",
+            "type": "PERSON",
+            "description": "Scriptwriter for 夏空彼方"
+        },
+        {
+            "name": "Famishin",
+            "type": "PERSON",
+            "description": "Composer for 夏空彼方's music"
+        },
+        {
+            "name": "Angel Note",
+            "type": "PERSON",
+            "description": "Composer for 夏空彼方's music"
+        },
+        {
+            "name": "DRACU-RIOT!",
+            "type": "ITEM",
+            "description": "Related work to 夏空彼方"
+        },
+        {
+            "name": "天色幻想岛",
+            "type": "ITEM",
+            "description": "Related work to 夏空彼方"
+        },
+        {
+            "name": "塔弦岛",
+            "type": "GEO",
+            "description": "Location where the story of 夏空彼方 takes place"
+        },
+        {
+            "name": "三好由比子",
+            "type": "PERSON",
+            "description": "One of the main characters in 夏空彼方"
+        },
+        {
+            "name": "六角五郎",
+            "type": "PERSON",
+            "description": "One of the main characters in 夏空彼方"
+        },
+        {
+            "name": "上坂茅羽耶",
+            "type": "PERSON",
+            "description": "One of the main characters in 夏空彼方"
+        },
+        {
+            "name": "七条沙沙罗",
+            "type": "PERSON",
+            "description": "One of the main characters in 夏空彼方"
+        },
+        {
+            "name": "三好双叶",
+            "type": "PERSON",
+            "description": "One of the secondary characters in 夏空彼方"
+        },
+        {
+            "name": "三好美帆",
+            "type": "PERSON",
+            "description": "One of the secondary characters in 夏空彼方"
+        },
+        {
+            "name": "仁木夕张",
+            "type": "PERSON",
+            "description": "One of the secondary characters in 夏空彼方"
+        },
+        {
+            "name": "足利贞道",
+            "type": "PERSON",
+            "description": "One of the secondary characters in 夏空彼方"
+        },
+        {
+            "name": "七条克己",
+            "type": "PERSON",
+            "description": "One of the secondary characters in 夏空彼方"
+        },
+        {
+            "name": "上坂昭彦",
+            "type": "PERSON",
+            "description": "One of the secondary characters in 夏空彼方"
+        },
+        {
+            "name": "羽柴昌平",
+            "type": "PERSON",
+            "description": "One of the secondary characters in 夏空彼方"
+        },
+        {
+            "name": "京极史绪",
+            "type": "PERSON",
+            "description": "One of the secondary characters in 夏空彼方"
+        },
+        {
+            "name": "思念的彼方",
+            "type": "ITEM",
+            "description": "Theme song for 夏空彼方"
+        },
+        {
+            "name": "Refrain",
+            "type": "ITEM",
+            "description": "Ending song for 夏空彼方"
+        }
+    ],
+    "relationships": [
+        {
+            "source": "夏空彼方",
+            "target": "萌娘百科",
+            "type": "IS",
+            "description": "夏空彼方 is a title or entry in 萌娘百科"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "夏空カナタ",
+            "type": "EQUAL",
+            "description": "夏空彼方 is also known as 夏空カナタ"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "EOCS R18.gif",
+            "type": "FOR",
+            "description": "夏空彼方 is rated for viewers aged 18 and above by EOCS"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "YUZU SOFT",
+            "type": "BY",
+            "description": "夏空彼方 was developed by YUZU SOFT"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "天宫リツ",
+            "type": "BY",
+            "description": "夏空彼方 was scripted by 天宫リツ"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "玉泽圆",
+            "type": "BY",
+            "description": "夏空彼方 was scripted by 玉泽圆"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "Famishin",
+            "type": "BY",
+            "description": "Summer Skies' music was composed by Famishin"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "Angel Note",
+            "type": "BY",
+            "description": "Summer Skies' music was composed by Angel Note"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "塔弦岛",
+            "type": "INFER",
+            "description": "The story of 夏空彼方 takes place on 塔弦岛"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "三好由比子",
+            "type": "WITH",
+            "description": "Summer Skies features 三好由比子 as one of the main characters"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "六角五郎",
+            "type": "WITH",
+            "description": "Summer Skies features 六角五郎 as one of the main characters"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "上坂茅羽耶",
+            "type": "WITH",
+            "description": "Summer Skies features 上坂茅羽耶 as one of the main characters"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "七条沙沙罗",
+            "type": "WITH",
+            "description": "Summer Skies features 七条沙沙罗 as one of the main characters"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "三好双叶",
+            "type": "WITH",
+            "description": "Summer Skies features 三好双叶 as one of the secondary characters"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "三好美帆",
+            "type": "WITH",
+            "description": "Summer Skies features 三好美帆 as one of the secondary characters"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "仁木夕张",
+            "type": "WITH",
+            "description": "Summer Skies features 仁木夕张 as one of the secondary characters"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "足利贞道",
+            "type": "WITH",
+            "description": "Summer Skies features 足利贞道 as one of the secondary characters"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "七条克己",
+            "type": "WITH",
+            "description": "Summer Skies features 七条克己 as one of the secondary characters"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "上坂昭彦",
+            "type": "WITH",
+            "description": "Summer Skies features 上坂昭彦 as one of the secondary characters"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "羽柴昌平",
+            "type": "WITH",
+            "description": "Summer Skies features 羽柴昌平 as one of the secondary characters"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "京极史绪",
+            "type": "WITH",
+            "description": "Summer Skies features 京极史绪 as one of the secondary characters"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "思念的彼方",
+            "type": "BY",
+            "description": "The theme song 思念的彼方 was composed by Angel Note"
+        },
+        {
+            "source": "夏空彼方",
+            "target": "Refrain",
+            "type": "BY",
+            "description": "The ending song Refrain was composed by Famishin"
+        }
+    ]
+}
