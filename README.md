@@ -1,5 +1,21 @@
 # <i>N</i><sup>2</sup>CHAT (Next-Next-CHAT)
 
+A large model app. Integrating various capabilities. Highly scalable, Highly compatible.
+
+## Features
++ Chat with LLM, and chat with your image / document / knowledgebase and more.
++ LLM tool call & role play.
++ Customize your LLM characters, plugins, animated figures, and workflows. Script for more complex functionalities.
++ (**TODO**) Open community for sharing custom components.
++ (**TODO**) Animated figures powered by Live2D and 1-shot voice cloning.
+
+## Running *N*<sup>2</sup>CHAT
+1. Run the [backend server](https://github.com/z-zeechung/next-next-chat-server).
+2. Clone this repository.
+3. `npm install`.
+4. `npm run dev`.
+5. Enable [JSPI](https://v8.dev/blog/jspi). This is required by some Pyodide components.
+
 ## Roadmap
 
 | Status | Task |
@@ -24,7 +40,7 @@
 | ✅   | Image Captioning |
 |     | Internationalization |
 |     | Distill `bge-large` Model |
-| 🏚️ | Local Embedding and Reranking Models |
+| 🏚️ | ~~Local Embedding and Reranking Models~~ |
 | ✅   | [ONNX Runtime](https://github.com/microsoft/onnxruntime) |
 | ✅   | [HNSW Vector Database](https://github.com/poloclub/mememo) |
 |     | Custom UI Theme |
