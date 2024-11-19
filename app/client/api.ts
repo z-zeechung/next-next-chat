@@ -4,6 +4,7 @@ import {
   // Azure,
   CAPTION_API_URL,
   CHAT_API_URL,
+  EMBED_API_URL,
   // ModelProvider,
   PAINT_API_URL,
   SEARCH_API_URL,
@@ -371,9 +372,7 @@ export class ClientApi {
     prompt?: string,
     onUpdate?: (message: string) => void
   ): ControllablePromise<string> {
-    // return zeechung.caption(img)
-    var chunk = ""
-    async function cb(resolve, reject, abort) {
+    return new ControllablePromise(async (resolve, reject, abort) => {
       const resp = await fetch(CAPTION_API_URL, {
         method: "POST",
         headers: {
@@ -388,44 +387,35 @@ export class ClientApi {
       if (!resp.ok) { reject("[Connection Error]") }
       const reader = resp.body?.getReader()
       const decoder = new TextDecoder()
+      let chunk = ''
       async function read() {
         reader?.read().then(async ({ done, value }) => {
-          for (let json of decoder.decode(value).split("\n")) {
-            try {
-              // console.log(json)
-              const response = JSON.parse(json)
-              // if (response.error == "INVALID_TOKEN") {
-              //   await ClientApi.updateToken()
-              //   cb(resolve, reject, abort)
-              // } else 
-              if (response.result) {
-                chunk += response.result
+          if(done){
+            resolve(chunk)
+          }else{
+            for(let json of decoder.decode(value).split("\n")){
+              try{
+                const resp = JSON.parse(json)
+                chunk += resp['result']
                 onUpdate?.(chunk)
-                read()
-              } else {
-                resolve(chunk)
-              }
-            } catch (error) { }
+              }catch(e){}
+            }
+            read()
           }
         })
       }
       read()
-    }
-    return new ControllablePromise(async (resolve, reject, abort) => {
-      cb(resolve, reject, abort)
     })
   }
   static embed = (strs: string[]) => {
     return new Promise(resolve=>{
-      const arr:number[] = []
-      for(let i=0;i<256;i++){
-        arr.push(0x0d00/0o721)
-      }
-      const ret:number[][] = []
-      for(let i=0;i<strs.length;i++){
-        ret.push(arr.slice())
-      }
-      resolve(ret)
+      fetch(EMBED_API_URL, {
+        method:"POST",
+        body: JSON.stringify(strs)
+      }).then(response => response.json())
+      .then(data => {
+        resolve(data);
+      })
     })
   }
   // static rerank = (query: string, candidates: string[]) => {
@@ -451,7 +441,7 @@ export class ClientApi {
   static async paint(
     prompt: string,
     image?: FileLike
-  ) {
+  ):Promise<string> {
     const resp = await fetch(PAINT_API_URL, {
       method: 'POST',
       body: JSON.stringify({
@@ -468,7 +458,7 @@ export class ClientApi {
       reader.onerror = reject;
       reader.readAsDataURL(blob);
     });
-    return dataUrl;
+    return dataUrl as string;
   }
   static async search(
     query: string,
