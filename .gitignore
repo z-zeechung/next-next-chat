@@ -3,3 +3,4 @@
 /.vscode
 /out
 /next-env.d.ts
+/app/panels/testpage.tsx

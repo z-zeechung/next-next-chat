@@ -1,8 +1,9 @@
 
-export const CHAT_API_URL = ""
-export const CAPTION_API_URL = ""
-export const PAINT_API_URL = ""
-export const SEARCH_API_URL = ""
+export const CHAT_API_URL = "http://127.114.51.4:19198/chat"
+export const EMBED_API_URL = "http://127.114.51.4:19198/embed"
+export const CAPTION_API_URL = "http://127.114.51.4:19198/caption"
+export const PAINT_API_URL = "http://127.114.51.4:19198/paint"
+export const SEARCH_API_URL = "http://127.114.51.4:19198/search"
 export const STT_API_URL = ""
 
 
