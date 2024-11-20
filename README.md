@@ -39,7 +39,7 @@ A large model app. Integrating various capabilities. Highly scalable, Highly com
 | ✅   | `.doc`/`.docx`/`.pptx`/`.pdf`/`.html`/Textfile to String |
 | ✅   | Image Captioning |
 |     | Internationalization |
-|     | Distill `bge-large` Model |
+|     | Distill [`tao-8k`](https://huggingface.co/Amu/tao-8k) Model |
 | 🏚️ | ~~Local Embedding and Reranking Models~~ |
 | ✅   | [ONNX Runtime](https://github.com/microsoft/onnxruntime) |
 | ✅   | [HNSW Vector Database](https://github.com/poloclub/mememo) |
