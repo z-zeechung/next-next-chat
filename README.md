@@ -44,6 +44,6 @@ A large model app. Integrating various capabilities. Highly scalable, Highly com
 | ✅   | [ONNX Runtime](https://github.com/microsoft/onnxruntime) |
 | ✅   | [HNSW Vector Database](https://github.com/poloclub/mememo) |
 |     | Custom UI Theme |
-| ✅   | New UI Interface |
+| ⚠️   | New UI Interface<br/>_Problematic. Need to be fixed._ |
 | ✅   | Re-implement APIs |
 | ✅   | Refactor [ChatGPT-Next-Web](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web) |
