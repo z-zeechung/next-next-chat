@@ -6,6 +6,86 @@ import { LocaleType } from "./index";
 
 const isApp = !!getClientConfig()?.isApp;
 const en: LocaleType = {
+
+  NextChat: {
+    SideBar: {
+      ChatList: "Chat List",
+      Manage: "Manage",
+      Exit: "Return",
+      NewChat: "New Chat",
+      CountOfChats: (count: number) => `${count} conversation${count>1?'s':''}`,
+      Select: "Select"
+    },
+    ChatArea: {
+      More: "More",
+      Return: "Return",
+      ChatOptions: "Chat Options",
+      Send: "Submit",
+      SendPrompt: "Enter for submission. Shift + Enter for new line.",
+      RolePlay: "Role Play",
+      SwitchModel: "Switch Model",
+      WebSearch: "Internet Search",
+      Scripting: "Scripting",
+      GenImage: "Image Generation",
+      UploadFile: "Upload Image / Document",
+      ChatPlugins: "Chat Plugins",
+      IntelligentOffice: "Intelligent Office",
+      WordDoc: "Word Document",
+      PDFDoc: "PDF Document",
+      Audio: "Audio",
+      DeleteChat: "Delete Chat",
+      ClearData: "Clear Data",
+      SelectRole: "Select Role",
+      SearchRole: "Search for roles...",
+      New: "New",
+      Use: "Activate",
+      StopUse: "Deactivate",
+      SwitchedToModel: (model: string) => `Switched to ${model=="regular"?"Regular":"Advanced"} model`,
+      ManagePlugins: "Manage Plugins",
+      AlreadyDeletedChat: "Deleted Chat",
+      ClearDataPrompt: "This would clear all configurations and data. Continue?",
+      Activated: (name:string) => `Activated ${name}`,
+      Deactivated: (name:string) => `Deactivated ${name}`,
+      Copy: "Copy",
+      Delete: "Delete",
+      Retry: "Retry",
+      Using: "Using",
+      Greeting: "How can I assist you today 🪄",
+      Revert: "Revert",
+      DefaultTopic: "New Conversation",
+    }
+  },
+
+  DevPage: {
+    RolePlay: "Role Play",
+    Live2D: "Digital Human",
+    Script: "Scripting",
+    Alter: "Change",
+    RoleName: "Name: ",
+    Prompt: "Prompt: ",
+    InitDialog: "Initial Dialogue: ",
+    User: "User",
+    System: "System",
+    Append: "Add",
+    AutoGen: "Auto Generate",
+    Clear: "Clear",
+    ActivateTool: "Enable Ability: ",
+    WebSearch: "Internet Search",
+    ImageGen: "Image Generation",
+    Scripting: "Scripting",
+    Upload: "Upload",
+    Save: "Save",
+    Export: "Export",
+    ChangeModel: "Change Model",
+    Send: "Submit",
+    Greeting: "How can I assist you today 🪄",
+    Expand: "Expand",
+    Collapse: "Collapse",
+    Stop: "Stop"
+  },
+
+  /** LEGACY */
+
   WIP: "Coming Soon...",
   Error: {
     Unauthorized: isApp

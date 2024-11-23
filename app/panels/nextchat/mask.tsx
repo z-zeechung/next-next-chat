@@ -473,13 +473,13 @@ export function MaskPage(props: { onClose: () => void}) {
             <TextArea
               //type="text"
               //className={styles["search-bar"]}
-              placeholder={"搜索角色……"}
+              placeholder={Locale.NextChat.ChatArea.SearchRole}
               autoFocus
               onInput={(v) => onSearch(v)}
               rows={1}
               rightAttachment={<Button
                 icon={<AddIcon/>}
-                text={Locale.Mask.Page.Create}
+                text={Locale.NextChat.ChatArea.New}
                 onClick={() => {
                   // const createdMask = maskStore.create();
                   // setEditingMaskId(createdMask.id);
@@ -493,10 +493,10 @@ export function MaskPage(props: { onClose: () => void}) {
             <Card background={"#00000000"} shadow={"none"}>
               <InfoCard
                 icon={<div dangerouslySetInnerHTML={{__html:chatStore.currentSession().avatar??""}}/>}
-                title="正在使用"
+                title={Locale.NextChat.ChatArea.Using}
               >
                 <Button
-                  text="停用"
+                  text={Locale.NextChat.ChatArea.StopUse}
                   type="primary"
                   onClick={()=>{
                     chatStore.updateCurrentSession(s=>{
@@ -543,7 +543,7 @@ export function MaskPage(props: { onClose: () => void}) {
                 >
                   <Button
                     icon={<TickIcon />}
-                    text={"使用"}
+                    text={Locale.NextChat.ChatArea.Use}
                     type="text"
                     onClick={() => {
                       chatStore.updateCurrentSession(session=>{
@@ -567,7 +567,7 @@ export function MaskPage(props: { onClose: () => void}) {
 
 export function SelectPromptModal(props: { onClose: () => void}){
   return (<Modal
-      title="选择角色"
+      title={Locale.NextChat.ChatArea.SelectRole}
       onClose={props.onClose}
     >
       <MaskPage onClose={props.onClose}/>

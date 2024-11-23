@@ -960,7 +960,8 @@ function _Chat() {
     }}>&nbsp;&nbsp;{useSmart ? "4" : "3.5"}&nbsp;&nbsp;</div>
   </div>
   const changeModel = () => {
-    showToast(`已切换至${!useSmart ? "高级" : "普通"}模型`)
+    // showToast(`已切换至${!useSmart ? "高级" : "普通"}模型`)
+    showToast(Locale.NextChat.ChatArea.SwitchedToModel(useSmart?"regular":"smart"))
     setUseSmart(!useSmart)
   }
 
@@ -1849,7 +1850,7 @@ function _Chat() {
           setAutoScroll(false);
         }}
       >
-        {[{type:"text", role:"assistant", content:session.greeting??"有什么我可以帮助您的吗🪄"} as Message].concat(session.messages).map((msg, i) => <Fragment key={i}>
+        {[{type:"text", role:"assistant", content:session.greeting??Locale.NextChat.ChatArea.Greeting} as Message].concat(session.messages).map((msg, i) => <Fragment key={i}>
           <div className={msg.role == "user" ? styles["chat-message-user"] : styles["chat-message"]}>
             <div className={styles["chat-message-container"]} style={{paddingBottom:"5px", paddingTop:"5px"}}>
               <div style={{display:"flex", flexDirection:msg.role == "user"?"row-reverse":"row", gap:"10px", alignItems:"center"}}>
@@ -1864,12 +1865,12 @@ function _Chat() {
                 )}
                 {i!=0&&<ButtonGroup>
                   <TinyButton
-                    text="复制"
+                    text={Locale.NextChat.ChatArea.Copy}
                     type="text"
                     icon={<CopyIcon/>}
                   />
                   <TinyButton
-                    text="删除"
+                    text={Locale.NextChat.ChatArea.Delete}
                     type="text"
                     icon={<DeleteIcon/>}
                     onClick={()=>{
@@ -1880,7 +1881,7 @@ function _Chat() {
                     }}
                   />
                   {msg.role=="assistant"&&<TinyButton
-                    text="重试"
+                    text={Locale.NextChat.ChatArea.Retry}
                     type="text"
                     icon={<ResetIcon/>}
                   />}
@@ -2131,7 +2132,7 @@ function _Chat() {
             <td style={{width:"100%"}}>
             <TinyButton
             onClick={()=>{handleShowOption(!showOption)}}
-            text={showOption?"返回":"更多"}
+            text={showOption?Locale.NextChat.ChatArea.Return:Locale.NextChat.ChatArea.More}
             icon={showOption?<ReturnIcon/>:<MoreIcon/>}
             type={showOption?"primary":undefined}
           />
@@ -2147,12 +2148,12 @@ function _Chat() {
                 {useEnhancedGeneration&&<TinyButton icon={enhanceGenerationIcon} onClick={enhanceGeneration} type="text"/>}
                 {getActivatedVecDBs().filter(id => id.startsWith("COMMON_VECDB_")).length > 0&&<TinyButton icon={configureVectorDBIcon} onClick={()=>{setIsConfiguringVectorDB(true)}} type="text"/>}
               </ButtonGroup> */}
-              <TinyButton text="对话选项" type="primary" popover={<div style={{display: "flex", flexDirection: "column", gap: "6px"}}>
-                <Button text="角色扮演" icon={rolePlayIcon} onClick={()=>{setIsSelectingPrompt(true)    }}/>
-                <Button text="切换模型" icon={changeModelIcon} onClick={changeModel}/>
-                <Button text="联网搜索" onClick={()=>{setSearchPlugin(!searchPlugin);showToast(`已${!searchPlugin ? "开启" : "关闭"}联网搜索`)}}/>
-                <Button text="脚本执行" onClick={()=>{setScriptPlugin(!scriptPlugin);showToast(`已${!scriptPlugin ? "开启" : "关闭"}脚本执行`)}}/>
-                <Button text="图像生成" onClick={()=>{setPaintPlugin(!paintPlugin);showToast(`已${!paintPlugin ? "开启" : "关闭"}图像生成`)}}/>
+              <TinyButton text={Locale.NextChat.ChatArea.ChatOptions} type="primary" popover={<div style={{display: "flex", flexDirection: "column", gap: "6px"}}>
+                <Button text={Locale.NextChat.ChatArea.RolePlay} icon={rolePlayIcon} onClick={()=>{setIsSelectingPrompt(true)    }}/>
+                <Button text={Locale.NextChat.ChatArea.SwitchModel} icon={changeModelIcon} onClick={changeModel}/>
+                <Button text={Locale.NextChat.ChatArea.WebSearch} onClick={()=>{setSearchPlugin(!searchPlugin);showToast(!searchPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.WebSearch):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.WebSearch))}}/>
+                <Button text={Locale.NextChat.ChatArea.Scripting} onClick={()=>{setScriptPlugin(!scriptPlugin);showToast(!scriptPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.Scripting):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.Scripting))}}/>
+                <Button text={Locale.NextChat.ChatArea.GenImage} onClick={()=>{setPaintPlugin(!paintPlugin);showToast(!paintPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.GenImage):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.GenImage))}}/>
               </div>}/>
             </td>
           </tr>
@@ -2169,7 +2170,7 @@ function _Chat() {
             //id="chat-input"
             //ref={inputRef}
             //className={styles["chat-input"]}
-            placeholder={Locale.Chat.Input(submitKey)}
+            placeholder={Locale.NextChat.ChatArea.SendPrompt}
             onInput={(v) => onInput(v)}
             value={userInput}
             //onKeyDown={onInputKeyDown}
@@ -2183,7 +2184,7 @@ function _Chat() {
             //}}
             rightAttachment={<Button
               icon={<SendWhiteIcon/>}
-              text={Locale.Chat.Send}
+              text={Locale.NextChat.ChatArea.Send}
               type="primary"
               onClick={() => doSubmit(userInput)}
             />}
@@ -2213,13 +2214,13 @@ function _Chat() {
           )*/}
           </>}
           {showOption&&<Toolbox>
-            <ButtonCard text="角色扮演" icon={rolePlayIcon} onClick={()=>{setIsSelectingPrompt(true)    }}/>
+            <ButtonCard text={Locale.NextChat.ChatArea.RolePlay} icon={rolePlayIcon} onClick={()=>{setIsSelectingPrompt(true)    }}/>
             {/*<ToolboxButton text="更改主题" icon={config.theme=="light"?<LightIcon/>:<DarkIcon/>} onClick={()=>{
               config.update(
                 (config) => (config.theme = (config.theme=="light"?"dark":"light") as any as Theme),
               );
             }}/>*/}
-            <ButtonCard text="切换模型" icon={changeModelIcon} onClick={changeModel}/>
+            <ButtonCard text={Locale.NextChat.ChatArea.SwitchModel} icon={changeModelIcon} onClick={changeModel}/>
             <UploadFile/>
             {/* <ButtonCard text="上传图片" icon={<UploadImageIcon/>} onClick={()=>{
               var input = document.createElement('input')
@@ -2277,16 +2278,16 @@ function _Chat() {
               input.click()
             }}/> */}
             <PluginMenu>
-              <Button text="联网搜索" onClick={()=>{setSearchPlugin(!searchPlugin);showToast(`已${!searchPlugin ? "开启" : "关闭"}联网搜索`)}}/>
-              <Button text="脚本执行" onClick={()=>{setScriptPlugin(!scriptPlugin);showToast(`已${!scriptPlugin ? "开启" : "关闭"}脚本执行`)}}/>
-              <Button text="图像生成" onClick={()=>{setPaintPlugin(!paintPlugin);showToast(`已${!paintPlugin ? "开启" : "关闭"}图像生成`)}}/>
+              <Button text={Locale.NextChat.ChatArea.WebSearch} onClick={()=>{setSearchPlugin(!searchPlugin);showToast(!searchPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.WebSearch):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.WebSearch))}}/>
+              <Button text={Locale.NextChat.ChatArea.Scripting} onClick={()=>{setScriptPlugin(!scriptPlugin);showToast(!scriptPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.Scripting):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.Scripting))}}/>
+              <Button text={Locale.NextChat.ChatArea.GenImage} onClick={()=>{setPaintPlugin(!paintPlugin);showToast(!paintPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.GenImage):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.GenImage))}}/>
             </PluginMenu>
             {/* <ButtonCard text="增强回答"  
               icon={enhanceGenerationIcon}
               onClick={enhanceGeneration}/> */}
             {/* <ButtonCard text="生成文章" icon={<GenerateEssayIcon/>} onClick={()=>{setIsGeneratingEssay(true)}}/> */}
             <ButtonCard 
-              text="智能办公" 
+              text={Locale.NextChat.ChatArea.IntelligentOffice}
               icon={<div style={{ position: "relative" }}>
                 <UploadFileIcon/>
                 <div style={{
@@ -2308,11 +2309,11 @@ function _Chat() {
               icon={configureVectorDBIcon}
               onClick={() => { setIsConfiguringVectorDB(true) }}
             /> */}
-            <ButtonCard text="删除对话" icon={<BreakIcon style={{ fill: "red", opacity: "0.8" }} />} onClick={async () => {
+            <ButtonCard text={Locale.NextChat.ChatArea.DeleteChat} icon={<BreakIcon style={{ fill: "red", opacity: "0.8" }} />} onClick={async () => {
               chatStore.deleteSession(chatStore.currentSessionIndex);
             }} />
-            <ButtonCard text="清除数据" icon={<DeleteIcon style={{ fill: "red", opacity: "0.8" }} />} onClick={async () => {
-              if (await showConfirm("", <>{"这将会清除所有的设置及聊天记录。要继续吗？"}</>, true)) {
+            <ButtonCard text={Locale.NextChat.ChatArea.ClearData} icon={<DeleteIcon style={{ fill: "red", opacity: "0.8" }} />} onClick={async () => {
+              if (await showConfirm("", <>{Locale.NextChat.ChatArea.ClearDataPrompt}</>, true)) {
                 chatStore.clearAllData();
               }
             }} />
