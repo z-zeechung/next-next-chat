@@ -13,6 +13,8 @@ import DropDownIcon from "../../icons/bootstrap/chevron-down.svg"
 import AddIcon from "../../icons/bootstrap/plus-lg.svg"
 import AutoIcon from "../../icons/bootstrap/play-fill.svg"
 
+import Locale from "../../locales";
+
 export function RolePlay(props: any) {
     const [prompt, setPrompt] = props.usePrompt
     const [greeting, setGreeting] = props.useGreeting
@@ -33,19 +35,19 @@ export function RolePlay(props: any) {
             <div style={{ position: "relative", width: 64, height: 64 }}>
                 <div style={{ scale: 3, display: "inline-flex" }}><Avatar icon={avatar} /></div>
                 <div style={{ position: "absolute", right: -24, bottom: -8 }}>
-                    <TinyButton text="更改" icon={<ImageIcon />} type="primary" />
+                    <TinyButton text={Locale.DevPage.Alter} icon={<ImageIcon />} type="primary" />
                 </div>
             </div>
         </div>
         <table style={{ borderCollapse: "separate", borderSpacing: 8 }}>
             <tr>
-                <td><b>角色名称：</b></td>
+                <td><b>{Locale.DevPage.RoleName}</b></td>
                 <td><TextArea
                     rows={1}
                 /></td>
             </tr>
             <tr>
-                <td style={{verticalAlign:"top"}}><b>提示词：</b></td>
+                <td style={{verticalAlign:"top"}}><b>{Locale.DevPage.Prompt}</b></td>
                 <td><TextArea
                     // rows={3}
                     value={prompt}
@@ -53,7 +55,7 @@ export function RolePlay(props: any) {
                 /></td>
             </tr>
             <tr>
-                <td style={{verticalAlign:"top"}}><b>初始对话：</b></td>
+                <td style={{verticalAlign:"top"}}><b>{Locale.DevPage.InitDialog}</b></td>
                 <td>
                     <Card>
                         <CardBody display={"flex"} flexDirection={"column"} gap={2}>
@@ -66,11 +68,11 @@ export function RolePlay(props: any) {
                                     }}
                                     leftAttachment={
                                         <Select
-                                            options={["用户", "N²CHAT", "系统"]}
-                                            value={{ "user": "用户", "assistant": "N²CHAT", "system": "系统" }[msg.role]}
+                                            options={[Locale.DevPage.User, "N²CHAT", Locale.DevPage.System]}
+                                            value={{ "user": Locale.DevPage.User, "assistant": "N²CHAT", "system": Locale.DevPage.System }[msg.role]}
                                             onChange={(v) => {
                                                 setGreeting(greeting.map((m, idx) => idx == i ?
-                                                    { type: msg.type, role: { "用户": "user", "N²CHAT": "assistant", "系统": "system" }[v], content: msg.content }
+                                                    { type: msg.type, role: Object.fromEntries(Object.entries({ "user": Locale.DevPage.User, "assistant": "N²CHAT", "system": Locale.DevPage.System }).map(([key, value]) => [value, key]))[v], content: msg.content }
                                                     : m))
                                             }}
                                         />
@@ -85,13 +87,13 @@ export function RolePlay(props: any) {
                             })}
                             <div />
                             <ButtonGroup>
-                                <Button text="新增" icon={<AddIcon />} onClick={() => {
+                                <Button text={Locale.DevPage.Append} icon={<AddIcon />} onClick={() => {
                                     setGreeting([
                                         ...greeting,
                                         { type: "text", role: greeting[greeting.length - 1].role == "user" ? "assistant" : "user", content: "" }
                                     ])
                                 }} />
-                                <Button text="自动生成" icon={<AutoIcon />} onClick={() => {
+                                <Button text={Locale.DevPage.AutoGen} icon={<AutoIcon />} onClick={() => {
                                     const _greeting = greeting.slice()
                                     let sendMessages = JSON.parse(JSON.stringify(greeting))
                                     let role = "assistant"
@@ -132,10 +134,10 @@ export function RolePlay(props: any) {
                                         setPromise(undefined)
                                     })
                                 }} />
-                                <Button text="清空" icon={<DeleteIcon />} onClick={() => {
+                                <Button text={Locale.DevPage.Clear} icon={<DeleteIcon />} onClick={() => {
                                     promise?.abort()
                                     setPromise(undefined)
-                                    setGreeting([{ type: "text", role: "assistant", content: "有什么我可以帮助您的吗🪄" }])
+                                    setGreeting([{ type: "text", role: "assistant", content: Locale.DevPage.Greeting }])
                                 }} />
                             </ButtonGroup>
                         </CardBody>
@@ -143,22 +145,22 @@ export function RolePlay(props: any) {
                 </td>
             </tr>
             <tr>
-                <td style={{verticalAlign:"top"}}><b>启用能力：</b></td>
+                <td style={{verticalAlign:"top"}}><b>{Locale.DevPage.ActivateTool}</b></td>
                 <td>
                     <SimpleGrid templateColumns={`repeat(auto-fill, minmax(${150}px, 1fr))`} gap={4}>
                         <Card>
                             <CardBody>
-                                <CheckBox text="联网搜索" checked={search} onClick={() => setSearch(!search)} />
+                                <CheckBox text={Locale.DevPage.WebSearch} checked={search} onClick={() => setSearch(!search)} />
                             </CardBody>
                         </Card>
                         <Card>
                             <CardBody>
-                                <CheckBox text="脚本执行" checked={script} onClick={() => setScript(!script)} />
+                                <CheckBox text={Locale.DevPage.Scripting} checked={script} onClick={() => setScript(!script)} />
                             </CardBody>
                         </Card>
                         <Card>
                             <CardBody>
-                                <CheckBox text="图像生成" checked={paint} onClick={() => setPaint(!paint)} />
+                                <CheckBox text={Locale.DevPage.ImageGen} checked={paint} onClick={() => setPaint(!paint)} />
                             </CardBody>
                         </Card>
                     </SimpleGrid>
@@ -168,9 +170,9 @@ export function RolePlay(props: any) {
                 <td style={{verticalAlign:"top"}}><b></b></td>
                 <td style={{display:"flex", flexDirection:"row-reverse"}}>
                     <ButtonGroup>
-                        <Button text="上传"/>
-                        <Button text="保存"/>
-                        <Button text="导出"/>
+                        <Button text={Locale.DevPage.Upload}/>
+                        <Button text={Locale.DevPage.Save}/>
+                        <Button text={Locale.DevPage.Export}/>
                     </ButtonGroup>
                 </td>
             </tr>

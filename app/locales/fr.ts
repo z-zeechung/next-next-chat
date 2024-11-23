@@ -2,6 +2,86 @@ import { SubmitKey } from "../store/config";
 import type { PartialLocaleType } from "./index";
 
 const fr: PartialLocaleType = {
+
+  NextChat: {
+    SideBar: {
+      ChatList: "Liste de Discussions",
+      Manage: "Gérer",
+      Exit: "Quitter",
+      NewChat: "Nouveau Chat",
+      CountOfChats: (count: number) => `${count} conversation${count > 1 ? 's' : ''}`,
+      Select: "Sélectionner"
+    },
+    ChatArea: {
+      More: "Plus",
+      Return: "Retour",
+      ChatOptions: "Options de Chat",
+      Send: "Envoyer",
+      SendPrompt: "Entrez pour envoyer, Shift + Entrez pour passer à la ligne suivante",
+      RolePlay: "Jeu de Rôle",
+      SwitchModel: "Changer de Modèle",
+      WebSearch: "Recherche sur Internet",
+      Scripting: "Script",
+      GenImage: "Génération d'Image",
+      UploadFile: "Uploader une Image / Document",
+      ChatPlugins: "Plugins de Chat",
+      IntelligentOffice: "Bureau Intelligent",
+      WordDoc: "Document Word",
+      PDFDoc: "Document PDF",
+      Audio: "Audio",
+      DeleteChat: "Supprimer le Chat",
+      ClearData: "Effacer les Données",
+      SelectRole: "Sélectionner un Rôle",
+      SearchRole: "Rechercher un Rôle...",
+      New: "Nouveau",
+      Use: "Utiliser",
+      StopUse: "Arrêter d'Utiliser",
+      SwitchedToModel: (model: string) => `Passé à le modèle ${model == "regular" ? "régulier" : "avancé"}`,
+      ManagePlugins: "Gérer les Plugins",
+      AlreadyDeletedChat: "Chat Déjà Supprimé",
+      ClearDataPrompt: "Cette action effacera toutes les configurations et données. Voulez-vous continuer ?",
+      Activated: (name: string) => `Activé ${name}`,
+      Deactivated: (name: string) => `Désactivé ${name}`,
+      Copy: "Copier",
+      Delete: "Supprimer",
+      Retry: "Réessayer",
+      Using: "Utilisation",
+      Greeting: "Comment puis-je vous aider aujourd'hui 🪄",
+      Revert: "Annuler",
+      DefaultTopic: "Nouveau Conversation",
+    }
+  },
+
+  DevPage: {
+    RolePlay: "Jeu de Rôle",
+    Live2D: "Personnage Numérique",
+    Script: "Script",
+    Alter: "Modifier",
+    RoleName: "Nom du Rôle : ",
+    Prompt: "Invite : ",
+    InitDialog: "Dialogue Initial : ",
+    User: "Utilisateur",
+    System: "Système",
+    Append: "Ajouter",
+    AutoGen: "Génération Automatique",
+    Clear: "Effacer",
+    ActivateTool: "Activer la Capacité : ",
+    WebSearch: "Recherche en Ligne",
+    ImageGen: "Génération d'Image",
+    Scripting: "Exécution de Script",
+    Upload: "Télécharger",
+    Save: "Enregistrer",
+    Export: "Exporter",
+    ChangeModel: "Changer de Modèle",
+    Send: "Envoyer",
+    Greeting: "Comment puis-je vous aider aujourd'hui 🪄",
+    Expand: "Développer",
+    Collapse: "Réduire",
+    Stop: "Arrêter"
+},
+
+  /** LEGACY */
+
   WIP: "Prochainement...",
   Error: {
     Unauthorized:
