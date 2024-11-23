@@ -105,7 +105,8 @@ import { NextChat } from "../panels/nextchat";
 // import { TestPage } from "../panels/testpage";
 // import emoji from "../emoji.json"
 // import { AutoGPT } from "../panels/autogpt";
-import { Button } from "../themes/theme";
+import { Button, Select } from "../themes/theme";
+import { ALL_LANG_OPTIONS, changeLang, getLang } from "../locales";
 // import { renderToString } from "react-dom/server";
 // import { Message } from "../message/Message";
 // import { MarkdownMessage } from "../message/TextMessage";
@@ -1280,8 +1281,14 @@ function _Chat() {
         </>}
 
         <div className="window-actions">
-          <div className="window-action-button" style={{zIndex:-1000}}>
-            <Button icon={<RenameIcon/>} text="聊天列表"/>
+          <div className="window-action-button">
+            <Select options={Object.values(ALL_LANG_OPTIONS)}
+            value={ALL_LANG_OPTIONS[getLang()]}
+            onChange={(value) => {
+              changeLang(Object.values(ALL_LANG_OPTIONS).reduce((acc, key, index) => Object.assign(acc, {[key]: Object.keys(ALL_LANG_OPTIONS)[index]}), {})[value])
+            }
+            }
+            />
           </div>
           {/* {!isMobileScreen && (
             <div className="window-action-button">

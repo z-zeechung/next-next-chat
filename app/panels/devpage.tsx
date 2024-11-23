@@ -21,6 +21,8 @@ import { Scripting } from "./devpage/scripting";
 import { runPython } from "../utils/pyodide";
 import { DEFAULT_SYSTEM_TEMPLATE } from "../constant";
 
+import Locale from "../locales";
+
 export function DevPage() {
 
     const [chatAreaSize, setChatAreaSize] = useState([0, 0])
@@ -32,7 +34,7 @@ export function DevPage() {
     const usePromise = useState(undefined as ControllablePromise<any> | undefined)
     const usePrompt = useState("")
     const useGreeting = useState([
-        { type: "text", role: "assistant", content: "有什么我可以帮助您的吗🪄" }
+        { type: "text", role: "assistant", content: Locale.DevPage.Greeting }
     ] as Message[])
     const useAvatar = useState(
         <div style={{
@@ -95,7 +97,7 @@ function Layout(props: { children, useChatAreaSize, useShow }) {
 }
 
 function DevArea(props: any) {
-    return <Tabs labels={["角色扮演", "数字人", "脚本"]}>
+    return <Tabs labels={[Locale.DevPage.RolePlay, Locale.DevPage.Live2D, Locale.DevPage.Script]}>
         <RolePlay {...props} />
         <></>
         <Scripting {...props} />
@@ -180,7 +182,7 @@ function MobileLayout(props: { children: JSX.Element[], useChatAreaSize, useShow
             right: 12,
             top: 12
         }}>
-            <TinyButton text="展开" onClick={() => {
+            <TinyButton text={Locale.DevPage.Expand} onClick={() => {
                 setShow(true)
             }} />
         </div>}
@@ -296,7 +298,7 @@ function ChatArea(props: {
                             setInput(v)
                         }}
                         rightAttachment={
-                            <Button text="发送" type="primary" onClick={async () => {
+                            <Button text={Locale.DevPage.Send} type="primary" onClick={async () => {
                                 if (input.trim().length <= 0) { return }
                                 let _messages = messages.concat([{ type: "text", role: "user", content: input }])
                                 setMessages(_messages.slice().concat([
@@ -342,7 +344,7 @@ function ChatArea(props: {
         }}>
             <ButtonGroup>
                 {promise && <TinyButton
-                    text="停止"
+                    text={Locale.DevPage.Stop}
                     onClick={() => {
                         if (promise) {
                             promise.abort()
@@ -350,12 +352,12 @@ function ChatArea(props: {
                         }
                     }}
                 />}
-                {!promise && <TinyButton text="清空" type="primary" onClick={() => {
+                {!promise && <TinyButton text={Locale.DevPage.Clear} type="primary" onClick={() => {
                     setMessages([])
                     setMeta({})
                 }} />}
-                <TinyButton text="切换模型" />
-                {props.mobile && <TinyButton text="收起" onClick={() => {
+                <TinyButton text={Locale.DevPage.ChangeModel} />
+                {props.mobile && <TinyButton text={Locale.DevPage.Collapse} onClick={() => {
                     setShow(false)
                 }} />}
             </ButtonGroup>

@@ -2,12 +2,13 @@ import { useState } from "react"
 import { Button, TextArea } from "../themes/theme"
 import { ClientApi } from "../client/api"
 import { useNavigate } from "react-router"
+import Locale from "../locales";
 
 import AudioIcon from "../icons/bootstrap/music-note-beamed.svg"
 
 export function AudioButton(){
     const navigate = useNavigate()
-    return <Button text="音频" type="primary" icon={<AudioIcon />} onClick={() => {
+    return <Button text={Locale.NextChat.ChatArea.Audio} type="primary" icon={<AudioIcon />} onClick={() => {
         navigate("/audio")
     }}/>
 }

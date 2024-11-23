@@ -2,6 +2,86 @@ import { SubmitKey } from "../store/config";
 import type { PartialLocaleType } from "./index";
 
 const ar: PartialLocaleType = {
+
+  NextChat: {
+    SideBar: {
+      ChatList: "قائمة المحادثات",
+      Manage: "إدارة",
+      Exit: "خروج",
+      NewChat: "محادثة جديدة",
+      CountOfChats: (count: number) => `${count} محادثة`,
+      Select: "اختيار"
+    },
+    ChatArea: {
+      More: "المزيد",
+      Return: "عودة",
+      ChatOptions: "خيارات المحادثة",
+      Send: "إرسال",
+      SendPrompt: "Enter للإرسال، Shift + Enter لسطر جديد",
+      RolePlay: "لعب الأدوار",
+      SwitchModel: "تبديل النموذج",
+      WebSearch: "بحث على الشبكة",
+      Scripting: "برمجة النصوص",
+      GenImage: "إنشاء صورة",
+      UploadFile: "رفع صورة/مستند",
+      ChatPlugins: "ملحقات المحادثة",
+      IntelligentOffice: "مكتب ذكي",
+      WordDoc: "مستند Word",
+      PDFDoc: "مستند PDF",
+      Audio: "صوت",
+      DeleteChat: "حذف المحادثة",
+      ClearData: "مسح البيانات",
+      SelectRole: "اختيار دور",
+      SearchRole: "بحث عن دور...",
+      New: "جديد",
+      Use: "تفعيل",
+      StopUse: "إيقاف",
+      SwitchedToModel: (model: string) => `تم التبديل إلى النموذج ${model == "regular" ? "عادي" : "متقدم"}`,
+      ManagePlugins: "إدارة الملحقات",
+      AlreadyDeletedChat: "محادثة تم حذفها",
+      ClearDataPrompt: "سيؤدي هذا إلى مسح جميع الإعدادات وسجلات المحادثة. هل تريد المتابعة؟",
+      Activated: (name: string) => `تم تفعيل ${name}`,
+      Deactivated: (name: string) => `تم إلغاء تفعيل ${name}`,
+      Copy: "نسخ",
+      Delete: "حذف",
+      Retry: "إعادة المحاولة",
+      Using: "قيد الاستخدام",
+      Greeting: "هل هناك ما يمكنني مساعدتكم به اليوم 🪄",
+      Revert: "إلغاء",
+      DefaultTopic: "محادثة جديدة"
+    }
+  },
+
+  DevPage: {
+    RolePlay: "تمثيل دور",
+    Live2D: "شخص رقمي",
+    Script: "نص درامي",
+    Alter: "تغيير",
+    RoleName: "اسم الدور:",
+    Prompt: "دعوة:",
+    InitDialog: "حوار مبدئي:",
+    User: "مستخدم",
+    System: "نظام",
+    Append: "إضافة",
+    AutoGen: "إنشاء تلقائي",
+    Clear: "مسح",
+    ActivateTool: "تفعيل قدرة:",
+    WebSearch: "بحث على شبكة الإنترنت",
+    ImageGen: "إنشاء صورة",
+    Scripting: "تنفيذ نص درامي",
+    Upload: "رفع",
+    Save: "حفظ",
+    Export: "تصدير",
+    ChangeModel: "تبديل نموذج",
+    Send: "إرسال",
+    Greeting: " هل هناك ما يمكنني مساعدتكم به اليوم🪄",
+    Expand: "توسيع",
+    Collapse: "طي",
+    Stop: "توقف",
+},
+
+  /** LEGACY */
+
   WIP: "قريبًا...",
   Error: {
     Unauthorized:

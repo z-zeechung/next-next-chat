@@ -199,7 +199,7 @@ export function SideBar(props: { /*className?: string*/ show:boolean }) {
 
       <div className={styles["sidebar-header"]}>
         <div className={styles["sidebar-title"]}>
-          &nbsp;&nbsp;聊天列表
+          &nbsp;&nbsp;{Locale.NextChat.SideBar.ChatList}
           <span
             style={{
               position: "absolute",
@@ -208,7 +208,7 @@ export function SideBar(props: { /*className?: string*/ show:boolean }) {
           >
             <Button
               icon={managing?<ReturnIcon/>:<ManageIcon/>}
-              text={managing?"退出":"管理"}
+              text={managing?Locale.NextChat.SideBar.Exit:Locale.NextChat.SideBar.Manage}
               onClick={()=>{setManaging(!managing)}}
             />
           </span>
@@ -252,7 +252,7 @@ export function SideBar(props: { /*className?: string*/ show:boolean }) {
         <div>
           {<Button
             icon={<AddIcon/>}
-            text={shouldNarrow ? undefined : Locale.Home.NewChat}
+            text={shouldNarrow ? undefined : Locale.NextChat.SideBar.NewChat}
             onClick={() => {
               //if (config.dontShowMaskSplashScreen) {
               if (true){

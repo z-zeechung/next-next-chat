@@ -15,7 +15,9 @@ import dynamic from "next/dynamic";
 import { /*ModelProvider,*/ Path, SlotID } from "../constant";
 import { ErrorBoundary } from "./error";
 
-import { getISOLang, getLang } from "../locales";
+import { ALL_LANG_OPTIONS, changeLang, getISOLang, getLang } from "../locales";
+
+import Locale from "../locales";
 
 import {
   HashRouter as Router,
@@ -31,7 +33,7 @@ import { getClientConfig } from "../config/client";
 import { useAccessStore } from "../store";
 // import { identifyDefaultClaudeModel } from "../utils/checkers";
 // import { useAccount } from "../store/account";
-import { Button } from "../themes/theme";
+import { Button, Select } from "../themes/theme";
 import ReturnIcon from "../icons/bootstrap/arrow-90deg-left.svg";
 
 export function Loading(props: { noLogo?: boolean }) {
@@ -151,19 +153,30 @@ const useHasHydrated = () => {
 // };
 
 import chatStyles from "./chat.module.scss";
-function Embedded(props:{element}){
+function Embedded(props: { element }) {
   const navigate = useNavigate()
   return <div className={chatStyles.chat}>
     <div className="window-header" data-tauri-drag-region>
-    <div className="window-actions">
-            <div className={"window-action-button"}>
-              <Button
-                icon={<ReturnIcon />}
-                text="返回"
-                onClick={() => navigate("/")}
-              />
-            </div>
-          </div>
+      <div className="window-actions">
+        <div className={"window-action-button"}>
+          <Button
+            icon={<ReturnIcon />}
+            text={Locale.NextChat.ChatArea.Return}
+            onClick={() => navigate("/")}
+          />
+        </div>
+      </div>
+      <div className="window-actions">
+        <div className={"window-action-button"}>
+          <Select options={Object.values(ALL_LANG_OPTIONS)}
+            value={ALL_LANG_OPTIONS[getLang()]}
+            onChange={(value) => {
+              changeLang(Object.values(ALL_LANG_OPTIONS).reduce((acc, key, index) => Object.assign(acc, { [key]: Object.keys(ALL_LANG_OPTIONS)[index] }), {})[value])
+            }
+            }
+          />
+        </div>
+      </div>
     </div>
     {props.element}
   </div>

@@ -1,7 +1,7 @@
 import cn from "./cn";
+import cnt from "./cnt";
 import en from "./en";
 import pt from "./pt";
-import tw from "./tw";
 import id from "./id";
 import fr from "./fr";
 import es from "./es";
@@ -17,6 +17,7 @@ import ko from "./ko";
 import ar from "./ar";
 import bn from "./bn";
 import sk from "./sk";
+import mn from "./mn"
 import { merge } from "../utils/merge";
 
 import type { LocaleType } from "./cn";
@@ -24,24 +25,25 @@ export type { LocaleType, PartialLocaleType } from "./cn";
 
 const ALL_LANGS = {
   cn,
+  cnt,
   en,
-  tw,
-  pt,
-  jp,
-  ko,
-  id,
+  // pt,
+  // jp,
+  // ko,
+  // id,
   fr,
   es,
-  it,
-  tr,
-  de,
-  vi,
+  // it,
+  // tr,
+  // de,
+  // vi,
   ru,
-  cs,
-  no,
+  // cs,
+  // no,
   ar,
-  bn,
-  sk,
+  // bn,
+  // sk,
+  mn,
 };
 
 export type Lang = keyof typeof ALL_LANGS;
@@ -49,25 +51,26 @@ export type Lang = keyof typeof ALL_LANGS;
 export const AllLangs = Object.keys(ALL_LANGS) as Lang[];
 
 export const ALL_LANG_OPTIONS: Record<Lang, string> = {
-  cn: "简体中文",
-  en: "English",
-  pt: "Português",
-  tw: "繁體中文",
-  jp: "日本語",
-  ko: "한국어",
-  id: "Indonesia",
-  fr: "Français",
-  es: "Español",
-  it: "Italiano",
-  tr: "Türkçe",
-  de: "Deutsch",
-  vi: "Tiếng Việt",
-  ru: "Русский",
-  cs: "Čeština",
-  no: "Nynorsk",
-  ar: "العربية",
-  bn: "বাংলা",
-  sk: "Slovensky",
+  ar: "العربية",    //ʿArabīyā
+  // bn: "বাংলা",       // Bangla
+  // cs: "Čeština",    // Čeština
+  // de: "Deutsch",    // Deutsch
+  en: "English",    // English
+  es: "Español",    // Español
+  fr: "Français",   // Français
+  // ko: "한국어",      // Hanguge
+  // id: "Indonesia",  // Indonesia
+  // it: "Italiano",   // Italiano
+  mn: "ᠮᠤᠩᠭᠤᠯ",        // Mongol
+  // jp: "日本語",     // Nihongo
+  // no: "Nynorsk",    // Nynorsk
+  // pt: "Português",  // Português
+  ru: "Русский",    // Russkiy
+  // sk: "Slovensky",  // Slovensky
+  // vi: "Tiếng Việt", // Tiếng Việt
+  // tr: "Türkçe",     // Türkçe
+  cn: "简体中文",   // Zhōngwénjiǎntǐ
+  cnt: "繁體中文",  // Zhōngwénfántǐ
 };
 
 const LANG_KEY = "lang";
@@ -96,7 +99,7 @@ function setItem(key: string, value: string) {
 }
 
 function getLanguage() {
-  return DEFAULT_LANG;
+  // return DEFAULT_LANG;
   try {
     return navigator.language.toLowerCase();
   } catch {
@@ -105,7 +108,7 @@ function getLanguage() {
 }
 
 export function getLang(): Lang {
-  return DEFAULT_LANG;
+  // return DEFAULT_LANG;
   const savedLang = getItem(LANG_KEY);
 
   if (AllLangs.includes((savedLang ?? "") as Lang)) {
@@ -130,8 +133,8 @@ export function changeLang(lang: Lang) {
 
 export function getISOLang() {
   const isoLangString: Record<string, string> = {
-    cn: "zh-Hans",
-    tw: "zh-Hant",
+    cn: "zh",
+    cnt: "zh",
   };
 
   const lang = getLang();
