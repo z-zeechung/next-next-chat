@@ -2,6 +2,86 @@ import { SubmitKey } from "../store/config";
 import type { PartialLocaleType } from "./index";
 
 const es: PartialLocaleType = {
+
+  NextChat: {
+    SideBar: {
+      ChatList: "Lista de Chats",
+      Manage: "Gestionar",
+      Exit: "Salir",
+      NewChat: "Nuevo Chat",
+      CountOfChats: (count: number) => `${count} conversaciones`,
+      Select: "Seleccionar"
+    },
+    ChatArea: {
+      More: "Más",
+      Return: "Volver",
+      ChatOptions: "Opciones de Chat",
+      Send: "Enviar",
+      SendPrompt: "Enter para enviar. Shift + Enter para nueva línea.",
+      RolePlay: "Juego de Roles",
+      SwitchModel: "Cambiar Modelo",
+      WebSearch: "Búsqueda en la Red",
+      Scripting: "Scripting",
+      GenImage: "Generación de Imágenes",
+      UploadFile: "Subir Imágenes / Documentos",
+      ChatPlugins: "Plugins de Chat",
+      IntelligentOffice: "Oficina Inteligente",
+      WordDoc: "Documento Word",
+      PDFDoc: "Documento PDF",
+      Audio: "Audio",
+      DeleteChat: "Eliminar Chat",
+      ClearData: "Limpiar Datos",
+      SelectRole: "Seleccionar Rol",
+      SearchRole: "Buscar Roles...",
+      New: "Nuevo",
+      Use: "Usar",
+      StopUse: "Dejar de Usar",
+      SwitchedToModel: (model: string) => `Cambiado a ${model=="regular"?"Regular":"Avanzado"} modelo`,
+      ManagePlugins: "Gestionar Plugins",
+      AlreadyDeletedChat: "Chat Eliminado",
+      ClearDataPrompt: "Esto limpiará todas las configuraciones y datos. ¿Continuar?",
+      Activated: (name:string) => `Activado ${name}`,
+      Deactivated: (name:string) => `Desactivado ${name}`,
+      Copy: "Copiar",
+      Delete: "Eliminar",
+      Retry: "Reintentar",
+      Using: "Usando",
+      Greeting: "¿En qué puedo ayudarle hoy? 🪄",
+      Revert: "Revertir",
+      DefaultTopic: "Nueva conversación"
+    }
+  },
+
+  DevPage: {
+    RolePlay: "Juego de Roles",
+    Live2D: "Humano Digital",
+    Script: "Guion",
+    Alter: "Modificar",
+    RoleName: "Nombre de Rol: ",
+    Prompt: "Sugerencia: ",
+    InitDialog: "Diálogo Inicial: ",
+    User: "Usuario",
+    System: "Sistema",
+    Append: "Agregar",
+    AutoGen: "Generar Automáticamente",
+    Clear: "Limpiar",
+    ActivateTool: "Activar Habilidad: ",
+    WebSearch: "Búsqueda en Internet",
+    ImageGen: "Generación de Imágenes",
+    Scripting: "Ejecución de Guiones",
+    Upload: "Subir",
+    Save: "Guardar",
+    Export: "Exportar",
+    ChangeModel: "Cambiar Modelo",
+    Send: "Enviar",
+    Greeting: "¿En qué puedo ayudarle hoy? 🪄",
+    Expand: "Expandir",
+    Collapse: "Colapsar",
+    Stop: "Detener"
+},
+
+  /** LEGACY */
+
   WIP: "En construcción...",
   Error: {
     Unauthorized:

@@ -24,6 +24,7 @@ import { useChatStore } from "../store";
 import { useNavigate } from "react-router-dom";
 import { ContextCard } from "./document/context-card";
 import { useWindowSize } from "../utils";
+import Locale from "../locales";
 
 let documentDiv = document.createElement("div")
 var instance = undefined as Editor | undefined
@@ -34,7 +35,7 @@ let setText = undefined as ((text:string)=>void) | undefined
 
 export function DocxButton() {
     const navigate = useNavigate()
-    return <ThemeButton text="Word文档" type="primary" icon={<DocIcon style={{ width: "16px", height: "16px" }} />} onClick={() => {
+    return <ThemeButton text={Locale.NextChat.ChatArea.WordDoc} type="primary" icon={<DocIcon style={{ width: "16px", height: "16px" }} />} onClick={() => {
         var input = document.createElement('input')
         input.type = 'file'
         input.multiple = false
@@ -91,7 +92,7 @@ export function DocxButton() {
 export function PDFButton() {
     const navigate = useNavigate()
     const {width, height} = useWindowSize()
-    return <ThemeButton text="PDF文档" type="primary" icon={<PDFIcon style={{ width: "16px", height: "16px" }} />} onClick={() => {
+    return <ThemeButton text={Locale.NextChat.ChatArea.PDFDoc} type="primary" icon={<PDFIcon style={{ width: "16px", height: "16px" }} />} onClick={() => {
         var input = document.createElement('input')
         input.type = 'file'
         input.multiple = false

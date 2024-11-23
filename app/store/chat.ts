@@ -82,7 +82,7 @@ export interface ChatSession {
   files?: {title:string, content:string}[]  // 给autogpt用的
 }
 
-export const DEFAULT_TOPIC = Locale.Store.DefaultTopic;
+export const DEFAULT_TOPIC = Locale.NextChat.ChatArea.DefaultTopic;
 export const BOT_HELLO: Message = {type:"text", role:"assistant", content:Locale.Store.BotHello}
 
 export function createEmptySession(): ChatSession {
@@ -299,9 +299,9 @@ export const useChatStore = createPersistStore(
 
         let removeVecDB = true
         showToast(
-          Locale.Home.DeleteToast,
+          Locale.NextChat.ChatArea.AlreadyDeletedChat,
           {
-            text: Locale.Home.Revert,
+            text: Locale.NextChat.ChatArea.Revert,
             onClick() {
               removeVecDB = false
               set(() => restoreState);

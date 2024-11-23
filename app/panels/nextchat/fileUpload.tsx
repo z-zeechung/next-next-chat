@@ -2,10 +2,11 @@ import { useChatStore } from "@/app/store";
 import { Button, ButtonCard } from "@/app/themes/theme";
 import { nanoid } from "nanoid";
 import UploadIcon from "../../icons/bootstrap/box-arrow-up.svg"
+import Locale from "../../locales"
 
 export function UploadFile() {
     const chatStore = useChatStore()
-    return <ButtonCard text="上传图片/文档" icon={<UploadIcon/>} onClick={() => {
+    return <ButtonCard text={Locale.NextChat.ChatArea.UploadFile} icon={<UploadIcon/>} onClick={() => {
         var input = document.createElement('input')
         input.type = 'file'
         input.multiple = false

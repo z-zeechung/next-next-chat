@@ -1,9 +1,90 @@
 import { getClientConfig } from "../config/client";
+import { NextChat } from "../panels/nextchat";
 import { SubmitKey } from "../store/config";
 
 const isApp = !!getClientConfig()?.isApp;
 
 const cn = {
+
+  NextChat: {
+    SideBar: {
+      ChatList: "聊天列表",
+      Manage: "管理",
+      Exit: "退出",
+      NewChat: "新的聊天",
+      CountOfChats: (count: number) => `${count} 条对话`,
+      Select: "选择"
+    },
+    ChatArea: {
+      More: "更多",
+      Return: "返回",
+      ChatOptions: "聊天选项",
+      Send: "发送",
+      SendPrompt: "Enter 发送，Shift + Enter 换行",
+      RolePlay: "角色扮演",
+      SwitchModel: "切换模型",
+      WebSearch: "联网搜索",
+      Scripting: "脚本执行",
+      GenImage: "图像生成",
+      UploadFile: "上传图片/文档",
+      ChatPlugins: "对话插件",
+      IntelligentOffice: "智能办公",
+      WordDoc: "Word 文档",
+      PDFDoc: "PDF 文档",
+      Audio: "音频",
+      DeleteChat: "删除对话",
+      ClearData: "清除数据",
+      SelectRole: "选择角色",
+      SearchRole: "搜索角色……",
+      New: "新建",
+      Use: "使用",
+      StopUse: "停用",
+      SwitchedToModel: (model: string) => `已切换至${model=="regular"?"普通":"高级"}模型`,
+      ManagePlugins: "管理插件",
+      AlreadyDeletedChat: "已删除对话",
+      ClearDataPrompt: "这将会清除所有设置及聊天记录。要继续吗？",
+      Activated: (name:string) => `已启用${name}`,
+      Deactivated: (name:string) => `已关闭${name}`,
+      Copy: "复制",
+      Delete: "删除",
+      Retry: "重试",
+      Using: "正在使用",
+      Greeting: "有什么我可以帮助您的吗🪄",
+      Revert: "撤销",
+      DefaultTopic: "新的聊天"
+    }
+  },
+
+  DevPage: {
+    RolePlay: "角色扮演",
+    Live2D: "数字人",
+    Script: "脚本",
+    Alter: "更改",
+    RoleName: "角色名称：",
+    Prompt: "提示词：",
+    InitDialog: "初始对话：",
+    User: "用户",
+    System: "系统",
+    Append: "新增",
+    AutoGen: "自动生成",
+    Clear: "清空",
+    ActivateTool: "启用能力：",
+    WebSearch: "联网搜索",
+    ImageGen: "图像生成",
+    Scripting: "脚本执行",
+    Upload: "上传",
+    Save: "保存",
+    Export: "导出",
+    ChangeModel: "切换模型",
+    Send: "发送",
+    Greeting: "有什么我可以帮助您的吗🪄",
+    Expand: "展开",
+    Collapse: "收起",
+    Stop: "停止",
+  },
+
+  /** LEGACY */
+
   WIP: "该功能仍在开发中……",
   Error: {
     Unauthorized: isApp

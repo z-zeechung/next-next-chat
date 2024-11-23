@@ -1,6 +1,7 @@
 import { Button, ButtonCard, Modal } from "@/app/themes/theme";
 import { useState } from "react";
 import PluginIcon from "../../icons/bootstrap/puzzle.svg"
+import Locale from "@/app/locales"
 
 export function PluginMenu(props: {
     children
@@ -9,10 +10,10 @@ export function PluginMenu(props: {
     const [show, setShow] = useState(false)
 
     return <>
-        <ButtonCard text="对话插件" icon={<PluginIcon style={{ transform: "rotate(45deg)", scale: "1.15" }} />} popover={
+        <ButtonCard text={Locale.NextChat.ChatArea.ChatPlugins} icon={<PluginIcon style={{ transform: "rotate(45deg)", scale: "1.15" }} />} popover={
             <div style={{display: "flex", flexDirection: "column", gap: "6px"}}>
                 {props.children.map((btn) => btn)}
-                <Button text="更多" onClick={() => {
+                <Button text={Locale.NextChat.ChatArea.More} onClick={() => {
                     setShow(!show)
                 }} />
             </div>
@@ -27,7 +28,7 @@ function PluginMenuModal(props: {
     onClose
 }) {
     return <Modal
-        title="管理插件"
+        title={Locale.NextChat.ChatArea.ManagePlugins}
         onClose={props.onClose}
     >
 
