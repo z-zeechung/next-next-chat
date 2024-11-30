@@ -30,7 +30,7 @@ A large model app. Integrating various capabilities. Highly scalable, Highly com
 | 🏗️ | Dev Env for Custom Component |
 | 🏗️ | 1-Shot Voice Cloning |
 | 🏗️ | Live2D |
-| 🏗️ | [Llama-Index](https://github.com/run-llama/llama_index) RAG |
+| ✅ | Vector / Keyword / Graph RAG |
 | ✅   | [Pyodide](https://github.com/pyodide/pyodide) Runtime |
 | 🏗️ | GPTs |
 | ✅   | LLM Plugins |
