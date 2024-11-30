@@ -73,9 +73,15 @@ const KnowledgeBase = dynamic(async () => (await import("../panels/knowledge")).
   loading: () => <Loading noLogo />,
 })
 
-const TestPage = dynamic(async () => (await import("../panels/testpage")).TestPage, {
+let TestPage = dynamic(async () => (await import("../panels/testpage.template")).TestPage, {
   loading: () => <Loading noLogo />,
 })
+try{
+  TestPage = dynamic(async () => (await import("../panels/testpage")).TestPage, {
+    loading: () => <Loading noLogo />,
+  })
+}catch(e){}
+
 
 // const NewChat = dynamic(async () => (await import("./new-chat")).NewChat, {
 //   loading: () => <Loading noLogo />,

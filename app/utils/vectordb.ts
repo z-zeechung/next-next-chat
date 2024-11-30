@@ -56,6 +56,7 @@ const mememoId = (vecDBId)=>`mememo-index-store-${vecDBId}`;
 //     dumpObject(PREFIX+"vecDBList", vecDBList)
 // }
 
+/**@deprecated */
 export function createVecDB(id:string){
     let dbList = JSON.parse(localStorage.getItem(PREFIX+"DBLIST")??"{}")
     if(dbList[id]) {return}
@@ -78,6 +79,7 @@ export function createVecDB(id:string){
 //     deleteObject(DB_PREFIX+id)
 // }
 
+/**@deprecated */
 export function deleteVecDB(id:string){
     let dbList = JSON.parse(localStorage.getItem(PREFIX+"DBLIST")??"{}")
     delete dbList[id]
@@ -94,6 +96,7 @@ export function deleteVecDB(id:string){
 //     return loadObject(PREFIX+"vecDBList")??[]
 // }
 
+/**@deprecated */
 export function listVecDBs():string[]{
     let dbList = JSON.parse(localStorage.getItem(PREFIX+"DBLIST")??"{}")
     let ret:string[] = []
@@ -127,6 +130,7 @@ export function listVecDBs():string[]{
 //     }).call(null)
 // }
 
+/**@deprecated */
 export async function insertIntoVecDB(vecDbId:string, docId:string, content:{title:string, content:string}[]){
     let dbList = JSON.parse(localStorage.getItem(PREFIX+"DBLIST")??"{}")
     if(!dbList[vecDbId]){createVecDB(vecDbId); dbList = JSON.parse(localStorage.getItem(PREFIX+"DBLIST")??"{}")}
@@ -161,6 +165,7 @@ export async function insertIntoVecDB(vecDbId:string, docId:string, content:{tit
 //     }).call(null)
 // }
 
+/**@deprecated */
 export async function deleteFromVecDB(vecDbId:string, docId:string){
     let dbList = JSON.parse(localStorage.getItem(PREFIX+"DBLIST")??"{}")
     if(!dbList[vecDbId]){createVecDB(vecDbId); dbList = JSON.parse(localStorage.getItem(PREFIX+"DBLIST")??"{}")}
@@ -203,6 +208,7 @@ export async function deleteFromVecDB(vecDbId:string, docId:string){
 //     dumpObject(DB_PREFIX+id, vecDB)
 // }
 
+/**@deprecated */
 export async function clearVecDB(vecDbId:string){
     await deleteVecDB(vecDbId)
     createVecDB(vecDbId)
@@ -221,6 +227,7 @@ export async function clearVecDB(vecDbId:string){
 //     return ret
 // }
 
+/**@deprecated */
 export function contentOfVecDB(id:string):string[]{
     let dbList = JSON.parse(localStorage.getItem(PREFIX+"DBLIST")??"{}")
     if(!dbList[id]){return []}
@@ -257,6 +264,7 @@ export function contentOfVecDB(id:string):string[]{
 //     return ret
 // }
 
+/**@deprecated */
 export async function queryVecDBs(vecDBs: string[], query: string, count: number, threshold = 0.9): Promise<string[]> {
     let results: { key: string, distance: number }[] = []
     let vec = (await ClientApi.embed([query]))[0]

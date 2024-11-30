@@ -407,7 +407,7 @@ export class ClientApi {
       read()
     })
   }
-  static embed = (strs: string[]) => {
+  static embed = (strs: string[]):Promise<number[][]> => {
     return new Promise(resolve=>{
       fetch(EMBED_API_URL, {
         method:"POST",
