@@ -1,5 +1,4 @@
 import { getClientConfig } from "../config/client";
-import { NextChat } from "../panels/nextchat";
 import { SubmitKey } from "../store/config";
 
 const isApp = !!getClientConfig()?.isApp;
@@ -51,7 +50,8 @@ const cn = {
       Using: "正在使用",
       Greeting: "有什么我可以帮助您的吗🪄",
       Revert: "撤销",
-      DefaultTopic: "新的聊天"
+      DefaultTopic: "新的聊天",
+      KnowledgeBase: "知识库",
     }
   },
 
@@ -81,6 +81,37 @@ const cn = {
     Expand: "展开",
     Collapse: "收起",
     Stop: "停止",
+  },
+
+  KnowledgeBase: {
+    New: "新建",
+    WhatsThis: "这是什么？",
+    Explaination: `大语言模型受限于其训练数据的时效性与全面性，对于特定的问题，其回答可能会不够准确或不够及时。通过向知识库中添加自定义文档，并让大语言模型回答时检索知识库，能够改善上述情况。
+
+要新建知识库，你可以点击右下角的“新建”按钮，并选择要创建的知识库类型。传统知识库从文档中提取关键词，检索时进行关键词匹配；向量知识库将文本映射为高维空间中的方向信息（即向量），通过比对向量与向量间的夹角来进行匹配；图知识库从源文本中提取实体以及实体间的联系，连结成网络，根据检索目标遍历周围结点的信息。
+
+你会在界面上看见你已经创建了的知识库。在“编辑”界面中，你可以添加新的文档，或浏览已经添加的文档。`,
+    ISee: "明白了",
+    KeywordKB: "传统知识库",
+    VectorKB: "向量知识库",
+    GraphKB: "图知识库",
+    NewKB: (type)=>`新建${type}`,
+    Name: "名称",
+    Cancel: "取消",
+    Confirm: "确认",
+    SubTitle: (type, count)=>`${type}，${count} 篇文档`,
+    Edit: "编辑",
+    Delete: "删除",
+    EditKB: (name)=>`编辑知识库${name}`,
+    AddDoc: "添加文档",
+    Done: "完成",
+    DeleteKB: "删除知识库",
+    ConfirmDeleteKB: (name)=>`确定要知识库 ${name} 吗？`,
+    KBNameNotEmpty: "知识库名称不能为空",
+    KBAlreadyExists: "知识库已存在",
+    SuccessfullyCreatedKB: (type, name)=>`成功创建${type} ${name}`,
+    SuccessfullyAddDocument: "成功添加文档",
+    SuccessfullyDeletedDocument: (name)=>`成功删除文档 ${name}`,
   },
 
   /** LEGACY */

@@ -40,7 +40,7 @@ type Graph = Map<string, {
     }[]
 }>
 
-export class GraphStore extends KnowledgeStore {
+export class GraphStore implements KnowledgeStore {
     async query(id: string, query: string, count: number): Promise<QueryResult[]> {
         const index = new Index()
         configLang(index, query)

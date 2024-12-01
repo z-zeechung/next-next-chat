@@ -53,6 +53,7 @@ const en: LocaleType = {
       Greeting: "How can I assist you today 🪄",
       Revert: "Revert",
       DefaultTopic: "New Conversation",
+      KnowledgeBase: "Knowledge Base",
     }
   },
 
@@ -82,6 +83,37 @@ const en: LocaleType = {
     Expand: "Expand",
     Collapse: "Collapse",
     Stop: "Stop"
+  },
+
+  KnowledgeBase: {
+    New: "New",
+    WhatsThis: "What's This?",
+    Explaination: `Large language models are limited by the timeliness and comprehensiveness of their training data, which may result in inaccurate or outdated answers to specific questions. This situation can be improved by adding custom documents to a knowledge base and enabling the large language model to retrieve information from the knowledge base when answering questions.
+
+To create a new knowledge base, you can click the "New" button in the lower right corner and select the type of knowledge base you wish to create. Traditional knowledge bases extract keywords from documents and perform keyword matching during retrieval. Vector knowledge bases map text to directional information in high-dimensional spaces (i.e., vectors), and perform matching by comparing the angles between vectors. Graph knowledge bases extract entities and relationships between entities from source text, connecting them into a network, and retrieve information by traversing the nodes surrounding the search target.
+
+You will see the knowledge bases you have already created on the interface. In the "Modify" interface, you can add new documents or browse the documents that have already been added.`,
+    ISee: "I See",
+    KeywordKB: "Traditional Knowledge Base",
+    VectorKB: "Vector Knowledge Base",
+    GraphKB: "Graph Knowledge Base",
+    NewKB: (type)=>`New ${type}`,
+    Name: "Name",
+    Cancel: "Cancel",
+    Confirm: "Confirm",
+    SubTitle: (type, count)=>`${type}, ${count} Document${count!=1?'s':''}`,
+    Edit: "Modify",
+    Delete: "Delete",
+    EditKB: (name)=>`Modify Knowledge Base ${name}`,
+    AddDoc: "Add Document(s)",
+    Done: "Done",
+    DeleteKB: "Delete Knowledge Base",
+    ConfirmDeleteKB: (name)=>`Are you sure you want to delete knowledge base ${name} ?`,
+    KBNameNotEmpty: "Knowledge base name cannot be empty",
+    KBAlreadyExists: "Knowledge base already exists",
+    SuccessfullyCreatedKB: (type, name)=>`Successfully created ${type} ${name}`,
+    SuccessfullyAddDocument: "Successfully added document",
+    SuccessfullyDeletedDocument: (name)=>`Successfully deleted ${name}`,
   },
 
   /** LEGACY */
