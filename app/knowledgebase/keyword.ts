@@ -9,7 +9,7 @@ import { estimateTokenLength } from "../utils/token";
 
 let JIEBA_INITED = false
 
-export class KeywordStore extends KnowledgeStore{
+export class KeywordStore implements KnowledgeStore{
     private async useIndex(id, cb:(index: Index)=>Promise<void>){
         const index = new Index({});
         const keys = await localForage.getItem<string[] | undefined>(KwsId(id))
