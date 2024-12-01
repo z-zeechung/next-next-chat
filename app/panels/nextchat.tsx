@@ -135,6 +135,7 @@ import { AudioButton } from "./audio";
 import { ClientApi } from "../client/api";
 import { runPyodide } from "../utils/pyodide";
 import { SelectPromptModal } from "./nextchat/mask";
+import { KnowledgeBaseButton } from "./knowledge";
 
 // const Markdown = dynamic(async () => (await import("../components/markdown")).Markdown, {
 //   loading: () => <LoadingIcon />,
@@ -2286,6 +2287,7 @@ function _Chat() {
               icon={enhanceGenerationIcon}
               onClick={enhanceGeneration}/> */}
             {/* <ButtonCard text="生成文章" icon={<GenerateEssayIcon/>} onClick={()=>{setIsGeneratingEssay(true)}}/> */}
+            <KnowledgeBaseButton/>
             <ButtonCard 
               text={Locale.NextChat.ChatArea.IntelligentOffice}
               icon={<div style={{ position: "relative" }}>

@@ -48,7 +48,8 @@ const es: PartialLocaleType = {
       Using: "Usando",
       Greeting: "¿En qué puedo ayudarle hoy? 🪄",
       Revert: "Revertir",
-      DefaultTopic: "Nueva conversación"
+      DefaultTopic: "Nueva conversación",
+      KnowledgeBase: "Base de Conocimiento",
     }
   },
 
@@ -78,6 +79,37 @@ const es: PartialLocaleType = {
     Expand: "Expandir",
     Collapse: "Colapsar",
     Stop: "Detener"
+},
+
+KnowledgeBase: {
+  New: "Nuevo",
+  WhatsThis: "¿Qué es esto?",
+  Explaination: `Los grandes modelos de lenguaje están limitados por la actualidad y la exhaustividad de sus datos de entrenamiento, lo que puede dar lugar a respuestas inexactas o no actualizadas a preguntas específicas. Esta situación puede mejorarse añadiendo documentos personalizados a una base de conocimientos y permitiendo que el gran modelo de lenguaje recupere información de la base de conocimientos cuando conteste preguntas.
+
+Para crear una nueva base de conocimientos, puede hacer clic en el botón "Nuevo" en la esquina inferior derecha y seleccionar el tipo de base de conocimientos que quiere crear. Las bases de conocimientos tradicionales extraen palabras clave de documentos y llevan a cabo emparejamientos de palabras clave durante la recuperación. Las bases de conocimientos vectoriales asignan textos a información direccional en espacios de alta dimensionalidad (es decir, vectores), y llevan a cabo emparejamientos comparando los ángulos entre vectores. Las bases de conocimientos gráficos extraen entidades y relaciones entre entidades de textos fuente, conectándolos en una red, y recuperan información recorriendo los nodos que rodean el objetivo de búsqueda.
+
+Verá las bases de conocimientos que ya ha creado en la interfaz. En la interfaz de "Modificar", puede añadir nuevos documentos o navegar por los documentos que ya se han añadido.`,
+  ISee: "Entiendo",
+  KeywordKB: "Base de Conocimientos Tradicional",
+  VectorKB: "Base de Conocimientos Vectorial",
+  GraphKB: "Base de Conocimientos Gráfico",
+  NewKB: (type) => `Nueva ${type}`,
+  Name: "Nombre",
+  Cancel: "Cancelar",
+  Confirm: "Confirmar",
+  SubTitle: (type, count) => `${type}, ${count} Documento${count != 1 ? 's' : ''}`,
+  Edit: "Editar",
+  Delete: "Eliminar",
+  EditKB: (name) => `Editar Base de Conocimientos ${name}`,
+  AddDoc: "Añadir Documento(s)",
+  Done: "Terminado",
+  DeleteKB: "Eliminar Base de Conocimientos",
+  ConfirmDeleteKB: (name) => `¿Está seguro de querer eliminar la base de conocimientos ${name}?`,
+  KBNameNotEmpty: "El nombre de la base de conocimientos no puede estar vacío",
+  KBAlreadyExists: "La base de conocimientos ya existe",
+  SuccessfullyCreatedKB: (type, name) => `Creada satisfactoriamente ${type} ${name}`,
+  SuccessfullyAddDocument: "Documento añadido satisfactoriamente",
+  SuccessfullyDeletedDocument: (name) => `Documento ${name} eliminado satisfactoriamente`,
 },
 
   /** LEGACY */

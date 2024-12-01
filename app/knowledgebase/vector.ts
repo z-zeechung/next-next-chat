@@ -7,7 +7,7 @@ import { chunk, jina } from "./jina";
 import Dexie from "dexie";
 import { estimateTokenLength } from "../utils/token";
 
-export class VectorStore extends KnowledgeStore{
+export class VectorStore implements KnowledgeStore{
     async deleteDoc(id: string, docId: string): Promise<void> {
         const myDexie = new Dexie(VdbId(id));
         myDexie.version(1).stores({

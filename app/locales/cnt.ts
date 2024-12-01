@@ -50,7 +50,8 @@ const cnt = {
       Using: "正在使用",
       Greeting: "有什麽我可以幫助您的嗎🪄",
       Revert: "撤銷",
-      DefaultTopic: "新的聊天"
+      DefaultTopic: "新的聊天",
+      KnowledgeBase: "知識庫",
     }
   },
 
@@ -80,6 +81,37 @@ const cnt = {
     Expand: "展開",
     Collapse: "收起",
     Stop: "停止",
+  },
+
+  KnowledgeBase: {
+    New: "新建",
+    WhatsThis: "這是什麽？",
+    Explaination: `大語言模型受限於其訓練數據的時效性與全面性，對於特定的問題，其回答可能會不夠準確或不夠及時。通過向知識庫中添加自定義文檔，並讓大語言模型回答時檢索知識庫，能夠改善上述情況。
+
+要新建知識庫，你可以點擊右下角的「新建」按鈕，並選擇要創建的知識庫類型。傳統知識庫從文檔中提取關鍵詞，檢索時進行關鍵詞匹配；向量知識庫將文本映射為高維空間中的方向信息（即向量），通過比對向量與向量間的夾角來進行匹配；圖知識庫從源文本中提取實體以及實體間的聯系，連結成網絡，根據檢索目標遍歷周圍結點的信息。
+
+你會在界面上看見你已經創建了的知識庫。在「編輯」界面中，你可以添加新的文檔，或瀏覽已經添加的文檔。`,
+    ISee: "明白了",
+    KeywordKB: "傳統知識庫",
+    VectorKB: "向量知識庫",
+    GraphKB: "圖知識庫",
+    NewKB: (type)=>`新建${type}`,
+    Name: "名稱",
+    Cancel: "取消",
+    Confirm: "確認",
+    SubTitle: (type, count)=>`${type}，${count} 篇文檔`,
+    Edit: "編輯",
+    Delete: "刪除",
+    EditKB: (name)=>`編輯知識庫${name}`,
+    AddDoc: "添加文檔",
+    Done: "完成",
+    DeleteKB: "刪除知識庫",
+    ConfirmDeleteKB: (name)=>`確定要知識庫 ${name} 嗎？`,
+    KBNameNotEmpty: "知識庫名稱不能為空",
+    KBAlreadyExists: "知識庫已存在",
+    SuccessfullyCreatedKB: (type, name)=>`成功創建${type} ${name}`,
+    SuccessfullyAddDocument: "成功添加文檔",
+    SuccessfullyDeletedDocument: (name)=>`成功刪除文檔 ${name}`,
   },
 };
 
