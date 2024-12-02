@@ -52,6 +52,18 @@ const cnt = {
       Revert: "撤銷",
       DefaultTopic: "新的聊天",
       KnowledgeBase: "知識庫",
+      QuickStart: "快速開始",
+      YouCanSeeInMore: "你可以在輸入框左上角的「更多」菜單中查看這些功能。",
+      Upload: "上傳",
+      UploadDesc: "基於長文本模型和多模態模型進行圖片/文檔問答。",
+      RolePlayDesc: "啟用大模型角色扮演或動畫形象。你可以通過提示詞，預置知識庫，Live2D形象乃至腳本來自定義大模型的交互。",
+      NewRole: "新建角色",
+      PluginDesc: "啟用插件以使得大模型能夠調用外部功能，如網絡查詢、圖像生成等。",
+      EnablePlugin: "啟用插件",
+      NewPlugin: "自定義插件",
+      KBDesc: "向知識庫中註入你的文檔，使得大模型能夠更加準確地回答你的問題。你可以選擇使用傳統知識庫，向量知識庫或圖知識庫。",
+      KBDetail: "詳細說明",
+      SeeKB: "查看知識庫",
     }
   },
 

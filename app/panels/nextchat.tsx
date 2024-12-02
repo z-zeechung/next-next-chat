@@ -54,6 +54,8 @@ import UserIcon from "../icons/bootstrap/person.svg"
 import AssistantIcon from "../icons/bootstrap/robot.svg"
 import SystemIcon from "../icons/bootstrap/gear.svg"
 
+import PluginIcon from "../icons/bootstrap/puzzle.svg"
+
 // import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -128,7 +130,7 @@ import { Live2D } from "./nextchat/Live2D";
 // import { wrapFunction } from "../client/function-call";
 // import { Markdown } from "../components/markdown";
 import { PluginMenu } from "./nextchat/plugins";
-import { UploadFile } from "./nextchat/fileUpload";
+import { uploadFile, UploadFile } from "./nextchat/fileUpload";
 // import ReactDOM from "react-dom";
 import { DocxButton, PDFButton } from "./document-docx";
 import { AudioButton } from "./audio";
@@ -136,6 +138,7 @@ import { ClientApi } from "../client/api";
 import { runPyodide } from "../utils/pyodide";
 import { SelectPromptModal } from "./nextchat/mask";
 import { KnowledgeBaseButton } from "./knowledge";
+import { Markdown } from "../components/markdown";
 
 // const Markdown = dynamic(async () => (await import("../components/markdown")).Markdown, {
 //   loading: () => <LoadingIcon />,
@@ -1843,7 +1846,7 @@ function _Chat() {
     <>
       <div
         className={styles["chat-body"]}
-        ref={scrollRef}
+        ref={session.messages.length > 0 ? scrollRef : undefined}
         onScroll={(e) => onChatBodyScroll(e.currentTarget)}
         onMouseDown={() => inputRef.current?.blur()}
         onTouchStart={() => {
@@ -1916,6 +1919,62 @@ function _Chat() {
             </div>
           </div>
         </Fragment>)}
+        {session.messages.length <=0 && <InfoCard title={Locale.NextChat.ChatArea.QuickStart} icon={"🚀"}>
+          {Locale.NextChat.ChatArea.YouCanSeeInMore}
+          <p>&nbsp;</p>
+          <SimpleGrid templateColumns={`repeat(auto-fill, minmax(${300}px, 1fr))`} gap={4}>
+            <InfoCard title={Locale.NextChat.ChatArea.UploadFile} icon={"📤"}>
+              <div style={{height:"100%"}}>
+                <Markdown content={Locale.NextChat.ChatArea.UploadDesc}/>
+              </div>
+              <ButtonGroup>
+                <TinyButton text={Locale.NextChat.ChatArea.Upload} type="primary" onClick={()=>{uploadFile(chatStore)}}/>
+              </ButtonGroup>
+            </InfoCard>
+            <InfoCard title={Locale.NextChat.ChatArea.RolePlay} icon={"🎭"}>
+              <div style={{height:"100%"}}>
+                <Markdown content={Locale.NextChat.ChatArea.RolePlayDesc}/>
+              </div>
+              <ButtonGroup>
+                <TinyButton text={Locale.NextChat.ChatArea.SelectRole} type="primary" onClick={()=>{setIsSelectingPrompt(true)}}/>
+                <TinyButton text={Locale.NextChat.ChatArea.NewRole} type="primary" onClick={()=>{navigate("/devrole")}}/>
+              </ButtonGroup>
+            </InfoCard>
+            <InfoCard title={Locale.NextChat.ChatArea.ChatPlugins} icon={"🧩"}>
+              <div style={{height:"100%"}}>
+                <Markdown content={Locale.NextChat.ChatArea.PluginDesc}/>
+              </div>
+              <ButtonGroup>
+                <TinyButton text={Locale.NextChat.ChatArea.EnablePlugin} type="primary" popover={              
+                <PluginMenu>
+                  <Button text={Locale.NextChat.ChatArea.WebSearch} onClick={()=>{setSearchPlugin(!searchPlugin);showToast(!searchPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.WebSearch):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.WebSearch))}}/>
+                  <Button text={Locale.NextChat.ChatArea.Scripting} onClick={()=>{setScriptPlugin(!scriptPlugin);showToast(!scriptPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.Scripting):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.Scripting))}}/>
+                  <Button text={Locale.NextChat.ChatArea.GenImage} onClick={()=>{setPaintPlugin(!paintPlugin);showToast(!paintPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.GenImage):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.GenImage))}}/>
+                </PluginMenu>
+                }/>
+                <TinyButton text={Locale.NextChat.ChatArea.NewPlugin} type="primary" onClick={()=>{showToast("WIP...")}}/>
+              </ButtonGroup>
+            </InfoCard>
+            <InfoCard title={Locale.NextChat.ChatArea.KnowledgeBase} icon={"📚"}>
+              <div style={{height:"100%"}}>
+                <Markdown content={Locale.NextChat.ChatArea.KBDesc}/>
+              </div>
+              <ButtonGroup>
+                <TinyButton text={Locale.NextChat.ChatArea.KBDetail} type="primary" popover={
+                  <div style={{width:window.innerWidth / 2, height:window.innerHeight / 4, overflow:"auto"}}>
+                    <Markdown content={Locale.KnowledgeBase.Explaination}/>
+                  </div>
+                }/>
+                <TinyButton text={Locale.NextChat.ChatArea.SeeKB} type="primary" onClick={()=>{navigate("/knowledge")}}/>
+              </ButtonGroup>
+            </InfoCard>
+            <InfoCard title={Locale.NextChat.ChatArea.IntelligentOffice} icon={"📑"}>
+              <div style={{height:"100%"}}>
+                <Markdown content="⚠ This module is under refactor."/>
+              </div>
+            </InfoCard>
+          </SimpleGrid>  
+        </InfoCard>}
         {(()=>{`{messages.map((message, i) => {
           const isUser = message.role === "user";
           const isContext = i < context.length;
@@ -2278,11 +2337,13 @@ function _Chat() {
               })
               input.click()
             }}/> */}
-            <PluginMenu>
-              <Button text={Locale.NextChat.ChatArea.WebSearch} onClick={()=>{setSearchPlugin(!searchPlugin);showToast(!searchPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.WebSearch):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.WebSearch))}}/>
-              <Button text={Locale.NextChat.ChatArea.Scripting} onClick={()=>{setScriptPlugin(!scriptPlugin);showToast(!scriptPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.Scripting):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.Scripting))}}/>
-              <Button text={Locale.NextChat.ChatArea.GenImage} onClick={()=>{setPaintPlugin(!paintPlugin);showToast(!paintPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.GenImage):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.GenImage))}}/>
-            </PluginMenu>
+            <ButtonCard text={Locale.NextChat.ChatArea.ChatPlugins} icon={<PluginIcon style={{ transform: "rotate(45deg)", scale: "1.15" }} />} popover={
+              <PluginMenu>
+                <Button text={Locale.NextChat.ChatArea.WebSearch} onClick={()=>{setSearchPlugin(!searchPlugin);showToast(!searchPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.WebSearch):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.WebSearch))}}/>
+                <Button text={Locale.NextChat.ChatArea.Scripting} onClick={()=>{setScriptPlugin(!scriptPlugin);showToast(!scriptPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.Scripting):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.Scripting))}}/>
+                <Button text={Locale.NextChat.ChatArea.GenImage} onClick={()=>{setPaintPlugin(!paintPlugin);showToast(!paintPlugin?Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.GenImage):Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.GenImage))}}/>
+              </PluginMenu>
+            }/>
             {/* <ButtonCard text="增强回答"  
               icon={enhanceGenerationIcon}
               onClick={enhanceGeneration}/> */}
