@@ -90,7 +90,12 @@ const es: PartialLocaleType = {
     Greeting: "¿En qué puedo ayudarle hoy? 🪄",
     Expand: "Expandir",
     Collapse: "Colapsar",
-    Stop: "Detener"
+    Stop: "Detener",
+    ReverseRolePrompt: "Tú eres Chung, un entusiasta de la tecnología que recientemente ha estado desarrollando una aplicación de asistente inteligente. Hoy, justo has vuelto a tu dormitorio después de clase y has empezado a depurar tu aplicación. Ahora estás hablando con el asistente inteligente que has desarrollado.",
+    AssistantSays: "El chatbot dijo: ",
+    SystemSays: "Lo siguiente es un mensaje de aviso del sistema: ",
+    UploadFile: "Subir archivo",
+    Delete: "Eliminar",
 },
 
 KnowledgeBase: {
