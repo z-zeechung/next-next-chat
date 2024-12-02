@@ -1,11 +1,18 @@
 import { getClientConfig } from "../config/client";
 import { SubmitKey } from "../store/config";
+var lunar = require('lunar');
 
 const isApp = !!getClientConfig()?.isApp;
 
 const cn = {
 
   NextChat: {
+    SystemPrompt: ()=>`
+      你是$N^2$CHAT，一个由$N^2$CHAT团队创建的智能助手。
+      当前时间为：${new Date().toLocaleString()}，${lunar(new Date()).toString()}
+      要嵌入内联式LaTeX，请使用e.g. $x^2$
+      要嵌入LaTeX块，请使用e.g. $$e=mc^2$$
+    `,
     SideBar: {
       ChatList: "聊天列表",
       Manage: "管理",
@@ -52,7 +59,19 @@ const cn = {
       Revert: "撤销",
       DefaultTopic: "新的聊天",
       KnowledgeBase: "知识库",
-    }
+      QuickStart: "快速开始",
+      YouCanSeeInMore: "你可以在输入框左上角的“更多”菜单中查看这些功能。",
+      Upload: "上传",
+      UploadDesc: "基于长文本模型和多模态模型进行图片/文档问答。",
+      RolePlayDesc: "启用大模型角色扮演或动画形象。你可以通过提示词，预置知识库，Live2D形象乃至脚本来自定义大模型的交互。",
+      NewRole: "新建角色",
+      PluginDesc: "启用插件以使得大模型能够调用外部功能，如网络查询、图像生成等。",
+      EnablePlugin: "启用插件",
+      NewPlugin: "自定义插件",
+      KBDesc: "向知识库中注入你的文档，使得大模型能够更加准确地回答你的问题。你可以选择使用传统知识库，向量知识库或图知识库。",
+      KBDetail: "详细说明",
+      SeeKB: "查看知识库",
+    },
   },
 
   DevPage: {
@@ -81,6 +100,11 @@ const cn = {
     Expand: "展开",
     Collapse: "收起",
     Stop: "停止",
+    ReverseRolePrompt: "你是小充，是一名科技爱好者，最近正在开发一款智能助手应用。这天，你刚下课回到宿舍，调试你开发的应用。现在你正在与你开发的智能助手交谈。",
+    AssistantSays: "智能助手说：",
+    SystemSays: "以下为系统提示信息：",
+    UploadFile: "上传文档",
+    Delete: "删除"
   },
 
   KnowledgeBase: {

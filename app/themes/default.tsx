@@ -1,5 +1,5 @@
 import { Theme } from "./theme"
-import { AlertDialog, Button, ButtonGroup, Card, CardBody, ChakraProvider, FormControl, FormLabel, Icon, IconButton, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, Switch, Textarea, useDisclosure, Text, Flex, CardHeader, Avatar, Heading, Box, Checkbox, ComponentWithAs, ButtonProps, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverBody, PopoverHeader, Tabs, TabList, Tab, TabPanels, TabPanel, Select } from '@chakra-ui/react'
+import { AlertDialog, Button, ButtonGroup, Card, CardBody, ChakraProvider, FormControl, FormLabel, Icon, IconButton, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, Switch, Textarea, useDisclosure, Text, Flex, CardHeader, Avatar, Heading, Box, Checkbox, ComponentWithAs, ButtonProps, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverBody, PopoverHeader, Tabs, TabList, Tab, TabPanels, TabPanel, Select, CardFooter } from '@chakra-ui/react'
 import styles from "../components/ui-lib.module.scss";
 import buttonStyles from "../components/button.module.scss"
 import chatStyles from "../components/chat.module.scss"
@@ -540,6 +540,9 @@ function ThemeInfoCard(props: {
         {props.children&&<CardBody>
             {props.children}
         </CardBody>}
+        <CardFooter padding={2}>
+            
+        </CardFooter>
     </Card>
 }
 
@@ -770,22 +773,17 @@ function ThemeTabs(props:{
     const [cardMenuIndex, setCardMenuIndex] = useState(0)
     const [parentSize, setParentSize] = useState({width:0, height:0})
     const ref = useRef<HTMLDivElement>(null)
+    const parentRef = useRef<HTMLDivElement>(null)
     useEffect(()=>{
-        if(ref.current){
-            setParentSize({
-                width:ref.current.parentElement?.clientWidth??0,
-                height:ref.current.parentElement?.clientHeight??0
-            })
-        }
+        ref.current!.style.height = `${parentRef.current!.clientHeight - 200}px`
     })
-    return <Tabs 
+    return <div ref={parentRef} style={{overflow:"scroll", height:"100%"}}>
+        <Tabs 
         ref={ref}
         colorScheme="teal" 
         isFitted 
         variant='enclosed' 
         index={props.tab?props.labels?.indexOf(props.tab):cardMenuIndex} 
-        width={"100%"}
-        height={"100%"}
         padding={0}
         onChange={(index)=>{
             setCardMenuIndex(index)
@@ -803,8 +801,8 @@ function ThemeTabs(props:{
             {props.children?.map((comp, idx)=>{
                 return <TabPanel display={"flex"} flexDirection={"column"} padding={0}>
                     <div style={{
-                        width:parentSize.width,
-                        height:parentSize.height-70,
+                        width:"100%",
+                        height:"100%",
                         overflow:"scroll"
                     }}>
                         {comp}
@@ -813,6 +811,7 @@ function ThemeTabs(props:{
             })}
         </TabPanels>
     </Tabs>
+    </div>
 }
 
 function ThemeSelect(props:{

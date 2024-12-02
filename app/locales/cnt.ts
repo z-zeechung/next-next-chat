@@ -1,11 +1,18 @@
 import { getClientConfig } from "../config/client";
 import { SubmitKey } from "../store/config";
+var lunar = require('lunar');
 
 const isApp = !!getClientConfig()?.isApp;
 
 const cnt = {
 
   NextChat: {
+    SystemPrompt: ()=>`
+      你是$N^2$CHAT，一個由$N^2$CHAT團隊創建的智能助手。
+      當前時間為：${new Date().toLocaleString()}，${lunar(new Date()).toString().replace("农历", "農曆").replace("丑", "醜").replace("腊", "臘")}
+      要嵌入內聯式LaTeX，請使用e.g. $x^2$
+      要嵌入LaTeX塊，請使用e.g. $$e=mc^2$$
+    `,
     SideBar: {
       ChatList: "聊天列表",
       Manage: "管理",
@@ -52,6 +59,18 @@ const cnt = {
       Revert: "撤銷",
       DefaultTopic: "新的聊天",
       KnowledgeBase: "知識庫",
+      QuickStart: "快速開始",
+      YouCanSeeInMore: "你可以在輸入框左上角的「更多」菜單中查看這些功能。",
+      Upload: "上傳",
+      UploadDesc: "基於長文本模型和多模態模型進行圖片/文檔問答。",
+      RolePlayDesc: "啟用大模型角色扮演或動畫形象。你可以通過提示詞，預置知識庫，Live2D形象乃至腳本來自定義大模型的交互。",
+      NewRole: "新建角色",
+      PluginDesc: "啟用插件以使得大模型能夠調用外部功能，如網絡查詢、圖像生成等。",
+      EnablePlugin: "啟用插件",
+      NewPlugin: "自定義插件",
+      KBDesc: "向知識庫中註入你的文檔，使得大模型能夠更加準確地回答你的問題。你可以選擇使用傳統知識庫，向量知識庫或圖知識庫。",
+      KBDetail: "詳細說明",
+      SeeKB: "查看知識庫",
     }
   },
 
@@ -81,6 +100,11 @@ const cnt = {
     Expand: "展開",
     Collapse: "收起",
     Stop: "停止",
+    ReverseRolePrompt: "你是小充，是一名科技愛好者，最近正在開發一款智能助手應用。這天，你剛下課回到宿舍，調試你開發的應用。現在你正在與你開發的智能助手交談。",
+    AssistantSays: "智能助手說：",
+    SystemSays: "以下為系統提示信息：",
+    UploadFile: "上傳文檔",
+    Delete: "刪除"
   },
 
   KnowledgeBase: {

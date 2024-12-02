@@ -22,6 +22,7 @@ import { runPython } from "../utils/pyodide";
 import { DEFAULT_SYSTEM_TEMPLATE } from "../constant";
 
 import Locale from "../locales";
+import { KnowledgeBase } from "../knowledgebase/knowledgebase";
 
 export function DevPage() {
 
@@ -53,6 +54,8 @@ export function DevPage() {
     const useSearch = useState(false)
     const usePaint = useState(false)
     const useScript = useState(false)
+    const useRoleName = useState("N²CHAT")
+    const useDocuments = useState<string[]>([])
 
     return <Layout useChatAreaSize={[chatAreaSize, setChatAreaSize]} useShow={useShow}>
         <DevArea
@@ -64,6 +67,8 @@ export function DevPage() {
             useSearch={useSearch}
             usePaint={usePaint}
             useScript={useScript}
+            useRoleName={useRoleName}
+            useDocuments={useDocuments}
         />
         <ChatArea
             width={chatAreaSize[0]}
@@ -79,6 +84,7 @@ export function DevPage() {
             useSearch={useSearch}
             usePaint={usePaint}
             useScript={useScript}
+            useDocuments={useDocuments}
         />
     </Layout>
 }
@@ -156,7 +162,7 @@ function MobileLayout(props: { children: JSX.Element[], useChatAreaSize, useShow
             setBoxHeight((boxRef.current as HTMLElement).clientHeight)
         }
         setChatAreaSize([width * 0.7, boxHeight - 16])
-    }, [setChatAreaSize])
+    }, [setChatAreaSize, boxRef, setBoxHeight])
 
     return <div ref={boxRef} style={{ width: "100%", height: "100%", position: "relative" }}>
         {props.children[0]}
@@ -190,7 +196,7 @@ function MobileLayout(props: { children: JSX.Element[], useChatAreaSize, useShow
 }
 
 function ChatArea(props: {
-    width, height, mobile?, useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript
+    width, height, mobile?, useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments
 }) {
     const [messages, setMessages] = props.useMessages
     const [meta, setMeta] = props.useMeta
@@ -208,6 +214,8 @@ function ChatArea(props: {
     const [search, setSearch] = props.useSearch
     const [paint, setPaint] = props.usePaint
     const [script, setScript] = props.useScript
+
+    const [documents, setDocuments] = props.useDocuments
 
     const boxRef = useRef(null)
     const inputRef = useRef(null)
@@ -259,13 +267,27 @@ function ChatArea(props: {
                 }
             }
         ] : []),
+        ...(documents.length > 0 ? [
+            {
+                function: async function getFromKB(query){
+                    const results = await new KnowledgeBase("nnchat-devrole-attatchment-tempstore-kb").query(query, 4)
+                    return JSON.stringify(results)
+                },
+                description: {
+                    function: "查询知识库。这个知识库的内容是用户自定义的文档。",
+                    params: {
+                        query: "要查询的内容"
+                    }
+                }
+            }
+        ] : [])
     ]
 
     useEffect(() => {
         if (boxRef.current && inputRef.current) {
             setChatHeight((boxRef.current as HTMLElement).clientHeight - (inputRef.current as HTMLElement).clientHeight - 48)
         }
-    })
+    }, [setChatHeight, boxRef, inputRef])
 
     return <div style={{
         width: "100%", height: "100%", position: "relative", padding: 24, paddingTop: 0
@@ -306,7 +328,7 @@ function ChatArea(props: {
                                 ]))
                                 const promise = ClientApi.chat(
                                     [
-                                        {type:"text", role:"system", content:DEFAULT_SYSTEM_TEMPLATE},
+                                        {type:"text", role:"system", content:Locale.NextChat.SystemPrompt()},
                                         ...(prompt.trim != "" ? [{ type: "text", role: "system", content: prompt }] : []),
                                         ...greeting,
                                         ...messages.slice(),

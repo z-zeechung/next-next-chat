@@ -4,6 +4,12 @@ import type { PartialLocaleType } from "./index";
 const es: PartialLocaleType = {
 
   NextChat: {
+    SystemPrompt: ()=>`
+      Usted es $N^2$CHAT, un asistente inteligente desarrollado por el equipo de $N^2$CHAT.
+      La hora actual es: ${new Date().toDateString()}
+      Para incrustar LaTeX en línea, use por ejemplo $x^2$
+      Para incrustar un bloque de LaTeX, use por ejemplo $$e=mc^2$$
+    `,
     SideBar: {
       ChatList: "Lista de Chats",
       Manage: "Gestionar",
@@ -50,6 +56,18 @@ const es: PartialLocaleType = {
       Revert: "Revertir",
       DefaultTopic: "Nueva conversación",
       KnowledgeBase: "Base de Conocimiento",
+      QuickStart: "Inicio rápido",
+      YouCanSeeInMore: "Puede ver estas funciones en el menú 'Más' en la esquina superior izquierda del cuadro de entrada.",
+      Upload: "Subir",
+      UploadDesc: "Realice preguntas y respuestas de imágenes/documentos basadas en modelos de texto largo y modelos multimodales.",
+      RolePlayDesc: "Habilite el juego de roles o las figuras animadas de grandes modelos. Puede personalizar la interacción de grandes modelos mediante palabras de sugerencia, bases de conocimiento preestablecidas, figuras Live2D o incluso scripts.",
+      NewRole: "Nuevo rol",
+      PluginDesc: "Habilite plugins para permitir que grandes modelos invocan funciones externas, como consultas web, generación de imágenes, etc.",
+      EnablePlugin: "Habilite plugins",
+      NewPlugin: "Nuevo plugin personalizado",
+      KBDesc: "Inyecte sus documentos en la base de conocimiento para permitir que el gran modelo responda a sus preguntas con mayor precisión. Puede elegir usar una base de conocimiento tradicional, una base de conocimiento vectorial o una base de conocimiento gráfico.",
+      KBDetail: "Detalle",
+      SeeKB: "Ver bases de conocimiento",
     }
   },
 
@@ -78,7 +96,12 @@ const es: PartialLocaleType = {
     Greeting: "¿En qué puedo ayudarle hoy? 🪄",
     Expand: "Expandir",
     Collapse: "Colapsar",
-    Stop: "Detener"
+    Stop: "Detener",
+    ReverseRolePrompt: "Tú eres Chung, un entusiasta de la tecnología que recientemente ha estado desarrollando una aplicación de asistente inteligente. Hoy, justo has vuelto a tu dormitorio después de clase y has empezado a depurar tu aplicación. Ahora estás hablando con el asistente inteligente que has desarrollado.",
+    AssistantSays: "El chatbot dijo: ",
+    SystemSays: "Lo siguiente es un mensaje de aviso del sistema: ",
+    UploadFile: "Subir archivo",
+    Delete: "Eliminar",
 },
 
 KnowledgeBase: {

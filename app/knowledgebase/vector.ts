@@ -37,7 +37,7 @@ export class VectorStore implements KnowledgeStore{
         const index = new HNSW({ distanceFunction: 'cosine', useIndexedDB: true, indexedDBId:VdbId(id) });
         const ball = await localForage.getItem(BallId(id))
         if (ball) {
-            index.loadIndex(ball)
+            await index.loadIndex(ball)
         }
         for(let doc of docs){
             const chunks = chunk(doc.text)
@@ -59,6 +59,33 @@ export class VectorStore implements KnowledgeStore{
         await localForage.removeItem(BallId(id))
         Dexie.delete(VdbId(id))
     }    
+    async export(id: string): Promise<Uint8Array> {
+        const ball = await localForage.getItem(BallId(id))
+        const nodes: MememoNode[] = []
+        const myDexie = new Dexie(VdbId(id));
+        myDexie.version(1).stores({
+            mememo: 'key'
+        });
+        const db = myDexie.table<MememoNode>('mememo');
+        await db.each(obj=>{
+            nodes.push(obj)
+        })
+        const exp = {ball, nodes}
+        return new TextEncoder().encode(JSON.stringify(exp))
+    }
+    async import(id: string, data: Uint8Array): Promise<void> {
+        await this.delete(id)
+        const exp = JSON.parse(new TextDecoder().decode(data))
+        const ball = exp.ball
+        const nodes = exp.nodes
+        await localForage.setItem(BallId(id), ball)
+        const myDexie = new Dexie(VdbId(id));
+        myDexie.version(1).stores({
+            mememo: 'key'
+        });
+        const db = myDexie.table<MememoNode>('mememo');
+        await db.bulkPut(nodes as MememoNode[])
+    }
 }
 
 const VdbId = (id: string) => `nnchat_vectorstore_${id}`;
