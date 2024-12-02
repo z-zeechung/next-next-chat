@@ -131,7 +131,27 @@ export class KeywordStore implements KnowledgeStore{
         await localForage.removeItem(KwsId(id))
         await localForage.removeItem(KwsDocStoreId(id))
     }
-    
+    async export(id: string): Promise<Uint8Array> {
+        const keys = await localForage.getItem<string[]>(KwsId(id))
+        const exs:any[] = []
+        if(keys){
+            for(let key of keys){
+                exs.push({key, data: await localForage.getItem(KwsExId(id, key))})
+            }
+        }
+        const docStore = await localForage.getItem(KwsDocStoreId(id))
+        const exp = {keys, exs, docStore}
+        return new TextEncoder().encode(JSON.stringify(exp))
+    }
+    async import(id: string, data: Uint8Array): Promise<void> {
+        this.delete(id)
+        const exp = JSON.parse(new TextDecoder().decode(data))
+        await localForage.setItem(KwsId(id), exp.keys)
+        await localForage.setItem(KwsDocStoreId(id), exp.docStore)
+        for(let ex of exp.exs){
+            await localForage.setItem(KwsExId(id, ex.key), ex.data)
+        }
+    }
 }
 
 const KwsId = (id)=>`nnchat-kws-id-${id}`

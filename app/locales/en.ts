@@ -8,6 +8,12 @@ const isApp = !!getClientConfig()?.isApp;
 const en: LocaleType = {
 
   NextChat: {
+    SystemPrompt: ()=>`
+      You are $N^2$CHAT, an intelligent assistant developed by $N^2$CHAT team.
+      Current time is: ${new Date().toDateString()}
+      To embed inline LaTeX, use e.g. $x^2$
+      To embed LaTeX block, use e.g. $$e=mc^2$$
+    `,
     SideBar: {
       ChatList: "Chat List",
       Manage: "Manage",
@@ -54,6 +60,18 @@ const en: LocaleType = {
       Revert: "Revert",
       DefaultTopic: "New Conversation",
       KnowledgeBase: "Knowledge Base",
+      QuickStart: "Quick Start",
+      YouCanSeeInMore: "You can view these functions in the 'More' menu in the upper left corner of the input box.",
+      Upload: "Upload",
+      UploadDesc: "Perform image/document question answering based on long text models and multimodal models.",
+      RolePlayDesc: "Enable large model role-playing or animated figures. You can customize the interaction of large models through prompt words, preset knowledge bases, Live2D figures, or even scripts.",
+      NewRole: "New Role",
+      PluginDesc: "Enable plugins to allow large models to invoke external functions, such as web queries, image generation, etc.",
+      EnablePlugin: "Enable Plugins",
+      NewPlugin: "New Custom Plugin",
+      KBDesc: "Inject your documents into the knowledge base to enable the large model to answer your questions more accurately. You can choose to use a traditional knowledge base, a vector knowledge base, or a graph knowledge base.",
+      KBDetail: "Expound",
+      SeeKB: "Check Out Knowledge Bases",
     }
   },
 
@@ -82,7 +100,12 @@ const en: LocaleType = {
     Greeting: "How can I assist you today 🪄",
     Expand: "Expand",
     Collapse: "Collapse",
-    Stop: "Stop"
+    Stop: "Stop",
+    ReverseRolePrompt: "You are Chung, a tech enthusiast who has recently been developing a smart assistant app. Today, you just got back to your dormitory after class and started debugging your app. Now you are talking to the smart assistant you developed.",
+    AssistantSays: "The chatbot said: ",
+    SystemSays: "Following is system prompt message: ",
+    UploadFile: "Upload File",
+    Delete: "Delete"
   },
 
   KnowledgeBase: {

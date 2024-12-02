@@ -282,7 +282,28 @@ export class GraphStore implements KnowledgeStore {
         await localForage.removeItem(gsExKwsKeysId(id))
         await localForage.removeItem(gsId(id))
     }
-
+    async export(id: string): Promise<Uint8Array> {
+        const gs = await localForage.getItem<Graph>(gsId(id))
+        const gsKwsKeys = await localForage.getItem<string[]>(gsExKwsKeysId(id))??[]
+        const exs:any[] = []
+        for (let key of gsKwsKeys) {
+            const data = await localForage.getItem(gsKwsKeysId(id, key))
+            if (data) {
+                exs.push([key, data])
+            }
+        }
+        const exp = {gs, gsKwsKeys, exs}
+        return new TextEncoder().encode(JSON.stringify(exp))
+    }
+    async import(id: string, data: Uint8Array): Promise<void> {
+        this.delete(id)
+        const exp = JSON.parse(new TextDecoder().decode(data))
+        await localForage.setItem(gsId(id), exp.gs)
+        await localForage.setItem(gsExKwsKeysId(id), exp.gsKwsKeys)
+        for (let ex of exp.exs) {
+            await localForage.setItem(gsKwsKeysId(id, ex[0]), ex[1])
+        }
+    }
 }
 
 

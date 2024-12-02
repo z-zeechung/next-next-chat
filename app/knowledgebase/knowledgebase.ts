@@ -188,4 +188,8 @@ export interface KnowledgeStore{
     deleteDoc(id:string, docId: string): Promise<void>
 
     delete(id:string): Promise<void>
+
+    export(id: string): Promise<Uint8Array>
+
+    import(id: string, data: Uint8Array): Promise<void>
 }
