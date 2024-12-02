@@ -10,14 +10,12 @@ export function PluginMenu(props: {
     const [show, setShow] = useState(false)
 
     return <>
-        <ButtonCard text={Locale.NextChat.ChatArea.ChatPlugins} icon={<PluginIcon style={{ transform: "rotate(45deg)", scale: "1.15" }} />} popover={
-            <div style={{display: "flex", flexDirection: "column", gap: "6px"}}>
-                {props.children.map((btn) => btn)}
-                <Button text={Locale.NextChat.ChatArea.More} onClick={() => {
-                    setShow(!show)
-                }} />
-            </div>
-        } />
+        <div style={{display: "flex", flexDirection: "column", gap: "6px"}}>
+            {props.children.map((btn) => btn)}
+            <Button text={Locale.NextChat.ChatArea.More} onClick={() => {
+                setShow(!show)
+            }} />
+        </div>
         {show && <PluginMenuModal onClose={() => {
             setShow(false)
         }} />}

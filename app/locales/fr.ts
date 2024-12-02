@@ -49,7 +49,19 @@ const fr: PartialLocaleType = {
       Greeting: "Comment puis-je vous aider aujourd'hui 🪄",
       Revert: "Annuler",
       DefaultTopic: "Nouveau Conversation",
-      KnowledgeBase: "Base de Connaissances"
+      KnowledgeBase: "Base de Connaissances",
+      QuickStart: "Démarrage rapide",
+      YouCanSeeInMore: "Vous pouvez voir ces fonctions dans le menu 'Plus' en haut à gauche de la zone de saisie.",
+      Upload: "Télécharger",
+      UploadDesc: "Effectuer un question-réponse sur image/document basé sur des modèles de long texte et multimodaux.",
+      RolePlayDesc: "Activez le jeu de rôle ou les figures animées du grand modèle. Vous pouvez personnaliser l'interaction des grands modèles à travers mots de passe, bases de connaissances prédéfinies, figures Live2D ou même scripts.",
+      NewRole: "Nouveau rôle",
+      PluginDesc: "Activez les plugins pour permettre aux grands modèles d'invoquer des fonctions externes, telles que les recherches sur le web, la génération d'images, etc.",
+      EnablePlugin: "Activer les plugins",
+      NewPlugin: "Nouveau plugin personnalisé",
+      KBDesc: "Injectez vos documents dans la base de connaissances pour permettre au grand modèle de répondre plus précisément à vos questions. Vous pouvez choisir d'utiliser une base de connaissances traditionnelle, une base de connaissances vectorielle ou une base de connaissances graphique.",
+      KBDetail: "Détails",
+      SeeKB: "Voir les bases de connaissances",
     }
   },
 

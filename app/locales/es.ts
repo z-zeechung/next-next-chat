@@ -50,6 +50,18 @@ const es: PartialLocaleType = {
       Revert: "Revertir",
       DefaultTopic: "Nueva conversación",
       KnowledgeBase: "Base de Conocimiento",
+      QuickStart: "Inicio rápido",
+      YouCanSeeInMore: "Puede ver estas funciones en el menú 'Más' en la esquina superior izquierda del cuadro de entrada.",
+      Upload: "Subir",
+      UploadDesc: "Realice preguntas y respuestas de imágenes/documentos basadas en modelos de texto largo y modelos multimodales.",
+      RolePlayDesc: "Habilite el juego de roles o las figuras animadas de grandes modelos. Puede personalizar la interacción de grandes modelos mediante palabras de sugerencia, bases de conocimiento preestablecidas, figuras Live2D o incluso scripts.",
+      NewRole: "Nuevo rol",
+      PluginDesc: "Habilite plugins para permitir que grandes modelos invocan funciones externas, como consultas web, generación de imágenes, etc.",
+      EnablePlugin: "Habilite plugins",
+      NewPlugin: "Nuevo plugin personalizado",
+      KBDesc: "Inyecte sus documentos en la base de conocimiento para permitir que el gran modelo responda a sus preguntas con mayor precisión. Puede elegir usar una base de conocimiento tradicional, una base de conocimiento vectorial o una base de conocimiento gráfico.",
+      KBDetail: "Detalle",
+      SeeKB: "Ver bases de conocimiento",
     }
   },
 

@@ -54,6 +54,18 @@ const en: LocaleType = {
       Revert: "Revert",
       DefaultTopic: "New Conversation",
       KnowledgeBase: "Knowledge Base",
+      QuickStart: "Quick Start",
+      YouCanSeeInMore: "You can view these functions in the 'More' menu in the upper left corner of the input box.",
+      Upload: "Upload",
+      UploadDesc: "Perform image/document question answering based on long text models and multimodal models.",
+      RolePlayDesc: "Enable large model role-playing or animated figures. You can customize the interaction of large models through prompt words, preset knowledge bases, Live2D figures, or even scripts.",
+      NewRole: "New Role",
+      PluginDesc: "Enable plugins to allow large models to invoke external functions, such as web queries, image generation, etc.",
+      EnablePlugin: "Enable Plugins",
+      NewPlugin: "New Custom Plugin",
+      KBDesc: "Inject your documents into the knowledge base to enable the large model to answer your questions more accurately. You can choose to use a traditional knowledge base, a vector knowledge base, or a graph knowledge base.",
+      KBDetail: "Expound",
+      SeeKB: "Check Out Knowledge Bases",
     }
   },
 

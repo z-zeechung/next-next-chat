@@ -1,5 +1,5 @@
 import { Theme } from "./theme"
-import { AlertDialog, Button, ButtonGroup, Card, CardBody, ChakraProvider, FormControl, FormLabel, Icon, IconButton, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, Switch, Textarea, useDisclosure, Text, Flex, CardHeader, Avatar, Heading, Box, Checkbox, ComponentWithAs, ButtonProps, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverBody, PopoverHeader, Tabs, TabList, Tab, TabPanels, TabPanel, Select } from '@chakra-ui/react'
+import { AlertDialog, Button, ButtonGroup, Card, CardBody, ChakraProvider, FormControl, FormLabel, Icon, IconButton, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, Switch, Textarea, useDisclosure, Text, Flex, CardHeader, Avatar, Heading, Box, Checkbox, ComponentWithAs, ButtonProps, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverBody, PopoverHeader, Tabs, TabList, Tab, TabPanels, TabPanel, Select, CardFooter } from '@chakra-ui/react'
 import styles from "../components/ui-lib.module.scss";
 import buttonStyles from "../components/button.module.scss"
 import chatStyles from "../components/chat.module.scss"
@@ -540,6 +540,9 @@ function ThemeInfoCard(props: {
         {props.children&&<CardBody>
             {props.children}
         </CardBody>}
+        <CardFooter padding={2}>
+            
+        </CardFooter>
     </Card>
 }
 
