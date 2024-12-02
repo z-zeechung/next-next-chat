@@ -1293,7 +1293,7 @@ function _Chat() {
     })
     const promise = ClientApi.chat(
       [
-        {type:"text", role:"system", content:DEFAULT_SYSTEM_TEMPLATE},
+        {type:"text", role:"system", content:Locale.NextChat.SystemPrompt()},
         ..._messages
       ],
       msg=>{

@@ -328,7 +328,7 @@ function ChatArea(props: {
                                 ]))
                                 const promise = ClientApi.chat(
                                     [
-                                        {type:"text", role:"system", content:DEFAULT_SYSTEM_TEMPLATE},
+                                        {type:"text", role:"system", content:Locale.NextChat.SystemPrompt()},
                                         ...(prompt.trim != "" ? [{ type: "text", role: "system", content: prompt }] : []),
                                         ...greeting,
                                         ...messages.slice(),
