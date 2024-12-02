@@ -142,7 +142,7 @@ function EditKbModal(props: {
         var input = document.createElement('input')
         input.type = 'file'
         input.multiple = true
-        input.accept = ".docx"
+        input.accept = ".doc,.docx,.ppt,.pptx,.pdf,.html,.htm,.txt,.md,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf,text/html,text/plain"
         input.onchange = (async (e) => {
           new KnowledgeBaseClass(editingKB).add(Array.from((e.target as any).files)).then(()=>{
             setStoreList(KnowledgeBaseClass.list())

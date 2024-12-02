@@ -91,6 +91,11 @@ const ar: PartialLocaleType = {
     Expand: "توسيع",
     Collapse: "طي",
     Stop: "توقف",
+    ReverseRolePrompt: "أنت تشونغ، محبي التكنولوجيا الذي كان يطور تطبيق مساعد ذكي مؤخراً. اليوم، عدت إلى مسكنك بعد الدرس وبدأت في إصلاح تطبيقك. الآن أنت تتحدث مع المساعد الذكي الذي طورته.",
+    AssistantSays: "قال الروبوت: ",
+    SystemSays: "إليك رسالة الإشارة النظامية: ",
+    UploadFile: "رفع ملف",
+    Delete: "حذف",
 },
 
   "KnowledgeBase": {

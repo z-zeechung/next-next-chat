@@ -13,7 +13,7 @@ export function Scripting(props: {
         if (divRef.current) {
             setHeight((divRef.current as HTMLElement).clientHeight)
         }
-    })
+    }, [setHeight])
 
     return <div style={{
         height: "100%",

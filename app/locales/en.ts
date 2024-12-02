@@ -94,7 +94,12 @@ const en: LocaleType = {
     Greeting: "How can I assist you today 🪄",
     Expand: "Expand",
     Collapse: "Collapse",
-    Stop: "Stop"
+    Stop: "Stop",
+    ReverseRolePrompt: "You are Chung, a tech enthusiast who has recently been developing a smart assistant app. Today, you just got back to your dormitory after class and started debugging your app. Now you are talking to the smart assistant you developed.",
+    AssistantSays: "The chatbot said: ",
+    SystemSays: "Following is system prompt message: ",
+    UploadFile: "Upload File",
+    Delete: "Delete"
   },
 
   KnowledgeBase: {
