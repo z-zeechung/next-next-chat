@@ -8,6 +8,12 @@ const isApp = !!getClientConfig()?.isApp;
 const en: LocaleType = {
 
   NextChat: {
+    SystemPrompt: ()=>`
+      You are $N^2$CHAT, an intelligent assistant developed by $N^2$CHAT team.
+      Current time is: ${new Date().toDateString()}
+      To embed inline LaTeX, use e.g. $x^2$
+      To embed LaTeX block, use e.g. $$e=mc^2$$
+    `,
     SideBar: {
       ChatList: "Chat List",
       Manage: "Manage",

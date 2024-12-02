@@ -4,6 +4,15 @@ import type { PartialLocaleType } from "./index";
 const ar: PartialLocaleType = {
 
   NextChat: {
+    SystemPrompt: ()=>{
+      var moment = require('moment-hijri');
+      return `
+        أنت $N^2$CHAT، مساعد آلي من صنع فريق $N^2$CHAT.
+        الوقت الحالي هو: ${new Date().toLocaleString()}، التقويم الإسلامي ${moment().format('iYYYY/iM/iD')}
+        لإدراج LaTeX داخلي، يرجى استخدام مثال $x^2$
+        لإدراج كتلة LaTeX، يرجى استخدام مثال $$e=mc^2$$
+      `
+    },
     SideBar: {
       ChatList: "قائمة المحادثات",
       Manage: "إدارة",

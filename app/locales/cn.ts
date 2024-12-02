@@ -1,11 +1,18 @@
 import { getClientConfig } from "../config/client";
 import { SubmitKey } from "../store/config";
+var lunar = require('lunar');
 
 const isApp = !!getClientConfig()?.isApp;
 
 const cn = {
 
   NextChat: {
+    SystemPrompt: ()=>`
+      你是$N^2$CHAT，一个由$N^2$CHAT团队创建的智能助手。
+      当前时间为：${new Date().toLocaleString()}，${lunar(new Date()).toString()}
+      要嵌入内联式LaTeX，请使用e.g. $x^2$
+      要嵌入LaTeX块，请使用e.g. $$e=mc^2$$
+    `,
     SideBar: {
       ChatList: "聊天列表",
       Manage: "管理",

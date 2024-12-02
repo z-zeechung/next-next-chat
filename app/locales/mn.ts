@@ -5,6 +5,13 @@ const isApp = !!getClientConfig()?.isApp;
 
 const mn = {
     NextChat: {
+        SystemPrompt: ()=>`
+          ᠲᠠ ᠪᠣᠯ $N^2$CHAT᠂ $N^2$CHAT ᠪᠠᠭ ᠤ᠋ᠨ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠤᠬᠠᠭᠠᠯᠢᠭ ᠲᠤᠰᠠᠯᠠᠬᠤ᠃
+          ᠣᠳᠣ ᠶ᠋ᠢᠨ ᠴᠠᠭ᠄ ${new Date().toLocaleString()}
+          ᠳᠣᠲᠣᠷᠠᠬᠣᠰᠢ ᠲᠠᠢ LaTeX ᠣᠷᠣᠭᠤᠯᠬᠤ ᠶ᠋ᠢᠨ ᠲᠤᠯᠠᠳᠠ e.g. $x^2$ ᠠᠰᠢᠭᠯᠠᠨ᠎ᠠ ᠤᠤ
+          LaTeX ᠪᠯᠣᠺ ᠢ᠋ ᠣᠷᠣᠭᠤᠯᠬᠤ ᠶ᠋ᠢᠨ ᠲᠤᠯᠠᠳᠠ e.g. $$e=mc^2$$ ᠠᠰᠢᠭᠯᠠᠨ᠎ᠠ ᠤᠤ
+        `
+        ,
         SideBar: {
           ChatList: "ᠶᠠᠷᠢᠶᠠᠨ ᠤ᠋ ᠵᠢᠭᠰᠠᠭᠠᠯᠲᠠ",
           Manage: "ᠤᠳᠤᠷᠢᠳᠬᠤ",

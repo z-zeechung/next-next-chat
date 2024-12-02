@@ -4,6 +4,12 @@ import type { PartialLocaleType } from "./index";
 const ru: PartialLocaleType = {
 
   NextChat: {
+    SystemPrompt: ()=>`
+      Вы $N^2$CHAT, интеллектуальный помощник, разработанный командой $N^2$CHAT.
+      Текущая дата и время: ${new Date().toDateString()}
+      Для встраивания встроенного LaTeX, используйте, например, $x^2$
+      Для встраивания блока LaTeX, используйте, например, $$e=mc^2$$
+    `,
     SideBar: {
       ChatList: "Список Чатов",
       Manage: "Управление",

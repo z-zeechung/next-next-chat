@@ -525,7 +525,7 @@ export const useChatStore = createPersistStore(
                 role:"system",
                 content: fillTemplateWith("", {
                   ...modelConfig,
-                  template: DEFAULT_SYSTEM_TEMPLATE,
+                  template: Locale.NextChat.SystemPrompt(),
                 })+prompt
               }
             ]
