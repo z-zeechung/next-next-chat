@@ -140,3 +140,7 @@ export function getISOLang() {
   const lang = getLang();
   return isoLangString[lang] ?? lang;
 }
+
+export function isRtlLang(){
+  return ["ar"].includes(getLang());
+}

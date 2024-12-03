@@ -18,6 +18,7 @@ import ReedsTexture from "../icons/bg-reeds.bmp"
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { nanoid } from "nanoid";
 import { renderToString } from "react-dom/server";
+import { isRtlLang } from "../locales";
 
 export const Default: Theme = {
     wrapper: ChakraProvider,
@@ -85,7 +86,14 @@ function enumRow(children: any): { left?: any[], center?: any[], right?: any[] }
 }
 
 function ThemeRow(props: { children?: any }) {
-    const { left, center, right } = enumRow(props.children)
+    let { left, center, right } = enumRow(props.children)
+
+    if(isRtlLang()){
+        let tmp = left
+        left = right
+        right = tmp
+    }
+    
     if (left && !center && !right) {
         return <table width={"100%"}>
             <tr><td width={"100%"} align="left" style={{verticalAlign:"middle"}}>{left}</td></tr>
@@ -142,7 +150,10 @@ function ThemeInfoCard(props: {
     >
         <CardHeader padding={3} paddingBottom={0}>
             <Flex>
-                <Flex flex='1' gap='4' alignItems='center' flexWrap="nowrap" padding={0}>
+                <Flex 
+                    flex='1' gap='4' alignItems='center' flexWrap="nowrap" padding={0}
+                    flexDirection={isRtlLang() ? "row-reverse" : "row"}
+                >
                     {props.icon ? <ThemeAvatar icon={props.icon} /> : <div style={{ width: 4 }}></div>}
                     <Box>
                         <Heading size='sm' whiteSpace={"nowrap"} overflow={"hidden"}>
@@ -154,7 +165,9 @@ function ThemeInfoCard(props: {
             </Flex>
         </CardHeader>
         {body && <CardBody>
-            <Flex flex={1} gap={4} direction={"column"} padding={0}>
+            <Flex 
+                flex={1} gap={4} direction={"column"} padding={0}
+            >
                 {...body}
             </Flex>
         </CardBody>}
