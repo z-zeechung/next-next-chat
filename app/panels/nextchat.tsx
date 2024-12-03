@@ -86,7 +86,7 @@ import {
 
 // import { ChatControllerPool } from "../client/controller";
 // import { Prompt, usePromptStore } from "../store/prompt";
-import Locale, { ALL_LANG_OPTIONS, changeLang, getLang } from "../locales";
+import Locale, { ALL_LANG_OPTIONS, changeLang, getLang, isRtlLang } from "../locales";
 
 // import { IconButton } from "../components/button";
 import styles from "../components/chat.module.scss";
@@ -2685,7 +2685,7 @@ export function NextChat() {
   const [isHovered, setIsHovered] = useState(false);
   const { width, height } = useWindowSize();
 
-  return <div style={{width:"100%", height:"100%", display:"flex"}}>
+  return <div style={{width:"100%", height:"100%", display:"flex", flexDirection: isRtlLang()?"row-reverse":"row"}}>
     <div>
       <SideBar />
     </div>
