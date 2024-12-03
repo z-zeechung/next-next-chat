@@ -9,6 +9,15 @@ export interface Theme{
         (props:{
             children?:any
         })=>JSX.Element
+    row:
+        (props:{
+            children?:any
+        })=>JSX.Element
+    component:
+        (props:{
+            children?: any
+            type?: "primary" | "plain"
+        })=>JSX.Element
     messageCard:(props?:{
         children?:any
         type?:MessageRole
@@ -62,6 +71,8 @@ export interface Theme{
         title?: string
         subTitle?: string
         children?: any
+        type?: "primary" | "plain"
+        onClick?: () => void
     })=>JSX.Element
     textArea:
         (props:{
@@ -123,16 +134,23 @@ export interface Theme{
 let theme:Theme = Default
 
 export let ThemeWrapper = theme.wrapper
+export let Row = theme.row
+export let Component = theme.component
+/** @deprecated */
 export let MessageCard = theme.messageCard
+/** @deprecated */
 export let ChatHistory = theme.chatHistory
 export let Button = theme.button
 export let TinyButton = theme.tinyButton
+/** @deprecated */
 export let ButtonGroup = theme.buttonGroup
 export let ButtonCard = theme.buttonCard
+/** @deprecated */
 export let ChatCard = theme.chatCard
 export let InfoCard = theme.infoCard
 export let TextArea = theme.textArea
 export let CheckBox = theme.checkBox
+/** @deprecated */
 export let Modal = theme.modal
 export let Avatar = theme.avatar
 export let List = theme.list
@@ -140,3 +158,27 @@ export let ListItem = theme.listItem
 export let Tabs = theme.tabs
 export let Select = theme.select
 export let showConfirm = theme.showConfirm
+
+export function Header(props:{children:any}) {
+    return <>{props.children}</>
+}
+
+// export function Body(props:{children:any}) {
+//     return <>{props.children}</>
+// }
+
+export function Footer(props:{children:any}) {
+    return <>{props.children}</>
+}
+
+export function Left(props:{children:any}) {
+    return <>{props.children}</>
+}
+
+export function Center(props:{children:any}) {
+    return <>{props.children}</>
+}
+
+export function Right(props:{children:any}) {
+    return <>{props.children}</>
+}
