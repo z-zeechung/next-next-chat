@@ -57,7 +57,7 @@ import { useEffect, useRef, useState } from "react";
 // } from "@hello-pangea/dnd";
 //import { getMessageTextContent } from "../../utils";
 // import { Emoji } from "emoji-picker-react";
-import { Button, InfoCard, Modal, TextArea } from "@/app/themes/theme";
+import { Button, Footer, InfoCard, Modal, Right, Row, TextArea, TinyButton } from "@/app/themes/theme";
 import { Card, SimpleGrid } from "@chakra-ui/react";
 import prompts from "@/app/prompts.json";
 // import { Message } from "@/app/message/Message";
@@ -495,19 +495,23 @@ export function MaskPage(props: { onClose: () => void}) {
                 icon={<div dangerouslySetInnerHTML={{__html:chatStore.currentSession().avatar??""}}/>}
                 title={Locale.NextChat.ChatArea.Using}
               >
-                <Button
-                  text={Locale.NextChat.ChatArea.StopUse}
-                  type="primary"
-                  onClick={()=>{
-                    chatStore.updateCurrentSession(s=>{
-                      s.avatar = undefined
-                      s.prompt = undefined
-                      s.live2d = undefined
-                      s.greeting = undefined
-                    })
-                  }}
-                  icon={<DisableIcon/>}
-                />
+                  <Row>
+                    <Right>
+                      <Button
+                        text={Locale.NextChat.ChatArea.StopUse}
+                        type="primary"
+                        onClick={()=>{
+                          chatStore.updateCurrentSession(s=>{
+                            s.avatar = undefined
+                            s.prompt = undefined
+                            s.live2d = undefined
+                            s.greeting = undefined
+                          })
+                        }}
+                        icon={<DisableIcon/>}
+                      />
+                    </Right>
+                  </Row>
               </InfoCard>
             </Card>
           </SimpleGrid>
@@ -541,20 +545,24 @@ export function MaskPage(props: { onClose: () => void}) {
                   icon={<div dangerouslySetInnerHTML={{__html:m.avatar}}/>}
                   title={m.name}
                 >
-                  <Button
-                    icon={<TickIcon />}
-                    text={Locale.NextChat.ChatArea.Use}
-                    type="text"
-                    onClick={() => {
-                      chatStore.updateCurrentSession(session=>{
-                        session.avatar = m.avatar
-                        session.prompt = m.prompt
-                        session.live2d = m.live2d
-                        session.greeting = m.greeting
-                      })
-                      props.onClose()
-                    }}
-                  />
+                    <Row>
+                      <Right>
+                        <Button
+                          icon={<TickIcon />}
+                          text={Locale.NextChat.ChatArea.Use}
+                          type="text"
+                          onClick={() => {
+                            chatStore.updateCurrentSession(session=>{
+                              session.avatar = m.avatar
+                              session.prompt = m.prompt
+                              session.live2d = m.live2d
+                              session.greeting = m.greeting
+                            })
+                            props.onClose()
+                          }}
+                        />
+                      </Right>
+                    </Row>
                 </InfoCard>
               </Card>
             ))}

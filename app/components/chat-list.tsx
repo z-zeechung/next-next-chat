@@ -1,4 +1,4 @@
-import DeleteIcon from "../icons/delete.svg";
+import DeleteIcon from "../icons/bootstrap/trash3.svg";
 import BotIcon from "../icons/bot.svg";
 
 import styles from "./home.module.scss";
@@ -19,7 +19,7 @@ import { Mask } from "../store/mask";
 import { useRef, useEffect } from "react";
 import { showConfirm } from "./ui-lib";
 import { useMobileScreen } from "../utils";
-import { ChatCard } from "../themes/theme";
+import { ChatCard, Footer, InfoCard, Left, Right, Row, TinyButton } from "../themes/theme";
 import emoji from "../emoji.json"
 
 export function ChatItem(props: {
@@ -147,8 +147,36 @@ export function ChatList(props: { narrow?: boolean, managing?:boolean }) {
               gap:"8px"
             }}
           >
-            {sessions.map((item, i) => (
-              <ChatCard
+            {sessions.map((item, i) => (<>
+              <InfoCard
+                icon={item.avatar?<div dangerouslySetInnerHTML={{__html:item.avatar}}/>:(item.emoji??emoji[DEFAULT_EMOJI])}
+                title={item.topic}
+                subTitle={Locale.NextChat.SideBar.CountOfChats(item.messages.length)}
+                onClick={()=>{
+                  navigate(Path.Chat);
+                  selectSession(i);
+                }}
+              >
+                <Footer>
+                  <Row>
+                    <Left>
+                      <div style={{fontSize:"12px", color:"gray"}}>
+                        {new Date(item.lastUpdate).toLocaleString()}
+                      </div>
+                    </Left>
+                    <Right>
+                      <TinyButton
+                        icon={<DeleteIcon />}
+                        type="text"
+                        onClick={()=>{
+                          chatStore.deleteSession(i);
+                        }}
+                      />
+                    </Right>
+                  </Row>
+                </Footer>
+              </InfoCard>
+              {false && `<ChatCard
                 icon={item.avatar?<div dangerouslySetInnerHTML={{__html:item.avatar}}/>:(item.emoji??emoji[DEFAULT_EMOJI])}
                 title={item.topic}
                 time={new Date(item.lastUpdate)}
@@ -173,8 +201,8 @@ export function ChatList(props: { narrow?: boolean, managing?:boolean }) {
                 managed={props.managing}
                 //narrow={props.narrow}
                 //mask={item.mask}
-              />
-            ))}
+              />`}
+            </>))}
             {provided.placeholder}
           </div>
         )}
