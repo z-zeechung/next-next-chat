@@ -29,10 +29,10 @@ import {
 } from "../constant";
 
 import { Link, useNavigate } from "react-router-dom";
-import { isIOS, useMobileScreen } from "../utils";
+import { isIOS, useMobileScreen, useWindowSize } from "../utils";
 import dynamic from "next/dynamic";
 import { showConfirm, showToast } from "./ui-lib";
-import { Avatar, Button, ChatHistory, Modal } from "../themes/theme";
+import { Avatar, Button, ChatHistory, Component, Footer, Header, Left, Modal, Right, Row } from "../themes/theme";
 import { Box, Card, CardBody, CardHeader, Flex, Heading, Text, useStatStyles } from "@chakra-ui/react";
 
 const ChatList = dynamic(async () => (await import("./chat-list")).ChatList, {
@@ -132,7 +132,7 @@ function useDragSideBar() {
   };
 }
 
-export function SideBar(props: { /*className?: string*/ show:boolean }) {
+export function SideBar(props: { /*className?: string*/ show?: boolean }) {
   const chatStore = useChatStore();
 
   // drag side bar
@@ -149,6 +149,9 @@ export function SideBar(props: { /*className?: string*/ show:boolean }) {
 
   useHotKey();
 
+  const [isHovered, setIsHovered] = useState(false);
+  const { width } = useWindowSize();
+
   return (<>
     {/*<div
       className={`${styles.sidebar} ${props.className} ${
@@ -159,7 +162,7 @@ export function SideBar(props: { /*className?: string*/ show:boolean }) {
         transition: isMobileScreen && isIOSMobile ? "none" : undefined,
       }}
     >*/}
-    <ChatHistory 
+    {false && `<ChatHistory
       show={props.show}
     >
       {/*<div className={styles["sidebar-header"]} data-tauri-drag-region>
@@ -207,9 +210,9 @@ export function SideBar(props: { /*className?: string*/ show:boolean }) {
             }}
           >
             <Button
-              icon={managing?<ReturnIcon/>:<ManageIcon/>}
-              text={managing?Locale.NextChat.SideBar.Exit:Locale.NextChat.SideBar.Manage}
-              onClick={()=>{setManaging(!managing)}}
+              icon={managing ? <ReturnIcon /> : <ManageIcon />}
+              text={managing ? Locale.NextChat.SideBar.Exit : Locale.NextChat.SideBar.Manage}
+              onClick={() => { setManaging(!managing) }}
             />
           </span>
         </div>
@@ -238,9 +241,9 @@ export function SideBar(props: { /*className?: string*/ show:boolean }) {
               }}
             />
           </div>
-          <div className={styles["sidebar-action"]} style={{display:"none"}}>
-            <Link to={Path.Settings} style={{textDecoration:"none"}}>
-              <IconButton icon={<SettingsIcon />} shadow text="设置"/>
+          <div className={styles["sidebar-action"]} style={{ display: "none" }}>
+            <Link to={Path.Settings} style={{ textDecoration: "none" }}>
+              <IconButton icon={<SettingsIcon />} shadow text="设置" />
             </Link>
           </div>
           {/*<div className={styles["sidebar-action"]}>
@@ -251,18 +254,18 @@ export function SideBar(props: { /*className?: string*/ show:boolean }) {
         </div>
         <div>
           {<Button
-            icon={<AddIcon/>}
+            icon={<AddIcon />}
             text={shouldNarrow ? undefined : Locale.NextChat.SideBar.NewChat}
             onClick={() => {
               //if (config.dontShowMaskSplashScreen) {
-              if (true){
+              if (true) {
                 let lastSession = chatStore.sessions[0]
-                if(lastSession.messages.length<=0){
-                  chatStore.update(sessions=>{
+                if (lastSession.messages.length <= 0) {
+                  chatStore.update(sessions => {
                     sessions.sessions[0].lastUpdate = Date.now()
                   })
                   chatStore.selectSession(0)
-                }else{
+                } else {
                   chatStore.newSession();
                   navigate(Path.Chat);
                 }
@@ -273,15 +276,66 @@ export function SideBar(props: { /*className?: string*/ show:boolean }) {
           />}
         </div>
       </div>
-      
+
       <div
         className={styles["sidebar-drag"]}
         onPointerDown={(e) => onDragStart(e as any)}
-        style={{display:"none"}}
+        style={{ display: "none" }}
       >
         <DragIcon />
       </div>
-    {/*</div>*/}
-    </ChatHistory>
+      {/*</div>*/}
+    </ChatHistory>`}
+    <div 
+      style={{width: isMobileScreen ? "" : (isHovered ? 300 : Math.min(width * (1 / 3), 300)), height:"100%"}}
+      // style={{width:"100%", height:"100%"}}
+      onMouseEnter={() => { setIsHovered(true) }}
+      onMouseLeave={() => { setIsHovered(false) }}
+    >
+      <Component type="primary">
+        <Header>
+          <Row>
+            <Left>
+              <span style={{fontSize: 18, fontWeight: "bold", margin: 4}}>{Locale.NextChat.SideBar.ChatList}</span>
+            </Left>
+            <Right>
+              <Button
+                icon={managing ? <ReturnIcon /> : <ManageIcon />}
+                text={managing ? Locale.NextChat.SideBar.Exit : Locale.NextChat.SideBar.Manage}
+                onClick={() => { setManaging(!managing) }}
+              />
+            </Right>
+          </Row>
+        </Header>
+        <ChatList narrow={shouldNarrow} managing={managing} />
+        <Footer>
+          <Row>
+            <Right>
+              <Button
+                icon={<AddIcon />}
+                text={shouldNarrow ? undefined : Locale.NextChat.SideBar.NewChat}
+                onClick={() => {
+                  //if (config.dontShowMaskSplashScreen) {
+                  if (true) {
+                    let lastSession = chatStore.sessions[0]
+                    if (lastSession.messages.length <= 0) {
+                      chatStore.update(sessions => {
+                        sessions.sessions[0].lastUpdate = Date.now()
+                      })
+                      chatStore.selectSession(0)
+                    } else {
+                      chatStore.newSession();
+                      navigate(Path.Chat);
+                    }
+                  } else {
+                    navigate(Path.NewChat);
+                  }
+                }}
+              />
+            </Right>
+          </Row>
+        </Footer>
+      </Component>
+    </div>
   </>);
 }

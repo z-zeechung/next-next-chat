@@ -17,36 +17,187 @@ import { autoGrowTextArea, useMobileScreen, useWindowSize } from "../utils";
 import ReedsTexture from "../icons/bg-reeds.bmp"
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { nanoid } from "nanoid";
+import { renderToString } from "react-dom/server";
+import { isRtlLang } from "../locales";
 
-export const Default:Theme = {
-    wrapper:ChakraProvider,
-    messageCard:ThemeMessage,
-    chatHistory:ThemeChatHistory,
-    button:ThemeButton,
-    tinyButton:ThemeTinyButton,
-    buttonGroup:ThemeButtonGroup,
-    buttonCard:ThemeButtonCard,
-    chatCard:ThemeChatCard,
-    infoCard:ThemeInfoCard,
-    textArea:ThemeTextArea,
-    checkBox:ThemeCheckBox,
-    modal:ThemeModal,
-    avatar:ThemeAvatar,
-    list:ThemeList,
-    listItem:ThemeListItem,
-    tabs:ThemeTabs,
-    select:ThemeSelect,
-    showConfirm:showConfirm
+export const Default: Theme = {
+    wrapper: ChakraProvider,
+    row: ThemeRow,
+    component: ThemeComponent,
+    messageCard: ThemeMessage,
+    chatHistory: ThemeChatHistory,
+    button: ThemeButton,
+    tinyButton: ThemeTinyButton,
+    buttonGroup: ThemeButtonGroup,
+    buttonCard: ThemeButtonCard,
+    chatCard: ThemeChatCard,
+    infoCard: ThemeInfoCard,
+    textArea: ThemeTextArea,
+    checkBox: ThemeCheckBox,
+    modal: ThemeModal,
+    avatar: ThemeAvatar,
+    list: ThemeList,
+    listItem: ThemeListItem,
+    tabs: ThemeTabs,
+    select: ThemeSelect,
+    showConfirm: showConfirm
 }
 
-function ThemeMessage(props?:{
-    children?:any
-    type?:MessageRole
-}){
+function enumChildren(children: any): { header?: any, body?: any[], footer?: any } {
+    if (!Array.isArray(children)) {
+        children = [children]
+    }
+    let header: any = undefined
+    let body: any[] | undefined = []
+    let footer: any = undefined
+    for (let child of children) {
+        if (child?.type?.name == "Header") {
+            header = child
+        } else if (child?.type?.name == "Footer") {
+            footer = child
+        } else {
+            body.push(child)
+        }
+    }
+    if (body!.length <= 0) { body = undefined }
+    return { header, body, footer }
+}
+
+function enumRow(children: any): { left?: any[], center?: any[], right?: any[] } {
+    if (!Array.isArray(children)) {
+        children = [children]
+    }
+    let left: [] | undefined = []
+    let center: any[] | undefined = []
+    let right: [] | undefined = []
+    for (let child of children) {
+        if (child?.type?.name == "Left") {
+            left = child
+        } else if (child?.type?.name == "Right") {
+            right = child
+        } else if (child?.type?.name == "Center") {
+            center = child
+        }
+    }
+    if (left!.length <= 0) { left = undefined }
+    if (center!.length <= 0) { center = undefined }
+    if (right!.length <= 0) { right = undefined }
+    return { left, center, right }
+}
+
+function ThemeRow(props: { children?: any }) {
+    let { left, center, right } = enumRow(props.children)
+
+    if(isRtlLang()){
+        let tmp = left
+        left = right
+        right = tmp
+    }
+    
+    if (left && !center && !right) {
+        return <table width={"100%"}>
+            <tr><td width={"100%"} align="left" style={{verticalAlign:"middle"}}>{left}</td></tr>
+        </table>
+    } else if (!left && center && !right) {
+        return <table width={"100%"}>
+            <tr><td width={"100%"} align="center" style={{verticalAlign:"middle"}}>{center}</td></tr>
+        </table>
+    } else if (!left && !center && right) {
+        return <table width={"100%"}>
+            <tr><td width={"100%"} align="right" style={{verticalAlign:"middle"}}>{right}</td></tr>
+        </table>
+    } else if (left && !center && right) {
+        return <table width={"100%"}>
+            <tr>
+                {<td align="left" style={{verticalAlign:"middle"}}>{left}</td>}
+                {<td align="right" style={{verticalAlign:"middle"}}>{right}</td>}
+            </tr>
+        </table>
+    }
+    return <table width={"100%"}>
+        <tr>
+            {<td width={"33%"} align="left" style={{verticalAlign:"middle"}}>{left}</td>}
+            {<td width={"34%"} align="center" style={{verticalAlign:"middle"}}>{center}</td>}
+            {<td width={"33%"} align="right" style={{verticalAlign:"middle"}}>{right}</td>}
+        </tr>
+    </table>
+}
+
+function ThemeInfoCard(props: {
+    icon?: JSX.Element | string
+    title?: string
+    subTitle?: string
+    children?: any
+    type?: "primary" | "plain"
+    onClick?: () => void
+}) {
+    const { header, body, footer } = enumChildren(props.children)
+
+    const [isHovered, setIsHovered] = useState(false);
+    const ref = useRef(null)
+
+    return <Card
+        width={"100%"}
+        {...(props.type ? {} : {
+            background: isHovered ? "#EDF2F7" : "#F7FAFC"
+        })}
+        {...(props.onClick ? {
+            onClick: props.onClick,
+            onMouseEnter: () => { setIsHovered(true) },
+            onMouseLeave: () => { setIsHovered(false) }
+        } : {})}
+        variant={props.type == "plain" ? "outline" : "elevated"}
+    >
+        <CardHeader padding={3} paddingBottom={0}>
+            <Flex>
+                <Flex 
+                    flex='1' gap='4' alignItems='center' flexWrap="nowrap" padding={0}
+                    flexDirection={isRtlLang() ? "row-reverse" : "row"}
+                >
+                    {props.icon ? <ThemeAvatar icon={props.icon} /> : <div style={{ width: 4 }}></div>}
+                    <Box>
+                        <Heading size='sm' whiteSpace={"nowrap"} overflow={"hidden"}>
+                            {props.title}
+                        </Heading>
+                        {props.subTitle && <Text fontSize={"12px"}>{props.subTitle}</Text>}
+                    </Box>
+                </Flex>
+            </Flex>
+        </CardHeader>
+        {body && <CardBody>
+            <Flex 
+                flex={1} gap={4} direction={"column"} padding={0}
+            >
+                {...body}
+            </Flex>
+        </CardBody>}
+        {footer && <CardFooter padding={3} paddingTop={0} paddingBottom={2}>
+            {footer}
+        </CardFooter>}
+    </Card>
+}
+
+function ThemeComponent(props: { children?: any, type?: "primary" | "plain" }) {
+    const { header, body, footer } = enumChildren(props.children)
+    return <div style={{width: "100%", height:"100%", display:"flex", flexDirection:"column", background: props.type == "primary" ? "#319795" : "#fff", color: props.type == "primary" ? "#fff" : "#000" }}>
+        <div style={{flexGrow:0, margin:16}}>{header.props.children}</div>
+        {(!props.type)&&<hr/>}
+        <div style={{flex:1, overflow:"auto", margin:12}}>{body}</div>
+        {(!props.type)&&<hr/>}
+        <div style={{flexGrow:0, margin:12, gap: 12, display:"flex", flexDirection:"column"}}>{footer.props.children}</div>
+    </div>
+}
+
+/** LEGACY */
+
+function ThemeMessage(props?: {
+    children?: any
+    type?: MessageRole
+}) {
     return <div className={chatStyles["chat-message-item"]}
         style={{
-            background:props?.type=="user"?"#319795":(props?.type=="system"?"#B2F5EA":"#EDF2F7"),
-            color:props?.type=="user"?"#fff":"#000",
+            background: props?.type == "user" ? "#319795" : (props?.type == "system" ? "#B2F5EA" : "#EDF2F7"),
+            color: props?.type == "user" ? "#fff" : "#000",
         }}
     >
         {props?.children}
@@ -83,10 +234,10 @@ function ThemeMessage(props?:{
 //     })
 // }
 
-function ThemeChatHistory(props?:{
-    children?:any
-    show?:boolean
-}){
+function ThemeChatHistory(props?: {
+    children?: any
+    show?: boolean
+}) {
     const isMobileScreen = useMobileScreen();
     const { width } = useWindowSize();
     const divRef = useRef(null)
@@ -114,20 +265,20 @@ function ThemeChatHistory(props?:{
     //         }
     //     }
     // })
-    
+
     return <div
         ref={divRef}
         className={`
             ${homeStyles.sidebar}
-            ${props?.show&&homeStyles["sidebar-show"]}
+            ${props?.show && homeStyles["sidebar-show"]}
         `}
         style={{
-            background:"#319795",
-            color:"#fff",
-            width:isMobileScreen?"":(isHovered?300:Math.min(width*(1/3), 300))
+            background: "#319795",
+            color: "#fff",
+            width: isMobileScreen ? "" : (isHovered ? 300 : Math.min(width * (1 / 3), 300))
         }}
-        onMouseEnter={()=>{setIsHovered(true)}}
-        onMouseLeave={()=>{setIsHovered(false)}}
+        onMouseEnter={() => { setIsHovered(true) }}
+        onMouseLeave={() => { setIsHovered(false) }}
     >
         {/* <img 
             ref={imgRef}
@@ -142,43 +293,43 @@ function ThemeChatHistory(props?:{
     </div>
 }
 
-function themePopover(button, children){
+function themePopover(button, children) {
     return <Popover>
-    <PopoverTrigger>
-        {button}
-    </PopoverTrigger>
-    <PopoverContent width={"fit-content"}>
-        <PopoverArrow />
-        <PopoverCloseButton size={"lg"}/>
-        <PopoverBody width={"fit-content"}>
-            <table>
-                <tr>
-                    <td>{children}</td>
-                    <td width={"48px"}></td>
-                </tr>
-            </table>
-        </PopoverBody>
-    </PopoverContent>
-</Popover>
+        <PopoverTrigger>
+            {button}
+        </PopoverTrigger>
+        <PopoverContent width={"fit-content"}>
+            <PopoverArrow />
+            <PopoverCloseButton size={"lg"} />
+            <PopoverBody width={"fit-content"}>
+                <table>
+                    <tr>
+                        <td>{children}</td>
+                        <td width={"48px"}></td>
+                    </tr>
+                </table>
+            </PopoverBody>
+        </PopoverContent>
+    </Popover>
 }
 
 function ThemeButton(props: {
-    icon?:JSX.Element
-    text?:string
-    onClick?:() => void
-    type?:string
-    disabled?:boolean
-    embed?:"left"|"right"
-    popover?:any
-}){
+    icon?: JSX.Element
+    text?: string
+    onClick?: () => void
+    type?: string
+    disabled?: boolean
+    embed?: "left" | "right"
+    popover?: any
+}) {
     let type = "outline"
-    if(props.type=="primary") type="solid"
-    if(props.type=="text") type="ghost"
-    if(props.type=="danger") type="solid"
+    if (props.type == "primary") type = "solid"
+    if (props.type == "text") type = "ghost"
+    if (props.type == "danger") type = "solid"
 
-    let danger = props.type=="danger"
+    let danger = props.type == "danger"
 
-    if(!props.text&&!props.embed){
+    if (!props.text && !props.embed) {
         return <ThemeIconButton
             icon={props.icon}
             onClick={props.onClick}
@@ -189,54 +340,54 @@ function ThemeButton(props: {
         />
     }
 
-    const ret = <Button 
+    const ret = <Button
         size={"sm"}
-        colorScheme={danger?"red":(props.disabled?'gray':'teal')}
+        colorScheme={danger ? "red" : (props.disabled ? 'gray' : 'teal')}
         leftIcon={props.icon}
-        onClick={()=>{
-            if(!props.disabled){
-                (props.onClick??(()=>{}))()
+        onClick={() => {
+            if (!props.disabled) {
+                (props.onClick ?? (() => { }))()
             }
         }}
         variant={type}
         disabled={props.disabled}
         style={{
-            fontSize:"14px",
-            fontWeight:"normal",
-            background:(type=="outline"&&!props.disabled)?"#fff":""
+            fontSize: "14px",
+            fontWeight: "normal",
+            background: (type == "outline" && !props.disabled) ? "#fff" : ""
         }}
-        {... props.embed&&{
-            width:"100%",
-            height:"100%",
-            ...(props.embed=="right"?{borderLeftRadius:0}:{borderRightRadius:0})
+        {...props.embed && {
+            width: "100%",
+            height: "100%",
+            ...(props.embed == "right" ? { borderLeftRadius: 0 } : { borderRightRadius: 0 })
         }}
     >
         {props.text}
     </Button>
 
-    if(!props.popover){
+    if (!props.popover) {
         return ret
-    }else{
+    } else {
         return themePopover(ret, props.popover)
     }
 }
 
 function ThemeTinyButton(props: {
-    icon?:JSX.Element
-    text?:string
-    onClick?:() => void
-    type?:string
-    disabled?:boolean
-    popover?:any
-}){
+    icon?: JSX.Element
+    text?: string
+    onClick?: () => void
+    type?: string
+    disabled?: boolean
+    popover?: any
+}) {
     let type = "outline"
-    if(props.type=="primary") type="solid"
-    if(props.type=="text") type="ghost"
-    if(props.type=="danger") type="solid"
+    if (props.type == "primary") type = "solid"
+    if (props.type == "text") type = "ghost"
+    if (props.type == "danger") type = "solid"
 
-    let danger = props.type=="danger"
+    let danger = props.type == "danger"
 
-    if(!props.text){
+    if (!props.text) {
         return <ThemeIconButton
             icon={props.icon}
             onClick={props.onClick}
@@ -249,139 +400,139 @@ function ThemeTinyButton(props: {
 
     const ret = <Button
         size={"xs"}
-        colorScheme={danger?"red":(props.disabled?'gray':'teal')}
+        colorScheme={danger ? "red" : (props.disabled ? 'gray' : 'teal')}
         leftIcon={props.icon}
-        onClick={()=>{
-            if(!props.disabled){
-                (props.onClick??(()=>{}))()
+        onClick={() => {
+            if (!props.disabled) {
+                (props.onClick ?? (() => { }))()
             }
         }}
         variant={type}
         disabled={props.disabled}
         style={{
-            fontSize:"12px",
-            fontWeight:"normal",
-            background:(type=="outline"&&!props.disabled)?"#fff":"",
-            borderRadius:"1000px",
-            color:props.type=="text"?"#000":"",
-            opacity:props.type=="text"?"0.5":""
+            fontSize: "12px",
+            fontWeight: "normal",
+            background: (type == "outline" && !props.disabled) ? "#fff" : "",
+            borderRadius: "1000px",
+            color: props.type == "text" ? "#000" : "",
+            opacity: props.type == "text" ? "0.5" : ""
         }}
     >
         {props.text}
     </Button>
 
-    if(!props.popover){
+    if (!props.popover) {
         return ret
-    }else{
+    } else {
         return themePopover(ret, props.popover)
     }
 }
 
 function ThemeIconButton(props: {
-    icon?:JSX.Element
-    onClick?:() => void
-    type?:string
-    disabled?:boolean
-    size?:string
-    popover?:any
-}){
+    icon?: JSX.Element
+    onClick?: () => void
+    type?: string
+    disabled?: boolean
+    size?: string
+    popover?: any
+}) {
 
-    let danger = props.type=="danger"
+    let danger = props.type == "danger"
 
-    const ret = <IconButton 
+    const ret = <IconButton
         aria-label=''
         size={props.size}
-        colorScheme={danger?"red":(props.disabled?'gray':'teal')}
-        icon={props.icon} 
-        onClick={()=>{
-            if(!props.disabled){
-                (props.onClick??(()=>{}))()
+        colorScheme={danger ? "red" : (props.disabled ? 'gray' : 'teal')}
+        icon={props.icon}
+        onClick={() => {
+            if (!props.disabled) {
+                (props.onClick ?? (() => { }))()
             }
         }}
         variant={props.type}
         disabled={props.disabled}
         style={{
-            background:(props.type=="outline"&&!props.disabled)?"#fff":"",
-            borderRadius:"1000px"
+            background: (props.type == "outline" && !props.disabled) ? "#fff" : "",
+            borderRadius: "1000px"
         }}
     />
 
-    if(!props.popover){
+    if (!props.popover) {
         return ret
-    }else{
+    } else {
         return themePopover(ret, props.popover)
     }
 }
 
-function ThemeButtonGroup(props:{children:any}){
+function ThemeButtonGroup(props: { children: any }) {
     return <ButtonGroup>
         {props.children}
     </ButtonGroup>
 }
 
 function ThemeTextArea(props: {
-    placeholder?:string
-    onInput?:(v:string)=>void
-    onChange?:(value:string)=>void
-    autoFocus?:boolean
-    rows?:number
-    leftAttachment?:JSX.Element
-    rightAttachment?:JSX.Element
-    value?:string
-    disabled?:boolean
+    placeholder?: string
+    onInput?: (v: string) => void
+    onChange?: (value: string) => void
+    autoFocus?: boolean
+    rows?: number
+    leftAttachment?: JSX.Element
+    rightAttachment?: JSX.Element
+    value?: string
+    disabled?: boolean
 }): JSX.Element {
 
     let rightAttachment = props.rightAttachment
-    if(props.rightAttachment?.type.name == "ThemeButton"){
-        rightAttachment = <ThemeButton{...props.rightAttachment.props} embed={"right"}/>
+    if (props.rightAttachment?.type.name == "ThemeButton") {
+        rightAttachment = <ThemeButton{...props.rightAttachment.props} embed={"right"} />
     }
-    if(props.rightAttachment?.type.name == "ThemeSelect"){
-        rightAttachment = <ThemeSelect{...props.rightAttachment.props} embed={"right"}/>
+    if (props.rightAttachment?.type.name == "ThemeSelect") {
+        rightAttachment = <ThemeSelect{...props.rightAttachment.props} embed={"right"} />
     }
 
     let leftAttachment = props.leftAttachment
-    if(props.leftAttachment?.type.name == "ThemeButton"){
-        leftAttachment = <ThemeButton{...props.leftAttachment.props} embed={"left"}/>
+    if (props.leftAttachment?.type.name == "ThemeButton") {
+        leftAttachment = <ThemeButton{...props.leftAttachment.props} embed={"left"} />
     }
-    if(props.leftAttachment?.type.name == "ThemeSelect"){
-        leftAttachment = <ThemeSelect{...props.leftAttachment.props} embed={"left"}/>
+    if (props.leftAttachment?.type.name == "ThemeSelect") {
+        leftAttachment = <ThemeSelect{...props.leftAttachment.props} embed={"left"} />
     }
 
     const ref = useRef(null)
     const { width, height } = useWindowSize();
-    if(props.rows==1){
+    if (props.rows == 1) {
         return ThemeInput(props)
     }
     return <InputGroup>
-        {leftAttachment&&<InputLeftAddon style={["ThemeButton", "ThemeSelect"].includes(props.leftAttachment?.type.name)?{padding:0}:{}}>
+        {leftAttachment && <InputLeftAddon style={["ThemeButton", "ThemeSelect"].includes(props.leftAttachment?.type.name) ? { padding: 0 } : {}}>
             {leftAttachment}
         </InputLeftAddon>}
-        <Textarea 
+        <Textarea
             ref={ref as any}
-            placeholder={props.placeholder} 
-            rows={ref.current?Math.max(autoGrowTextArea(ref.current), props.rows??2):props.rows}
+            placeholder={props.placeholder}
+            rows={ref.current ? Math.max(autoGrowTextArea(ref.current), props.rows ?? 2) : props.rows}
             resize={'none'}
-            onInput={(e)=>{if(props.onInput)props.onInput(e.currentTarget.value)}}
-            onChange={(e)=>{if(props.onChange)props.onChange(e.currentTarget.value)}}
+            onInput={(e) => { if (props.onInput) props.onInput(e.currentTarget.value) }}
+            onChange={(e) => { if (props.onChange) props.onChange(e.currentTarget.value) }}
             autoFocus={props.autoFocus}
             value={props.value}
             disabled={props.disabled}
-            variant={props.disabled?'filled':'outline'}
-            maxHeight={height/2}    // 权宜之计
-            borderTopRightRadius={props.rightAttachment?0:undefined}
+            variant={props.disabled ? 'filled' : 'outline'}
+            maxHeight={height / 2}    // 权宜之计
+            borderTopRightRadius={props.rightAttachment ? 0 : undefined}
         />
-        {rightAttachment&&<InputRightAddon style={["ThemeButton", "ThemeSelect"].includes(props.rightAttachment?.type.name)?{padding:0}:{}}>
+        {rightAttachment && <InputRightAddon style={["ThemeButton", "ThemeSelect"].includes(props.rightAttachment?.type.name) ? { padding: 0 } : {}}>
             {rightAttachment}
         </InputRightAddon>}
     </InputGroup>
 }
 
-function ThemeButtonCard(props:{
-    icon?:JSX.Element
-    text?:string
-    onClick?:()=>void
-    popover?:any
-}){
+function ThemeButtonCard(props: {
+    icon?: JSX.Element
+    text?: string
+    onClick?: () => void
+    popover?: any
+}) {
     const ret = <Button
         className={`
             ${buttonStyles["icon-button"]} 
@@ -389,94 +540,94 @@ function ThemeButtonCard(props:{
             clickable
         `}
         style={{
-            width:81,
-            height:83.5,
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"center",
-            textAlign:"center",
-            fontSize:12,
+            width: 81,
+            height: 83.5,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+            fontSize: 12,
         }}
         onClick={props.onClick}
     >
-        <i style={{padding:"8px"}}>{props.icon}</i>
+        <i style={{ padding: "8px" }}>{props.icon}</i>
         {props.text}
     </Button>
 
-    if(!props.popover){
+    if (!props.popover) {
         return ret
-    }else{
+    } else {
         return themePopover(ret, props.popover)
     }
 }
 
-function ThemeChatCard(props:{
-    icon?:JSX.Element | string
-    title?:string
-    count?:number
-    time?:Date
-    onClick?:()=>void
-    selected?:boolean
-    managed?:boolean
-    onDelete?:()=>void
-}){
+function ThemeChatCard(props: {
+    icon?: JSX.Element | string
+    title?: string
+    count?: number
+    time?: Date
+    onClick?: () => void
+    selected?: boolean
+    managed?: boolean
+    onDelete?: () => void
+}) {
     const [isHovered, setIsHovered] = useState(false);
     const ref = useRef(null)
 
     return <>
-        {!props.managed&&<Card
+        {!props.managed && <Card
             style={{
-                background:isHovered?"#E2E8F0":"#EDF2F7",
-                borderStyle:"solid",
-                borderWidth:props.selected?"2px":"0px",
-                borderColor:"#2C7A7B"
+                background: isHovered ? "#E2E8F0" : "#EDF2F7",
+                borderStyle: "solid",
+                borderWidth: props.selected ? "2px" : "0px",
+                borderColor: "#2C7A7B"
             }}
             onClick={props.onClick}
-            onMouseEnter={()=>{setIsHovered(true)}}
-            onMouseLeave={()=>{setIsHovered(false)}}
+            onMouseEnter={() => { setIsHovered(true) }}
+            onMouseLeave={() => { setIsHovered(false) }}
         >
             <CardHeader padding={"12px"}>
                 <Flex >
                     <Flex flex='1' gap='4' alignItems='center' flexWrap="nowrap">
-                        <ThemeAvatar icon={props.icon}/>
+                        <ThemeAvatar icon={props.icon} />
                         <Box>
                             <Heading size='sm' whiteSpace={"nowrap"} overflow={"hidden"}>{props.title}</Heading>
                             <Text fontSize={"12px"}>{props.count}条对话</Text>
                         </Box>
-                        </Flex>
                     </Flex>
+                </Flex>
                 <Text fontSize={"12px"} color={"gray"}>{props.time?.toLocaleString()}</Text>
             </CardHeader>
             <div
                 style={{
-                    position:"absolute",
-                    bottom:12,
-                    right:12
+                    position: "absolute",
+                    bottom: 12,
+                    right: 12
                 }}
             >
-                <ThemeTinyButton 
-                    icon={<DeleteIcon/>}
+                <ThemeTinyButton
+                    icon={<DeleteIcon />}
                     type="text"
                     onClick={props.onDelete}
                 />
             </div>
         </Card>}
-        {props.managed&&<Card
+        {props.managed && <Card
             ref={ref as any}
-            onMouseEnter={()=>{setIsHovered(true)}}
-            onMouseLeave={()=>{setIsHovered(false)}}
+            onMouseEnter={() => { setIsHovered(true) }}
+            onMouseLeave={() => { setIsHovered(false) }}
             background={"#E2E8F0"}
         >
             <CardHeader padding={"12px"}>
                 <Flex >
                     <Flex flex='1' gap='4' alignItems='center' flexWrap="nowrap">
-                        <IconButton 
-                            aria-label="" 
+                        <IconButton
+                            aria-label=""
                             borderRadius={1000}
                             background={"red"}
                             color={"white"}
                             opacity={0.8}
-                            icon={<CloseIcon/>}
+                            icon={<CloseIcon />}
                             onClick={props.onDelete}
                         />
                         <Box>
@@ -486,11 +637,11 @@ function ThemeChatCard(props:{
                             </Heading>
                             <Text fontSize={"12px"}>{props.count}条对话</Text>
                         </Box>
-                        </Flex>
                     </Flex>
+                </Flex>
                 <Text fontSize={"12px"} color={"gray"}>{props.time?.toLocaleString()}</Text>
             </CardHeader>
-            <Checkbox 
+            <Checkbox
                 colorScheme="teal"
                 position={"absolute"}
                 bottom={3}
@@ -500,12 +651,12 @@ function ThemeChatCard(props:{
                 paddingRight={2}
                 borderRadius={1000}
                 color={"#285E61"}
-                onChange={(e)=>{
-                    if(!ref.current) return
-                    if(e.currentTarget.checked){
-                        (ref.current as any).style.background="#EDF2F7"
-                    }else{
-                        (ref.current as any).style.background="#E2E8F0"
+                onChange={(e) => {
+                    if (!ref.current) return
+                    if (e.currentTarget.checked) {
+                        (ref.current as any).style.background = "#EDF2F7"
+                    } else {
+                        (ref.current as any).style.background = "#E2E8F0"
                     }
                 }}
             >
@@ -515,7 +666,7 @@ function ThemeChatCard(props:{
     </>
 }
 
-function ThemeInfoCard(props: {
+function ThemeInfoCardOld(props: {
     icon?: JSX.Element | string
     title?: string
     subTitle?: string
@@ -527,75 +678,75 @@ function ThemeInfoCard(props: {
         <CardHeader padding={"12px"}>
             <Flex >
                 <Flex flex='1' gap='4' alignItems='center' flexWrap="nowrap">
-                    {props.icon?<ThemeAvatar icon={props.icon} />:<div style={{width:4}}></div>}
+                    {props.icon ? <ThemeAvatar icon={props.icon} /> : <div style={{ width: 4 }}></div>}
                     <Box>
                         <Heading size='sm' whiteSpace={"nowrap"} overflow={"hidden"}>
                             {props.title}
                         </Heading>
-                        {props.subTitle&&<Text fontSize={"12px"}>{props.subTitle}</Text>}
+                        {props.subTitle && <Text fontSize={"12px"}>{props.subTitle}</Text>}
                     </Box>
                 </Flex>
             </Flex>
         </CardHeader>
-        {props.children&&<CardBody>
+        {props.children && <CardBody>
             {props.children}
         </CardBody>}
         <CardFooter padding={2}>
-            
+
         </CardFooter>
     </Card>
 }
 
 function ThemeInput(props: {
-    placeholder?:string
-    onInput?:(v:string)=>void
-    onChange?:(value:string)=>void
-    autoFocus?:boolean
-    rows?:number
-    leftAttachment?:JSX.Element
-    rightAttachment?:JSX.Element
-    value?:string
-    disabled?:boolean
-}){
+    placeholder?: string
+    onInput?: (v: string) => void
+    onChange?: (value: string) => void
+    autoFocus?: boolean
+    rows?: number
+    leftAttachment?: JSX.Element
+    rightAttachment?: JSX.Element
+    value?: string
+    disabled?: boolean
+}) {
     let rightAttachment = props.rightAttachment
-    if(props.rightAttachment?.type.name == "ThemeButton"){
-        rightAttachment = <ThemeButton{...props.rightAttachment.props} embed={"right"}/>
+    if (props.rightAttachment?.type.name == "ThemeButton") {
+        rightAttachment = <ThemeButton{...props.rightAttachment.props} embed={"right"} />
     }
-    if(props.rightAttachment?.type.name == "ThemeSelect"){
-        rightAttachment = <ThemeSelect{...props.rightAttachment.props} embed={"right"}/>
+    if (props.rightAttachment?.type.name == "ThemeSelect") {
+        rightAttachment = <ThemeSelect{...props.rightAttachment.props} embed={"right"} />
     }
 
     let leftAttachment = props.leftAttachment
-    if(props.leftAttachment?.type.name == "ThemeButton"){
-        leftAttachment = <ThemeButton{...props.leftAttachment.props} embed={"left"}/>
+    if (props.leftAttachment?.type.name == "ThemeButton") {
+        leftAttachment = <ThemeButton{...props.leftAttachment.props} embed={"left"} />
     }
-    if(props.leftAttachment?.type.name == "ThemeSelect"){
-        leftAttachment = <ThemeSelect{...props.leftAttachment.props} embed={"left"}/>
+    if (props.leftAttachment?.type.name == "ThemeSelect") {
+        leftAttachment = <ThemeSelect{...props.leftAttachment.props} embed={"left"} />
     }
 
     return <InputGroup>
-        {leftAttachment&&<InputLeftAddon style={["ThemeButton", "ThemeSelect"].includes(props.leftAttachment?.type.name)?{padding:0}:{}}>
+        {leftAttachment && <InputLeftAddon style={["ThemeButton", "ThemeSelect"].includes(props.leftAttachment?.type.name) ? { padding: 0 } : {}}>
             {leftAttachment}
         </InputLeftAddon>}
         <Input
             placeholder={props.placeholder}
-            onInput={(e)=>{if(props.onInput)props.onInput(e.currentTarget.value)}}
-            onChange={(e)=>{if(props.onChange)props.onChange(e.currentTarget.value)}}
+            onInput={(e) => { if (props.onInput) props.onInput(e.currentTarget.value) }}
+            onChange={(e) => { if (props.onChange) props.onChange(e.currentTarget.value) }}
             autoFocus={props.autoFocus}
             value={props.value}
             disabled={props.disabled}
-            variant={props.disabled?'filled':'outline'}
+            variant={props.disabled ? 'filled' : 'outline'}
         />
-        {rightAttachment&&<InputRightAddon style={["ThemeButton", "ThemeSelect"].includes(props.rightAttachment?.type.name)?{padding:0}:{}}>
+        {rightAttachment && <InputRightAddon style={["ThemeButton", "ThemeSelect"].includes(props.rightAttachment?.type.name) ? { padding: 0 } : {}}>
             {rightAttachment}
         </InputRightAddon>}
     </InputGroup>
 }
 
 function ThemeCheckBox(props: {
-    checked?:boolean
-    text?:string
-    onClick?:(checked:boolean)=>void
+    checked?: boolean
+    text?: string
+    onClick?: (checked: boolean) => void
 }): JSX.Element {
     const id = nanoid()
     return <FormControl display='flex' alignItems='center'>
@@ -603,9 +754,9 @@ function ThemeCheckBox(props: {
             {props.text}
         </FormLabel>
         <Switch
-            id={id} 
+            id={id}
             isChecked={props.checked}
-            onChange={(e)=>{
+            onChange={(e) => {
                 if (props.onClick)
                     props.onClick(e.currentTarget.checked)
             }}
@@ -615,36 +766,36 @@ function ThemeCheckBox(props: {
 }
 
 function ThemeModal(props: {
-    title?:string
-    children?:any
-    max?:boolean
-    footer?:JSX.Element
-    onClose?:()=>void
-    headerActions?:boolean
+    title?: string
+    children?: any
+    max?: boolean
+    footer?: JSX.Element
+    onClose?: () => void
+    headerActions?: boolean
 }): JSX.Element {
     const [max, setMax] = useState(props.max)
-    return <div className="modal-mask" style={{background:"#0000"}}>
+    return <div className="modal-mask" style={{ background: "#0000" }}>
         <div className={
-            styles["modal-container"] + 
+            styles["modal-container"] +
             ` ${max && styles["modal-container-max"]}`
         }>
             <div className={styles["modal-header"]}>
-                <div 
+                <div
                     className={styles["modal-title"]}
                 >
                     {props.title}
                 </div>
-                {(props.headerActions??true)&&<div className={styles["modal-header-actions"]}>
+                {(props.headerActions ?? true) && <div className={styles["modal-header-actions"]}>
                     <ButtonGroup>
                         <ThemeButton
                             type="text"
                             onClick={() => setMax(!max)}
-                            icon={max?<MinIcon/>:<MaxIcon/>}
+                            icon={max ? <MinIcon /> : <MaxIcon />}
                         />
                         <ThemeButton
                             type="text"
                             onClick={props.onClose}
-                            icon={<CloseIcon/>}
+                            icon={<CloseIcon />}
                         />
                     </ButtonGroup>
                 </div>}
@@ -655,226 +806,239 @@ function ThemeModal(props: {
     </div>
 }
 
-function ThemeAvatar(props:{icon?:JSX.Element | string}){
-    try{
-        if(props?.icon?.["type"]?.()?.type == "svg") return <Avatar icon={<>{props.icon}</>} size={"sm"}/>
-    }catch(e){}
-    return <Avatar icon={<div style={{scale:"2"}}>{props.icon}</div>} size={"sm"} style={{background:"#ffffff00"}}/>
+function ThemeAvatar(props: { icon?: JSX.Element | string }) {
+    try {
+        if (props?.icon?.["type"]?.()?.type == "svg") return <Avatar icon={<>{props.icon}</>} size={"sm"} />
+    } catch (e) { }
+    return <Avatar icon={<div style={{ scale: "2" }}>{props.icon}</div>} size={"sm"} style={{ background: "#ffffff00" }} />
 }
 
-function ThemeList(props:{children?:any}){
+function ThemeList(props: { children?: any }) {
     return <div style={{
-        display:"flex",
-        flexDirection:"column",
-        gap:24
+        display: "flex",
+        flexDirection: "column",
+        gap: 24
     }}>
         {props.children}
     </div>
 }
 
-function ThemeListItem(props:{
+function ThemeListItem(props: {
     title?: string
     subTitle?: string
     children?: any
-}){
+}) {
     const titleElem = <div
         style={{
-            position:"absolute",
-            left:16,
-            top:-15,
-            background:"#ffff",
-            color:"gray",
-            fontWeight:"bold",
-            paddingLeft:16,
-            paddingRight:16,
-            borderRadius:1000,
+            position: "absolute",
+            left: 16,
+            top: -15,
+            background: "#ffff",
+            color: "gray",
+            fontWeight: "bold",
+            paddingLeft: 16,
+            paddingRight: 16,
+            borderRadius: 1000,
         }}
     >
         {props.title}
     </div>
 
     const subTitleElem = <div
-    style={{
-        position:"absolute",
-        right:16,
-        top:-12,
-        background:"#ffff",
-        color:"gray",
-        fontSize:14,
-        paddingLeft:14,
-        paddingRight:14,
-        borderRadius:1000,
-    }}
+        style={{
+            position: "absolute",
+            right: 16,
+            top: -12,
+            background: "#ffff",
+            color: "gray",
+            fontSize: 14,
+            paddingLeft: 14,
+            paddingRight: 14,
+            borderRadius: 1000,
+        }}
     >
         {props.subTitle}
     </div>
 
-    if(props?.children?.type?.name=="ThemeList"){
+    if (props?.children?.type?.name == "ThemeList") {
         return <div
             style={{
-                marginTop:16,
-                position:"relative",
-                border:"1px solid #E2E8F0",
-                borderRadius:6,
-                paddingTop:30,
-                paddingBottom:8,
-                paddingLeft:16,
-                paddingRight:16,
+                marginTop: 16,
+                position: "relative",
+                border: "1px solid #E2E8F0",
+                borderRadius: 6,
+                paddingTop: 30,
+                paddingBottom: 8,
+                paddingLeft: 16,
+                paddingRight: 16,
             }}
         >
-            {props.subTitle&&subTitleElem}
-            {props.title&&titleElem}
-            <table style={{width:"100%"}}>
-                <tr style={{width:"100%"}}>
-                    <td style={{width:"10%"}}/>
+            {props.subTitle && subTitleElem}
+            {props.title && titleElem}
+            <table style={{ width: "100%" }}>
+                <tr style={{ width: "100%" }}>
+                    <td style={{ width: "10%" }} />
                     <td>{props.children}</td>
                 </tr>
             </table>
         </div>
     }
 
-    if(props?.children?.type?.name=="ThemeTextArea"){
+    if (props?.children?.type?.name == "ThemeTextArea") {
         return <div
             style={{
-                display:"inline-block",
-                position:"relative"
+                display: "inline-block",
+                position: "relative"
             }}
         >
             {props.children}
-            {props.subTitle&&subTitleElem}
-            {props.title&&titleElem}
+            {props.subTitle && subTitleElem}
+            {props.title && titleElem}
         </div>
     }
 
     return <div
         style={{
-            marginTop:16,
-            position:"relative",
-            border:"1px solid #E2E8F0",
-            borderRadius:6,
-            paddingTop:10,
-            paddingBottom:8,
-            paddingLeft:16,
-            paddingRight:16
+            marginTop: 16,
+            position: "relative",
+            border: "1px solid #E2E8F0",
+            borderRadius: 6,
+            paddingTop: 10,
+            paddingBottom: 8,
+            paddingLeft: 16,
+            paddingRight: 16
         }}
     >
-        {props.subTitle&&subTitleElem}
-        {props.title&&titleElem}
+        {props.subTitle && subTitleElem}
+        {props.title && titleElem}
         {props.children}
     </div>
 }
 
-function ThemeTabs(props:{
-    tab?:string
-    onChange?:((tab:string)=>void)
-    labels?:string[],
-    children?:any[]
-}):JSX.Element{
+function ThemeTabs(props: {
+    tab?: string
+    onChange?: ((tab: string) => void)
+    labels?: string[],
+    children?: any[]
+}): JSX.Element {
     const [cardMenuIndex, setCardMenuIndex] = useState(0)
-    const [parentSize, setParentSize] = useState({width:0, height:0})
+    const [parentSize, setParentSize] = useState({ width: 0, height: 0 })
     const ref = useRef<HTMLDivElement>(null)
     const parentRef = useRef<HTMLDivElement>(null)
-    useEffect(()=>{
+    useEffect(() => {
         ref.current!.style.height = `${parentRef.current!.clientHeight - 200}px`
     })
-    return <div ref={parentRef} style={{overflow:"scroll", height:"100%"}}>
-        <Tabs 
-        ref={ref}
-        colorScheme="teal" 
-        isFitted 
-        variant='enclosed' 
-        index={props.tab?props.labels?.indexOf(props.tab):cardMenuIndex} 
-        padding={0}
-        onChange={(index)=>{
-            setCardMenuIndex(index)
-            props.onChange?.(props.labels?.[index]??"")
-        }
-    }>
-        <TabList mb='1em'>
-            {props.labels?.map((label, idx)=>{
-                return <Tab>
-                    {label}
-                </Tab>
-            })}
-        </TabList>
-        <TabPanels>
-            {props.children?.map((comp, idx)=>{
-                return <TabPanel display={"flex"} flexDirection={"column"} padding={0}>
-                    <div style={{
-                        width:"100%",
-                        height:"100%",
-                        overflow:"scroll"
-                    }}>
-                        {comp}
-                    </div>
-                </TabPanel>
-            })}
-        </TabPanels>
-    </Tabs>
+    return <div ref={parentRef} style={{ overflow: "scroll", height: "100%" }}>
+        <Tabs
+            ref={ref}
+            colorScheme="teal"
+            isFitted
+            variant='enclosed'
+            index={props.tab ? props.labels?.indexOf(props.tab) : cardMenuIndex}
+            padding={0}
+            onChange={(index) => {
+                setCardMenuIndex(index)
+                props.onChange?.(props.labels?.[index] ?? "")
+            }
+            }>
+            <TabList mb='1em'>
+                {props.labels?.map((label, idx) => {
+                    return <Tab>
+                        {label}
+                    </Tab>
+                })}
+            </TabList>
+            <TabPanels>
+                {props.children?.map((comp, idx) => {
+                    return <TabPanel display={"flex"} flexDirection={"column"} padding={0}>
+                        <div style={{
+                            width: "100%",
+                            height: "100%",
+                            overflow: "scroll"
+                        }}>
+                            {comp}
+                        </div>
+                    </TabPanel>
+                })}
+            </TabPanels>
+        </Tabs>
     </div>
 }
 
-function ThemeSelect(props:{
-    options?:string[]
-    value?:string
-    onChange?:(value:string)=>void
-    embed?:"left"|"right"
-}):JSX.Element{
-    return <Select 
-        value={props.value} 
-        onChange={(e)=>{props.onChange?.(e.currentTarget.value)}}
-        {... props.embed&&{
-            ...(props.embed=="right"?{borderLeftRadius:0}:{borderRightRadius:0}),
+function ThemeSelect(props: {
+    options?: string[]
+    value?: string
+    onChange?: (value: string) => void
+    embed?: "left" | "right"
+}): JSX.Element {
+    const [width, setWidth] = useState(0)
+    return <Select
+        value={props.value}
+        onChange={(e) => { props.onChange?.(e.currentTarget.value) }}
+        {...props.embed && {
+            ...(props.embed == "right" ? { borderLeftRadius: 0 } : { borderRightRadius: 0 }),
         }}
-        style={{padding:4, paddingRight:32}}
+        style={{ padding: 4, paddingRight: 32 }}
+        width={width}
+        fontSize={16}
     >
-        {props.options?.map((v, i)=><option value={v}>
-            {v}
-        </option>)}
+        {props.options?.map((v, i) => {
+            const mdiv = document.createElement("div")
+            mdiv.innerText = v
+            mdiv.style.opacity = "0"
+            mdiv.style.fontSize = "16px"
+            document.body.appendChild(mdiv)
+            const _width = mdiv.clientWidth + 48
+            if(_width > width){setWidth(_width)}
+            mdiv.remove()
+            return <option value={v}>
+                {v}
+            </option>
+        })}
     </Select>
 }
 
-async function showConfirm(title?:string, content?:JSX.Element, danger?:boolean){
+async function showConfirm(title?: string, content?: JSX.Element, danger?: boolean) {
     const div = document.createElement("div");
     div.className = "";
     document.body.appendChild(div);
-  
+
     const root = createRoot(div);
     const closeModal = () => {
-      root.unmount();
-      div.remove();
+        root.unmount();
+        div.remove();
     };
 
-    if(title==""){title=undefined}
-  
+    if (title == "") { title = undefined }
+
     return new Promise<boolean>((resolve) => {
-      root.render(
-        <ChakraProvider><ThemeModal
-          title={title??"确认"}
-          headerActions={false}
-          footer={<ThemeButtonGroup>
-            <ThemeButton
-              text={"取消"}
-              onClick={() => {
-                resolve(false);
-                closeModal();
-              }}
-              icon={<CancelIcon/>}
-            ></ThemeButton>
-            <ThemeButton
-              text={"确认"}
-              type={danger?"danger":"primary"}
-              onClick={() => {
-                resolve(true);
-                closeModal();
-              }}
-              icon={<ConfirmIcon/>}
-            ></ThemeButton>
-          </ThemeButtonGroup>}
-          onClose={closeModal}
-        >
-          {content}
-        </ThemeModal></ChakraProvider>,
-      );
+        root.render(
+            <ChakraProvider><ThemeModal
+                title={title ?? "确认"}
+                headerActions={false}
+                footer={<ThemeButtonGroup>
+                    <ThemeButton
+                        text={"取消"}
+                        onClick={() => {
+                            resolve(false);
+                            closeModal();
+                        }}
+                        icon={<CancelIcon />}
+                    ></ThemeButton>
+                    <ThemeButton
+                        text={"确认"}
+                        type={danger ? "danger" : "primary"}
+                        onClick={() => {
+                            resolve(true);
+                            closeModal();
+                        }}
+                        icon={<ConfirmIcon />}
+                    ></ThemeButton>
+                </ThemeButtonGroup>}
+                onClose={closeModal}
+            >
+                {content}
+            </ThemeModal></ChakraProvider>,
+        );
     });
 }

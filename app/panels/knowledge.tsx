@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, ButtonCard, ButtonGroup, InfoCard, List, ListItem, Modal, showConfirm, TextArea } from "../themes/theme";
+import { Button, ButtonCard, ButtonGroup, Footer, InfoCard, List, ListItem, Modal, Right, Row, showConfirm, TextArea } from "../themes/theme";
 import { showToast } from "../components/ui-lib";
 import { KnowledgeBase as KnowledgeBaseClass } from "../knowledgebase/knowledgebase";
 import { SimpleGrid } from "@chakra-ui/react";
@@ -44,17 +44,21 @@ export function KnowledgeBase() {
       <SimpleGrid templateColumns={`repeat(auto-fill, minmax(${250}px, 1fr))`} gap={4}>
         {storeList.map(kb =>
           <InfoCard icon={typeIconMap[kb.type]} title={kb.id} subTitle={Locale.KnowledgeBase.SubTitle(typeNameMap[kb.type], kb.docs.length)}>
-            <ButtonGroup>
-              <Button text={Locale.KnowledgeBase.Edit} icon={<EditIcon />} type="primary" onClick={() => {
-                setEditingKB(kb.id)
-              }} />
-              <Button text={Locale.KnowledgeBase.Delete} icon={<DeleteIcon/>} type="primary" onClick={() => {
-                showConfirm(Locale.KnowledgeBase.DeleteKB, <>{Locale.KnowledgeBase.ConfirmDeleteKB(kb.id)}</>).then(async _ => {
-                  await new KnowledgeBaseClass(kb.id).delete()
-                  setStoreList(KnowledgeBaseClass.list())
-                })
-              }} />
-            </ButtonGroup>
+              <Row>
+                <Right>
+                  <ButtonGroup>
+                    <Button text={Locale.KnowledgeBase.Edit} icon={<EditIcon />} type="primary" onClick={() => {
+                      setEditingKB(kb.id)
+                    }} />
+                    <Button text={Locale.KnowledgeBase.Delete} icon={<DeleteIcon/>} type="primary" onClick={() => {
+                      showConfirm(Locale.KnowledgeBase.DeleteKB, <>{Locale.KnowledgeBase.ConfirmDeleteKB(kb.id)}</>).then(async _ => {
+                        await new KnowledgeBaseClass(kb.id).delete()
+                        setStoreList(KnowledgeBaseClass.list())
+                      })
+                    }} />
+                  </ButtonGroup>
+                </Right>
+              </Row>
           </InfoCard>
         )}
       </SimpleGrid>
