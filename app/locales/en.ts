@@ -72,6 +72,7 @@ const en: LocaleType = {
       KBDesc: "Inject your documents into the knowledge base to enable the large model to answer your questions more accurately. You can choose to use a traditional knowledge base, a vector knowledge base, or a graph knowledge base.",
       KBDetail: "Expound",
       SeeKB: "Check Out Knowledge Bases",
+      MakeTopicPrompt: "Summarize and directly return to the brief topic of this conversation. The theme should be limited to five words, starting with an emoji. Do not explain, do not punctuation, do not use modal particles, do not use redundant text, and do not bold. If there is no theme, please return directly \"💬 Chat\"."
     }
   },
 

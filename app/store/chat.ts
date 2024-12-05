@@ -1,7 +1,6 @@
 import { trimTopic, /*getMessageTextContent*/ } from "../utils";
 
 import Locale, { getLang } from "../locales";
-import { showToast } from "../components/ui-lib";
 import { ModelConfig, ModelType, useAppConfig } from "./config";
 import { createEmptyMask, Mask } from "./mask";
 import {
@@ -30,6 +29,7 @@ import emoji from "../emoji.json"
 import { Message, revokeMessage } from "../message/Message";
 // import { MarkdownMessage } from "../message/TextMessage";
 import { ControllablePromise } from "../utils/controllable-promise";
+import { deteteSessionToast } from "../components/delete-session-toast";
 
 const VECDB_PREFIX = "SESSION_VECDB_"
 
@@ -89,7 +89,7 @@ export function createEmptySession(): ChatSession {
   const newID = nanoid()
   return {
     id: newID,
-    topic: DEFAULT_TOPIC,
+    topic: "",
     emoji: DEFAULT_EMOJI,
     memoryPrompt: "",
     messages: [],
@@ -298,28 +298,42 @@ export const useChatStore = createPersistStore(
         }));
 
         let removeVecDB = true
-        showToast(
-          Locale.NextChat.ChatArea.AlreadyDeletedChat,
-          {
-            text: Locale.NextChat.ChatArea.Revert,
-            onClick() {
-              removeVecDB = false
-              set(() => restoreState);
-            },
-          },
-          5000,
-          ()=>{
-            if(!removeVecDB) return
-            //新增逻辑，在删除对话之后，等撤销吐司消失后，清除专属知识库和indexedDB内容
-            deleteVecDB(VECDB_PREFIX+deletedSessionId)
-            const IDB = require("../utils/indexedDB")
-            IDB.clearSessionIDB(deletedSessionId)
-            for(let msg of deletedMessages){
-              revokeMessage(msg)
-            }
-            //存在的问题：要是程序在这个过程中被关闭了咋办？答：算它倒霉，懒得管了
+        // showToast(
+        //   Locale.NextChat.ChatArea.AlreadyDeletedChat,
+        //   {
+        //     text: Locale.NextChat.ChatArea.Revert,
+        //     onClick() {
+        //       removeVecDB = false
+        //       set(() => restoreState);
+        //     },
+        //   },
+        //   ()=>{
+        //     if(!removeVecDB) return
+        //     //新增逻辑，在删除对话之后，等撤销吐司消失后，清除专属知识库和indexedDB内容
+        //     deleteVecDB(VECDB_PREFIX+deletedSessionId)
+        //     const IDB = require("../utils/indexedDB")
+        //     IDB.clearSessionIDB(deletedSessionId)
+        //     for(let msg of deletedMessages){
+        //       revokeMessage(msg)
+        //     }
+        //     //存在的问题：要是程序在这个过程中被关闭了咋办？答：算它倒霉，懒得管了
+        //   }
+        // );
+        console.log(deteteSessionToast)
+        deteteSessionToast(() => {
+          removeVecDB = false
+          set(() => restoreState);
+        }).then(_ => {
+          if (!removeVecDB) return
+          //新增逻辑，在删除对话之后，等撤销吐司消失后，清除专属知识库和indexedDB内容
+          deleteVecDB(VECDB_PREFIX + deletedSessionId)
+          const IDB = require("../utils/indexedDB")
+          IDB.clearSessionIDB(deletedSessionId)
+          for (let msg of deletedMessages) {
+            revokeMessage(msg)
           }
-        );
+          //存在的问题：要是程序在这个过程中被关闭了咋办？答：算它倒霉，懒得管了
+        })
       },
 
       currentSession() {

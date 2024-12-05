@@ -1,5 +1,5 @@
-import { Theme } from "./theme"
-import { AlertDialog, Button, ButtonGroup, Card, CardBody, ChakraProvider, FormControl, FormLabel, Icon, IconButton, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, Switch, Textarea, useDisclosure, Text, Flex, CardHeader, Avatar, Heading, Box, Checkbox, ComponentWithAs, ButtonProps, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverBody, PopoverHeader, Tabs, TabList, Tab, TabPanels, TabPanel, Select, CardFooter } from '@chakra-ui/react'
+import { Component, Group, Header, Left, Right, Row, Theme, TinyButton } from "./theme"
+import { AlertDialog, Button, ButtonGroup, Card, CardBody, ChakraProvider, FormControl, FormLabel, Icon, IconButton, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, Switch, Textarea, useDisclosure, Text, Flex, CardHeader, Avatar, Heading, Box, Checkbox, ComponentWithAs, ButtonProps, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverBody, PopoverHeader, Tabs, TabList, Tab, TabPanels, TabPanel, Select, CardFooter, TextareaProps, useToast } from '@chakra-ui/react'
 import styles from "../components/ui-lib.module.scss";
 import buttonStyles from "../components/button.module.scss"
 import chatStyles from "../components/chat.module.scss"
@@ -18,12 +18,16 @@ import ReedsTexture from "../icons/bg-reeds.bmp"
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { nanoid } from "nanoid";
 import { renderToString } from "react-dom/server";
-import { isRtlLang } from "../locales";
+import { getLang, isRtlLang } from "../locales";
 
 export const Default: Theme = {
     wrapper: ChakraProvider,
+    heading: ThemeHeading,
+    textBlock: ThemeTextBlock,
     row: ThemeRow,
     component: ThemeComponent,
+    plate: ThemePlate,
+    group: ThemeGroup,
     messageCard: ThemeMessage,
     chatHistory: ThemeChatHistory,
     button: ThemeButton,
@@ -40,8 +44,11 @@ export const Default: Theme = {
     listItem: ThemeListItem,
     tabs: ThemeTabs,
     select: ThemeSelect,
-    showConfirm: showConfirm
+    showConfirm: showConfirm,
+    showToast: showToast
 }
+
+const FONT_FAMILY = "sans-serif, NotoSansMongolian"
 
 function enumChildren(children: any): { header?: any, body?: any[], footer?: any } {
     if (!Array.isArray(children)) {
@@ -85,42 +92,171 @@ function enumRow(children: any): { left?: any[], center?: any[], right?: any[] }
     return { left, center, right }
 }
 
+function handleListItem(body?: any[]) {
+    if (!body) { return body }
+    let titles = ""
+    for (let elem of body) {
+        if (elem?.type?.name == "ListItem") {
+            if (getLang() == "mn") {
+                if (elem?.props?.title) {
+                    titles += `<div>${splitMongolian(elem.props.title)}</div>`
+                }
+            } else {
+                for (let i of elem?.props?.title.split(" ")) {
+                    titles += `<div>${i}</div>`
+                }
+            }
+        }
+    }
+    const mdiv = document.createElement("div")
+    mdiv.innerHTML = titles
+    mdiv.style.opacity = "0"
+    mdiv.style.fontFamily = FONT_FAMILY
+    mdiv.style.fontWeight = "bold"
+    document.body.appendChild(mdiv)
+    const width = mdiv.clientWidth + 10
+    mdiv.remove()
+    return body.map(elem => elem?.type?.name == "ListItem" ? <div style={{ width: "100%", height: "100%", display: "flex", ...(isRtlLang() ? { flexDirection: "row-reverse" } : {}) }}>
+        <div style={{ width: width, fontFamily: FONT_FAMILY, fontWeight: "bold", color: "#285E61", ...(isRtlLang() ? { direction: "rtl" } : {}) }}>{
+            elem?.props?.title ? <div dangerouslySetInnerHTML={{ __html: splitMongolian(elem.props.title) }} /> : elem?.props?.title
+        }</div>
+        <div style={{ flex: 1 }}>{elem?.props?.children}</div>
+    </div> : elem)
+}
+
+function splitMongolian(text) {
+    const re = /[\u1801-\u18AA]+/g
+    text = text?.replaceAll(" ", "&nbsp;")
+    return `
+        <div style="display:flex;align-items: top;">
+            ${text?.replaceAll(re, match =>
+        `<span style="writing-mode: vertical-lr;">${match}</span>`
+    )}
+        </div>
+    `
+}
+
+function ThemeHeading(props: { children?: any }) {
+    if (getLang() == "mn") {
+        return <Heading size={"sm"} paddingTop={0} paddingBottom={0} paddingLeft={4} paddingRight={4} width={"100%"} fontFamily={FONT_FAMILY} height={12}>
+            <div style={{ WebkitTextStroke: 0.7 }} dangerouslySetInnerHTML={{ __html: splitMongolian(props.children) }} />
+        </Heading>
+    }
+    if (isRtlLang()) {
+        return <Heading size={"md"} paddingTop={2} paddingBottom={3} paddingLeft={4} paddingRight={4} width={"100%"} fontFamily={FONT_FAMILY} height={12} display={"flex"} flexDirection={"row-reverse"}>
+            {props.children}
+        </Heading>
+    }
+    return <Heading size={"md"} paddingTop={2} paddingBottom={3} paddingLeft={4} paddingRight={4} width={"100%"} height={12}>
+        {props.children}
+    </Heading>
+}
+
+function MongolianTextBlock(props: { children?: any }) {
+    const ref = useRef<HTMLDivElement>(null)
+    const [height, setHeight] = useState(0 as any)
+    const [text, setText] = useState("")
+    const [vertical, setVertical] = useState(true)
+    useEffect(() => {
+        if (!ref.current) return
+        if (props.children.trim().length <= 0) {
+            setHeight(8)
+            setText(props.children)
+            setVertical(false)
+            return
+        }
+        if (props.children.length * 256 / ref.current.clientWidth < 100) {
+            setVertical(false)
+            setHeight(undefined)
+            setText(splitMongolian(props.children))
+            return
+        }
+        setHeight(Math.max(props.children.length * 256 / ref.current.clientWidth, 128))
+        setText(props.children)
+    }, [setHeight, setText, props.children, ref])
+    return <div ref={ref} style={{ width: "100%", ...(height ? { height: height } : {}), ...(vertical ? { writingMode: "vertical-lr" } : {}) }} dangerouslySetInnerHTML={{ __html: text }} />
+}
+function ThemeTextBlock(props: { children?: any }) {
+    if (getLang() == "mn") {
+        return <div>{props.children.split("\n").map((ln, i) => <>
+            <MongolianTextBlock>{ln}</MongolianTextBlock>
+            {i < props.children.split("\n").length - 1 && ln.trim().length > 0 && <hr style={{ opacity: 1 }} />}
+        </>)}</div>
+    }
+    if (isRtlLang()) {
+        return <div style={{ width: "100%", direction: "rtl" }}>{props.children}</div>
+    }
+    return <div style={{ width: "100%", whiteSpace:"pre-line" }}>{props.children}</div>
+}
+
 function ThemeRow(props: { children?: any }) {
     let { left, center, right } = enumRow(props.children)
 
-    if(isRtlLang()){
+    if (isRtlLang()) {
         let tmp = left
         left = right
         right = tmp
     }
-    
+
     if (left && !center && !right) {
         return <table width={"100%"}>
-            <tr><td width={"100%"} align="left" style={{verticalAlign:"middle"}}>{left}</td></tr>
+            <tr><td width={"100%"} align="left" style={{ verticalAlign: "middle" }}>{left}</td></tr>
         </table>
     } else if (!left && center && !right) {
         return <table width={"100%"}>
-            <tr><td width={"100%"} align="center" style={{verticalAlign:"middle"}}>{center}</td></tr>
+            <tr><td width={"100%"} align="center" style={{ verticalAlign: "middle" }}>{center}</td></tr>
         </table>
     } else if (!left && !center && right) {
         return <table width={"100%"}>
-            <tr><td width={"100%"} align="right" style={{verticalAlign:"middle"}}>{right}</td></tr>
+            <tr><td width={"100%"} align="right" style={{ verticalAlign: "middle" }}>{right}</td></tr>
         </table>
     } else if (left && !center && right) {
         return <table width={"100%"}>
             <tr>
-                {<td align="left" style={{verticalAlign:"middle"}}>{left}</td>}
-                {<td align="right" style={{verticalAlign:"middle"}}>{right}</td>}
+                {<td align="left" style={{ verticalAlign: "middle" }}>{left}</td>}
+                {<td align="right" style={{ verticalAlign: "middle" }}>{right}</td>}
             </tr>
         </table>
     }
     return <table width={"100%"}>
         <tr>
-            {<td width={"33%"} align="left" style={{verticalAlign:"middle"}}>{left}</td>}
-            {<td width={"34%"} align="center" style={{verticalAlign:"middle"}}>{center}</td>}
-            {<td width={"33%"} align="right" style={{verticalAlign:"middle"}}>{right}</td>}
+            {<td width={"33%"} align="left" style={{ verticalAlign: "middle" }}>{left}</td>}
+            {<td width={"34%"} align="center" style={{ verticalAlign: "middle" }}>{center}</td>}
+            {<td width={"33%"} align="right" style={{ verticalAlign: "middle" }}>{right}</td>}
         </tr>
     </table>
+}
+
+function ThemeGroup(props: { children?: any, isAttached?: boolean }) {
+    let children = props.children
+    if (isRtlLang()) {
+        let newChildren: any[] = []
+        for (let child of children) {
+            newChildren.push(child)
+        }
+        children = newChildren.reverse()
+    }
+    if (props.isAttached) {
+        return <div style={{ display: "inline-flex", gap: 0 }}>
+            {children?.map((elem, i) => {
+                const position: "left" | "middle" | "right"
+                    = i == 0 ? "right" : i == children.length - 1 ? "left" : "middle"
+                if (elem?.type?.name == "ThemeSelect") {
+                    return <ThemeSelect {...elem.props} embed={position} />
+                }
+                if (elem?.type?.name == "ThemeButton") {
+                    return <ThemeButton {...elem.props} embed={position} />
+                }
+                if (elem?.type?.name == "ThemeTextArea") {
+                    return <ThemeTextArea {...elem.props} embed={position} />
+                }
+                return elem
+            })}
+        </div>
+    }
+    return <div style={{ display: "inline-flex", gap: 8 }}>
+        {children}
+    </div>
 }
 
 function ThemeInfoCard(props: {
@@ -136,6 +272,9 @@ function ThemeInfoCard(props: {
     const [isHovered, setIsHovered] = useState(false);
     const ref = useRef(null)
 
+    const title = getLang() == "mn" ? <span dangerouslySetInnerHTML={{ __html: splitMongolian(props.title) }}></span> : props.title
+    const subTitle = getLang() == "mn" ? <span dangerouslySetInnerHTML={{ __html: splitMongolian(props.subTitle) }}></span> : props.subTitle
+
     return <Card
         width={"100%"}
         {...(props.type ? {} : {
@@ -150,22 +289,28 @@ function ThemeInfoCard(props: {
     >
         <CardHeader padding={3} paddingBottom={0}>
             <Flex>
-                <Flex 
+                <Flex
                     flex='1' gap='4' alignItems='center' flexWrap="nowrap" padding={0}
                     flexDirection={isRtlLang() ? "row-reverse" : "row"}
                 >
                     {props.icon ? <ThemeAvatar icon={props.icon} /> : <div style={{ width: 4 }}></div>}
-                    <Box>
-                        <Heading size='sm' whiteSpace={"nowrap"} overflow={"hidden"}>
-                            {props.title}
+                    <Box width={"100%"}>
+                        {getLang() == "mn" && <Flex flexDirection={"row"}>
+                            <Heading width={"100%"} size='sm' whiteSpace={"nowrap"} overflow={"hidden"} fontFamily={FONT_FAMILY}>
+                                {title}
+                            </Heading>
+                            {props.subTitle && <Text fontSize={"12px"}>{subTitle}</Text>}
+                        </Flex>}
+                        {getLang() != "mn" && <><Heading size='sm' whiteSpace={"nowrap"} overflow={"hidden"} fontFamily={FONT_FAMILY}>
+                            {title}
                         </Heading>
-                        {props.subTitle && <Text fontSize={"12px"}>{props.subTitle}</Text>}
+                            {props.subTitle && <Text fontSize={"12px"}>{subTitle}</Text>}</>}
                     </Box>
                 </Flex>
             </Flex>
         </CardHeader>
         {body && <CardBody>
-            <Flex 
+            <Flex
                 flex={1} gap={4} direction={"column"} padding={0}
             >
                 {...body}
@@ -177,15 +322,264 @@ function ThemeInfoCard(props: {
     </Card>
 }
 
-function ThemeComponent(props: { children?: any, type?: "primary" | "plain" }) {
-    const { header, body, footer } = enumChildren(props.children)
-    return <div style={{width: "100%", height:"100%", display:"flex", flexDirection:"column", background: props.type == "primary" ? "#319795" : "#fff", color: props.type == "primary" ? "#fff" : "#000" }}>
-        <div style={{flexGrow:0, margin:16}}>{header.props.children}</div>
-        {(!props.type)&&<hr/>}
-        <div style={{flex:1, overflow:"auto", margin:12}}>{body}</div>
-        {(!props.type)&&<hr/>}
-        <div style={{flexGrow:0, margin:12, gap: 12, display:"flex", flexDirection:"column"}}>{footer.props.children}</div>
+function ThemeComponent(props: { children?: any, type?: "primary" | "plain", subHeader?: boolean, bodyOnly?: boolean }) {
+    let { header, body, footer } = enumChildren(props.children)
+    body = handleListItem(body)
+    if (props.bodyOnly) {
+        return <div style={{ flex: 1, overflow: "auto", margin: 0, gap: 12, display: "flex", flexDirection: "column" }}>{body}</div>
+    }
+    return <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", background: props.type == "primary" ? "#319795" : "#fff", color: props.type == "primary" ? "#fff" : "#000", fontFamily: FONT_FAMILY }}>
+        <div style={{ flexGrow: 0, margin: props.subHeader ? 0 : 10, marginBottom: props.subHeader ? 0 : 6 }}>{header?.props.children}</div>
+        {(!props.type) && <hr />}
+        <div style={{ flex: 1, overflow: "auto", margin: 12, gap: 12, display: "flex", flexDirection: "column" }}>{body}</div>
+        {(!props.type) && <hr />}
+        <div style={{ flexGrow: 0, margin: 12, marginTop: 6, gap: 8, display: "flex", flexDirection: "column" }}>{footer?.props.children}</div>
     </div>
+}
+
+function ThemePlate(props: { children?: any }) {
+    return <div style={{ width: "100%", height: "100%", boxShadow: "2px 2px 6px rgba(0, 0, 0, 0.1)" }}>
+        {props.children}
+    </div>
+}
+
+function ThemeTabs(props: {
+    tab?: string
+    onChange?: ((tab: string) => void)
+    labels?: string[],
+    children?: any
+    type?: "primary" | "plain"
+}): JSX.Element {
+    const { header, body, footer } = enumChildren(props.children)
+    console.log(header, body, footer)
+    return <ThemeComponent subHeader type={props.type}>
+        <Header>
+            <Tabs transform={isRtlLang() ? "scaleX(-1)" : undefined} isFitted index={props.labels?.indexOf(props?.tab ?? "")} onChange={i => { props?.onChange?.((props.labels?.[i]) ?? "") }} width={"100%"}>
+                <TabList>
+                    {props.labels?.map(label => {
+                        let _label: any = label
+                        if (getLang() == "mn") {
+                            _label = <div dangerouslySetInnerHTML={{ __html: splitMongolian(label) }} />
+                        }
+                        return <Tab transform={isRtlLang() ? "scaleX(-1)" : undefined}>{_label}</Tab>
+                    })}
+                </TabList>
+            </Tabs>
+        </Header>
+        {body}
+        {footer}
+    </ThemeComponent>
+}
+
+function ThemeList(props: { children?: any, type?: "primary" | "plain" }): JSX.Element {
+    return <ThemeComponent bodyOnly type={props.type}>
+        {props.children}
+    </ThemeComponent>
+}
+
+function ThemeButton(props: {
+    icon?: JSX.Element
+    text?: string
+    onClick?: () => void
+    type?: "text" | "primary" | "danger"
+    disabled?: boolean
+    embed?: "left" | "middle" | "right"
+}): JSX.Element {
+    if (!props.text) {
+        const leftRadius = props.embed == "left" || props.embed == "middle" ? 0 : 20
+        const rightRadius = props.embed == "right" || props.embed == "middle" ? 0 : 20
+        return <IconButton
+            aria-label=''
+            icon={props.icon}
+            {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost" } : {})}
+            {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
+            {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
+            {...(props.type == undefined ? { colorScheme: "teal", variant: "outline", background: "gray.50" } : {})}
+            {...(props.disabled ? { colorScheme: "gray", variant: "solid" } : {})}
+            onClick={props.disabled ? () => { } : props.onClick}
+            style={{ height: 32, width: 32 }}
+            borderLeftRadius={leftRadius}
+            borderRightRadius={rightRadius}
+        />
+    }
+    const leftRadius = props.embed == "left" || props.embed == "middle" ? 0 : 6
+    const rightRadius = props.embed == "right" || props.embed == "middle" ? 0 : 6
+    return <Button
+        {...(!isRtlLang() ? { leftIcon: props.icon } : {})}
+        {...(isRtlLang() ? { rightIcon: props.icon } : {})}
+        {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost" } : {})}
+        {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
+        {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
+        {...(props.type == undefined ? { colorScheme: "teal", variant: "outline", background: "gray.50" } : {})}
+        {...(props.disabled ? { colorScheme: "gray", variant: "solid" } : {})}
+        onClick={props.disabled ? () => { } : props.onClick}
+        style={{ height: 32, paddingLeft: 12, paddingRight: 12 }}
+        borderLeftRadius={leftRadius}
+        borderRightRadius={rightRadius}
+    >
+        {props.text}
+    </Button>
+}
+
+function ThemeTinyButton(props: {
+    icon?: JSX.Element
+    text?: string
+    onClick?: () => void
+    type?: "text" | "primary" | "danger"
+    disabled?: boolean
+    embed?: "left" | "middle" | "right"
+}): JSX.Element {
+    const leftRadius = props.embed == "left" || props.embed == "middle" ? 0 : 20
+    const rightRadius = props.embed == "right" || props.embed == "middle" ? 0 : 20
+    if (!props.text) {
+        return <IconButton
+            aria-label=''
+            size={"xs"}
+            icon={props.icon}
+            {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost", color: "gray.500" } : {})}
+            {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
+            {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
+            {...(props.type == undefined ? { colorScheme: "teal", variant: "outline", color: "teal.700" } : {})}
+            {...(props.disabled ? { colorScheme: "gray", variant: "solid" } : {})}
+            onClick={props.disabled ? () => { } : props.onClick}
+            style={{ height: 24 }}
+            borderLeftRadius={leftRadius}
+            borderRightRadius={rightRadius}
+        />
+    }
+    return <Button
+        size={"xs"}
+        {...(!isRtlLang() ? { leftIcon: props.icon } : {})}
+        {...(isRtlLang() ? { rightIcon: props.icon } : {})}
+        {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost", color: "gray.500" } : {})}
+        {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
+        {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
+        {...(props.type == undefined ? { colorScheme: "teal", variant: "outline", color: "teal.700" } : {})}
+        {...(props.disabled ? { colorScheme: "gray", variant: "solid" } : {})}
+        onClick={props.disabled ? () => { } : props.onClick}
+        style={{ height: 24, borderRadius: 12 }}
+        borderLeftRadius={leftRadius}
+        borderRightRadius={rightRadius}
+    >
+        {props.text}
+    </Button>
+}
+
+function ThemeTextArea(props: {
+    placeholder?: string
+    onInput?: (value: string) => void
+    onChange?: (value: string) => void
+    autoFocus?: boolean
+    autoGrow?: boolean
+    rows?: number
+    value?: string
+    disabled?: boolean
+    embed?: "left" | "middle" | "right"
+}) {
+    const { width, height } = useWindowSize();
+    const [rows, setRows] = useState(props.rows ?? 3)
+    const ref = useRef(null)
+
+    const [areaHeight, setAreaHeight] = useState(32 * (props.rows??1))
+
+    const tlRadius = (props.embed == "left" || props.embed == "middle") ? 0 : 6
+    const trRadius = (props.embed == "right" || props.embed == "middle") ? 0 : 6
+    const blRadius = (props.embed == "left" || props.embed == "middle") && areaHeight == 32 ? 0 : 6
+    const brRadius = (props.embed == "right" || props.embed == "middle") && areaHeight == 32 ? 0 : 6
+
+    useEffect(() => {
+        if (props.autoGrow && ref.current) {
+            if (getLang() == "mn") {
+                const text = (ref.current as any)?.value
+                const width = (ref.current as any)?.offsetWidth
+                if (text.length * 256 / width < 100) {
+                    const mdiv = document.createElement("div")
+                    mdiv.style.opacity = "0"
+                    mdiv.style.fontFamily = FONT_FAMILY
+                    mdiv.innerText = text.split(" ").join("\n")
+                    document.body.appendChild(mdiv)
+                    console.log(mdiv.clientWidth)
+                    setAreaHeight(Math.max(mdiv.clientWidth + 16, 32*rows))
+                    mdiv.remove()
+                } else {
+                    setAreaHeight(Math.max(text.length * 256 / width, 128, 32*rows))
+                }
+            } else {
+                const mdiv = document.createElement("div")
+                mdiv.style.opacity = "0"
+                mdiv.innerText = (ref.current as any)?.value
+                mdiv.style.width = (ref.current as any)?.offsetWidth + "px"
+                mdiv.style.fontFamily = FONT_FAMILY
+                document.body.appendChild(mdiv)
+                setRows(Math.max(mdiv.offsetHeight / 24 + 1, props.rows || 3))
+                mdiv.remove()
+            }
+        }
+    })
+
+    return <Textarea
+        ref={ref}
+        resize="none"
+        width={"100%"}
+        rows={rows}
+        padding={4.2}
+        placeholder={props.placeholder}
+        onInput={(e) => { if (props.onInput) props.onInput(e.currentTarget.value) }}
+        onChange={(e) => { if (props.onChange) props.onChange(e.currentTarget.value) }}
+        autoFocus={props.autoFocus}
+        value={(rows == 1 && !props.autoGrow) ? props.value?.replaceAll("\n", "") : props.value}
+        disabled={props.disabled}
+        maxHeight={height / 2}
+        fontFamily={FONT_FAMILY}
+        style={{
+            borderTopLeftRadius: tlRadius,
+            borderTopRightRadius: trRadius,
+            borderBottomLeftRadius: blRadius,
+            borderBottomRightRadius: brRadius,
+            ...(isRtlLang() ? { direction: "rtl" } : {}),
+            ...(getLang() == "mn" ? {
+                ...(areaHeight == 32 ? {} : { writingMode: "vertical-lr" }),
+                height: areaHeight
+            } : {})
+        }}
+    />
+}
+
+async function showToast(children: any) {
+    return new Promise<void>(resolve => {
+        const div = document.createElement("div");
+        div.className = styles.show;
+        document.body.appendChild(div);
+
+        const root = createRoot(div);
+        const close = () => {
+            div.classList.add(styles.hide);
+
+            setTimeout(() => {
+                root.unmount();
+                div.remove();
+                resolve()
+            }, 300);
+        };
+
+        setTimeout(() => {
+            close();
+        }, 5000);
+
+        root.render(
+            <ChakraProvider>
+                <div style={{
+                    position: "fixed", bottom: 24, width: window.innerWidth, textAlign: "center"
+                }}>
+                    <div style={{
+                        padding: 8, paddingLeft: 16, paddingRight: 16, border: "1px solid lightgray", borderRadius: 1000, display: "inline-block", fontFamily: FONT_FAMILY, background: "white"
+                    }}>
+                        {children}
+                    </div>
+                </div>
+            </ChakraProvider>
+        );
+    })
 }
 
 /** LEGACY */
@@ -313,7 +707,7 @@ function themePopover(button, children) {
     </Popover>
 }
 
-function ThemeButton(props: {
+function ThemeButtonOld(props: {
     icon?: JSX.Element
     text?: string
     onClick?: () => void
@@ -343,7 +737,8 @@ function ThemeButton(props: {
     const ret = <Button
         size={"sm"}
         colorScheme={danger ? "red" : (props.disabled ? 'gray' : 'teal')}
-        leftIcon={props.icon}
+        leftIcon={isRtlLang() ? undefined : props.icon}
+        rightIcon={isRtlLang() ? props.icon : undefined}
         onClick={() => {
             if (!props.disabled) {
                 (props.onClick ?? (() => { }))()
@@ -372,7 +767,7 @@ function ThemeButton(props: {
     }
 }
 
-function ThemeTinyButton(props: {
+function ThemeTinyButtonOld(props: {
     icon?: JSX.Element
     text?: string
     onClick?: () => void
@@ -401,7 +796,8 @@ function ThemeTinyButton(props: {
     const ret = <Button
         size={"xs"}
         colorScheme={danger ? "red" : (props.disabled ? 'gray' : 'teal')}
-        leftIcon={props.icon}
+        leftIcon={isRtlLang() ? undefined : props.icon}
+        rightIcon={isRtlLang() ? props.icon : undefined}
         onClick={() => {
             if (!props.disabled) {
                 (props.onClick ?? (() => { }))()
@@ -470,7 +866,7 @@ function ThemeButtonGroup(props: { children: any }) {
     </ButtonGroup>
 }
 
-function ThemeTextArea(props: {
+function ThemeTextAreaOld(props: {
     placeholder?: string
     onInput?: (v: string) => void
     onChange?: (value: string) => void
@@ -520,6 +916,10 @@ function ThemeTextArea(props: {
             variant={props.disabled ? 'filled' : 'outline'}
             maxHeight={height / 2}    // 权宜之计
             borderTopRightRadius={props.rightAttachment ? 0 : undefined}
+            style={{
+                // ...(getLang()=="mn"?{writingMode:"vertical-lr"}:{}),
+                ...(isRtlLang() ? { direction: "rtl" } : {})
+            }}
         />
         {rightAttachment && <InputRightAddon style={["ThemeButton", "ThemeSelect"].includes(props.rightAttachment?.type.name) ? { padding: 0 } : {}}>
             {rightAttachment}
@@ -749,7 +1149,7 @@ function ThemeCheckBox(props: {
     onClick?: (checked: boolean) => void
 }): JSX.Element {
     const id = nanoid()
-    return <FormControl display='flex' alignItems='center'>
+    return <FormControl display='flex' alignItems='center' style={{ height: 32 }}>
         <FormLabel htmlFor={id} mb='0'>
             {props.text}
         </FormLabel>
@@ -780,11 +1180,7 @@ function ThemeModal(props: {
             ` ${max && styles["modal-container-max"]}`
         }>
             <div className={styles["modal-header"]}>
-                <div
-                    className={styles["modal-title"]}
-                >
-                    {props.title}
-                </div>
+                <ThemeHeading>{props.title}</ThemeHeading>
                 {(props.headerActions ?? true) && <div className={styles["modal-header-actions"]}>
                     <ButtonGroup>
                         <ThemeButton
@@ -801,7 +1197,11 @@ function ThemeModal(props: {
                 </div>}
             </div>
             <div className={styles["modal-content"]}>{props.children}</div>
-            <div className={styles["modal-footer"]}>{props.footer}</div>
+            <div className={styles["modal-footer"]}>
+                <div style={{ width: "100%" }}>
+                    {props.footer}
+                </div>
+            </div>
         </div>
     </div>
 }
@@ -813,7 +1213,7 @@ function ThemeAvatar(props: { icon?: JSX.Element | string }) {
     return <Avatar icon={<div style={{ scale: "2" }}>{props.icon}</div>} size={"sm"} style={{ background: "#ffffff00" }} />
 }
 
-function ThemeList(props: { children?: any }) {
+function ThemeListOld(props: { children?: any }) {
     return <div style={{
         display: "flex",
         flexDirection: "column",
@@ -915,7 +1315,7 @@ function ThemeListItem(props: {
     </div>
 }
 
-function ThemeTabs(props: {
+function ThemeTabsOld(props: {
     tab?: string
     onChange?: ((tab: string) => void)
     labels?: string[],
@@ -969,18 +1369,21 @@ function ThemeSelect(props: {
     options?: string[]
     value?: string
     onChange?: (value: string) => void
-    embed?: "left" | "right"
+    embed?: "left" | "middle" | "right"
 }): JSX.Element {
     const [width, setWidth] = useState(0)
-    return <Select
-        value={props.value}
+    const select = <Select
         onChange={(e) => { props.onChange?.(e.currentTarget.value) }}
-        {...props.embed && {
-            ...(props.embed == "right" ? { borderLeftRadius: 0 } : { borderRightRadius: 0 }),
-        }}
-        style={{ padding: 4, paddingRight: 32 }}
+        value={props.value}
+        style={{ padding: 4, paddingRight: 32, height: 32 }}
         width={width}
         fontSize={16}
+        size={"sm"}
+        borderRadius={6}
+        fontFamily={FONT_FAMILY}
+        {...props.embed == "left" && { borderLeftRadius: 0 }}
+        {...props.embed == "middle" && { borderRadius: 0 }}
+        {...props.embed == "right" && { borderRightRadius: 0 }}
     >
         {props.options?.map((v, i) => {
             const mdiv = document.createElement("div")
@@ -989,13 +1392,16 @@ function ThemeSelect(props: {
             mdiv.style.fontSize = "16px"
             document.body.appendChild(mdiv)
             const _width = mdiv.clientWidth + 48
-            if(_width > width){setWidth(_width)}
+            if (_width > width) { setWidth(_width) }
             mdiv.remove()
             return <option value={v}>
                 {v}
             </option>
         })}
     </Select>
+    return <div style={{ display: "inline-block" }}>
+        {select}
+    </div>
 }
 
 async function showConfirm(title?: string, content?: JSX.Element, danger?: boolean) {

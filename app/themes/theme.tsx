@@ -9,6 +9,14 @@ export interface Theme{
         (props:{
             children?:any
         })=>JSX.Element
+    heading:
+        (props:{
+            children?: any
+        })=>JSX.Element
+    textBlock:
+        (props:{
+            children?:any
+        })=>JSX.Element
     row:
         (props:{
             children?:any
@@ -17,6 +25,23 @@ export interface Theme{
         (props:{
             children?: any
             type?: "primary" | "plain"
+        })=>JSX.Element
+    plate:
+        (props:{
+            children?:any
+        })=>JSX.Element
+    tabs:
+        (props:{
+            tab?:string
+            onChange?:((tab:string)=>void)
+            labels?:string[]
+            children?: any
+            type?: "primary" | "plain"
+        })=>JSX.Element
+    group:
+        (props:{
+            children?: any
+            isAttached?: boolean
         })=>JSX.Element
     messageCard:(props?:{
         children?:any
@@ -33,6 +58,7 @@ export interface Theme{
             onClick?:() => void
             type?:"text" | "primary" | "danger"
             disabled?:boolean
+            /**  @deprecated */
             popover?:any
         }) => JSX.Element
     tinyButton:
@@ -42,6 +68,7 @@ export interface Theme{
             onClick?:() => void
             type?:"text" | "primary" | "danger"
             disabled?:boolean
+            /**  @deprecated */
             popover?:any
         }) => JSX.Element
     buttonGroup:
@@ -80,8 +107,11 @@ export interface Theme{
             onInput?:(value:string)=>void
             onChange?:(value:string)=>void
             autoFocus?:boolean
+            autoGrow?:boolean
             rows?:number
+            /** @deprecated */
             leftAttachment?:JSX.Element
+            /** @deprecated */
             rightAttachment?:JSX.Element
             value?:string
             disabled?:boolean
@@ -107,20 +137,14 @@ export interface Theme{
     list:
         (props:{
             children?:any
+            type?: "primary" | "plain"
         })=>JSX.Element
-    listItem:
-        (props:{
-            title?: string
-            subTitle?: string
-            children?: any
-        })=>JSX.Element
-    tabs:
-        (props:{
-            tab?:string
-            onChange?:((tab:string)=>void)
-            labels?:string[]
-            children?: any[]
-        })=>JSX.Element
+    // listItem:
+    //     (props:{
+    //         title?: string
+    //         subTitle?: string
+    //         children?: any
+    //     })=>JSX.Element
     select:
         (props:{
             options?:string[]
@@ -129,13 +153,19 @@ export interface Theme{
         })=>JSX.Element
     showConfirm:
         (title?:string, content?:JSX.Element, danger?:boolean)=>Promise<boolean>
+    showToast:
+        (children: any)=>Promise<void>
 }
 
 let theme:Theme = Default
 
 export let ThemeWrapper = theme.wrapper
+export let Heading = theme.heading
+export let TextBlock = theme.textBlock
 export let Row = theme.row
 export let Component = theme.component
+export let Plate = theme.plate
+export let Group = theme.group
 /** @deprecated */
 export let MessageCard = theme.messageCard
 /** @deprecated */
@@ -153,11 +183,13 @@ export let CheckBox = theme.checkBox
 /** @deprecated */
 export let Modal = theme.modal
 export let Avatar = theme.avatar
+/** @deprecated */
 export let List = theme.list
-export let ListItem = theme.listItem
+// export let ListItem = theme.listItem
 export let Tabs = theme.tabs
 export let Select = theme.select
 export let showConfirm = theme.showConfirm
+export let showToast = theme.showToast
 
 export function Header(props:{children:any}) {
     return <>{props.children}</>
@@ -180,5 +212,13 @@ export function Center(props:{children:any}) {
 }
 
 export function Right(props:{children:any}) {
+    return <>{props.children}</>
+}
+
+export function ListItem(props:{
+    title?:string
+    subTitle?:string
+    children:any
+}) {
     return <>{props.children}</>
 }

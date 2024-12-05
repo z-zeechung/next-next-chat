@@ -68,6 +68,7 @@ const es: PartialLocaleType = {
       KBDesc: "Inyecte sus documentos en la base de conocimiento para permitir que el gran modelo responda a sus preguntas con mayor precisión. Puede elegir usar una base de conocimiento tradicional, una base de conocimiento vectorial o una base de conocimiento gráfico.",
       KBDetail: "Detalle",
       SeeKB: "Ver bases de conocimiento",
+      MakeTopicPrompt: `Resumir y volver directamente al breve tema de este diálogo. El tema debe controlarse dentro de diez palabras, con un carácter inicial de emoji. No explique, no puntuación, no palabras de tono, no texto superfluo, no engrosamiento. Si no hay tema, regrese directamente. "💬 Charla"`
     }
   },
 
