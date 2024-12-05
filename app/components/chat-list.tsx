@@ -150,7 +150,7 @@ export function ChatList(props: { narrow?: boolean, managing?:boolean }) {
             {sessions.map((item, i) => (<>
               <InfoCard
                 icon={item.avatar?<div dangerouslySetInnerHTML={{__html:item.avatar}}/>:(item.emoji??emoji[DEFAULT_EMOJI])}
-                title={item.topic}
+                title={item.topic.length>0?item.topic:Locale.NextChat.ChatArea.DefaultTopic}
                 subTitle={Locale.NextChat.SideBar.CountOfChats(item.messages.length)}
                 onClick={()=>{
                   navigate(Path.Chat);

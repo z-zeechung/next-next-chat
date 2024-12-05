@@ -2,7 +2,7 @@ import { createContext, useEffect, useRef, useState } from "react";
 import { autoGrowTextArea, useMobileScreen, useWindowSize } from "../utils";
 import { Box, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Stack, StackDivider } from "@chakra-ui/react";
 import { Message, MessageElement } from "../message/Message";
-import { Button, List, MessageCard, TextArea, TinyButton, ListItem, Avatar, Tabs } from "../themes/theme";
+import { Button, List, MessageCard, TextArea, TinyButton, ListItem, Avatar, Tabs, Component, Header, Row, Left, Right, Select, Footer, Plate } from "../themes/theme";
 
 import { ControllablePromise } from "../utils/controllable-promise";
 import { ClientApi } from "../client/api";
@@ -16,15 +16,20 @@ import DeleteIcon from "../icons/bootstrap/trash3.svg"
 import DropDownIcon from "../icons/bootstrap/chevron-down.svg"
 import AddIcon from "../icons/bootstrap/plus-lg.svg"
 import AutoIcon from "../icons/bootstrap/play-fill.svg"
+import ReturnIcon from "../icons/bootstrap/arrow-90deg-left.svg";
+
 import { RolePlay } from "./devpage/roleplay";
 import { Scripting } from "./devpage/scripting";
 import { runPython } from "../utils/pyodide";
 import { DEFAULT_SYSTEM_TEMPLATE } from "../constant";
 
-import Locale from "../locales";
+import Locale, { ALL_LANG_OPTIONS, changeLang, getLang, isRtlLang } from "../locales";
 import { KnowledgeBase } from "../knowledgebase/knowledgebase";
+import { useNavigate } from "react-router-dom";
 
 export function DevPage() {
+
+    const navigate = useNavigate()
 
     const [chatAreaSize, setChatAreaSize] = useState([0, 0])
     const isMobileScreen = useMobileScreen();
@@ -57,146 +62,49 @@ export function DevPage() {
     const useRoleName = useState("N²CHAT")
     const useDocuments = useState<string[]>([])
 
-    return <Layout useChatAreaSize={[chatAreaSize, setChatAreaSize]} useShow={useShow}>
-        <DevArea
-            usePrompt={usePrompt}
-            useGreeting={useGreeting}
-            usePromise={usePromise}
-            useAvatar={useAvatar}
-            useJavaScript={useJavaScript}
-            useSearch={useSearch}
-            usePaint={usePaint}
-            useScript={useScript}
-            useRoleName={useRoleName}
-            useDocuments={useDocuments}
-        />
-        <ChatArea
-            width={chatAreaSize[0]}
-            height={chatAreaSize[1]}
-            mobile={isMobileScreen ? true : false}
-            useMessages={useMessages}
-            useMeta={useMeta}
-            useShow={useShow}
-            usePromise={usePromise}
-            usePrompt={usePrompt}
-            useGreeting={useGreeting}
-            useAvatar={useAvatar}
-            useSearch={useSearch}
-            usePaint={usePaint}
-            useScript={useScript}
-            useDocuments={useDocuments}
-        />
-    </Layout>
-}
+    const tabs = [Locale.DevPage.RolePlay, Locale.DevPage.Live2D, Locale.DevPage.Script]
+    const [tab, setTab] = useState(tabs[0])
 
-function Layout(props: { children, useChatAreaSize, useShow }) {
-    const isMobileScreen = useMobileScreen();
-    return isMobileScreen
-        ?
-        <MobileLayout {...props}>
-            {props.children}
-        </MobileLayout>
-        :
-        <DesktopLayout useChatAreaSize={props.useChatAreaSize}>
-            {props.children}
-        </DesktopLayout>
-}
-
-function DevArea(props: any) {
-    return <Tabs labels={[Locale.DevPage.RolePlay, Locale.DevPage.Live2D, Locale.DevPage.Script]}>
-        <RolePlay {...props} />
-        <></>
-        <Scripting {...props} />
-        <></>
-    </Tabs>
-    // return <RolePlay {...props}/>
-}
-
-function DesktopLayout(props: { children: JSX.Element[], useChatAreaSize }) {
-    const { width, height } = useWindowSize()
-    const [left, setLeft] = useState(0.4)
-    const [hover, setHover] = useState(false)
-    // const [chatAreaSize, setChatAreaSize] = props.useChatAreaSize
-
-    // const boxRef = useRef(null)
-    // const [boxHeight, setBoxHeight] = useState(height)
-
-    // useEffect(() => {
-    //     if (boxRef.current) {
-    //         setBoxHeight((boxRef.current as HTMLElement).clientHeight)
-    //     }
-    //     setChatAreaSize([width - Math.max(left * width, 300) - 24, boxHeight - 80])
-    // }, [setChatAreaSize])
-
-    return <div style={{ width: "100%", height: "100%" }}>
-        <table style={{ width: "100%", height: "100%", borderCollapse: "separate", borderSpacing: 8 }}>
-            <tr style={{ height: "100%" }}>
-                <td width={"33%"}>
-                    <Card width={"100%"} height={"100%"}>
-                        <CardBody width={"100%"} height={"100%"} padding={0}>
-                            {props.children[0]}
-                        </CardBody>
-                    </Card>
-                </td>
-                <td width={"67%"}>
-                    <Card width={"100%"} height={"100%"}>
-                        <CardBody width={"100%"} height={"100%"} padding={0}>
-                            {props.children[1]}
-                        </CardBody>
-                    </Card>
-                </td>
-            </tr>
-        </table>
-    </div>
-}
-
-function MobileLayout(props: { children: JSX.Element[], useChatAreaSize, useShow }) {
-    const boxRef = useRef(null)
-    const { width, height } = useWindowSize()
-    const [boxHeight, setBoxHeight] = useState(height)
-    const [chatAreaSize, setChatAreaSize] = props.useChatAreaSize
-    const [show, setShow] = props.useShow
-
-    useEffect(() => {
-        if (boxRef.current) {
-            setBoxHeight((boxRef.current as HTMLElement).clientHeight)
-        }
-        setChatAreaSize([width * 0.7, boxHeight - 16])
-    }, [setChatAreaSize, boxRef, setBoxHeight])
-
-    return <div ref={boxRef} style={{ width: "100%", height: "100%", position: "relative" }}>
-        {props.children[0]}
-        {show && <div style={{
-            position: "absolute",
-            right: 4,
-            top: 4,
-            display: "flex",
-            flexDirection: "column",
-            gap: "8",
-            width: 300,
-            height: boxHeight,
-            padding: 4
-        }}>
-            <Card width={"100%"} height={"100%"}>
-                <CardBody width={"100%"} height={"100%"} padding={0}>
-                    {props.children[1]}
-                </CardBody>
-            </Card>
-        </div>}
-        {!show && <div style={{
-            position: "absolute",
-            right: 12,
-            top: 12
-        }}>
-            <TinyButton text={Locale.DevPage.Expand} onClick={() => {
-                setShow(true)
-            }} />
-        </div>}
-    </div>
+    return <Component>
+        <Header>
+            <Row>
+                <Left>
+                    <Button
+                        icon={<ReturnIcon />}
+                        text={Locale.NextChat.ChatArea.Return}
+                        onClick={() => navigate("/")}
+                    />
+                </Left>
+                <Right>
+                    <Select options={Object.values(ALL_LANG_OPTIONS)}
+                        value={ALL_LANG_OPTIONS[getLang()]}
+                        onChange={(value) => {
+                            changeLang(Object.values(ALL_LANG_OPTIONS).reduce((acc, key, index) => Object.assign(acc, { [key]: Object.keys(ALL_LANG_OPTIONS)[index] }), {})[value])
+                        }
+                        }
+                    />
+                </Right>
+            </Row>
+        </Header>
+        <div style={{ width: "100%", height: "100%", display: "flex", gap: 16, flexDirection:isRtlLang()?"row-reverse":"row" }}>
+            <div style={{ height: "100%", width: "35%" }}>
+                <Plate>
+                    <Tabs type="plain" tab={tab} labels={tabs} onChange={setTab} >
+                        {tab == tabs[0] && <RolePlay {...{usePrompt, useGreeting, usePromise, useAvatar, useJavaScript, useSearch, usePaint, useScript, useRoleName, useDocuments}}/>}
+                    </Tabs>
+                </Plate>
+            </div>
+            <div style={{ height: "100%", flex: "auto" }}>
+                <Plate>
+                    <ChatArea {...{ useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments }} />
+                </Plate>
+            </div>
+        </div>
+    </Component>
 }
 
 function ChatArea(props: {
-    width, height, mobile?, useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments
+    width?, height?, mobile?, useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments
 }) {
     const [messages, setMessages] = props.useMessages
     const [meta, setMeta] = props.useMeta
@@ -221,7 +129,7 @@ function ChatArea(props: {
     const inputRef = useRef(null)
     const [chatHeight, setChatHeight] = useState(0)
 
-    const tools = (appendMessage:(message:Message)=>void)=>[
+    const tools = (appendMessage: (message: Message) => void) => [
         ...(search ? [
             {
                 function: function web(query) {
@@ -238,9 +146,9 @@ function ChatArea(props: {
         ...(script ? [
             {
                 function: async function runPythonScript(code) {
-                    try{
+                    try {
                         return await runPython(code)
-                    }catch(e){
+                    } catch (e) {
                         return JSON.stringify(e)
                     }
                 },
@@ -256,7 +164,7 @@ function ChatArea(props: {
             {
                 function: async function drawImage(prompt) {
                     const img = await ClientApi.paint(prompt) as string
-                    appendMessage({type:"image", role:"assistant", src:img, content:prompt})
+                    appendMessage({ type: "image", role: "assistant", src: img, content: prompt })
                     return "图片画好了，已经展示给用户了，剩下的你就不用管了"
                 },
                 description: {
@@ -269,7 +177,7 @@ function ChatArea(props: {
         ] : []),
         ...(documents.length > 0 ? [
             {
-                function: async function getFromKB(query){
+                function: async function getFromKB(query) {
                     const results = await new KnowledgeBase("nnchat-devrole-attatchment-tempstore-kb").query(query, 4)
                     return JSON.stringify(results)
                 },
@@ -288,6 +196,89 @@ function ChatArea(props: {
             setChatHeight((boxRef.current as HTMLElement).clientHeight - (inputRef.current as HTMLElement).clientHeight - 48)
         }
     }, [setChatHeight, boxRef, inputRef])
+
+    return <Component type="plain">
+        <Header>
+            <Row>
+                <Right>
+                    <ButtonGroup>
+                        {promise && <TinyButton
+                            text={Locale.DevPage.Stop}
+                            onClick={() => {
+                                if (promise) {
+                                    promise.abort()
+                                    setPromise(undefined)
+                                }
+                            }}
+                        />}
+                        {!promise && <TinyButton text={Locale.DevPage.Clear} type="primary" onClick={() => {
+                            setMessages([])
+                            setMeta({})
+                        }} />}
+                        <TinyButton text={Locale.DevPage.ChangeModel} />
+                        {props.mobile && <TinyButton text={Locale.DevPage.Collapse} onClick={() => {
+                            setShow(false)
+                        }} />}
+                    </ButtonGroup>
+                </Right>
+            </Row>
+        </Header>
+        {greeting.concat(messages).map((msg, i) => <div>
+            {msg.role == "user" ? <UserIcon /> :
+                (msg.role == "system" ? <SystemIcon /> :
+                    (avatar)
+                )
+            }
+            <MessageCard type={msg.role}>
+                <MessageElement message={msg} />
+            </MessageCard>
+        </div>)}
+        <Footer>
+            <TextArea
+                rows={1}
+                value={input}
+                onChange={v => {
+                    setInput(v)
+                }}
+                rightAttachment={
+                    <Button text={Locale.DevPage.Send} type="primary" onClick={async () => {
+                        if (input.trim().length <= 0) { return }
+                        let _messages = messages.concat([{ type: "text", role: "user", content: input }])
+                        setMessages(_messages.slice().concat([
+                            { type: "text", role: "assistant", content: "" }
+                        ]))
+                        const promise = ClientApi.chat(
+                            [
+                                { type: "text", role: "system", content: Locale.NextChat.SystemPrompt() },
+                                ...(prompt.trim != "" ? [{ type: "text", role: "system", content: prompt }] : []),
+                                ...greeting,
+                                ...messages.slice(),
+                                { type: "text", role: "user", content: input }
+                            ],
+                            msg => {
+                                setMessages(_messages.slice().concat([
+                                    { type: "text", role: "assistant", content: msg }
+                                ]))
+                            },
+                            {
+                                tools: tools((msg) => {
+                                    _messages.push(msg)
+                                })
+                            }
+                        )
+                        setPromise(promise)
+                        promise.then(resp => {
+                            setPromise(undefined)
+                            setMessages(_messages.slice().concat([
+                                { type: "text", role: "assistant", content: resp }
+                            ]))
+                        })
+                        setInput("")
+                    }} />
+                }
+            />
+        </Footer>
+    </Component>
 
     return <div style={{
         width: "100%", height: "100%", position: "relative", padding: 24, paddingTop: 0
@@ -328,7 +319,7 @@ function ChatArea(props: {
                                 ]))
                                 const promise = ClientApi.chat(
                                     [
-                                        {type:"text", role:"system", content:Locale.NextChat.SystemPrompt()},
+                                        { type: "text", role: "system", content: Locale.NextChat.SystemPrompt() },
                                         ...(prompt.trim != "" ? [{ type: "text", role: "system", content: prompt }] : []),
                                         ...greeting,
                                         ...messages.slice(),
@@ -340,7 +331,7 @@ function ChatArea(props: {
                                         ]))
                                     },
                                     {
-                                        tools:tools((msg)=>{
+                                        tools: tools((msg) => {
                                             _messages.push(msg)
                                         })
                                     }

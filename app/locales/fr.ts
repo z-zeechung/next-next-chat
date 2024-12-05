@@ -68,6 +68,7 @@ const fr: PartialLocaleType = {
       KBDesc: "Injectez vos documents dans la base de connaissances pour permettre au grand modèle de répondre plus précisément à vos questions. Vous pouvez choisir d'utiliser une base de connaissances traditionnelle, une base de connaissances vectorielle ou une base de connaissances graphique.",
       KBDetail: "Détails",
       SeeKB: "Voir les bases de connaissances",
+      MakeTopicPrompt: `Résumer et revenir directement au bref sujet de cette conversation. Le sujet doit être contrôlé à moins de dix mots avec un emoji au début. Ne pas expliquer, ne pas Ponctuation, pas de mots de ton, pas de texte superflu, pas d'épaississement. S'il n'y a pas de sujet, revenez directement à "💬 Bavardage".`
     }
   },
 

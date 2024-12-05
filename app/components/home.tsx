@@ -158,6 +158,18 @@ const useHasHydrated = () => {
 //   document.head.appendChild(linkEl);
 // };
 
+function loadFont(fontName:string, fontUrl:string, fontFormat:string) {
+  const style = document.createElement('style');
+  style.type = 'text/css';
+  style.innerHTML = `
+      @font-face {
+          font-family: '${fontName}';
+          src: url('${fontUrl}') format('${fontFormat}'); 
+      }
+  `;
+  document.head.appendChild(style);
+}
+
 import chatStyles from "./chat.module.scss";
 function Embedded(props: { element }) {
   const navigate = useNavigate()
@@ -200,9 +212,10 @@ function Screen() {
   const shouldTightBorder =
     getClientConfig()?.isApp || (config.tightBorder && !isMobileScreen);
 
-  // useEffect(() => {
-  //   loadAsyncGoogleFont();
-  // }, []);
+  useEffect(() => {
+    // loadAsyncGoogleFont();
+    loadFont("NotoSansMongolian", '/fonts/NotoSansMongolian-Regular.woff2', "woff2");
+  }, []);
 
   // useEffect(()=>{
   //   if(isAuth) {navigate("/auth")}
@@ -213,9 +226,9 @@ function Screen() {
     <Route path="/chat" element={<Chat />}/>
     <Route path="/test" element={<TestPage />} />
     <Route path="/docx" element={<Embedded element={<DocumentDocx />} />} />
-    <Route path="/devrole" element={<Embedded element={<DevPage />} />} />
+    <Route path="/devrole" element={<DevPage />} />
     <Route path="/audio" element={<Embedded element={<AudioPage />} />} />
-    <Route path="/knowledge" element={<Embedded element={<KnowledgeBase />} />} />
+    <Route path="/knowledge" element={<KnowledgeBase />} />
   </Routes>
 
   return (

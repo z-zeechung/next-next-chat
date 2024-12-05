@@ -1,10 +1,11 @@
+import { PartialLocaleType } from "./index";
 import { getClientConfig } from "../config/client";
 import { SubmitKey } from "../store/config";
 var lunar = require('lunar');
 
 const isApp = !!getClientConfig()?.isApp;
 
-const cnt = {
+const cnt: PartialLocaleType = {
 
   NextChat: {
     SystemPrompt: ()=>`
@@ -146,7 +147,6 @@ type DeepPartial<T> = T extends object
   : T;
 
 export type LocaleType = typeof cnt;
-export type PartialLocaleType = DeepPartial<typeof cnt>;
 
 export default cnt;
 // Translated by @chunkiuuu, feel free the submit new pr if there are typo/incorrect translations :D
