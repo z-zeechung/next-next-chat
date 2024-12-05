@@ -109,7 +109,7 @@ import { Message, MessageElement, revokeMessage } from "../message/Message";
 
 // import btnstyles from "../components/button.module.scss";
 // import { contentOfVecDB, createVecDB, deleteVecDB, insertIntoVecDB, queryVecDBs } from "../utils/vectordb";
-import { Avatar, Button, ButtonCard, ButtonGroup, Component, Footer, Group, Header, Heading, InfoCard, Left, List, ListItem, MessageCard, Modal, Right, Row, Select, showConfirm, showToast, TextArea, TextBlock, TinyButton } from "../themes/theme";
+import { Avatar, Button, ButtonCard, ButtonGroup, Component, Footer, Group, Header, Heading, InfoCard, Left, List, ListItem, MessageCard, Modal, Popover, PopoverItem, Right, Row, Select, showConfirm, showToast, TextArea, TextBlock, TinyButton, TinyPopover } from "../themes/theme";
 import { Card, grid, SimpleGrid } from "@chakra-ui/react";
 // import emoji from "../emoji.json"
 // import { title } from "process";
@@ -1985,7 +1985,7 @@ function _Chat() {
               <Row>
                 <Right>
                   <Group>
-                    <TinyButton text={Locale.NextChat.ChatArea.KBDetail} type="primary" onClick={()=>{setIsShowingWhatsThis(true)}} />
+                    <TinyButton text={Locale.NextChat.ChatArea.KBDetail} type="primary" onClick={() => { setIsShowingWhatsThis(true) }} />
                     <TinyButton text={Locale.NextChat.ChatArea.SeeKB} type="primary" onClick={() => { navigate("/knowledge") }} />
                   </Group>
                 </Right>
@@ -2009,13 +2009,13 @@ function _Chat() {
           />
         </Left>
         <Right>
-          <TinyButton text={Locale.NextChat.ChatArea.ChatOptions} type="primary" popover={<div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-            <Button text={Locale.NextChat.ChatArea.RolePlay} icon={rolePlayIcon} onClick={() => { setIsSelectingPrompt(true) }} />
-            <Button text={Locale.NextChat.ChatArea.SwitchModel} icon={changeModelIcon} onClick={changeModel} />
-            <Button text={Locale.NextChat.ChatArea.WebSearch} onClick={() => { setSearchPlugin(!searchPlugin); showToast(<TextBlock>{!searchPlugin ? Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.WebSearch) : Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.WebSearch)}</TextBlock>) }} />
-            <Button text={Locale.NextChat.ChatArea.Scripting} onClick={() => { setScriptPlugin(!scriptPlugin); showToast(<TextBlock>{!scriptPlugin ? Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.Scripting) : Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.Scripting)}</TextBlock>) }} />
-            <Button text={Locale.NextChat.ChatArea.GenImage} onClick={() => { setPaintPlugin(!paintPlugin); showToast(<TextBlock>{!paintPlugin ? Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.GenImage) : Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.GenImage)}</TextBlock>) }} />
-          </div>} />
+          <TinyPopover text={Locale.NextChat.ChatArea.ChatOptions} type="primary">
+            <PopoverItem text={Locale.NextChat.ChatArea.RolePlay} icon={rolePlayIcon} onClick={() => { setIsSelectingPrompt(true) }} />
+            <PopoverItem text={Locale.NextChat.ChatArea.SwitchModel} icon={changeModelIcon} onClick={changeModel} />
+            <PopoverItem text={Locale.NextChat.ChatArea.WebSearch} onClick={() => { setSearchPlugin(!searchPlugin); showToast(<TextBlock>{!searchPlugin ? Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.WebSearch) : Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.WebSearch)}</TextBlock>) }} />
+            <PopoverItem text={Locale.NextChat.ChatArea.Scripting} onClick={() => { setScriptPlugin(!scriptPlugin); showToast(<TextBlock>{!scriptPlugin ? Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.Scripting) : Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.Scripting)}</TextBlock>) }} />
+            <PopoverItem text={Locale.NextChat.ChatArea.GenImage} onClick={() => { setPaintPlugin(!paintPlugin); showToast(<TextBlock>{!paintPlugin ? Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.GenImage) : Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.GenImage)}</TextBlock>) }} />
+          </TinyPopover>
         </Right>
       </Row>
       {!showOption && <Group isAttached>
@@ -2023,16 +2023,16 @@ function _Chat() {
           placeholder={Locale.NextChat.ChatArea.SendPrompt}
           onInput={(v) => onInput(v)}
           value={userInput}
-          rows={3}
+          rows={3.5}
           autoGrow
           autoFocus={autoFocus}
         />
         <Button
-            icon={<SendWhiteIcon />}
-            text={Locale.NextChat.ChatArea.Send}
-            type="primary"
-            onClick={() => doSubmit(userInput)}
-          />
+          icon={<SendWhiteIcon />}
+          text={Locale.NextChat.ChatArea.Send}
+          type="primary"
+          onClick={() => doSubmit(userInput)}
+        />
       </Group>}
       {showOption && <Toolbox>
         <ButtonCard text={Locale.NextChat.ChatArea.RolePlay} icon={rolePlayIcon} onClick={() => { setIsSelectingPrompt(true) }} />
@@ -2078,7 +2078,7 @@ function _Chat() {
 
     {isSelectingPrompt && <SelectPromptModal onClose={() => { setIsSelectingPrompt(false) }} />}
 
-    {isShowingWhatsThis && <Modal title={Locale.KnowledgeBase.WhatsThis} onClose={() => { setIsShowingWhatsThis(false) }} footer={<Button text={Locale.KnowledgeBase.ISee} onClick={()=>{setIsShowingWhatsThis(false)}}/>}>
+    {isShowingWhatsThis && <Modal title={Locale.KnowledgeBase.WhatsThis} onClose={() => { setIsShowingWhatsThis(false) }} footer={<Button text={Locale.KnowledgeBase.ISee} onClick={() => { setIsShowingWhatsThis(false) }} />}>
       <TextBlock>{Locale.KnowledgeBase.Explaination}</TextBlock>
     </Modal>}
 

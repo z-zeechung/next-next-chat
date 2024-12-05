@@ -155,6 +155,26 @@ export interface Theme{
         (title?:string, content?:JSX.Element, danger?:boolean)=>Promise<boolean>
     showToast:
         (children: any)=>Promise<void>
+    popover:
+        (props:{
+            children?:any
+            icon?:JSX.Element
+            text?:string
+            type?:"text" | "primary" | "danger"
+        })=>JSX.Element
+    tinyPopover:
+        (props:{
+            children?:any
+            icon?:JSX.Element
+            text?:string
+            type?:"text" | "primary" | "danger"
+        })=>JSX.Element
+    popoverItem:
+        (props:{
+            text?:string
+            icon?:JSX.Element
+            onClick?:()=>void
+        })=>JSX.Element
 }
 
 let theme:Theme = Default
@@ -190,6 +210,9 @@ export let Tabs = theme.tabs
 export let Select = theme.select
 export let showConfirm = theme.showConfirm
 export let showToast = theme.showToast
+export let Popover = theme.popover
+export let TinyPopover = theme.tinyPopover
+export let PopoverItem = theme.popoverItem
 
 export function Header(props:{children:any}) {
     return <>{props.children}</>

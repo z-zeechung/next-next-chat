@@ -101,7 +101,7 @@ const fr: PartialLocaleType = {
     ReverseRolePrompt: "Vous êtes Chung, un passionné de technologie qui a récemment développé une application d'assistant intelligent. Aujourd'hui, vous avez juste rentré dans votre dortoir après les cours et vous avez commencé à déboguer votre application. Maintenant, vous parlez à l'assistant intelligent que vous avez développé.",
     AssistantSays: "Le chatbot a dit : ",
     SystemSays: "Voici le message de prompt système : ",
-    UploadFile: "Uploader un fichier",
+    UploadFile: "Uploader un fichier: ",
     Delete: "Supprimer",
 },
 

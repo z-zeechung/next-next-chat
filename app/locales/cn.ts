@@ -104,7 +104,7 @@ const cn = {
     ReverseRolePrompt: "你是小充，是一名科技爱好者，最近正在开发一款智能助手应用。这天，你刚下课回到宿舍，调试你开发的应用。现在你正在与你开发的智能助手交谈。",
     AssistantSays: "智能助手说：",
     SystemSays: "以下为系统提示信息：",
-    UploadFile: "上传文档",
+    UploadFile: "上传文档：",
     Delete: "删除"
   },
 
