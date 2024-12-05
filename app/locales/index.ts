@@ -144,3 +144,14 @@ export function getISOLang() {
 export function isRtlLang(){
   return ["ar"].includes(getLang());
 }
+
+export function isVerticalLang(){
+  return ["mn"].includes(getLang());
+}
+
+export function getIndent(){
+  if(["cn", "cnt"].includes(getLang())){
+    return "2em";
+  }
+  return "1em";
+}

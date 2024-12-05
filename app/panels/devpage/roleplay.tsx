@@ -20,7 +20,7 @@ import MarkdownIcon from "../../icons/file-icon-vectors/square-o/md.svg"
 import HTMLIcon from "../../icons/file-icon-vectors/classic/html.svg"
 import TxtIcon from "../../icons/file-icon-vectors/txt.svg"
 
-import Locale from "../../locales";
+import Locale, { isRtlLang } from "../../locales";
 import { KnowledgeBase } from "../../knowledgebase/knowledgebase";
 
 const IconMap = {
@@ -66,8 +66,10 @@ export function RolePlay(props: any) {
         <Row>
             <Center>
                 <div style={{ position: "relative", width: 96, height: 96 }}>
-                    <div style={{ scale: 3, display: "inline-flex" }}><Avatar icon={avatar} /></div>
-                    <div style={{ position: "absolute", right: -24, bottom: -8 }}>
+                    <div style={{ scale: 3, position:"absolute", left: 32, top: 32 }}><Avatar icon={avatar} /></div>
+                    <div style={{ position: "absolute", 
+                        ...(isRtlLang()?{right: 48}:{left: 48}), 
+                    bottom: -8 }}>
                         <TinyButton text={Locale.DevPage.Alter} icon={<ImageIcon />} type="primary" />
                     </div>
                 </div>
@@ -85,25 +87,30 @@ export function RolePlay(props: any) {
                     {greeting.map((msg: Message, i) => {
                         return <Group isAttached>
                             <Select
-                                options={[Locale.DevPage.User, roleName, Locale.DevPage.System]}
+                                options={[Locale.DevPage.User, roleName, Locale.DevPage.System, Locale.DevPage.Delete]}
                                 value={{ "user": Locale.DevPage.User, "assistant": roleName, "system": Locale.DevPage.System }[msg.role]}
                                 onChange={(v) => {
+                                    if(v == Locale.DevPage.Delete){
+                                        if (greeting.length <= 1) { return }
+                                        setGreeting(greeting.filter((v, idx) => idx != i))
+                                        return
+                                    }
                                     setGreeting(greeting.map((m, idx) => idx == i ?
                                         { type: msg.type, role: Object.fromEntries(Object.entries({ "user": Locale.DevPage.User, "assistant": roleName, "system": Locale.DevPage.System }).map(([key, value]) => [value, key]))[v], content: msg.content }
                                         : m))
                                 }}
                             />
-                            <TextArea rows={1} value={msg.content}
+                            <TextArea rows={1} value={msg.content} autoGrow
                                 onChange={(v) => {
                                     setGreeting(greeting.map((m, idx) => idx == i ?
                                         { type: msg.type, role: msg.role, content: v }
                                         : m))
                                 }}
                             />
-                            <Button icon={<DeleteIcon />} onClick={() => {
+                            {/* <Button icon={<DeleteIcon />} onClick={() => {
                                 if (greeting.length <= 1) { return }
                                 setGreeting(greeting.filter((v, idx) => idx != i))
-                            }} />
+                            }} /> */}
                         </Group>
                     })}
                     <div />

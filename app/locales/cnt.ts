@@ -104,7 +104,7 @@ const cnt: PartialLocaleType = {
     ReverseRolePrompt: "你是小充，是一名科技愛好者，最近正在開發一款智能助手應用。這天，你剛下課回到宿舍，調試你開發的應用。現在你正在與你開發的智能助手交談。",
     AssistantSays: "智能助手說：",
     SystemSays: "以下為系統提示信息：",
-    UploadFile: "上傳文檔",
+    UploadFile: "上傳文檔：",
     Delete: "刪除"
   },
 

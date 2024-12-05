@@ -1,5 +1,5 @@
 import { Component, Group, Header, Left, Right, Row, Theme, TinyButton } from "./theme"
-import { AlertDialog, Button, ButtonGroup, Card, CardBody, ChakraProvider, FormControl, FormLabel, Icon, IconButton, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, Switch, Textarea, useDisclosure, Text, Flex, CardHeader, Avatar, Heading, Box, Checkbox, ComponentWithAs, ButtonProps, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverBody, PopoverHeader, Tabs, TabList, Tab, TabPanels, TabPanel, Select, CardFooter, TextareaProps, useToast } from '@chakra-ui/react'
+import { AlertDialog, Button, ButtonGroup, Card, CardBody, ChakraProvider, FormControl, FormLabel, Icon, IconButton, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, Switch, Textarea, useDisclosure, Text, Flex, CardHeader, Avatar, Heading, Box, Checkbox, ComponentWithAs, ButtonProps, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverBody, PopoverHeader, Tabs, TabList, Tab, TabPanels, TabPanel, Select, CardFooter, TextareaProps, useToast, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
 import styles from "../components/ui-lib.module.scss";
 import buttonStyles from "../components/button.module.scss"
 import chatStyles from "../components/chat.module.scss"
@@ -18,7 +18,7 @@ import ReedsTexture from "../icons/bg-reeds.bmp"
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { nanoid } from "nanoid";
 import { renderToString } from "react-dom/server";
-import { getLang, isRtlLang } from "../locales";
+import { getIndent, getLang, isRtlLang, isVerticalLang } from "../locales";
 
 export const Default: Theme = {
     wrapper: ChakraProvider,
@@ -45,7 +45,10 @@ export const Default: Theme = {
     tabs: ThemeTabs,
     select: ThemeSelect,
     showConfirm: showConfirm,
-    showToast: showToast
+    showToast: showToast,
+    popover: ThemePopover,
+    tinyPopover: ThemeTinyPopover,
+    popoverItem: ThemePopoverItem,
 }
 
 const FONT_FAMILY = "sans-serif, NotoSansMongolian"
@@ -97,7 +100,7 @@ function handleListItem(body?: any[]) {
     let titles = ""
     for (let elem of body) {
         if (elem?.type?.name == "ListItem") {
-            if (getLang() == "mn") {
+            if (isVerticalLang()) {
                 if (elem?.props?.title) {
                     titles += `<div>${splitMongolian(elem.props.title)}</div>`
                 }
@@ -111,14 +114,15 @@ function handleListItem(body?: any[]) {
     const mdiv = document.createElement("div")
     mdiv.innerHTML = titles
     mdiv.style.opacity = "0"
+    mdiv.style.fontSize = "14px"
     mdiv.style.fontFamily = FONT_FAMILY
     mdiv.style.fontWeight = "bold"
     document.body.appendChild(mdiv)
     const width = mdiv.clientWidth + 10
     mdiv.remove()
-    return body.map(elem => elem?.type?.name == "ListItem" ? <div style={{ width: "100%", height: "100%", display: "flex", ...(isRtlLang() ? { flexDirection: "row-reverse" } : {}) }}>
+    return body.map(elem => elem?.type?.name == "ListItem" ? <div style={{ width: "100%", height: "100%", fontSize: 14, display: "flex", ...(isRtlLang() ? { flexDirection: "row-reverse" } : {}) }}>
         <div style={{ width: width, fontFamily: FONT_FAMILY, fontWeight: "bold", color: "#285E61", ...(isRtlLang() ? { direction: "rtl" } : {}) }}>{
-            elem?.props?.title ? <div dangerouslySetInnerHTML={{ __html: splitMongolian(elem.props.title) }} /> : elem?.props?.title
+            isVerticalLang() ? <div dangerouslySetInnerHTML={{ __html: splitMongolian(elem.props.title) }} /> : elem?.props?.title
         }</div>
         <div style={{ flex: 1 }}>{elem?.props?.children}</div>
     </div> : elem)
@@ -137,7 +141,7 @@ function splitMongolian(text) {
 }
 
 function ThemeHeading(props: { children?: any }) {
-    if (getLang() == "mn") {
+    if (isVerticalLang()) {
         return <Heading size={"sm"} paddingTop={0} paddingBottom={0} paddingLeft={4} paddingRight={4} width={"100%"} fontFamily={FONT_FAMILY} height={12}>
             <div style={{ WebkitTextStroke: 0.7 }} dangerouslySetInnerHTML={{ __html: splitMongolian(props.children) }} />
         </Heading>
@@ -177,16 +181,15 @@ function MongolianTextBlock(props: { children?: any }) {
     return <div ref={ref} style={{ width: "100%", ...(height ? { height: height } : {}), ...(vertical ? { writingMode: "vertical-lr" } : {}) }} dangerouslySetInnerHTML={{ __html: text }} />
 }
 function ThemeTextBlock(props: { children?: any }) {
-    if (getLang() == "mn") {
+    if (isVerticalLang()) {
         return <div>{props.children.split("\n").map((ln, i) => <>
             <MongolianTextBlock>{ln}</MongolianTextBlock>
             {i < props.children.split("\n").length - 1 && ln.trim().length > 0 && <hr style={{ opacity: 1 }} />}
         </>)}</div>
     }
-    if (isRtlLang()) {
-        return <div style={{ width: "100%", direction: "rtl" }}>{props.children}</div>
-    }
-    return <div style={{ width: "100%", whiteSpace:"pre-line" }}>{props.children}</div>
+    return <div style={{ width: "100%", whiteSpace:"pre-line", textIndent: props.children.includes("\n")?getIndent():0, ...(isRtlLang()?{direction:"rtl"}:{}) }}>{
+        props.children.split("\n").map(ln=><div>{ln.trim().length > 0 ? ln : <br />}</div>)
+    }</div>
 }
 
 function ThemeRow(props: { children?: any }) {
@@ -272,8 +275,8 @@ function ThemeInfoCard(props: {
     const [isHovered, setIsHovered] = useState(false);
     const ref = useRef(null)
 
-    const title = getLang() == "mn" ? <span dangerouslySetInnerHTML={{ __html: splitMongolian(props.title) }}></span> : props.title
-    const subTitle = getLang() == "mn" ? <span dangerouslySetInnerHTML={{ __html: splitMongolian(props.subTitle) }}></span> : props.subTitle
+    const title = isVerticalLang() ? <span dangerouslySetInnerHTML={{ __html: splitMongolian(props.title) }}></span> : props.title
+    const subTitle = isVerticalLang() ? <span dangerouslySetInnerHTML={{ __html: splitMongolian(props.subTitle) }}></span> : props.subTitle
 
     return <Card
         width={"100%"}
@@ -295,13 +298,13 @@ function ThemeInfoCard(props: {
                 >
                     {props.icon ? <ThemeAvatar icon={props.icon} /> : <div style={{ width: 4 }}></div>}
                     <Box width={"100%"}>
-                        {getLang() == "mn" && <Flex flexDirection={"row"}>
+                        {isVerticalLang() && <Flex flexDirection={"row"}>
                             <Heading width={"100%"} size='sm' whiteSpace={"nowrap"} overflow={"hidden"} fontFamily={FONT_FAMILY}>
                                 {title}
                             </Heading>
                             {props.subTitle && <Text fontSize={"12px"}>{subTitle}</Text>}
                         </Flex>}
-                        {getLang() != "mn" && <><Heading size='sm' whiteSpace={"nowrap"} overflow={"hidden"} fontFamily={FONT_FAMILY}>
+                        {!isVerticalLang() && <><Heading size='sm' whiteSpace={"nowrap"} overflow={"hidden"} fontFamily={FONT_FAMILY}>
                             {title}
                         </Heading>
                             {props.subTitle && <Text fontSize={"12px"}>{subTitle}</Text>}</>}
@@ -358,10 +361,10 @@ function ThemeTabs(props: {
                 <TabList>
                     {props.labels?.map(label => {
                         let _label: any = label
-                        if (getLang() == "mn") {
+                        if (isVerticalLang()) {
                             _label = <div dangerouslySetInnerHTML={{ __html: splitMongolian(label) }} />
                         }
-                        return <Tab transform={isRtlLang() ? "scaleX(-1)" : undefined}>{_label}</Tab>
+                        return <Tab transform={isRtlLang() ? "scaleX(-1)" : undefined} fontSize={14}>{_label}</Tab>
                     })}
                 </TabList>
             </Tabs>
@@ -394,30 +397,35 @@ function ThemeButton(props: {
             {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost" } : {})}
             {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
             {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
-            {...(props.type == undefined ? { colorScheme: "teal", variant: "outline", background: "gray.50" } : {})}
+            {...(props.type == undefined ? { variant: "outline", background: "white", outline:"none", border:"none", shadow:"0 4px 8px rgba(0,0,0,0.1)" } : {})}
             {...(props.disabled ? { colorScheme: "gray", variant: "solid" } : {})}
             onClick={props.disabled ? () => { } : props.onClick}
-            style={{ height: 32, width: 32 }}
+            style={{ height: 36, width: 36 }}
             borderLeftRadius={leftRadius}
             borderRightRadius={rightRadius}
         />
     }
-    const leftRadius = props.embed == "left" || props.embed == "middle" ? 0 : 6
-    const rightRadius = props.embed == "right" || props.embed == "middle" ? 0 : 6
+    const leftRadius = props.embed == "left" || props.embed == "middle" ? 0 : 12
+    const rightRadius = props.embed == "right" || props.embed == "middle" ? 0 : 12
     return <Button
         {...(!isRtlLang() ? { leftIcon: props.icon } : {})}
         {...(isRtlLang() ? { rightIcon: props.icon } : {})}
         {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost" } : {})}
         {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
         {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
-        {...(props.type == undefined ? { colorScheme: "teal", variant: "outline", background: "gray.50" } : {})}
+        {...(props.type == undefined ? { variant: "outline", background: "white", outline:"none", border:"none", shadow:"0 4px 8px rgba(0,0,0,0.1)" } : {})}
         {...(props.disabled ? { colorScheme: "gray", variant: "solid" } : {})}
         onClick={props.disabled ? () => { } : props.onClick}
-        style={{ height: 32, paddingLeft: 12, paddingRight: 12 }}
+        style={{ height: 36, paddingLeft: 12, paddingRight: 12 }}
         borderLeftRadius={leftRadius}
         borderRightRadius={rightRadius}
+        fontWeight={"normal"}
+        fontSize={"small"}
+        maxWidth={150}
     >
-        {props.text}
+        <div style={{display:"inline-block", ...(["cn", "cnt"].includes(getLang())?{}:{whiteSpace:"break-spaces"})}}>
+            {props.text}
+        </div>
     </Button>
 }
 
@@ -439,7 +447,7 @@ function ThemeTinyButton(props: {
             {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost", color: "gray.500" } : {})}
             {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
             {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
-            {...(props.type == undefined ? { colorScheme: "teal", variant: "outline", color: "teal.700" } : {})}
+            {...(props.type == undefined ? { variant: "outline", background: "white", outline:"none", border:"1px lightgray solid" } : {})}
             {...(props.disabled ? { colorScheme: "gray", variant: "solid" } : {})}
             onClick={props.disabled ? () => { } : props.onClick}
             style={{ height: 24 }}
@@ -454,12 +462,14 @@ function ThemeTinyButton(props: {
         {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost", color: "gray.500" } : {})}
         {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
         {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
-        {...(props.type == undefined ? { colorScheme: "teal", variant: "outline", color: "teal.700" } : {})}
+        {...(props.type == undefined ? { variant: "outline", background: "white", outline:"none", border:"1px lightgray solid" } : {})}
         {...(props.disabled ? { colorScheme: "gray", variant: "solid" } : {})}
         onClick={props.disabled ? () => { } : props.onClick}
         style={{ height: 24, borderRadius: 12 }}
         borderLeftRadius={leftRadius}
         borderRightRadius={rightRadius}
+        fontWeight={"normal"}
+        fontSize={"x-small"}
     >
         {props.text}
     </Button>
@@ -480,16 +490,16 @@ function ThemeTextArea(props: {
     const [rows, setRows] = useState(props.rows ?? 3)
     const ref = useRef(null)
 
-    const [areaHeight, setAreaHeight] = useState(32 * (props.rows??1))
+    const [areaHeight, setAreaHeight] = useState(36 * (props.rows??1))
 
-    const tlRadius = (props.embed == "left" || props.embed == "middle") ? 0 : 6
-    const trRadius = (props.embed == "right" || props.embed == "middle") ? 0 : 6
-    const blRadius = (props.embed == "left" || props.embed == "middle") && areaHeight == 32 ? 0 : 6
-    const brRadius = (props.embed == "right" || props.embed == "middle") && areaHeight == 32 ? 0 : 6
+    const tlRadius = (props.embed == "left" || props.embed == "middle") ? 0 : 10
+    const trRadius = (props.embed == "right" || props.embed == "middle") ? 0 : 10
+    const blRadius = (props.embed == "left" || props.embed == "middle") ? 0 : 10
+    const brRadius = (props.embed == "right" || props.embed == "middle")  ? 0 : 10
 
     useEffect(() => {
         if (props.autoGrow && ref.current) {
-            if (getLang() == "mn") {
+            if (isVerticalLang()) {
                 const text = (ref.current as any)?.value
                 const width = (ref.current as any)?.offsetWidth
                 if (text.length * 256 / width < 100) {
@@ -499,10 +509,10 @@ function ThemeTextArea(props: {
                     mdiv.innerText = text.split(" ").join("\n")
                     document.body.appendChild(mdiv)
                     console.log(mdiv.clientWidth)
-                    setAreaHeight(Math.max(mdiv.clientWidth + 16, 32*rows))
+                    setAreaHeight(Math.max(mdiv.clientWidth + 16, 36*rows))
                     mdiv.remove()
                 } else {
-                    setAreaHeight(Math.max(text.length * 256 / width, 128, 32*rows))
+                    setAreaHeight(Math.max(text.length * 256 / width, 128, 36*rows))
                 }
             } else {
                 const mdiv = document.createElement("div")
@@ -511,7 +521,7 @@ function ThemeTextArea(props: {
                 mdiv.style.width = (ref.current as any)?.offsetWidth + "px"
                 mdiv.style.fontFamily = FONT_FAMILY
                 document.body.appendChild(mdiv)
-                setRows(Math.max(mdiv.offsetHeight / 24 + 1, props.rows || 3))
+                setRows(Math.max(mdiv.offsetHeight / 24, props.rows || 3))
                 mdiv.remove()
             }
         }
@@ -522,7 +532,7 @@ function ThemeTextArea(props: {
         resize="none"
         width={"100%"}
         rows={rows}
-        padding={4.2}
+        fontSize={14}
         placeholder={props.placeholder}
         onInput={(e) => { if (props.onInput) props.onInput(e.currentTarget.value) }}
         onChange={(e) => { if (props.onChange) props.onChange(e.currentTarget.value) }}
@@ -537,8 +547,8 @@ function ThemeTextArea(props: {
             borderBottomLeftRadius: blRadius,
             borderBottomRightRadius: brRadius,
             ...(isRtlLang() ? { direction: "rtl" } : {}),
-            ...(getLang() == "mn" ? {
-                ...(areaHeight == 32 ? {} : { writingMode: "vertical-lr" }),
+            ...(isVerticalLang() ? {
+                ...(areaHeight == 36 ? {} : { writingMode: "vertical-lr" }),
                 height: areaHeight
             } : {})
         }}
@@ -580,6 +590,68 @@ async function showToast(children: any) {
             </ChakraProvider>
         );
     })
+}
+
+function ThemePopover(props:{
+    children?:any
+    icon?:JSX.Element
+    text?:string
+    type?:"text" | "primary" | "danger"
+}){
+    return <Menu>
+        <MenuButton
+            as={IconButton}
+            aria-label=''
+            icon={props.icon}
+            {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost" } : {})}
+            {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
+            {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
+            {...(props.type == undefined ? { variant: "outline", background: "white", outline:"none", border:"none", shadow:"0 4px 8px rgba(0,0,0,0.1)" } : {})}
+        >
+            {props.text}
+        </MenuButton>
+        <MenuList>
+            {props.children}
+        </MenuList>
+    </Menu>
+}
+
+function ThemeTinyPopover(props:{
+    children?:any
+    icon?:JSX.Element
+    text?:string
+    type?:"text" | "primary" | "danger"
+}){
+    return <Menu>
+        <MenuButton
+            size={"xs"}
+            as={IconButton}
+            aria-label=''
+            icon={props.icon}
+            {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost", color: "gray.500" } : {})}
+            {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
+            {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
+            {...(props.type == undefined ? { variant: "outline", background: "white", outline:"none", border:"1px lightgray solid" } : {})}
+            borderRadius={100}
+            fontWeight={"normal"}
+            fontSize={"x-small"}
+        >
+            {props.text}
+        </MenuButton>
+        <MenuList>
+            {props.children}
+        </MenuList>
+    </Menu>
+}
+
+function ThemePopoverItem(props:{
+    text?:string
+    icon?:JSX.Element
+    onClick?:()=>void
+}){
+    return <MenuItem fontSize={"small"} icon={props.icon??<div style={{display:"inline-block",width:16,height:16}}/>} onClick={props.onClick}>
+        {props.text}
+    </MenuItem>
 }
 
 /** LEGACY */
@@ -917,7 +989,7 @@ function ThemeTextAreaOld(props: {
             maxHeight={height / 2}    // 权宜之计
             borderTopRightRadius={props.rightAttachment ? 0 : undefined}
             style={{
-                // ...(getLang()=="mn"?{writingMode:"vertical-lr"}:{}),
+                // ...(isVerticalLang()?{writingMode:"vertical-lr"}:{}),
                 ...(isRtlLang() ? { direction: "rtl" } : {})
             }}
         />
@@ -1149,19 +1221,21 @@ function ThemeCheckBox(props: {
     onClick?: (checked: boolean) => void
 }): JSX.Element {
     const id = nanoid()
-    return <FormControl display='flex' alignItems='center' style={{ height: 32 }}>
-        <FormLabel htmlFor={id} mb='0'>
-            {props.text}
+    return <FormControl display='flex' alignItems='center' style={{ height: 36 }} {...(isRtlLang()?{flexDirection:"row-reverse"}:{})}>
+        <FormLabel htmlFor={id} mb='0' {...(isRtlLang()?{style:{direction:"rtl"}}:{})} fontSize={14} gap={4} display={"flex"}>
+            <Switch
+                id={id}
+                isChecked={props.checked}
+                onChange={(e) => {
+                    if (props.onClick)
+                        props.onClick(e.currentTarget.checked)
+                }}
+                colorScheme={'teal'}
+                style={{direction:"ltr"}}
+                {...(isRtlLang()?{transform:"scaleX(-1)"}:{})}
+            />
+            {isVerticalLang()?<div dangerouslySetInnerHTML={{__html:splitMongolian(props.text)}}/>:props.text}
         </FormLabel>
-        <Switch
-            id={id}
-            isChecked={props.checked}
-            onChange={(e) => {
-                if (props.onClick)
-                    props.onClick(e.currentTarget.checked)
-            }}
-            colorScheme={'teal'}
-        />
     </FormControl>
 }
 
@@ -1180,7 +1254,9 @@ function ThemeModal(props: {
             ` ${max && styles["modal-container-max"]}`
         }>
             <div className={styles["modal-header"]}>
-                <ThemeHeading>{props.title}</ThemeHeading>
+                <Heading size={isVerticalLang()?"xs":'sm'} whiteSpace={"nowrap"} overflow={"hidden"} fontFamily={FONT_FAMILY}>{
+                    isVerticalLang()?<div style={{ WebkitTextStroke: 0.3 }} dangerouslySetInnerHTML={{ __html: splitMongolian(props.title) }} />:props.title    
+                }</Heading>
                 {(props.headerActions ?? true) && <div className={styles["modal-header-actions"]}>
                     <ButtonGroup>
                         <ThemeButton
@@ -1375,11 +1451,11 @@ function ThemeSelect(props: {
     const select = <Select
         onChange={(e) => { props.onChange?.(e.currentTarget.value) }}
         value={props.value}
-        style={{ padding: 4, paddingRight: 32, height: 32 }}
+        style={{ padding: 4, paddingRight: 36, height: 36 }}
         width={width}
-        fontSize={16}
+        fontSize={14}
         size={"sm"}
-        borderRadius={6}
+        borderRadius={12}
         fontFamily={FONT_FAMILY}
         {...props.embed == "left" && { borderLeftRadius: 0 }}
         {...props.embed == "middle" && { borderRadius: 0 }}
