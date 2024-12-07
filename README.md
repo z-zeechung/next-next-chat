@@ -2,12 +2,30 @@
 
 A large model app. Integrating various capabilities. Highly scalable, Highly compatible.
 
+<details>
+  <summary>Click to show screen shots</summary>
+  <h3>Chat:</h3>
+  <img src="https://github.com/z-zeechung/next-next-chat/blob/master/docs/images/nextchat.jpeg"/>
+  <h3>Role Play:</h3>
+  <img src="https://github.com/z-zeechung/next-next-chat/blob/master/docs/images/roleplay.jpeg"/>
+  <h3>GPTs:</h3>
+  <img src="https://github.com/z-zeechung/next-next-chat/blob/master/docs/images/devrole.jpeg"/>
+  <h3>Live2D:</h3>
+  <img src="https://github.com/z-zeechung/next-next-chat/blob/master/docs/images/live2d.jpeg"/>
+  <h3>Knowledgebase:</h3>
+  <img src="https://github.com/z-zeechung/next-next-chat/blob/master/docs/images/knowledgebase.jpeg"/>
+  <h3>I18n Support for RTL Scripts and Vertical Scripts:</h3>
+  <img src="https://github.com/z-zeechung/next-next-chat/blob/master/docs/images/devrole-ar.jpeg"/>
+  <img src="https://github.com/z-zeechung/next-next-chat/blob/master/docs/images/nextchat-mn.jpeg"/>
+</details>
+
 ## Features
 + Chat with LLM, and chat with your image / document / knowledgebase and more.
 + LLM tool call & role play.
 + Customize your LLM characters, plugins, animated figures, and workflows. Script for more complex functionalities.
 + (**TODO**) Open community for sharing custom components.
 + Animated figures powered by Live2D and 1-shot voice cloning. Generate Live2D models from images instantly.
++ Runs entirely on a browser, highly portable.
 
 ## Running *N*<sup>2</sup>CHAT
 1. Run the [backend server](https://github.com/z-zeechung/next-next-chat-server).
