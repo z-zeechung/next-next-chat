@@ -3,9 +3,7 @@
 A large model app. Integrating various capabilities. Highly scalable, Highly compatible.
 
 <details>
-  <summary><i>Click to show screen shots</i></summary>
-  <h3>Chat:</h3>
-  <img src="https://github.com/z-zeechung/next-next-chat/blob/master/docs/images/nextchat.jpeg"/>
+  <summary><i>Click to show more screen shots</i></summary>
   <h3>Role Play:</h3>
   <img src="https://github.com/z-zeechung/next-next-chat/blob/master/docs/images/roleplay.jpeg"/>
   <h3>GPTs:</h3>
@@ -18,6 +16,7 @@ A large model app. Integrating various capabilities. Highly scalable, Highly com
   <img src="https://github.com/z-zeechung/next-next-chat/blob/master/docs/images/devrole-ar.jpeg"/>
   <img src="https://github.com/z-zeechung/next-next-chat/blob/master/docs/images/nextchat-mn.jpeg"/>
 </details>
+<img src="https://github.com/z-zeechung/next-next-chat/blob/master/docs/images/nextchat.jpeg"/>
 
 ## Features
 + Chat with LLM, and chat with your image / document / knowledgebase and more.
