@@ -7,7 +7,7 @@ A large model app. Integrating various capabilities. Highly scalable, Highly com
 + LLM tool call & role play.
 + Customize your LLM characters, plugins, animated figures, and workflows. Script for more complex functionalities.
 + (**TODO**) Open community for sharing custom components.
-+ (**TODO**) Animated figures powered by Live2D and 1-shot voice cloning. Generate Live2D models from images instantly.
++ Animated figures powered by Live2D and 1-shot voice cloning. Generate Live2D models from images instantly.
 
 ## Running *N*<sup>2</sup>CHAT
 1. Run the [backend server](https://github.com/z-zeechung/next-next-chat-server).
@@ -37,7 +37,7 @@ A large model app. Integrating various capabilities. Highly scalable, Highly com
 | ✅   | Markdown to `.docx`/`.pdf`/`.html`/Textfile |
 | ✅   | `.doc`/`.docx`/`.pptx`/`.pdf`/`.html`/Textfile to String |
 | ✅   | Image Captioning |
-| 🏗️ | Internationalization |
+| ✅ | Internationalization |
 | 🏗️ | Distill [`tao-8k`](https://huggingface.co/Amu/tao-8k) Model |
 | 🏚️ | ~~Local Embedding and Reranking Models~~ |
 | ✅   | [ONNX Runtime](https://github.com/microsoft/onnxruntime) |
