@@ -121,10 +121,14 @@ function handleListItem(body?: any[]) {
     const width = mdiv.clientWidth + 10
     mdiv.remove()
     return body.map(elem => elem?.type?.name == "ListItem" ? <div style={{ width: "100%", height: "100%", fontSize: 14, display: "flex", ...(isRtlLang() ? { flexDirection: "row-reverse" } : {}) }}>
-        <div style={{ width: width, fontFamily: FONT_FAMILY, fontWeight: "bold", color: "#285E61", ...(isRtlLang() ? { direction: "rtl" } : {}) }}>{
-            isVerticalLang() ? <div dangerouslySetInnerHTML={{ __html: splitMongolian(elem.props.title) }} /> : elem?.props?.title
-        }</div>
-        <div style={{ flex: 1 }}>{elem?.props?.children}</div>
+        <div style={{ width: width, fontFamily: FONT_FAMILY, fontWeight: "bold", color: "#285E61", ...(isRtlLang() ? { direction: "rtl" } : {}) }}>
+            {isVerticalLang() ? <div dangerouslySetInnerHTML={{ __html: splitMongolian(elem.props.title) }} /> : elem?.props?.title}
+        </div>
+        <div style={{ flex: 1, maxHeight: window.innerHeight * (1-0.618), overflowY: "auto", display:"flex", flexDirection: "column", gap: 8}}>
+            {elem?.props?.children}
+            <div style={{fontSize:12, color:"gray"}}>{elem?.props?.subTitle}</div>
+            <hr/>
+        </div>
     </div> : elem)
 }
 
@@ -334,7 +338,7 @@ function ThemeComponent(props: { children?: any, type?: "primary" | "plain", sub
     return <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", background: props.type == "primary" ? "#319795" : "#fff", color: props.type == "primary" ? "#fff" : "#000", fontFamily: FONT_FAMILY }}>
         <div style={{ flexGrow: 0, margin: props.subHeader ? 0 : 10, marginBottom: props.subHeader ? 0 : 6 }}>{header?.props.children}</div>
         {(!props.type) && <hr />}
-        <div style={{ flex: 1, overflow: "auto", margin: 12, gap: 12, display: "flex", flexDirection: "column" }}>{body}</div>
+        <div style={{ flex: 1, overflow: "auto", margin: 12, gap: 12, display: "flex", flexDirection: "column", position:"relative" }}>{body}</div>
         {(!props.type) && <hr />}
         <div style={{ flexGrow: 0, margin: 12, marginTop: 6, gap: 8, display: "flex", flexDirection: "column" }}>{footer?.props.children}</div>
     </div>
@@ -354,7 +358,6 @@ function ThemeTabs(props: {
     type?: "primary" | "plain"
 }): JSX.Element {
     const { header, body, footer } = enumChildren(props.children)
-    console.log(header, body, footer)
     return <ThemeComponent subHeader type={props.type}>
         <Header>
             <Tabs transform={isRtlLang() ? "scaleX(-1)" : undefined} isFitted index={props.labels?.indexOf(props?.tab ?? "")} onChange={i => { props?.onChange?.((props.labels?.[i]) ?? "") }} width={"100%"}>
@@ -389,8 +392,8 @@ function ThemeButton(props: {
     embed?: "left" | "middle" | "right"
 }): JSX.Element {
     if (!props.text) {
-        const leftRadius = props.embed == "left" || props.embed == "middle" ? 0 : 20
-        const rightRadius = props.embed == "right" || props.embed == "middle" ? 0 : 20
+        const leftRadius = props.embed == "left" || props.embed == "middle" ? 0 : props.embed ? 12 : 20
+        const rightRadius = props.embed == "right" || props.embed == "middle" ? 0 : props.embed ? 12 : 20
         return <IconButton
             aria-label=''
             icon={props.icon}
@@ -494,8 +497,8 @@ function ThemeTextArea(props: {
 
     const tlRadius = (props.embed == "left" || props.embed == "middle") ? 0 : 10
     const trRadius = (props.embed == "right" || props.embed == "middle") ? 0 : 10
-    const blRadius = (props.embed == "left" || props.embed == "middle") ? 0 : 10
-    const brRadius = (props.embed == "right" || props.embed == "middle")  ? 0 : 10
+    const blRadius = (props.embed == "left" || props.embed == "middle") ? (rows >= 2 ? 10 : 0) : 10
+    const brRadius = (props.embed == "right" || props.embed == "middle")  ? (rows >= 2 ? 10 : 0) : 10
 
     useEffect(() => {
         if (props.autoGrow && ref.current) {

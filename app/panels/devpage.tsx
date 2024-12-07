@@ -2,7 +2,7 @@ import { createContext, useEffect, useRef, useState } from "react";
 import { autoGrowTextArea, useMobileScreen, useWindowSize } from "../utils";
 import { Box, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Stack, StackDivider } from "@chakra-ui/react";
 import { Message, MessageElement } from "../message/Message";
-import { Button, List, MessageCard, TextArea, TinyButton, ListItem, Avatar, Tabs, Component, Header, Row, Left, Right, Select, Footer, Plate } from "../themes/theme";
+import { Button, List, MessageCard, TextArea, TinyButton, ListItem, Avatar, Tabs, Component, Header, Row, Left, Right, Select, Footer, Plate, Group } from "../themes/theme";
 
 import { ControllablePromise } from "../utils/controllable-promise";
 import { ClientApi } from "../client/api";
@@ -26,6 +26,8 @@ import { DEFAULT_SYSTEM_TEMPLATE } from "../constant";
 import Locale, { ALL_LANG_OPTIONS, changeLang, getLang, isRtlLang } from "../locales";
 import { KnowledgeBase } from "../knowledgebase/knowledgebase";
 import { useNavigate } from "react-router-dom";
+import { Live2D } from "./devpage/live2d";
+import { Live2D as Live2DComponent } from "./nextchat/Live2D";
 
 export function DevPage() {
 
@@ -38,7 +40,7 @@ export function DevPage() {
     const useMeta = useState({})
     const useShow = useState(true)
     const usePromise = useState(undefined as ControllablePromise<any> | undefined)
-    const usePrompt = useState("")
+    const usePrompt = useState("你是$N^2$CHAT，一个智能助手。")
     const useGreeting = useState([
         { type: "text", role: "assistant", content: Locale.DevPage.Greeting }
     ] as Message[])
@@ -61,6 +63,15 @@ export function DevPage() {
     const useScript = useState(false)
     const useRoleName = useState("N²CHAT")
     const useDocuments = useState<string[]>([])
+
+    const useLive2DHeight = useState("170")
+    const useLive2DConfig = useState<File | undefined>(undefined)
+    const useLive2DModel = useState<File | undefined>(undefined)
+    const useLive2DPhysics = useState<File | undefined>(undefined)
+    const useLive2DTextures = useState<File[]>([])
+    const useLive2DMotions = useState<File[]>([])
+    const useLive2DIdleMotion = useState("无")
+    const useLive2DUrl = useState<string | undefined>(undefined)
 
     const tabs = [Locale.DevPage.RolePlay, Locale.DevPage.Live2D, Locale.DevPage.Script]
     const [tab, setTab] = useState(tabs[0])
@@ -86,17 +97,29 @@ export function DevPage() {
                 </Right>
             </Row>
         </Header>
-        <div style={{ width: "100%", height: "100%", display: "flex", gap: 16, flexDirection:isRtlLang()?"row-reverse":"row" }}>
-            <div style={{ height: "100%", width: "35%" }}>
+        <div style={{ width: "100%", height: "100%", display: "flex", gap: 16, flexDirection: isRtlLang() ? "row-reverse" : "row" }}>
+            <div style={{ height: "100%", width: "43%" }}>
                 <Plate>
                     <Tabs type="plain" tab={tab} labels={tabs} onChange={setTab} >
-                        {tab == tabs[0] && <RolePlay {...{usePrompt, useGreeting, usePromise, useAvatar, useJavaScript, useSearch, usePaint, useScript, useRoleName, useDocuments}}/>}
+                        {tab == tabs[0] && <RolePlay {...{ usePrompt, useGreeting, usePromise, useAvatar, useJavaScript, useSearch, usePaint, useScript, useRoleName, useDocuments }} />}
+                        {tab == tabs[1] && <Live2D {...{ useLive2DConfig, useLive2DModel, useLive2DPhysics, useLive2DTextures, useLive2DMotions, useLive2DIdleMotion, useLive2DUrl, useLive2DHeight }} />}
+                        <Footer>
+                            <Row>
+                                <Right>
+                                    <Group>
+                                        <Button text={Locale.DevPage.Upload} />
+                                        <Button text={Locale.DevPage.Save} />
+                                        <Button text={Locale.DevPage.Export} />
+                                    </Group>
+                                </Right>
+                            </Row>
+                        </Footer>
                     </Tabs>
                 </Plate>
             </div>
-            <div style={{ height: "100%", flex: "auto" }}>
+            <div style={{ height: "100%", width: "57%"}}>
                 <Plate>
-                    <ChatArea {...{ useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments }} />
+                    <ChatArea {...{ useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments, useLive2DUrl, useLive2DHeight }} />
                 </Plate>
             </div>
         </div>
@@ -104,7 +127,7 @@ export function DevPage() {
 }
 
 function ChatArea(props: {
-    width?, height?, mobile?, useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments
+    width?, height?, mobile?, useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments, useLive2DUrl, useLive2DHeight
 }) {
     const [messages, setMessages] = props.useMessages
     const [meta, setMeta] = props.useMeta
@@ -233,50 +256,58 @@ function ChatArea(props: {
                 <MessageElement message={msg} />
             </MessageCard>
         </div>)}
+        <div style={{
+            position: "absolute",
+            right: 0,
+            bottom: 0,
+            pointerEvents: "none"
+        }}>
+            <Live2DComponent src={props.useLive2DUrl[0]} height={Number.parseInt(props.useLive2DHeight[0])/100} zoom={0.618} />
+        </div>
         <Footer>
-            <TextArea
-                rows={1}
-                value={input}
-                onChange={v => {
-                    setInput(v)
-                }}
-                rightAttachment={
-                    <Button text={Locale.DevPage.Send} type="primary" onClick={async () => {
-                        if (input.trim().length <= 0) { return }
-                        let _messages = messages.concat([{ type: "text", role: "user", content: input }])
-                        setMessages(_messages.slice().concat([
-                            { type: "text", role: "assistant", content: "" }
-                        ]))
-                        const promise = ClientApi.chat(
-                            [
-                                { type: "text", role: "system", content: Locale.NextChat.SystemPrompt() },
-                                ...(prompt.trim != "" ? [{ type: "text", role: "system", content: prompt }] : []),
-                                ...greeting,
-                                ...messages.slice(),
-                                { type: "text", role: "user", content: input }
-                            ],
-                            msg => {
-                                setMessages(_messages.slice().concat([
-                                    { type: "text", role: "assistant", content: msg }
-                                ]))
-                            },
-                            {
-                                tools: tools((msg) => {
-                                    _messages.push(msg)
-                                })
-                            }
-                        )
-                        setPromise(promise)
-                        promise.then(resp => {
-                            setPromise(undefined)
+            <Group isAttached>
+                <TextArea
+                    rows={1}
+                    value={input}
+                    onChange={v => {
+                        setInput(v)
+                    }}
+                />
+                <Button text={Locale.DevPage.Send} type="primary" onClick={async () => {
+                    if (input.trim().length <= 0) { return }
+                    let _messages = messages.concat([{ type: "text", role: "user", content: input }])
+                    setMessages(_messages.slice().concat([
+                        { type: "text", role: "assistant", content: "" }
+                    ]))
+                    const promise = ClientApi.chat(
+                        [
+                            { type: "text", role: "system", content: Locale.NextChat.SystemPrompt() },
+                            ...(prompt.trim != "" ? [{ type: "text", role: "system", content: prompt }] : []),
+                            ...greeting,
+                            ...messages.slice(),
+                            { type: "text", role: "user", content: input }
+                        ],
+                        msg => {
                             setMessages(_messages.slice().concat([
-                                { type: "text", role: "assistant", content: resp }
+                                { type: "text", role: "assistant", content: msg }
                             ]))
-                        })
-                        setInput("")
-                    }} />
-                }
-            />
+                        },
+                        {
+                            tools: tools((msg) => {
+                                _messages.push(msg)
+                            })
+                        }
+                    )
+                    setPromise(promise)
+                    promise.then(resp => {
+                        setPromise(undefined)
+                        setMessages(_messages.slice().concat([
+                            { type: "text", role: "assistant", content: resp }
+                        ]))
+                    })
+                    setInput("")
+                }} />
+            </Group>
         </Footer>
     </Component>
 
