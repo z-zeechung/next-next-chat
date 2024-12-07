@@ -1,6 +1,6 @@
 import { ClientApi } from "@/app/client/api"
 import { Message } from "@/app/message/Message"
-import { Avatar, Button, ButtonGroup, Center, CheckBox, Group, InfoCard, Left, List, ListItem, Right, Row, Select, TextArea, TinyButton } from "@/app/themes/theme"
+import { Avatar, Button, ButtonGroup, Center, CheckBox, Group, InfoCard, Left, List, ListItem, Right, Row, Select, TextArea, TextBlock, TinyButton } from "@/app/themes/theme"
 import { Card, CardBody, CardFooter, SimpleGrid } from "@chakra-ui/react"
 
 import UserIcon from "../../icons/bootstrap/person.svg"
@@ -66,10 +66,12 @@ export function RolePlay(props: any) {
         <Row>
             <Center>
                 <div style={{ position: "relative", width: 96, height: 96 }}>
-                    <div style={{ scale: 3, position:"absolute", left: 32, top: 32 }}><Avatar icon={avatar} /></div>
-                    <div style={{ position: "absolute", 
-                        ...(isRtlLang()?{right: 48}:{left: 48}), 
-                    bottom: -8 }}>
+                    <div style={{ scale: 3, position: "absolute", left: 32, top: 32 }}><Avatar icon={avatar} /></div>
+                    <div style={{
+                        position: "absolute",
+                        ...(isRtlLang() ? { right: 48 } : { left: 48 }),
+                        bottom: -8
+                    }}>
                         <TinyButton text={Locale.DevPage.Alter} icon={<ImageIcon />} type="primary" />
                     </div>
                 </div>
@@ -82,90 +84,81 @@ export function RolePlay(props: any) {
             <TextArea value={prompt} onChange={(v) => { setPrompt(v) }} />
         </ListItem>
         <ListItem title={Locale.DevPage.InitDialog}>
-            <Card>
-                <CardBody display={"flex"} flexDirection={"column"} gap={2}>
-                    {greeting.map((msg: Message, i) => {
-                        return <Group isAttached>
-                            <Select
-                                options={[Locale.DevPage.User, roleName, Locale.DevPage.System, Locale.DevPage.Delete]}
-                                value={{ "user": Locale.DevPage.User, "assistant": roleName, "system": Locale.DevPage.System }[msg.role]}
-                                onChange={(v) => {
-                                    if(v == Locale.DevPage.Delete){
-                                        if (greeting.length <= 1) { return }
-                                        setGreeting(greeting.filter((v, idx) => idx != i))
-                                        return
-                                    }
-                                    setGreeting(greeting.map((m, idx) => idx == i ?
-                                        { type: msg.type, role: Object.fromEntries(Object.entries({ "user": Locale.DevPage.User, "assistant": roleName, "system": Locale.DevPage.System }).map(([key, value]) => [value, key]))[v], content: msg.content }
-                                        : m))
-                                }}
-                            />
-                            <TextArea rows={1} value={msg.content} autoGrow
-                                onChange={(v) => {
-                                    setGreeting(greeting.map((m, idx) => idx == i ?
-                                        { type: msg.type, role: msg.role, content: v }
-                                        : m))
-                                }}
-                            />
-                            {/* <Button icon={<DeleteIcon />} onClick={() => {
-                                if (greeting.length <= 1) { return }
-                                setGreeting(greeting.filter((v, idx) => idx != i))
-                            }} /> */}
-                        </Group>
-                    })}
-                    <div />
-                    <Group>
-                        <Button text={Locale.DevPage.Append} icon={<AddIcon />} onClick={() => {
-                            setGreeting([
-                                ...greeting,
-                                { type: "text", role: greeting[greeting.length - 1].role == "user" ? "assistant" : "user", content: "" }
-                            ])
-                        }} />
-                        <Button text={Locale.DevPage.AutoGen} icon={<AutoIcon />} onClick={() => {
-                            const _greeting = greeting.slice()
-                            let sendMessages = JSON.parse(JSON.stringify(greeting))
-                            let role = "assistant"
-                            if (_greeting[_greeting.length - 1].role == "assistant") {
-                                sendMessages = [
-                                    { type: "text", role: "system", content: Locale.DevPage.ReverseRolePrompt },
-                                    ...sendMessages
-                                ].map((v, _) => {
-                                    if (v.role == "user") {
-                                        v.role = "assistant"
-                                    } else if (v.role == "assistant") {
-                                        v.role = "user"
-                                        v.content = Locale.DevPage.AssistantSays + v.content
-                                    } else if (v.role == "system") {
-                                        v.role = "assistant"
-                                        v.content = Locale.DevPage.SystemSays + v.content
-                                    }
-                                    return v
-                                })
-                                role = "user"
+            {greeting.map((msg: Message, i) => {
+                return <Group isAttached>
+                    <Select
+                        options={[Locale.DevPage.User, roleName, Locale.DevPage.System]}
+                        value={{ "user": Locale.DevPage.User, "assistant": roleName, "system": Locale.DevPage.System }[msg.role]}
+                        onChange={(v) => {
+                            setGreeting(greeting.map((m, idx) => idx == i ?
+                                { type: msg.type, role: Object.fromEntries(Object.entries({ "user": Locale.DevPage.User, "assistant": roleName, "system": Locale.DevPage.System }).map(([key, value]) => [value, key]))[v], content: msg.content }
+                                : m))
+                        }}
+                    />
+                    <TextArea rows={1} value={msg.content} autoGrow
+                        onChange={(v) => {
+                            setGreeting(greeting.map((m, idx) => idx == i ?
+                                { type: msg.type, role: msg.role, content: v }
+                                : m))
+                        }}
+                    />
+                    <Button icon={<DeleteIcon />} type="text" onClick={() => {
+                        if (greeting.length <= 1) { return }
+                        setGreeting(greeting.filter((v, idx) => idx != i))
+                    }} />
+                </Group>
+            })}
+            <div />
+            <Group>
+                <Button text={Locale.DevPage.Append} icon={<AddIcon />} onClick={() => {
+                    setGreeting([
+                        ...greeting,
+                        { type: "text", role: greeting[greeting.length - 1].role == "user" ? "assistant" : "user", content: "" }
+                    ])
+                }} />
+                <Button text={Locale.DevPage.AutoGen} icon={<AutoIcon />} onClick={() => {
+                    const _greeting = greeting.slice()
+                    let sendMessages = JSON.parse(JSON.stringify(greeting))
+                    let role = "assistant"
+                    if (_greeting[_greeting.length - 1].role == "assistant") {
+                        sendMessages = [
+                            { type: "text", role: "system", content: Locale.DevPage.ReverseRolePrompt },
+                            ...sendMessages
+                        ].map((v, _) => {
+                            if (v.role == "user") {
+                                v.role = "assistant"
+                            } else if (v.role == "assistant") {
+                                v.role = "user"
+                                v.content = Locale.DevPage.AssistantSays + v.content
+                            } else if (v.role == "system") {
+                                v.role = "assistant"
+                                v.content = Locale.DevPage.SystemSays + v.content
                             }
-                            const p = ClientApi.chat(sendMessages, (m) => {
-                                setGreeting([
-                                    ..._greeting,
-                                    { type: "text", role: role, content: m }
-                                ])
-                            })
-                            setPromise(p)
-                            p.then(m => {
-                                setGreeting([
-                                    ..._greeting,
-                                    { type: "text", role: role, content: m }
-                                ])
-                                setPromise(undefined)
-                            })
-                        }} />
-                        <Button text={Locale.DevPage.Clear} icon={<DeleteIcon />} onClick={() => {
-                            promise?.abort()
-                            setPromise(undefined)
-                            setGreeting([{ type: "text", role: "assistant", content: Locale.DevPage.Greeting }])
-                        }} />
-                    </Group>
-                </CardBody>
-            </Card>
+                            return v
+                        })
+                        role = "user"
+                    }
+                    const p = ClientApi.chat(sendMessages, (m) => {
+                        setGreeting([
+                            ..._greeting,
+                            { type: "text", role: role, content: m }
+                        ])
+                    })
+                    setPromise(p)
+                    p.then(m => {
+                        setGreeting([
+                            ..._greeting,
+                            { type: "text", role: role, content: m }
+                        ])
+                        setPromise(undefined)
+                    })
+                }} />
+                <Button text={Locale.DevPage.Clear} icon={<DeleteIcon />} onClick={() => {
+                    promise?.abort()
+                    setPromise(undefined)
+                    setGreeting([{ type: "text", role: "assistant", content: Locale.DevPage.Greeting }])
+                }} />
+            </Group>
         </ListItem>
         <ListItem title={Locale.DevPage.ActivateTool}>
             <SimpleGrid templateColumns={`repeat(auto-fill, minmax(${150}px, 1fr))`} gap={4}>
@@ -184,42 +177,57 @@ export function RolePlay(props: any) {
                         <CheckBox text={Locale.DevPage.ImageGen} checked={paint} onClick={() => setPaint(!paint)} />
                     </CardBody>
                 </Card>
+                <Card>
+                    <CardBody>
+                        <Button type="text" text="更多" icon={<AddIcon />} />
+                    </CardBody>
+                </Card>
             </SimpleGrid>
         </ListItem>
         <ListItem title={Locale.DevPage.UploadFile}>
-            <SimpleGrid templateColumns={`repeat(auto-fill, minmax(${150}px, 1fr))`} gap={4}>
-                {documents.map(doc => <InfoCard title={doc.length <= 10 ? doc : doc.slice(0, 10) + "..."} icon={IconMap[(doc as string).split('.').slice(-1)[0].toLowerCase()] ?? <TxtIcon style={{ width: "16px", height: "16px" }} />}>
+            {documents.map(doc => <Row>
+                <Left>
+                    <div style={{ display: "flex", gap: 8 }}>
+                        {IconMap[(doc as string).split('.').slice(-1)[0].toLowerCase()] ?? <TxtIcon style={{ width: "16px", height: "16px" }} />}
+                        <TextBlock>{doc}</TextBlock>
+                    </div>
+                </Left>
+                <Right>
                     <TinyButton text={Locale.DevPage.Delete} type="primary" onClick={async () => {
                         await new KnowledgeBase(kbid).deleteDoc(doc)
                     }} />
-                </InfoCard>)}
-            </SimpleGrid>
-            <p>&nbsp;</p>
-            <Button text={Locale.DevPage.Upload} onClick={async () => {
-                if (documents.length <= 0) {
-                    await new KnowledgeBase(kbid).delete()
-                }
-                var input = document.createElement('input')
-                input.type = 'file'
-                input.multiple = true
-                input.accept = ".doc,.docx,.ppt,.pptx,.pdf,.html,.htm,.txt,.md,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf,text/html,text/plain"
-                input.onchange = (async (e) => {
-                    new KnowledgeBase(kbid, "keyword").add(Array.from((e.target as any).files)).then(() => {
-                        setDocuments(new KnowledgeBase(kbid).listDocs())
-                    })
-                })
-                input.click()
-            }} />
+                </Right>
+            </Row>)}
+            <Row>
+                <Left>
+                    <Button text={Locale.DevPage.Upload} onClick={async () => {
+                        if (documents.length <= 0) {
+                            await new KnowledgeBase(kbid).delete()
+                        }
+                        var input = document.createElement('input')
+                        input.type = 'file'
+                        input.multiple = true
+                        input.accept = ".doc,.docx,.ppt,.pptx,.pdf,.html,.htm,.txt,.md,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf,text/html,text/plain"
+                        input.onchange = (async (e) => {
+                            new KnowledgeBase(kbid, "keyword").add(Array.from((e.target as any).files)).then(() => {
+                                setDocuments(new KnowledgeBase(kbid).listDocs())
+                            })
+                        })
+                        input.click()
+                    }} />
+                </Left>
+            </Row>
         </ListItem>
-        <Row>
-            <Right>
-                <Group>
-                    <Button text={Locale.DevPage.Upload} />
-                    <Button text={Locale.DevPage.Save} />
-                    <Button text={Locale.DevPage.Export} />
-                </Group>
-            </Right>
-        </Row>
+        <ListItem title="杂项：">
+            <Row>
+                <Left>
+                    <CheckBox text="单次交互" />
+                </Left>
+                <Right>
+                    <TextBlock>大模型直接响应本轮输入，忽略历史消息</TextBlock>
+                </Right>
+            </Row>
+        </ListItem>
     </List>
     // </div>
 }
