@@ -3,7 +3,7 @@
 A large model app. Integrating various capabilities. Highly scalable, Highly compatible.
 
 <details>
-  <summary>Click to show screen shots</summary>
+  <summary><i>Click to show screen shots</i></summary>
   <h3>Chat:</h3>
   <img src="https://github.com/z-zeechung/next-next-chat/blob/master/docs/images/nextchat.jpeg"/>
   <h3>Role Play:</h3>
