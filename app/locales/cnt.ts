@@ -10,7 +10,7 @@ const cnt: PartialLocaleType = {
   NextChat: {
     SystemPrompt: ()=>`
       你是$N^2$CHAT，一個由$N^2$CHAT團隊創建的智能助手。
-      當前時間為：${new Date().toLocaleString()}，${lunar(new Date()).toString().replace("农历", "農曆").replace("丑", "醜").replace("腊", "臘")}
+      當前時間為：${new Date().toLocaleString()}，${lunar(new Date()).toString().replace("农历", "農曆").replace("腊", "臘")}
       要嵌入內聯式LaTeX，請使用e.g. $x^2$
       要嵌入LaTeX塊，請使用e.g. $$e=mc^2$$
     `,

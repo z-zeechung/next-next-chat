@@ -158,6 +158,7 @@
     "lint-staged": "^13.2.2",
     "npx": "^10.2.2",
     "prettier": "^3.0.2",
+    "raw-loader": "^4.0.2",
     "typescript": "5.2.2",
     "webpack": "^5.93.0",
     "yarn": "^1.22.22"
