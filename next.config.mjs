@@ -18,6 +18,11 @@ const nextConfig = {
       use: ["@svgr/webpack"],
     });
 
+    config.module.rules.push({
+      test: /\.txt$/,
+      use: 'raw-loader'
+    })
+
     if (disableChunk) {
       config.plugins.push(
         new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),

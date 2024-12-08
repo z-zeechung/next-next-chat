@@ -1,0 +1,71 @@
+/**
+* 
+* @param {{
+*      getInput: ()=>string
+*			 setInput: (text:string)=>void
+*      getMessages: ()=>{role: "system" | "user" | "assistant", content:string}[]
+*      updateMessages: (messages: {role: "system" | "user" | "assistant", content:string}[])=>void
+*      getPrompt: ()=>string
+*      getInitDialog: ()=>{role: "system" | "user" | "assistant", content:string}[]
+*      getPlugins: ()=>[]
+*      getModel: ()=> "regular" | "smart"
+*      chat: (
+*          messages: {role: "system" | "user" | "assistant", content:string}[],
+*          onUpdate?: (message: string)=>void
+*          options?:{
+*              model?: "regular" | "smart" | "long"
+*              tools?
+*          }
+*      ) => Promise<string>
+*      embed: (texts: string[]) => Promise<number[][]>
+*      storeLargeData: (data: Uint8Array) => Promise<string>
+*      execPython: (code: string) => Promise<string>
+*      getLive2DMotions: ()=>{id: string, description: string}[]
+*      triggerLive2DMotion: (id: string)=>void
+*      isSingleInteraction: ()=>boolean
+* }} apis 
+*/
+async function onSendMessage(apis){
+    /// WRITE YOUR CODE HERE ///
+    
+    // historical messages
+    const messages = apis.isSingleInteraction() ? [] : // ignore historical messages if set to single-round interaction
+                    apis.getMessages()
+    // display user input
+    apis.updateMessages([
+        ...messages, 
+        {role:"user", content: apis.getInput()}
+    ])
+    // call llm
+    const promise = apis.chat(
+        [   
+            {role: "system", content: apis.getPrompt()}, // system prompt
+            ...apis.getInitDialog(),                     // initial dialog
+            ...messages,                                 
+            {role: "user", content: apis.getInput()}
+        ],
+        (message) => {  // onUpdate() callback
+            apis.updateMessages([
+                ...messages, 
+                {role:"user", content: apis.getInput()}, 
+                {role:"assistant", content: message}
+            ])
+        },
+        {
+            model: apis.getModel(),     // model option, regular or smart
+            tools: apis.getPlugins()    // tool call
+        }
+    )
+    apis.setInput("")   // clear the input box
+    const result = await promise    // wait for the result to be returned
+    // display the result
+    apis.updateMessages([   
+        ...messages, 
+        {role:"user", content: apis.getInput()}, 
+        {role:"assistant", content: result}
+    ])
+
+    ////////////////////////////
+}
+
+return onSendMessage
