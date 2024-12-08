@@ -29,6 +29,8 @@ import { useNavigate } from "react-router-dom";
 import { Live2D } from "./devpage/live2d";
 import { Live2D as Live2DComponent } from "./nextchat/Live2D";
 
+import JAVASCRIPT_TEMPLATE from "./devpage/javascript-template.txt"
+
 export function DevPage() {
 
     const navigate = useNavigate()
@@ -57,7 +59,7 @@ export function DevPage() {
             <div style={{ scale: 0.7, color: "white" }}><DefaultAvatarIcon /></div>
         </div>
     )
-    const useJavaScript = useState("#include <stdio.h>\nint main(){\n\tprintf(\"Hello World\\n\");\n}")
+    const useCustomScript = useState(JAVASCRIPT_TEMPLATE)
     const useSearch = useState(false)
     const usePaint = useState(false)
     const useScript = useState(false)
@@ -101,8 +103,9 @@ export function DevPage() {
             <div style={{ height: "100%", width: "43%" }}>
                 <Plate>
                     <Tabs type="plain" tab={tab} labels={tabs} onChange={setTab} >
-                        {tab == tabs[0] && <RolePlay {...{ usePrompt, useGreeting, usePromise, useAvatar, useJavaScript, useSearch, usePaint, useScript, useRoleName, useDocuments }} />}
+                        {tab == tabs[0] && <RolePlay {...{ usePrompt, useGreeting, usePromise, useAvatar, useSearch, usePaint, useScript, useRoleName, useDocuments }} />}
                         {tab == tabs[1] && <Live2D {...{ useLive2DConfig, useLive2DModel, useLive2DPhysics, useLive2DTextures, useLive2DMotions, useLive2DIdleMotion, useLive2DUrl, useLive2DHeight }} />}
+                        {tab == tabs[2] && <Scripting useCustomScript={useCustomScript}/>}
                         <Footer>
                             <Row>
                                 <Right>
@@ -119,7 +122,7 @@ export function DevPage() {
             </div>
             <div style={{ height: "100%", width: "57%"}}>
                 <Plate>
-                    <ChatArea {...{ useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments, useLive2DUrl, useLive2DHeight }} />
+                    <ChatArea {...{ useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments, useLive2DUrl, useLive2DHeight, useCustomScript }} />
                 </Plate>
             </div>
         </div>
@@ -127,7 +130,7 @@ export function DevPage() {
 }
 
 function ChatArea(props: {
-    width?, height?, mobile?, useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments, useLive2DUrl, useLive2DHeight
+    width?, height?, mobile?, useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments, useLive2DUrl, useLive2DHeight, useCustomScript
 }) {
     const [messages, setMessages] = props.useMessages
     const [meta, setMeta] = props.useMeta
@@ -274,6 +277,34 @@ function ChatArea(props: {
                     }}
                 />
                 <Button text={Locale.DevPage.Send} type="primary" onClick={async () => {
+                    const apis = {
+                        getInput(){return input},
+                        setInput,
+                        getMessages(){return messages},
+                        updateMessages(messages){setMessages(
+                            messages.slice().map(m=>{
+                                if(m?.type){return m}
+                                return {type:"text", ...m}
+                            })
+                        )},
+                        getPrompt(){return prompt},
+                        getInitDialog(){return greeting},
+                        getPlugins(){return []},
+                        getModel(){return "regular"},
+                        chat: (messages, onUpdate, options)=>{
+                            return ClientApi.chat([
+                                { type: "text", role: "system", content: Locale.NextChat.SystemPrompt() },
+                                ...messages,
+                            ], onUpdate, options)
+                        },
+                        embed: ClientApi.embed,
+                        async storeLargeData(data){return ""},
+                        async execPython(code){return ""},
+                        isSingleInteraction(){return false}
+                    }
+                    const onSendMessage = new Function('apis', props.useCustomScript[0])();
+                    await onSendMessage(apis)
+                    return
                     if (input.trim().length <= 0) { return }
                     let _messages = messages.concat([{ type: "text", role: "user", content: input }])
                     setMessages(_messages.slice().concat([
