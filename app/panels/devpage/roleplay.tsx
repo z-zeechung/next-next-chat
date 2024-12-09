@@ -110,13 +110,13 @@ export function RolePlay(props: any) {
             })}
             <div />
             <Group>
-                <Button text={Locale.DevPage.Append} icon={<AddIcon />} onClick={() => {
+                <Button text={Locale.DevPage.Append} icon={<AddIcon />} type="primary" onClick={() => {
                     setGreeting([
                         ...greeting,
                         { type: "text", role: greeting[greeting.length - 1].role == "user" ? "assistant" : "user", content: "" }
                     ])
                 }} />
-                <Button text={Locale.DevPage.AutoGen} icon={<AutoIcon />} onClick={() => {
+                <Button text={Locale.DevPage.AutoGen} icon={<AutoIcon />} type="primary" onClick={() => {
                     const _greeting = greeting.slice()
                     let sendMessages = JSON.parse(JSON.stringify(greeting))
                     let role = "assistant"

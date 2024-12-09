@@ -16,7 +16,7 @@ import { Button, ButtonGroup, Card, CardBody, Input, InputGroup, InputRightAddon
 import { ClientApi } from "../client/api";
 // import { MarkdownMessage } from "../message/TextMessage";
 import { Markdown } from "../components/markdown";
-import { TextArea, Button as ThemeButton } from "../themes/theme";
+import { PopoverItem, TextArea, Button as ThemeButton } from "../themes/theme";
 import docxPlugin from '@hufe921/canvas-editor-plugin-docx'
 import { ControllablePromise } from "../utils/controllable-promise";
 import { showToast } from "../components/ui-lib";
@@ -33,9 +33,9 @@ let onScaleChange = undefined as (() => void) | undefined
 let setTab = undefined as ((tab:string)=>void) | undefined
 let setText = undefined as ((text:string)=>void) | undefined
 
-export function DocxButton() {
+export function DocxPopoverItem() {
     const navigate = useNavigate()
-    return <ThemeButton text={Locale.NextChat.ChatArea.WordDoc} type="primary" icon={<DocIcon style={{ width: "16px", height: "16px" }} />} onClick={() => {
+    return <PopoverItem text={Locale.NextChat.ChatArea.WordDoc} icon={<DocIcon style={{ width: "16px", height: "16px" }} />} onClick={() => {
         var input = document.createElement('input')
         input.type = 'file'
         input.multiple = false
@@ -89,10 +89,10 @@ export function DocxButton() {
     />
 }
 
-export function PDFButton() {
+export function PDFPopoverItem() {
     const navigate = useNavigate()
     const {width, height} = useWindowSize()
-    return <ThemeButton text={Locale.NextChat.ChatArea.PDFDoc} type="primary" icon={<PDFIcon style={{ width: "16px", height: "16px" }} />} onClick={() => {
+    return <PopoverItem text={Locale.NextChat.ChatArea.PDFDoc} icon={<PDFIcon style={{ width: "16px", height: "16px" }} />} onClick={() => {
         var input = document.createElement('input')
         input.type = 'file'
         input.multiple = false
