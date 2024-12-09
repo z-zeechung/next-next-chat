@@ -2,13 +2,19 @@
 * 
 * @param {{
 *      getInput: ()=>string
-*			 setInput: (text:string)=>void
+*      setInput: (text:string)=>void
 *      getMessages: ()=>{role: "system" | "user" | "assistant", content:string}[]
 *      updateMessages: (messages: {role: "system" | "user" | "assistant", content:string}[])=>void
 *      getPrompt: ()=>string
 *      getInitDialog: ()=>{role: "system" | "user" | "assistant", content:string}[]
 *      getPlugins: ()=>[]
 *      getModel: ()=> "regular" | "smart"
+*      setPromise: (promise: Promise)=>void
+*      createControllablePromise: (cb:(
+*          resolve: (value: T | PromiseLike<T>) => void, 
+*          reject: (reason?: any) => void,
+*          abort: (value: T)=>boolean
+*      )=>void)=>Promise
 *      chat: (
 *          messages: {role: "system" | "user" | "assistant", content:string}[],
 *          onUpdate?: (message: string)=>void
@@ -56,6 +62,7 @@ async function onSendMessage(apis){
             tools: apis.getPlugins()    // tool call
         }
     )
+    apis.setPromise(promise)   // pass the chat promise so that user can interrupt it
     apis.setInput("")   // clear the input box
     const result = await promise    // wait for the result to be returned
     // display the result
@@ -64,6 +71,7 @@ async function onSendMessage(apis){
         {role:"user", content: apis.getInput()}, 
         {role:"assistant", content: result}
     ])
+    apis.setPromise(undefined)  // remove chat promise
 
     ////////////////////////////
 }

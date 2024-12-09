@@ -294,7 +294,7 @@ function ThemeInfoCard(props: {
         } : {})}
         variant={props.type == "plain" ? "outline" : "elevated"}
     >
-        <CardHeader padding={3} paddingBottom={0}>
+        {(props.title || props.icon || props.subTitle) &&<CardHeader padding={3} paddingBottom={0}>
             <Flex>
                 <Flex
                     flex='1' gap='4' alignItems='center' flexWrap="nowrap" padding={0}
@@ -315,7 +315,7 @@ function ThemeInfoCard(props: {
                     </Box>
                 </Flex>
             </Flex>
-        </CardHeader>
+        </CardHeader>}
         {body && <CardBody>
             <Flex
                 flex={1} gap={4} direction={"column"} padding={0}
@@ -478,6 +478,37 @@ function ThemeTinyButton(props: {
     </Button>
 }
 
+function ThemeButtonCard(props: {
+    icon?: JSX.Element
+    text?: string
+    onClick?: () => void
+}) {
+    return <Button
+        height={75.35}
+        width={75.35}
+        flexDirection={"column"}
+        fontSize={"x-small"}
+        fontWeight={"normal"}
+        padding={0}
+        onClick={props.onClick}
+    >
+        <div style={{height:75, width:75, transform: isVerticalLang() ? "rotate(-90deg)" : "rotate(0deg)"}}>
+            <div style={{height:30.5, paddingTop:14.5, paddingLeft:(75-16)/2, paddingRight:(75-16)/2, paddingBottom:0}}>
+                <div style={{height:16, width:16, transform: isVerticalLang() ? "rotate(90deg)" : "rotate(0deg)"}}>
+                    {props.icon}
+                </div>
+            </div>
+            <div style={{
+                width: 75, height:75-30.5, textWrap:"pretty", display:"flex", justifyContent:"center", alignItems:"center",
+                lineHeight:0.9,
+                ...(isVerticalLang() ? {writingMode:"vertical-lr", transform: "rotate(90deg)"} : {})
+            }}>
+                {props.text}
+            </div>
+        </div>
+    </Button>
+}
+
 function ThemeTextArea(props: {
     placeholder?: string
     onInput?: (value: string) => void
@@ -610,6 +641,11 @@ function ThemePopover(props:{
             {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
             {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
             {...(props.type == undefined ? { variant: "outline", background: "white", outline:"none", border:"none", shadow:"0 4px 8px rgba(0,0,0,0.1)" } : {})}
+            borderLeftRadius={12}
+            borderRightRadius={12}
+            fontWeight={"normal"}
+            fontSize={"small"}
+            style={{ height: 36, paddingLeft: 12, paddingRight: 12 }}
         >
             {props.text}
         </MenuButton>
@@ -1002,7 +1038,7 @@ function ThemeTextAreaOld(props: {
     </InputGroup>
 }
 
-function ThemeButtonCard(props: {
+function ThemeButtonCardOld(props: {
     icon?: JSX.Element
     text?: string
     onClick?: () => void
