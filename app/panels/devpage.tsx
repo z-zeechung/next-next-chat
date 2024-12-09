@@ -2,7 +2,7 @@ import { createContext, useEffect, useRef, useState } from "react";
 import { autoGrowTextArea, useMobileScreen, useWindowSize } from "../utils";
 import { Box, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Stack, StackDivider } from "@chakra-ui/react";
 import { Message, MessageElement } from "../message/Message";
-import { Button, List, MessageCard, TextArea, TinyButton, ListItem, Avatar, Tabs, Component, Header, Row, Left, Right, Select, Footer, Plate, Group } from "../themes/theme";
+import { Button, List, MessageCard, TextArea, TinyButton, ListItem, Avatar, Tabs, Component, Header, Row, Left, Right, Select, Footer, Plate, Group, TextBlock, showToast, Popover, PopoverItem } from "../themes/theme";
 
 import { ControllablePromise } from "../utils/controllable-promise";
 import { ClientApi } from "../client/api";
@@ -30,6 +30,10 @@ import { Live2D } from "./devpage/live2d";
 import { Live2D as Live2DComponent } from "./nextchat/Live2D";
 
 import JAVASCRIPT_TEMPLATE from "./devpage/javascript-template.txt"
+import { blobToBase64, compileLive2dModel } from "./devpage/compile-live2d-model";
+import { renderToString } from "react-dom/server";
+
+import brotliPromise from 'brotli-wasm';
 
 export function DevPage() {
 
@@ -46,19 +50,18 @@ export function DevPage() {
     const useGreeting = useState([
         { type: "text", role: "assistant", content: Locale.DevPage.Greeting }
     ] as Message[])
-    const useAvatar = useState(
-        <div style={{
-            background: "gray",
-            width: 16,
-            height: 16,
-            borderRadius: 1000,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-        }}>
-            <div style={{ scale: 0.7, color: "white" }}><DefaultAvatarIcon /></div>
-        </div>
-    )
+    const defaultAvatar = <div style={{
+        background: "gray",
+        width: 16,
+        height: 16,
+        borderRadius: 1000,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    }}>
+        <div style={{ scale: 0.7, color: "white" }}><DefaultAvatarIcon /></div>
+    </div>
+    const useAvatar = useState(defaultAvatar)
     const useCustomScript = useState(JAVASCRIPT_TEMPLATE)
     const useSearch = useState(false)
     const usePaint = useState(false)
@@ -105,14 +108,165 @@ export function DevPage() {
                     <Tabs type="plain" tab={tab} labels={tabs} onChange={setTab} >
                         {tab == tabs[0] && <RolePlay {...{ usePrompt, useGreeting, usePromise, useAvatar, useSearch, usePaint, useScript, useRoleName, useDocuments }} />}
                         {tab == tabs[1] && <Live2D {...{ useLive2DConfig, useLive2DModel, useLive2DPhysics, useLive2DTextures, useLive2DMotions, useLive2DIdleMotion, useLive2DUrl, useLive2DHeight }} />}
-                        {tab == tabs[2] && <Scripting useCustomScript={useCustomScript}/>}
+                        {tab == tabs[2] && <Scripting useCustomScript={useCustomScript} />}
                         <Footer>
                             <Row>
                                 <Right>
                                     <Group>
-                                        <Button text={Locale.DevPage.Upload} />
+                                        <Button text={Locale.DevPage.Upload} onClick={()=>{
+                                            const input = document.createElement("input")
+                                            input.accept = ".nnr"
+                                            input.type = "file"
+                                            input.onchange = async (e)=>{
+                                                async function readBase64(dataUrl: string) {
+                                                    return await (await fetch(dataUrl)).blob()
+                                                }
+                                                const arr = new Uint8Array((await ((e.target as any).files[0] as File).arrayBuffer()).slice(4))
+                                                const brotli = await brotliPromise;
+                                                const textDecoder = new TextDecoder()
+                                                const json = textDecoder.decode(brotli.decompress(arr))
+                                                const data = JSON.parse(json)
+                                                useRoleName[1](data?.name??"N²CHAT")
+                                                usePrompt[1](data?.prompt??"你是$N^2$CHAT，一个智能助手。")
+                                                useGreeting[1](data?.greeting??[{ type: "text", role: "assistant", content: Locale.DevPage.Greeting }])
+                                                if(data?.avatar){useAvatar[1](<div style={{display:"inline-block"}} dangerouslySetInnerHTML={{__html:data?.avatar??""}} />)}
+                                                    else{useAvatar[1](defaultAvatar)}
+                                                useSearch[1](data?.search??false)
+                                                usePaint[1](data?.paint??false)
+                                                useScript[1](data?.script??false)
+                                                useLive2DHeight[1](data?.useLive2DHeight??"170")
+                                                let live2dConfig=undefined as any; if(data?.live2dConfig){live2dConfig=new File([data?.live2dConfig], data?.live2dConfigName); useLive2DConfig[1](live2dConfig)}
+                                                let live2dModel=undefined as any; if(data?.live2dModel){live2dModel=new File([await readBase64(data?.live2dModel)], data?.live2dModelName); useLive2DModel[1](live2dModel)}
+                                                let live2dPhysics=undefined as any; if(data?.live2dPhysics){live2dPhysics=new File([data?.live2dPhysics], data?.live2dPhysicsName);useLive2DPhysics[1](live2dPhysics)}
+                                                const textures:File[] = [] as any
+                                                if(data?.live2dTextures?.length>0){
+                                                    for(let i=0;i<data?.live2dTextures?.length;i++){
+                                                        textures.push(new File([await readBase64(data?.live2dTextures[i])], data?.live2dTexturesName[i]))
+                                                    }
+                                                    useLive2DTextures[1](textures)
+                                                }
+                                                let live2dMotions:File[] = [] as any; if(data?.live2dMotions?.length>0){live2dMotions=data?.live2dMotions.map((item, idx)=>new File([item], data?.live2dMotionsName[idx]));useLive2DMotions[1](live2dMotions)}
+                                                useLive2DIdleMotion[1](data?.live2DIdleMotion??"无")
+                                                if(data?.live2dConfig || data?.live2dModel || data?.live2dTextures?.length>0){
+                                                    const idleMotion = data?.live2DIdleMotion??"无"
+                                                    const url = await compileLive2dModel(
+                                                        live2dConfig,
+                                                        live2dModel,
+                                                        live2dPhysics,
+                                                        textures,
+                                                        live2dMotions.filter(f => f.name != idleMotion),
+                                                        live2dMotions.find(f => f.name == idleMotion)
+                                                    )
+                                                    URL.revokeObjectURL(useLive2DUrl[0]??"")
+                                                    useLive2DUrl[1](url)
+                                                }
+                                                useCustomScript[1](data?.customScript??JAVASCRIPT_TEMPLATE)
+                                            }
+                                            input.click()
+                                        }} />
                                         <Button text={Locale.DevPage.Save} />
-                                        <Button text={Locale.DevPage.Export} />
+                                        <Popover text={Locale.DevPage.Export}>
+                                            <PopoverItem text="导出角色文件" onClick={async () => {
+                                                function readFile(file?: File, isText?) {
+                                                    if (!file) return undefined
+                                                    if (isText) return file.text()
+                                                    return blobToBase64(file)
+                                                }
+                                                async function readFiles(files: File[], isText?) {
+                                                    const bufs: any[] = []
+                                                    for (let file of files) {
+                                                        bufs.push(await readFile(file, isText))
+                                                    }
+                                                    return bufs
+                                                }
+                                                const data = {
+                                                    name: useRoleName[0],
+                                                    prompt: usePrompt[0],
+                                                    greeting: useGreeting[0],
+                                                    avatar: renderToString(useAvatar[0]),
+                                                    search: useSearch[0],
+                                                    paint: usePaint[0],
+                                                    script: useScript[0],
+                                                    live2dHeight: useLive2DHeight[0],
+                                                    live2dConfig: await readFile(useLive2DConfig[0], true),
+                                                    live2dConfigName: useLive2DConfig[0]?.name,
+                                                    live2dModel: await readFile(useLive2DModel[0]),
+                                                    live2dModelName: useLive2DModel[0]?.name,
+                                                    live2dPhysics: await readFile(useLive2DPhysics[0], true),
+                                                    live2dPhysicsName: useLive2DPhysics[0]?.name,
+                                                    live2dTextures: await readFiles(useLive2DTextures[0]),
+                                                    live2dTexturesName: useLive2DTextures[0]?.map(x => x.name),
+                                                    live2dMotions: await readFiles(useLive2DMotions[0], true),
+                                                    live2dMotionsName: useLive2DMotions[0]?.map(x => x.name),
+                                                    live2dIdleMotion: useLive2DIdleMotion[0] == "无" ? undefined : useLive2DIdleMotion[0],
+                                                    customScript: useCustomScript[0],
+                                                }
+                                                const json = JSON.stringify(data)
+                                                // console.log(data)
+
+                                                const brotli = await brotliPromise;
+                                                const textEncoder = new TextEncoder();
+                                                const uncompressedData = textEncoder.encode(json);
+                                                const compressedData = brotli.compress(uncompressedData, { quality: 3 });
+                                                const magic = new Uint8Array([0x0d, 0x00, 0x07, 0x21]);
+                                                const dataWithMagic = new Uint8Array(magic.length + compressedData.length);
+                                                dataWithMagic.set(magic, 0);
+                                                dataWithMagic.set(compressedData, magic.length);
+
+                                                const a = document.createElement("a");
+                                                a.href = URL.createObjectURL(new Blob([dataWithMagic], { type: "application/octet-stream" }));
+                                                a.download = `${useRoleName[0]}.nnr`;
+                                                a.click();
+                                            }} />
+                                            <PopoverItem text="导出元数据" onClick={()=>{
+                                                const data = {
+                                                    name: useRoleName[0],
+                                                    avatar: renderToString(useAvatar[0])
+                                                }
+                                                const json = JSON.stringify(data)
+                                                const a = document.createElement("a");
+                                                a.href = URL.createObjectURL(new Blob([json], { type: "application/json" }));
+                                                a.download = `${useRoleName[0]}.json`;
+                                                a.click();
+                                            }}/>
+                                            <PopoverItem text="导出归档角色文件" onClick={async ()=>{
+                                                const data = {
+                                                    name: useRoleName[0],
+                                                    prompt: usePrompt[0],
+                                                    greeting: useGreeting[0],
+                                                    avatar: renderToString(useAvatar[0]),
+                                                    search: useSearch[0],
+                                                    paint: usePaint[0],
+                                                    script: useScript[0],
+                                                    live2d: (useLive2DConfig[0] || useLive2DModel[0] || useLive2DTextures[0].length>0)?
+                                                        await (await fetch(await compileLive2dModel(
+                                                            useLive2DConfig[0],
+                                                            useLive2DModel[0],
+                                                            useLive2DPhysics[0],
+                                                            useLive2DTextures[0],
+                                                            useLive2DMotions[0].filter(f=>f.name!=useLive2DIdleMotion[0]),
+                                                            useLive2DMotions[0].find(f=>f.name==useLive2DIdleMotion[0])
+                                                        ))).text()
+                                                    :undefined,
+                                                    customScript: useCustomScript[0],
+                                                }
+                                                const json = JSON.stringify(data)
+
+                                                const brotli = await brotliPromise;
+                                                const textEncoder = new TextEncoder();
+                                                const uncompressedData = textEncoder.encode(json);
+                                                const compressedData = brotli.compress(uncompressedData, { quality: 9 });
+                                                const magic = new Uint8Array([0x07, 0x21, 0x0d, 0x00]);
+                                                const dataWithMagic = new Uint8Array(magic.length + compressedData.length);
+                                                dataWithMagic.set(magic, 0);
+                                                dataWithMagic.set(compressedData, magic.length);
+
+                                                const a = document.createElement("a");
+                                                a.href = URL.createObjectURL(new Blob([dataWithMagic], { type: "application/octet-stream" }));
+                                                a.download = `${useRoleName[0]}.nnra`;
+                                                a.click();
+                                            }}/>
+                                        </Popover>
                                     </Group>
                                 </Right>
                             </Row>
@@ -120,7 +274,7 @@ export function DevPage() {
                     </Tabs>
                 </Plate>
             </div>
-            <div style={{ height: "100%", width: "57%"}}>
+            <div style={{ height: "100%", width: "57%" }}>
                 <Plate>
                     <ChatArea {...{ useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments, useLive2DUrl, useLive2DHeight, useCustomScript }} />
                 </Plate>
@@ -140,6 +294,7 @@ function ChatArea(props: {
     const [input, setInput] = useState("")
     const { width, height } = useWindowSize()
     const isMobile = useMobileScreen()
+    const [model, setModel] = useState<"regular" | "smart">("regular")
 
     const [prompt, setPrompt] = props.usePrompt
     const [greeting, setGreeting] = props.useGreeting
@@ -241,7 +396,10 @@ function ChatArea(props: {
                             setMessages([])
                             setMeta({})
                         }} />}
-                        <TinyButton text={Locale.DevPage.ChangeModel} />
+                        <TinyButton text={Locale.DevPage.ChangeModel} onClick={() => {
+                            setModel(model == "regular" ? "smart" : "regular")
+                            showToast(<TextBlock>{Locale.NextChat.ChatArea.SwitchedToModel(model == "regular" ? "smart" : "regular")}</TextBlock>)
+                        }} />
                         {props.mobile && <TinyButton text={Locale.DevPage.Collapse} onClick={() => {
                             setShow(false)
                         }} />}
@@ -265,7 +423,7 @@ function ChatArea(props: {
             bottom: 0,
             pointerEvents: "none"
         }}>
-            <Live2DComponent src={props.useLive2DUrl[0]} height={Number.parseInt(props.useLive2DHeight[0])/100} zoom={0.618} />
+            <Live2DComponent src={props.useLive2DUrl[0]} height={Number.parseInt(props.useLive2DHeight[0]) / 100} zoom={0.618} />
         </div>
         <Footer>
             <Group isAttached>
@@ -278,29 +436,35 @@ function ChatArea(props: {
                 />
                 <Button text={Locale.DevPage.Send} type="primary" onClick={async () => {
                     const apis = {
-                        getInput(){return input},
+                        getInput() { return input },
                         setInput,
-                        getMessages(){return messages},
-                        updateMessages(messages){setMessages(
-                            messages.slice().map(m=>{
-                                if(m?.type){return m}
-                                return {type:"text", ...m}
-                            })
-                        )},
-                        getPrompt(){return prompt},
-                        getInitDialog(){return greeting},
-                        getPlugins(){return []},
-                        getModel(){return "regular"},
-                        chat: (messages, onUpdate, options)=>{
+                        getMessages() { return messages },
+                        updateMessages(messages) {
+                            setMessages(
+                                messages.slice().map(m => {
+                                    if (m?.type) { return m }
+                                    return { type: "text", ...m }
+                                })
+                            )
+                        },
+                        getPrompt() { return prompt },
+                        getInitDialog() { return greeting },
+                        getPlugins() { return [] },
+                        getModel() { return model },
+                        setPromise,
+                        createControllablePromise(cb) {
+                            return new ControllablePromise(cb)
+                        },
+                        chat: (messages, onUpdate, options) => {
                             return ClientApi.chat([
                                 { type: "text", role: "system", content: Locale.NextChat.SystemPrompt() },
                                 ...messages,
                             ], onUpdate, options)
                         },
                         embed: ClientApi.embed,
-                        async storeLargeData(data){return ""},
-                        async execPython(code){return ""},
-                        isSingleInteraction(){return false}
+                        async storeLargeData(data) { return "" },
+                        async execPython(code) { return "" },
+                        isSingleInteraction() { return false }
                     }
                     const onSendMessage = new Function('apis', props.useCustomScript[0])();
                     await onSendMessage(apis)

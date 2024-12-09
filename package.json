@@ -52,6 +52,7 @@
     "babel-eslint": "^10.1.0",
     "babel-preset-react": "^6.24.1",
     "bonjour": "^3.5.0",
+    "brotli-wasm": "^3.0.1",
     "cheerio": "^1.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
