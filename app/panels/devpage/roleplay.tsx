@@ -162,26 +162,34 @@ export function RolePlay(props: any) {
         </ListItem>
         <ListItem title={Locale.DevPage.ActivateTool}>
             <SimpleGrid templateColumns={`repeat(auto-fill, minmax(${150}px, 1fr))`} gap={4}>
-                <Card>
-                    <CardBody>
-                        <CheckBox text={Locale.DevPage.WebSearch} checked={search} onClick={() => setSearch(!search)} />
-                    </CardBody>
-                </Card>
-                <Card>
-                    <CardBody>
-                        <CheckBox text={Locale.DevPage.Scripting} checked={script} onClick={() => setScript(!script)} />
-                    </CardBody>
-                </Card>
-                <Card>
-                    <CardBody>
-                        <CheckBox text={Locale.DevPage.ImageGen} checked={paint} onClick={() => setPaint(!paint)} />
-                    </CardBody>
-                </Card>
-                <Card>
-                    <CardBody>
-                        <Button type="text" text="更多" icon={<AddIcon />} />
-                    </CardBody>
-                </Card>
+                <InfoCard>
+                    <Row>
+                        <Left>
+                            <CheckBox text={Locale.DevPage.WebSearch} checked={search} onClick={() => setSearch(!search)} />
+                        </Left>
+                    </Row>
+                </InfoCard>
+                <InfoCard>
+                    <Row>
+                        <Left>
+                            <CheckBox text={Locale.DevPage.Scripting} checked={script} onClick={() => setScript(!script)} />
+                        </Left>
+                    </Row>
+                </InfoCard>
+                <InfoCard>
+                    <Row>
+                        <Left>
+                            <CheckBox text={Locale.DevPage.ImageGen} checked={paint} onClick={() => setPaint(!paint)} />
+                        </Left>
+                    </Row>
+                </InfoCard>
+                <InfoCard>
+                    <Row>
+                        <Left>
+                            <Button type="text" text="更多" icon={<AddIcon />} />
+                        </Left>
+                    </Row>
+                </InfoCard>
             </SimpleGrid>
         </ListItem>
         <ListItem title={Locale.DevPage.UploadFile}>
