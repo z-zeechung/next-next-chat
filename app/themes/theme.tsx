@@ -169,6 +169,12 @@ export interface Theme{
             text?:string
             type?:"text" | "primary" | "danger"
         })=>JSX.Element
+    popoverCard:
+        (props:{
+            children?:any
+            icon?:JSX.Element
+            text?:string
+        })=>JSX.Element
     popoverItem:
         (props:{
             text?:string
@@ -212,6 +218,7 @@ export let showConfirm = theme.showConfirm
 export let showToast = theme.showToast
 export let Popover = theme.popover
 export let TinyPopover = theme.tinyPopover
+export let PopoverCard = theme.popoverCard
 export let PopoverItem = theme.popoverItem
 
 export function Header(props:{children:any}) {

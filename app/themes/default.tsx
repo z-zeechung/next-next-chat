@@ -48,6 +48,7 @@ export const Default: Theme = {
     showToast: showToast,
     popover: ThemePopover,
     tinyPopover: ThemeTinyPopover,
+    popoverCard: ThemePopoverCard,
     popoverItem: ThemePopoverItem,
 }
 
@@ -124,10 +125,10 @@ function handleListItem(body?: any[]) {
         <div style={{ width: width, fontFamily: FONT_FAMILY, fontWeight: "bold", color: "#285E61", ...(isRtlLang() ? { direction: "rtl" } : {}) }}>
             {isVerticalLang() ? <div dangerouslySetInnerHTML={{ __html: splitMongolian(elem.props.title) }} /> : elem?.props?.title}
         </div>
-        <div style={{ flex: 1, maxHeight: window.innerHeight * (1-0.618), overflowY: "auto", display:"flex", flexDirection: "column", gap: 8}}>
+        <div style={{ flex: 1, maxHeight: window.innerHeight * (1 - 0.618), overflowY: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
             {elem?.props?.children}
-            <div style={{fontSize:12, color:"gray"}}>{elem?.props?.subTitle}</div>
-            <hr/>
+            <div style={{ fontSize: 12, color: "gray" }}>{elem?.props?.subTitle}</div>
+            <hr />
         </div>
     </div> : elem)
 }
@@ -191,8 +192,8 @@ function ThemeTextBlock(props: { children?: any }) {
             {i < props.children.split("\n").length - 1 && ln.trim().length > 0 && <hr style={{ opacity: 1 }} />}
         </>)}</div>
     }
-    return <div style={{ width: "100%", whiteSpace:"pre-line", textIndent: props.children.includes("\n")?getIndent():0, ...(isRtlLang()?{direction:"rtl"}:{}) }}>{
-        props.children.split("\n").map(ln=><div>{ln.trim().length > 0 ? ln : <br />}</div>)
+    return <div style={{ width: "100%", whiteSpace: "pre-line", textIndent: props.children.includes("\n") ? getIndent() : 0, ...(isRtlLang() ? { direction: "rtl" } : {}) }}>{
+        props.children.split("\n").map(ln => <div>{ln.trim().length > 0 ? ln : <br />}</div>)
     }</div>
 }
 
@@ -294,7 +295,7 @@ function ThemeInfoCard(props: {
         } : {})}
         variant={props.type == "plain" ? "outline" : "elevated"}
     >
-        {(props.title || props.icon || props.subTitle) &&<CardHeader padding={3} paddingBottom={0}>
+        {(props.title || props.icon || props.subTitle) && <CardHeader padding={3} paddingBottom={0}>
             <Flex>
                 <Flex
                     flex='1' gap='4' alignItems='center' flexWrap="nowrap" padding={0}
@@ -338,7 +339,7 @@ function ThemeComponent(props: { children?: any, type?: "primary" | "plain", sub
     return <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", background: props.type == "primary" ? "#319795" : "#fff", color: props.type == "primary" ? "#fff" : "#000", fontFamily: FONT_FAMILY }}>
         <div style={{ flexGrow: 0, margin: props.subHeader ? 0 : 10, marginBottom: props.subHeader ? 0 : 6 }}>{header?.props.children}</div>
         {(!props.type) && <hr />}
-        <div style={{ flex: 1, overflow: "auto", margin: 12, gap: 12, display: "flex", flexDirection: "column", position:"relative" }}>{body}</div>
+        <div style={{ flex: 1, overflow: "auto", margin: 12, gap: 12, display: "flex", flexDirection: "column", position: "relative" }}>{body}</div>
         {(!props.type) && <hr />}
         <div style={{ flexGrow: 0, margin: 12, marginTop: 6, gap: 8, display: "flex", flexDirection: "column" }}>{footer?.props.children}</div>
     </div>
@@ -400,7 +401,7 @@ function ThemeButton(props: {
             {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost" } : {})}
             {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
             {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
-            {...(props.type == undefined ? { variant: "outline", background: "white", outline:"none", border:"none", shadow:"0 4px 8px rgba(0,0,0,0.1)" } : {})}
+            {...(props.type == undefined ? { variant: "outline", background: "white", outline: "none", border: "none", shadow: "0 4px 8px rgba(0,0,0,0.1)" } : {})}
             {...(props.disabled ? { colorScheme: "gray", variant: "solid" } : {})}
             onClick={props.disabled ? () => { } : props.onClick}
             style={{ height: 36, width: 36 }}
@@ -416,7 +417,7 @@ function ThemeButton(props: {
         {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost" } : {})}
         {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
         {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
-        {...(props.type == undefined ? { variant: "outline", background: "white", outline:"none", border:"none", shadow:"0 4px 8px rgba(0,0,0,0.1)" } : {})}
+        {...(props.type == undefined ? { variant: "outline", background: "white", outline: "none", border: "none", shadow: "0 4px 8px rgba(0,0,0,0.1)" } : {})}
         {...(props.disabled ? { colorScheme: "gray", variant: "solid" } : {})}
         onClick={props.disabled ? () => { } : props.onClick}
         style={{ height: 36, paddingLeft: 12, paddingRight: 12 }}
@@ -426,7 +427,7 @@ function ThemeButton(props: {
         fontSize={"small"}
         maxWidth={150}
     >
-        <div style={{display:"inline-block", ...(["cn", "cnt"].includes(getLang())?{}:{whiteSpace:"break-spaces"})}}>
+        <div style={{ display: "inline-block", ...(["cn", "cnt"].includes(getLang()) ? {} : { whiteSpace: "break-spaces" }) }}>
             {props.text}
         </div>
     </Button>
@@ -450,7 +451,7 @@ function ThemeTinyButton(props: {
             {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost", color: "gray.500" } : {})}
             {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
             {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
-            {...(props.type == undefined ? { variant: "outline", background: "white", outline:"none", border:"1px lightgray solid" } : {})}
+            {...(props.type == undefined ? { variant: "outline", background: "white", outline: "none", border: "1px lightgray solid" } : {})}
             {...(props.disabled ? { colorScheme: "gray", variant: "solid" } : {})}
             onClick={props.disabled ? () => { } : props.onClick}
             style={{ height: 24 }}
@@ -465,7 +466,7 @@ function ThemeTinyButton(props: {
         {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost", color: "gray.500" } : {})}
         {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
         {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
-        {...(props.type == undefined ? { variant: "outline", background: "white", outline:"none", border:"1px lightgray solid" } : {})}
+        {...(props.type == undefined ? { variant: "outline", background: "white", outline: "none", border: "1px lightgray solid" } : {})}
         {...(props.disabled ? { colorScheme: "gray", variant: "solid" } : {})}
         onClick={props.disabled ? () => { } : props.onClick}
         style={{ height: 24, borderRadius: 12 }}
@@ -492,16 +493,16 @@ function ThemeButtonCard(props: {
         padding={0}
         onClick={props.onClick}
     >
-        <div style={{height:75, width:75, transform: isVerticalLang() ? "rotate(-90deg)" : "rotate(0deg)"}}>
-            <div style={{height:30.5, paddingTop:14.5, paddingLeft:(75-16)/2, paddingRight:(75-16)/2, paddingBottom:0}}>
-                <div style={{height:16, width:16, transform: isVerticalLang() ? "rotate(90deg)" : "rotate(0deg)"}}>
+        <div style={{ height: 75, width: 75, transform: isVerticalLang() ? "rotate(-90deg)" : "rotate(0deg)" }}>
+            <div style={{ height: 30.5, paddingTop: 14.5, paddingLeft: (75 - 16) / 2, paddingRight: (75 - 16) / 2, paddingBottom: 0 }}>
+                <div style={{ height: 16, width: 16, transform: isVerticalLang() ? "rotate(90deg)" : "rotate(0deg)" }}>
                     {props.icon}
                 </div>
             </div>
             <div style={{
-                width: 75, height:75-30.5, textWrap:"pretty", display:"flex", justifyContent:"center", alignItems:"center",
-                lineHeight:0.9,
-                ...(isVerticalLang() ? {writingMode:"vertical-lr", transform: "rotate(90deg)"} : {})
+                width: 75, height: 75 - 30.5, textWrap: "pretty", display: "flex", justifyContent: "center", alignItems: "center",
+                lineHeight: 0.9,
+                ...(isVerticalLang() ? { writingMode: "vertical-lr", transform: "rotate(90deg)" } : {})
             }}>
                 {props.text}
             </div>
@@ -524,12 +525,12 @@ function ThemeTextArea(props: {
     const [rows, setRows] = useState(props.rows ?? 3)
     const ref = useRef(null)
 
-    const [areaHeight, setAreaHeight] = useState(36 * (props.rows??1))
+    const [areaHeight, setAreaHeight] = useState(36 * (props.rows ?? 1))
 
     const tlRadius = (props.embed == "left" || props.embed == "middle") ? 0 : 10
     const trRadius = (props.embed == "right" || props.embed == "middle") ? 0 : 10
     const blRadius = (props.embed == "left" || props.embed == "middle") ? (rows >= 2 ? 10 : 0) : 10
-    const brRadius = (props.embed == "right" || props.embed == "middle")  ? (rows >= 2 ? 10 : 0) : 10
+    const brRadius = (props.embed == "right" || props.embed == "middle") ? (rows >= 2 ? 10 : 0) : 10
 
     useEffect(() => {
         if (props.autoGrow && ref.current) {
@@ -543,10 +544,10 @@ function ThemeTextArea(props: {
                     mdiv.innerText = text.split(" ").join("\n")
                     document.body.appendChild(mdiv)
                     console.log(mdiv.clientWidth)
-                    setAreaHeight(Math.max(mdiv.clientWidth + 16, 36*rows))
+                    setAreaHeight(Math.max(mdiv.clientWidth + 16, 36 * rows))
                     mdiv.remove()
                 } else {
-                    setAreaHeight(Math.max(text.length * 256 / width, 128, 36*rows))
+                    setAreaHeight(Math.max(text.length * 256 / width, 128, 36 * rows))
                 }
             } else {
                 const mdiv = document.createElement("div")
@@ -626,12 +627,12 @@ async function showToast(children: any) {
     })
 }
 
-function ThemePopover(props:{
-    children?:any
-    icon?:JSX.Element
-    text?:string
-    type?:"text" | "primary" | "danger"
-}){
+function ThemePopover(props: {
+    children?: any
+    icon?: JSX.Element
+    text?: string
+    type?: "text" | "primary" | "danger"
+}) {
     return <Menu>
         <MenuButton
             as={IconButton}
@@ -640,7 +641,7 @@ function ThemePopover(props:{
             {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost" } : {})}
             {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
             {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
-            {...(props.type == undefined ? { variant: "outline", background: "white", outline:"none", border:"none", shadow:"0 4px 8px rgba(0,0,0,0.1)" } : {})}
+            {...(props.type == undefined ? { variant: "outline", background: "white", outline: "none", border: "none", shadow: "0 4px 8px rgba(0,0,0,0.1)" } : {})}
             borderLeftRadius={12}
             borderRightRadius={12}
             fontWeight={"normal"}
@@ -655,27 +656,33 @@ function ThemePopover(props:{
     </Menu>
 }
 
-function ThemeTinyPopover(props:{
-    children?:any
-    icon?:JSX.Element
-    text?:string
-    type?:"text" | "primary" | "danger"
-}){
+function ThemeTinyPopover(props: {
+    children?: any
+    icon?: JSX.Element
+    text?: string
+    type?: "text" | "primary" | "danger"
+}) {
     return <Menu>
         <MenuButton
             size={"xs"}
             as={IconButton}
             aria-label=''
-            icon={props.icon}
             {...(props.type == "text" ? { colorScheme: "teal", variant: "ghost", color: "gray.500" } : {})}
             {...(props.type == "primary" ? { colorScheme: "teal", variant: "solid" } : {})}
             {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
-            {...(props.type == undefined ? { variant: "outline", background: "white", outline:"none", border:"1px lightgray solid" } : {})}
+            {...(props.type == undefined ? { variant: "outline", background: "white", outline: "none", border: "1px lightgray solid" } : {})}
             borderRadius={100}
             fontWeight={"normal"}
             fontSize={"x-small"}
+            paddingLeft={2}
+            paddingRight={2}
         >
-            {props.text}
+            <div style={{ display: "inline-flex", gap: 8, justifyItems:"center", alignItems: "center" }}>
+                {props.icon && <div style={{ display: "inline-block", width: 16, height: 16 }}>
+                    {props.icon}
+                </div>}
+                {props.text}
+            </div>
         </MenuButton>
         <MenuList>
             {props.children}
@@ -683,12 +690,50 @@ function ThemeTinyPopover(props:{
     </Menu>
 }
 
-function ThemePopoverItem(props:{
-    text?:string
-    icon?:JSX.Element
-    onClick?:()=>void
-}){
-    return <MenuItem fontSize={"small"} icon={props.icon??<div style={{display:"inline-block",width:16,height:16}}/>} onClick={props.onClick}>
+function ThemePopoverCard(props: {
+    children?: any
+    icon?: JSX.Element
+    text?: string
+}) {
+    return <Menu>
+        <MenuButton
+            size={"xs"}
+            as={Button}
+            aria-label=''
+            height={75.35}
+            width={75.35}
+            flexDirection={"column"}
+            fontSize={"x-small"}
+            fontWeight={"normal"}
+            padding={0}
+        >
+            <div style={{ height: 75, width: 75, transform: isVerticalLang() ? "rotate(-90deg)" : "rotate(0deg)" }}>
+                <div style={{ height: 30.5, paddingTop: 14.5, paddingLeft: (75 - 16) / 2, paddingRight: (75 - 16) / 2, paddingBottom: 0 }}>
+                    <div style={{ height: 16, width: 16, transform: isVerticalLang() ? "rotate(90deg)" : "rotate(0deg)" }}>
+                        {props.icon}
+                    </div>
+                </div>
+                <div style={{
+                    width: 75, height: 75 - 30.5, textWrap: "pretty", display: "flex", justifyContent: "center", alignItems: "center",
+                    lineHeight: 0.9,
+                    ...(isVerticalLang() ? { writingMode: "vertical-lr", transform: "rotate(90deg)" } : {})
+                }}>
+                    {props.text}
+                </div>
+            </div>
+        </MenuButton>
+        <MenuList>
+            {props.children}
+        </MenuList>
+    </Menu>
+}
+
+function ThemePopoverItem(props: {
+    text?: string
+    icon?: JSX.Element
+    onClick?: () => void
+}) {
+    return <MenuItem fontSize={"small"} icon={props.icon ?? <div style={{ display: "inline-block", width: 16, height: 16 }} />} onClick={props.onClick}>
         {props.text}
     </MenuItem>
 }
@@ -1260,8 +1305,8 @@ function ThemeCheckBox(props: {
     onClick?: (checked: boolean) => void
 }): JSX.Element {
     const id = nanoid()
-    return <FormControl display='flex' alignItems='center' style={{ height: 36 }} {...(isRtlLang()?{flexDirection:"row-reverse"}:{})}>
-        <FormLabel htmlFor={id} mb='0' {...(isRtlLang()?{style:{direction:"rtl"}}:{})} fontSize={14} gap={4} display={"flex"}>
+    return <FormControl display='flex' alignItems='center' style={{ height: 36 }} {...(isRtlLang() ? { flexDirection: "row-reverse" } : {})}>
+        <FormLabel htmlFor={id} mb='0' {...(isRtlLang() ? { style: { direction: "rtl" } } : {})} fontSize={14} gap={4} display={"flex"}>
             <Switch
                 id={id}
                 isChecked={props.checked}
@@ -1270,10 +1315,10 @@ function ThemeCheckBox(props: {
                         props.onClick(e.currentTarget.checked)
                 }}
                 colorScheme={'teal'}
-                style={{direction:"ltr"}}
-                {...(isRtlLang()?{transform:"scaleX(-1)"}:{})}
+                style={{ direction: "ltr" }}
+                {...(isRtlLang() ? { transform: "scaleX(-1)" } : {})}
             />
-            {isVerticalLang()?<div dangerouslySetInnerHTML={{__html:splitMongolian(props.text)}}/>:props.text}
+            {isVerticalLang() ? <div dangerouslySetInnerHTML={{ __html: splitMongolian(props.text) }} /> : props.text}
         </FormLabel>
     </FormControl>
 }
@@ -1293,8 +1338,8 @@ function ThemeModal(props: {
             ` ${max && styles["modal-container-max"]}`
         }>
             <div className={styles["modal-header"]}>
-                <Heading size={isVerticalLang()?"xs":'sm'} whiteSpace={"nowrap"} overflow={"hidden"} fontFamily={FONT_FAMILY}>{
-                    isVerticalLang()?<div style={{ WebkitTextStroke: 0.3 }} dangerouslySetInnerHTML={{ __html: splitMongolian(props.title) }} />:props.title    
+                <Heading size={isVerticalLang() ? "xs" : 'sm'} whiteSpace={"nowrap"} overflow={"hidden"} fontFamily={FONT_FAMILY}>{
+                    isVerticalLang() ? <div style={{ WebkitTextStroke: 0.3 }} dangerouslySetInnerHTML={{ __html: splitMongolian(props.title) }} /> : props.title
                 }</Heading>
                 {(props.headerActions ?? true) && <div className={styles["modal-header-actions"]}>
                     <ButtonGroup>

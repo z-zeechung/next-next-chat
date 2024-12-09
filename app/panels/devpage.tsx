@@ -113,7 +113,7 @@ export function DevPage() {
                             <Row>
                                 <Right>
                                     <Group>
-                                        <Button text={Locale.DevPage.Upload} onClick={()=>{
+                                        <Button text={Locale.DevPage.Upload} type="primary" onClick={()=>{
                                             const input = document.createElement("input")
                                             input.accept = ".nnr"
                                             input.type = "file"

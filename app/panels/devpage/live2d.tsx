@@ -34,7 +34,7 @@ export function Live2D(props: any) {
                     <Right>
                         <Group isAttached>
                             <TextArea rows={1} />
-                            <Button text="自动生成" onClick={() => {
+                            <Button text="自动生成" type="primary" onClick={() => {
                                 showToast(<TextBlock>
                                     录制开始，请不要摇晃鼠标
                                 </TextBlock>)
@@ -64,7 +64,7 @@ export function Live2D(props: any) {
                         </Left>
                         <Right>
                             <Group>
-                                {props.useLive2DIdleMotion[0] != file.name && <TinyButton text="触发" onClick={() => {
+                                {(props.useLive2DIdleMotion[0]) != file.name && props.useLive2DUrl[0] && <TinyButton text="触发" type="primary" onClick={() => {
                                     motionLive2D(file.name)
                                 }} />}
                                 <TinyButton text="删除" onClick={() => {
@@ -95,7 +95,7 @@ export function Live2D(props: any) {
                 <TextBlock>{props?.useLive2DUrl[0] ? "要刷新模型，请先点击“卸载”，再重新加载模型：" : "上传所有文件后，请点击“加载”："}</TextBlock>
             </Left>
             <Right>
-                {!props.useLive2DUrl[0] && <Button text="加载" onClick={() => { updateLive2DModel(props) }} />}
+                {!props.useLive2DUrl[0] && <Button text="加载" type="primary" onClick={() => { updateLive2DModel(props) }} />}
                 {props.useLive2DUrl[0] && <Button text="卸载" onClick={() => { props.useLive2DUrl[1](undefined) }} />}
             </Right>
         </Row>
