@@ -113,11 +113,11 @@ export function DevPage() {
                             <Row>
                                 <Right>
                                     <Group>
-                                        <Button text={Locale.DevPage.Upload} type="primary" onClick={()=>{
+                                        <Button text={Locale.DevPage.Upload} type="primary" onClick={() => {
                                             const input = document.createElement("input")
                                             input.accept = ".nnr"
                                             input.type = "file"
-                                            input.onchange = async (e)=>{
+                                            input.onchange = async (e) => {
                                                 async function readBase64(dataUrl: string) {
                                                     return await (await fetch(dataUrl)).blob()
                                                 }
@@ -126,29 +126,29 @@ export function DevPage() {
                                                 const textDecoder = new TextDecoder()
                                                 const json = textDecoder.decode(brotli.decompress(arr))
                                                 const data = JSON.parse(json)
-                                                useRoleName[1](data?.name??"N²CHAT")
-                                                usePrompt[1](data?.prompt??"你是$N^2$CHAT，一个智能助手。")
-                                                useGreeting[1](data?.greeting??[{ type: "text", role: "assistant", content: Locale.DevPage.Greeting }])
-                                                if(data?.avatar){useAvatar[1](<div style={{display:"inline-block"}} dangerouslySetInnerHTML={{__html:data?.avatar??""}} />)}
-                                                    else{useAvatar[1](defaultAvatar)}
-                                                useSearch[1](data?.search??false)
-                                                usePaint[1](data?.paint??false)
-                                                useScript[1](data?.script??false)
-                                                useLive2DHeight[1](data?.useLive2DHeight??"170")
-                                                let live2dConfig=undefined as any; if(data?.live2dConfig){live2dConfig=new File([data?.live2dConfig], data?.live2dConfigName); useLive2DConfig[1](live2dConfig)}
-                                                let live2dModel=undefined as any; if(data?.live2dModel){live2dModel=new File([await readBase64(data?.live2dModel)], data?.live2dModelName); useLive2DModel[1](live2dModel)}
-                                                let live2dPhysics=undefined as any; if(data?.live2dPhysics){live2dPhysics=new File([data?.live2dPhysics], data?.live2dPhysicsName);useLive2DPhysics[1](live2dPhysics)}
-                                                const textures:File[] = [] as any
-                                                if(data?.live2dTextures?.length>0){
-                                                    for(let i=0;i<data?.live2dTextures?.length;i++){
+                                                useRoleName[1](data?.name ?? "N²CHAT")
+                                                usePrompt[1](data?.prompt ?? "你是$N^2$CHAT，一个智能助手。")
+                                                useGreeting[1](data?.greeting ?? [{ type: "text", role: "assistant", content: Locale.DevPage.Greeting }])
+                                                if (data?.avatar) { useAvatar[1](<div style={{ display: "inline-block" }} dangerouslySetInnerHTML={{ __html: data?.avatar ?? "" }} />) }
+                                                else { useAvatar[1](defaultAvatar) }
+                                                useSearch[1](data?.search ?? false)
+                                                usePaint[1](data?.paint ?? false)
+                                                useScript[1](data?.script ?? false)
+                                                useLive2DHeight[1](data?.useLive2DHeight ?? "170")
+                                                let live2dConfig = undefined as any; if (data?.live2dConfig) { live2dConfig = new File([data?.live2dConfig], data?.live2dConfigName); useLive2DConfig[1](live2dConfig) }
+                                                let live2dModel = undefined as any; if (data?.live2dModel) { live2dModel = new File([await readBase64(data?.live2dModel)], data?.live2dModelName); useLive2DModel[1](live2dModel) }
+                                                let live2dPhysics = undefined as any; if (data?.live2dPhysics) { live2dPhysics = new File([data?.live2dPhysics], data?.live2dPhysicsName); useLive2DPhysics[1](live2dPhysics) }
+                                                const textures: File[] = [] as any
+                                                if (data?.live2dTextures?.length > 0) {
+                                                    for (let i = 0; i < data?.live2dTextures?.length; i++) {
                                                         textures.push(new File([await readBase64(data?.live2dTextures[i])], data?.live2dTexturesName[i]))
                                                     }
                                                     useLive2DTextures[1](textures)
                                                 }
-                                                let live2dMotions:File[] = [] as any; if(data?.live2dMotions?.length>0){live2dMotions=data?.live2dMotions.map((item, idx)=>new File([item], data?.live2dMotionsName[idx]));useLive2DMotions[1](live2dMotions)}
-                                                useLive2DIdleMotion[1](data?.live2DIdleMotion??"无")
-                                                if(data?.live2dConfig || data?.live2dModel || data?.live2dTextures?.length>0){
-                                                    const idleMotion = data?.live2DIdleMotion??"无"
+                                                let live2dMotions: File[] = [] as any; if (data?.live2dMotions?.length > 0) { live2dMotions = data?.live2dMotions.map((item, idx) => new File([item], data?.live2dMotionsName[idx])); useLive2DMotions[1](live2dMotions) }
+                                                useLive2DIdleMotion[1](data?.live2DIdleMotion ?? "无")
+                                                if (data?.live2dConfig || data?.live2dModel || data?.live2dTextures?.length > 0) {
+                                                    const idleMotion = data?.live2DIdleMotion ?? "无"
                                                     const url = await compileLive2dModel(
                                                         live2dConfig,
                                                         live2dModel,
@@ -157,10 +157,10 @@ export function DevPage() {
                                                         live2dMotions.filter(f => f.name != idleMotion),
                                                         live2dMotions.find(f => f.name == idleMotion)
                                                     )
-                                                    URL.revokeObjectURL(useLive2DUrl[0]??"")
+                                                    URL.revokeObjectURL(useLive2DUrl[0] ?? "")
                                                     useLive2DUrl[1](url)
                                                 }
-                                                useCustomScript[1](data?.customScript??JAVASCRIPT_TEMPLATE)
+                                                useCustomScript[1](data?.customScript ?? JAVASCRIPT_TEMPLATE)
                                             }
                                             input.click()
                                         }} />
@@ -218,7 +218,7 @@ export function DevPage() {
                                                 a.download = `${useRoleName[0]}.nnr`;
                                                 a.click();
                                             }} />
-                                            <PopoverItem text="导出元数据" onClick={()=>{
+                                            <PopoverItem text="导出元数据" onClick={() => {
                                                 const data = {
                                                     name: useRoleName[0],
                                                     avatar: renderToString(useAvatar[0])
@@ -228,8 +228,8 @@ export function DevPage() {
                                                 a.href = URL.createObjectURL(new Blob([json], { type: "application/json" }));
                                                 a.download = `${useRoleName[0]}.json`;
                                                 a.click();
-                                            }}/>
-                                            <PopoverItem text="导出归档角色文件" onClick={async ()=>{
+                                            }} />
+                                            <PopoverItem text="导出归档角色文件" onClick={async () => {
                                                 const data = {
                                                     name: useRoleName[0],
                                                     prompt: usePrompt[0],
@@ -238,16 +238,16 @@ export function DevPage() {
                                                     search: useSearch[0],
                                                     paint: usePaint[0],
                                                     script: useScript[0],
-                                                    live2d: (useLive2DConfig[0] || useLive2DModel[0] || useLive2DTextures[0].length>0)?
+                                                    live2d: (useLive2DConfig[0] || useLive2DModel[0] || useLive2DTextures[0].length > 0) ?
                                                         await (await fetch(await compileLive2dModel(
                                                             useLive2DConfig[0],
                                                             useLive2DModel[0],
                                                             useLive2DPhysics[0],
                                                             useLive2DTextures[0],
-                                                            useLive2DMotions[0].filter(f=>f.name!=useLive2DIdleMotion[0]),
-                                                            useLive2DMotions[0].find(f=>f.name==useLive2DIdleMotion[0])
+                                                            useLive2DMotions[0].filter(f => f.name != useLive2DIdleMotion[0]),
+                                                            useLive2DMotions[0].find(f => f.name == useLive2DIdleMotion[0])
                                                         ))).text()
-                                                    :undefined,
+                                                        : undefined,
                                                     customScript: useCustomScript[0],
                                                 }
                                                 const json = JSON.stringify(data)
@@ -265,7 +265,7 @@ export function DevPage() {
                                                 a.href = URL.createObjectURL(new Blob([dataWithMagic], { type: "application/octet-stream" }));
                                                 a.download = `${useRoleName[0]}.nnra`;
                                                 a.click();
-                                            }}/>
+                                            }} />
                                         </Popover>
                                     </Group>
                                 </Right>
@@ -407,16 +407,22 @@ function ChatArea(props: {
                 </Right>
             </Row>
         </Header>
-        {greeting.concat(messages).map((msg, i) => <div>
-            {msg.role == "user" ? <UserIcon /> :
-                (msg.role == "system" ? <SystemIcon /> :
-                    (avatar)
-                )
-            }
+        {greeting.concat(messages).map((msg, i) =>
             <MessageCard type={msg.role}>
+                <Header>
+                    {msg.role == "user" ? (
+                        <Avatar icon={<UserIcon />} />
+                    ) : (msg.role == "system" ? <Avatar icon={<SystemIcon />} /> :
+                        <Avatar icon={msg.role == "user" ? <UserIcon /> :
+                            (msg.role == "system" ? <SystemIcon /> :
+                                (avatar)
+                            )
+                        } />
+                    )}
+                </Header>
                 <MessageElement message={msg} />
             </MessageCard>
-        </div>)}
+        )}
         <div style={{
             position: "absolute",
             right: 0,

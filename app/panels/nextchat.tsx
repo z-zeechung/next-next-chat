@@ -120,7 +120,7 @@ import { Message, MessageElement, revokeMessage } from "../message/Message";
 
 // import btnstyles from "../components/button.module.scss";
 // import { contentOfVecDB, createVecDB, deleteVecDB, insertIntoVecDB, queryVecDBs } from "../utils/vectordb";
-import { Avatar, Button, ButtonCard, ButtonGroup, Component, Footer, Group, Header, Heading, InfoCard, Left, List, ListItem, MessageCard, Modal, Popover, PopoverCard, PopoverItem, Right, Row, Select, showConfirm, showToast, TextArea, TextBlock, TinyButton, TinyPopover } from "../themes/theme";
+import { Avatar, Button, ButtonCard, ButtonGroup, Component, Footer, Group, Header, Heading, InfoCard, Left, List, ListItem, MessageCard, Modal, Popover, PopoverCard, PopoverItem, Right, Row, Select, showConfirm, showToast, TextArea, TextBlock, TinyButton, TinyPopover, useTheme } from "../themes/theme";
 import { Card, grid, SimpleGrid } from "@chakra-ui/react";
 // import emoji from "../emoji.json"
 // import { title } from "process";
@@ -933,6 +933,8 @@ function _Chat() {
   const config = useAppConfig();
   // const fontSize = config.fontSize;
   // const [showExport, setShowExport] = useState(false);
+
+  const theme = useTheme()
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [userInput, setUserInput] = useState("");
@@ -1881,138 +1883,111 @@ function _Chat() {
         </Right>
       </Row>
     </Header>
-    <div
-      ref={session.messages.length > 0 ? scrollRef : undefined}
-      onScroll={(e) => onChatBodyScroll(e.currentTarget)}
-      onMouseDown={() => inputRef.current?.blur()}
-      onTouchStart={() => {
-        inputRef.current?.blur();
-        setAutoScroll(false);
-      }}
-    >
-      {[
-        { type: "text", role: "assistant", content: session.greeting ?? Locale.NextChat.ChatArea.Greeting }, 
-        ...session.messages,
-        ...(userInput.trim().length > 0 ? [{ type: "text", role: "user", content: userInput }] : [])
-      ].map((msg: any, i) => <Fragment key={i}>
-        <div className={msg.role == "user" ? styles["chat-message-user"] : styles["chat-message"]}>
-          <div className={styles["chat-message-container"]} style={{ paddingBottom: "5px", paddingTop: "5px" }}>
-            <div style={{ display: "flex", flexDirection: msg.role == "user" ? "row-reverse" : "row", gap: "10px", alignItems: "center" }}>
-              {msg.role == "user" ? (
-                <Avatar icon={<UserIcon />} />
-              ) : (msg.role == "system" ? <Avatar icon={<SystemIcon />} /> :
-                <Avatar
-                  icon={session.avatar ? <div dangerouslySetInnerHTML={{
-                    __html: session.avatar
-                  }} /> : <AssistantIcon />}
-                />
-              )}
-              {i != 0 && <ButtonGroup>
-                <TinyButton
-                  text={Locale.NextChat.ChatArea.Copy}
-                  type="text"
-                  icon={<CopyIcon />}
-                />
-                <TinyButton
-                  text={Locale.NextChat.ChatArea.Delete}
-                  type="text"
-                  icon={<DeleteIcon />}
-                  onClick={() => {
-                    chatStore.updateCurrentSession(sess => {
-                      revokeMessage(msg)
-                      sess.messages = sess.messages.filter((msg, mi) => mi != i - 1)
-                    })
-                  }}
-                />
-                {msg.role == "assistant" && <TinyButton
-                  text={Locale.NextChat.ChatArea.Retry}
-                  type="text"
-                  icon={<ResetIcon />}
-                />}
-              </ButtonGroup>}
-            </div>
-            <div style={{ gap: "6px", display: "flex", flexDirection: "column" }}>
-              <MessageCard type={msg.role}>
-                <MessageElement message={msg} />
-              </MessageCard>
-              <div style={{ display: "flex", flexDirection: msg.role == "user" ? "row-reverse" : "row", gap: "10px", alignItems: "center" }}>
-                {msg.streaming && <TinyButton
-                  text="停止"
-                  type="primary"
-                  icon={<StopIcon />}
-                  onClick={() => {
-                    chatPromise?.abort()
-                  }}
-                />}
-              </div>
-            </div>
-          </div>
-        </div>
-      </Fragment>)}
-      {session.messages.length <= 0 && userInput.trim().length <= 0 && <InfoCard title={Locale.NextChat.ChatArea.QuickStart} icon={"🚀"} type="plain">
-        <TextBlock>{Locale.NextChat.ChatArea.YouCanSeeInMore}</TextBlock>
-        <SimpleGrid templateColumns={`repeat(auto-fill, minmax(${300}px, 1fr))`} gap={4}>
-          <InfoCard title={Locale.NextChat.ChatArea.UploadFile} icon={"📤"}>
-            <TextBlock>{Locale.NextChat.ChatArea.UploadDesc}</TextBlock>
-            <Footer>
-              <Row>
-                <Right>
-                  <TinyButton text={Locale.NextChat.ChatArea.Upload} icon={<UploadIcon />} type="primary" onClick={() => { uploadFile(chatStore) }} />
-                </Right>
-              </Row>
-            </Footer>
-          </InfoCard>
-          <InfoCard title={Locale.NextChat.ChatArea.RolePlay} icon={"🎭"}>
-            <TextBlock>{Locale.NextChat.ChatArea.RolePlayDesc}</TextBlock>
-            <Footer>
-              <Row>
-                <Right>
-                  <Group>
-                    <TinyButton text={Locale.NextChat.ChatArea.SelectRole} icon={<RolePlayIcon />} type="primary" onClick={() => { setIsSelectingPrompt(true) }} />
-                    <TinyButton text={Locale.NextChat.ChatArea.NewRole} icon={<MoreIcon />} type="primary" onClick={() => { navigate("/devrole") }} />
-                  </Group>
-                </Right>
-              </Row>
-            </Footer>
-          </InfoCard>
-          <InfoCard title={Locale.NextChat.ChatArea.ChatPlugins} icon={"🧩"}>
-            <TextBlock>{Locale.NextChat.ChatArea.PluginDesc}</TextBlock>
-            <Footer>
-              <Row>
-                <Right>
-                  <Group>
-                    <TinyPopover text={Locale.NextChat.ChatArea.EnablePlugin} icon={<PluginIcon style={{ transform: "rotate(45deg)", scale: "1.15" }} />} type="primary">
-                      <PopoverItem text={Locale.NextChat.ChatArea.WebSearch} icon={<SearchIcon />} onClick={() => { setSearchPlugin(!searchPlugin); showToast(<TextBlock>{!searchPlugin ? Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.WebSearch) : Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.WebSearch)}</TextBlock>) }} />
-                      <PopoverItem text={Locale.NextChat.ChatArea.Scripting} icon={<ScriptingIcon />} onClick={() => { setScriptPlugin(!scriptPlugin); showToast(<TextBlock>{!scriptPlugin ? Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.Scripting) : Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.Scripting)}</TextBlock>) }} />
-                      <PopoverItem text={Locale.NextChat.ChatArea.GenImage} icon={
-                        <div style={{ width: 16, height: 16, position: "relative" }}><ImageIcon /><BrushIcon style={{ position: "absolute", right: -4, bottom: -6, zoom: 0.8 }} /></div>
-                      } onClick={() => { setPaintPlugin(!paintPlugin); showToast(<TextBlock>{!paintPlugin ? Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.GenImage) : Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.GenImage)}</TextBlock>) }} />
-                    </TinyPopover>
-                    <TinyButton text={Locale.NextChat.ChatArea.NewPlugin} icon={<CustomIcon />} type="primary" onClick={() => { showToast(<TextBlock>WIP...</TextBlock>) }} />
-                  </Group>
-                </Right>
-              </Row>
-            </Footer>
-          </InfoCard>
-          <InfoCard title={Locale.NextChat.ChatArea.KnowledgeBase} icon={"📚"}>
-            <TextBlock>{Locale.NextChat.ChatArea.KBDesc}</TextBlock>
-            <Footer>
-              <Row>
-                <Right>
-                  <Group>
-                    <TinyButton text={Locale.NextChat.ChatArea.KBDetail} icon={<WhatsThisIcon />} type="primary" onClick={() => { setIsShowingWhatsThis(true) }} />
-                    <TinyButton text={Locale.NextChat.ChatArea.SeeKB} icon={<CheckOutIcon />} type="primary" onClick={() => { navigate("/knowledge") }} />
-                  </Group>
-                </Right>
-              </Row>
-            </Footer>
-          </InfoCard>
-          <InfoCard title={Locale.NextChat.ChatArea.IntelligentOffice} icon={"📑"}>
-            <TextBlock>⚠ This module is under refactor.</TextBlock>
-          </InfoCard>
-        </SimpleGrid>
-      </InfoCard>}
-    </div>
+
+    {[
+      { type: "text", role: "assistant", content: session.greeting ?? Locale.NextChat.ChatArea.Greeting },
+      ...session.messages,
+      ...(userInput.trim().length > 0 ? [{ type: "text", role: "user", content: userInput }] : [])
+    ].map((msg: any, i) => <MessageCard type={msg.role}>
+      <Header>
+        {msg.role == "user" ? (
+          <Avatar icon={<UserIcon />} />
+        ) : (msg.role == "system" ? <Avatar icon={<SystemIcon />} /> :
+          <Avatar
+            icon={session.avatar ? <div dangerouslySetInnerHTML={{
+              __html: session.avatar
+            }} /> : <AssistantIcon />}
+          />
+        )}
+        {i != 0 && <>
+          <TinyButton
+            text={Locale.NextChat.ChatArea.Copy}
+            type="text"
+            icon={<CopyIcon />}
+          />
+          <TinyButton
+            text={Locale.NextChat.ChatArea.Delete}
+            type="text"
+            icon={<DeleteIcon />}
+            onClick={() => {
+              chatStore.updateCurrentSession(sess => {
+                revokeMessage(msg)
+                sess.messages = sess.messages.filter((msg, mi) => mi != i - 1)
+              })
+            }}
+          />
+          {msg.role == "assistant" && <TinyButton
+            text={Locale.NextChat.ChatArea.Retry}
+            type="text"
+            icon={<ResetIcon />}
+          />}
+        </>}
+      </Header>
+      <MessageElement message={msg} />
+    </MessageCard>)}
+    {session.messages.length <= 0 && userInput.trim().length <= 0 && <InfoCard title={Locale.NextChat.ChatArea.QuickStart} icon={"🚀"} type="plain">
+      <TextBlock>{Locale.NextChat.ChatArea.YouCanSeeInMore}</TextBlock>
+      <SimpleGrid templateColumns={`repeat(auto-fill, minmax(${300}px, 1fr))`} gap={4}>
+        <InfoCard title={Locale.NextChat.ChatArea.UploadFile} icon={"📤"}>
+          <TextBlock>{Locale.NextChat.ChatArea.UploadDesc}</TextBlock>
+          <Footer>
+            <Row>
+              <Right>
+                <TinyButton text={Locale.NextChat.ChatArea.Upload} icon={<UploadIcon />} type="primary" onClick={() => { uploadFile(chatStore) }} />
+              </Right>
+            </Row>
+          </Footer>
+        </InfoCard>
+        <InfoCard title={Locale.NextChat.ChatArea.RolePlay} icon={"🎭"}>
+          <TextBlock>{Locale.NextChat.ChatArea.RolePlayDesc}</TextBlock>
+          <Footer>
+            <Row>
+              <Right>
+                <Group>
+                  <TinyButton text={Locale.NextChat.ChatArea.SelectRole} icon={<RolePlayIcon />} type="primary" onClick={() => { setIsSelectingPrompt(true) }} />
+                  <TinyButton text={Locale.NextChat.ChatArea.NewRole} icon={<MoreIcon />} type="primary" onClick={() => { navigate("/devrole") }} />
+                </Group>
+              </Right>
+            </Row>
+          </Footer>
+        </InfoCard>
+        <InfoCard title={Locale.NextChat.ChatArea.ChatPlugins} icon={"🧩"}>
+          <TextBlock>{Locale.NextChat.ChatArea.PluginDesc}</TextBlock>
+          <Footer>
+            <Row>
+              <Right>
+                <Group>
+                  <TinyPopover text={Locale.NextChat.ChatArea.EnablePlugin} icon={<PluginIcon style={{ transform: "rotate(45deg)", scale: "1.15" }} />} type="primary">
+                    <PopoverItem text={Locale.NextChat.ChatArea.WebSearch} icon={<SearchIcon />} onClick={() => { setSearchPlugin(!searchPlugin); showToast(<TextBlock>{!searchPlugin ? Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.WebSearch) : Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.WebSearch)}</TextBlock>) }} />
+                    <PopoverItem text={Locale.NextChat.ChatArea.Scripting} icon={<ScriptingIcon />} onClick={() => { setScriptPlugin(!scriptPlugin); showToast(<TextBlock>{!scriptPlugin ? Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.Scripting) : Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.Scripting)}</TextBlock>) }} />
+                    <PopoverItem text={Locale.NextChat.ChatArea.GenImage} icon={
+                      <div style={{ width: 16, height: 16, position: "relative" }}><ImageIcon /><BrushIcon style={{ position: "absolute", right: -4, bottom: -6, zoom: 0.8 }} /></div>
+                    } onClick={() => { setPaintPlugin(!paintPlugin); showToast(<TextBlock>{!paintPlugin ? Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.GenImage) : Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.GenImage)}</TextBlock>) }} />
+                  </TinyPopover>
+                  <TinyButton text={Locale.NextChat.ChatArea.NewPlugin} icon={<CustomIcon />} type="primary" onClick={() => { showToast(<TextBlock>WIP...</TextBlock>) }} />
+                </Group>
+              </Right>
+            </Row>
+          </Footer>
+        </InfoCard>
+        <InfoCard title={Locale.NextChat.ChatArea.KnowledgeBase} icon={"📚"}>
+          <TextBlock>{Locale.NextChat.ChatArea.KBDesc}</TextBlock>
+          <Footer>
+            <Row>
+              <Right>
+                <Group>
+                  <TinyButton text={Locale.NextChat.ChatArea.KBDetail} icon={<WhatsThisIcon />} type="primary" onClick={() => { setIsShowingWhatsThis(true) }} />
+                  <TinyButton text={Locale.NextChat.ChatArea.SeeKB} icon={<CheckOutIcon />} type="primary" onClick={() => { navigate("/knowledge") }} />
+                </Group>
+              </Right>
+            </Row>
+          </Footer>
+        </InfoCard>
+        <InfoCard title={Locale.NextChat.ChatArea.IntelligentOffice} icon={"📑"}>
+          <TextBlock>⚠ This module is under refactor.</TextBlock>
+        </InfoCard>
+      </SimpleGrid>
+    </InfoCard>}
     <Footer>
       <Row>
         <Left>
@@ -2054,6 +2029,18 @@ function _Chat() {
       {showOption && <Toolbox>
         <ButtonCard text={Locale.NextChat.ChatArea.RolePlay} icon={rolePlayIcon} onClick={() => { setIsSelectingPrompt(true) }} />
         <ButtonCard text={Locale.NextChat.ChatArea.SwitchModel} icon={changeModelIcon} onClick={changeModel} />
+        <PopoverCard text={"更改主题"}>
+          <PopoverItem text="灰色" onClick={() => { theme.setTheme("defaultGray") }} />
+          <PopoverItem text="红色" onClick={() => { theme.setTheme("defaultRed") }} />
+          <PopoverItem text="橙色" onClick={() => { theme.setTheme("defaultOrange") }} />
+          <PopoverItem text="黄色" onClick={() => { theme.setTheme("defaultYellow") }} />
+          <PopoverItem text="绿色" onClick={() => { theme.setTheme("defaultGreen") }} />
+          <PopoverItem text="鸭绿" onClick={() => { theme.setTheme("defaultTeal") }} />
+          <PopoverItem text="蓝色" onClick={() => { theme.setTheme("defaultBlue") }} />
+          <PopoverItem text="青色" onClick={() => { theme.setTheme("defaultCyan") }} />
+          <PopoverItem text="紫色" onClick={() => { theme.setTheme("defaultPurple") }} />
+          <PopoverItem text="粉色" onClick={() => { theme.setTheme("defaultPink") }} />
+        </PopoverCard>
         <UploadFile />
         <PopoverCard text={Locale.NextChat.ChatArea.ChatPlugins} icon={<PluginIcon style={{ transform: "rotate(45deg)", scale: "1.15" }} />}>
           <PopoverItem text={Locale.NextChat.ChatArea.WebSearch} icon={<SearchIcon />} onClick={() => { setSearchPlugin(!searchPlugin); showToast(<TextBlock>{!searchPlugin ? Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.WebSearch) : Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.WebSearch)}</TextBlock>) }} />
