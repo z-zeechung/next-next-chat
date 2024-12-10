@@ -23,7 +23,7 @@ import { Scripting } from "./devpage/scripting";
 import { runPython } from "../utils/pyodide";
 import { DEFAULT_SYSTEM_TEMPLATE } from "../constant";
 
-import Locale, { ALL_LANG_OPTIONS, changeLang, getLang, isRtlLang } from "../locales";
+import Locale, { ALL_LANG_OPTIONS, ALL_LANGS, AllLangs, changeLang, getISOLang, getLang, isRtlLang, LOCAL_ALL_LANG_OPTIONS } from "../locales";
 import { KnowledgeBase } from "../knowledgebase/knowledgebase";
 import { useNavigate } from "react-router-dom";
 import { Live2D } from "./devpage/live2d";
@@ -35,6 +35,9 @@ import { renderToString } from "react-dom/server";
 
 import brotliPromise from 'brotli-wasm';
 
+let i18nData = JSON.parse(JSON.stringify(LOCAL_ALL_LANG_OPTIONS))
+for(let lang in i18nData){i18nData[lang]={}}
+
 export function DevPage() {
 
     const navigate = useNavigate()
@@ -42,14 +45,42 @@ export function DevPage() {
     const [chatAreaSize, setChatAreaSize] = useState([0, 0])
     const isMobileScreen = useMobileScreen();
 
+    const useLanguage = useState(getLang())
+    function switchLanguage(language){
+        const code = Object.keys(LOCAL_ALL_LANG_OPTIONS).find(k=>LOCAL_ALL_LANG_OPTIONS[k]===language) ?? getLang()
+        useLanguage[1](code)
+        _setRoleName(i18nData[code]["roleName"]??"N²CHAT")
+        _setPrompt(i18nData[code]["prompt"]??"")
+        _setGreeting(i18nData[code]["greeting"]??[{ type: "text", role: "assistant", content: ALL_LANGS[code].DevPage.Greeting }])
+    }
+    useEffect(()=>{
+        return ()=>{
+            let i18nData = JSON.parse(JSON.stringify(LOCAL_ALL_LANG_OPTIONS))
+            for(let lang in i18nData){i18nData[lang]={}}
+        }
+    })
+
+    const [roleName, _setRoleName] = useState("N²CHAT")
+    const useRoleName = [roleName, (v)=>{
+        i18nData[useLanguage[0]]["roleName"] = v
+        _setRoleName(v)
+    }]
+    const [prompt, _setPrompt] = useState("你是$N^2$CHAT，一个智能助手。")
+    const usePrompt = [prompt, (v)=>{
+        i18nData[useLanguage[0]]["prompt"] = v
+        _setPrompt(v)
+    }]
+    const [greeting, _setGreeting] = useState([
+        { type: "text", role: "assistant", content: Locale.DevPage.Greeting }
+    ] as Message[])
+    const useGreeting = [greeting, (v)=>{
+        i18nData[useLanguage[0]]["greeting"] = v
+        _setGreeting(v)
+    }]
     const useMessages = useState([] as Message[])
     const useMeta = useState({})
     const useShow = useState(true)
     const usePromise = useState(undefined as ControllablePromise<any> | undefined)
-    const usePrompt = useState("你是$N^2$CHAT，一个智能助手。")
-    const useGreeting = useState([
-        { type: "text", role: "assistant", content: Locale.DevPage.Greeting }
-    ] as Message[])
     const defaultAvatar = <div style={{
         background: "gray",
         width: 16,
@@ -66,7 +97,6 @@ export function DevPage() {
     const useSearch = useState(false)
     const usePaint = useState(false)
     const useScript = useState(false)
-    const useRoleName = useState("N²CHAT")
     const useDocuments = useState<string[]>([])
 
     const useLive2DHeight = useState("170")
@@ -106,7 +136,7 @@ export function DevPage() {
             <div style={{ height: "100%", width: "43%" }}>
                 <Plate>
                     <Tabs type="plain" tab={tab} labels={tabs} onChange={setTab} >
-                        {tab == tabs[0] && <RolePlay {...{ usePrompt, useGreeting, usePromise, useAvatar, useSearch, usePaint, useScript, useRoleName, useDocuments }} />}
+                        {tab == tabs[0] && <RolePlay {...{ usePrompt, useGreeting, usePromise, useAvatar, useSearch, usePaint, useScript, useRoleName, useDocuments, useLanguage, switchLanguage }} />}
                         {tab == tabs[1] && <Live2D {...{ useLive2DConfig, useLive2DModel, useLive2DPhysics, useLive2DTextures, useLive2DMotions, useLive2DIdleMotion, useLive2DUrl, useLive2DHeight }} />}
                         {tab == tabs[2] && <Scripting useCustomScript={useCustomScript} />}
                         <Footer>
@@ -126,9 +156,9 @@ export function DevPage() {
                                                 const textDecoder = new TextDecoder()
                                                 const json = textDecoder.decode(brotli.decompress(arr))
                                                 const data = JSON.parse(json)
-                                                useRoleName[1](data?.name ?? "N²CHAT")
-                                                usePrompt[1](data?.prompt ?? "你是$N^2$CHAT，一个智能助手。")
-                                                useGreeting[1](data?.greeting ?? [{ type: "text", role: "assistant", content: Locale.DevPage.Greeting }])
+                                                useRoleName[1](data?.i18n[getLang()]?.roleName ?? "N²CHAT")
+                                                usePrompt[1](data?.i18n[getLang()]?.prompt ?? "你是$N^2$CHAT，一个智能助手。")
+                                                useGreeting[1](data?.i18n[getLang()]?.greeting ?? [{ type: "text", role: "assistant", content: Locale.DevPage.Greeting }])
                                                 if (data?.avatar) { useAvatar[1](<div style={{ display: "inline-block" }} dangerouslySetInnerHTML={{ __html: data?.avatar ?? "" }} />) }
                                                 else { useAvatar[1](defaultAvatar) }
                                                 useSearch[1](data?.search ?? false)
@@ -180,9 +210,7 @@ export function DevPage() {
                                                     return bufs
                                                 }
                                                 const data = {
-                                                    name: useRoleName[0],
-                                                    prompt: usePrompt[0],
-                                                    greeting: useGreeting[0],
+                                                    i18n: i18nData,
                                                     avatar: renderToString(useAvatar[0]),
                                                     search: useSearch[0],
                                                     paint: usePaint[0],
@@ -231,9 +259,7 @@ export function DevPage() {
                                             }} />
                                             <PopoverItem text="导出归档角色文件" onClick={async () => {
                                                 const data = {
-                                                    name: useRoleName[0],
-                                                    prompt: usePrompt[0],
-                                                    greeting: useGreeting[0],
+                                                    i18n: i18nData,
                                                     avatar: renderToString(useAvatar[0]),
                                                     search: useSearch[0],
                                                     paint: usePaint[0],

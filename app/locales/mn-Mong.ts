@@ -4,7 +4,7 @@ import { PartialLocaleType } from "./index";
 
 const isApp = !!getClientConfig()?.isApp;
 
-const mn: PartialLocaleType = {
+const mn_Mong: PartialLocaleType = {
     NextChat: {
         SystemPrompt: ()=>`
           ᠲᠠ ᠪᠣᠯ $N^2$CHAT᠂ $N^2$CHAT ᠪᠠᠭ ᠤ᠋ᠨ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠤᠬᠠᠭᠠᠯᠢᠭ ᠲᠤᠰᠠᠯᠠᠬᠤ᠃
@@ -146,7 +146,7 @@ type DeepPartial<T> = T extends object
     }
   : T;
 
-export type LocaleType = typeof mn;
+export type LocaleType = typeof mn_Mong;
 
-export default mn;
+export default mn_Mong;
 // Translated by @chunkiuuu, feel free the submit new pr if there are typo/incorrect translations :D

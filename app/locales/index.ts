@@ -1,5 +1,5 @@
-import cn from "./cn";
-import cnt from "./cnt";
+import zh_Hans from "./zh-Hans";
+import zh_Hant from "./zh-Hant";
 import en from "./en";
 import pt from "./pt";
 import id from "./id";
@@ -17,15 +17,15 @@ import ko from "./ko";
 import ar from "./ar";
 import bn from "./bn";
 import sk from "./sk";
-import mn from "./mn"
+import mn_Mong from "./mn-Mong"
 import { merge } from "../utils/merge";
 
-import type { LocaleType } from "./cn";
-export type { LocaleType, PartialLocaleType } from "./cn";
+import type { LocaleType } from "./zh-Hans";
+export type { LocaleType, PartialLocaleType } from "./zh-Hans";
 
-const ALL_LANGS = {
-  cn,
-  cnt,
+export const ALL_LANGS = {
+  zh_Hans: zh_Hans,
+  zh_Hant: zh_Hant,
   en,
   // pt,
   // jp,
@@ -43,7 +43,7 @@ const ALL_LANGS = {
   ar,
   // bn,
   // sk,
-  mn,
+  mn_Mong: mn_Mong,
 };
 
 export type Lang = keyof typeof ALL_LANGS;
@@ -61,7 +61,7 @@ export const ALL_LANG_OPTIONS: Record<Lang, string> = {
   // ko: "한국어",      // Hanguge
   // id: "Indonesia",  // Indonesia
   // it: "Italiano",   // Italiano
-  mn: "ᠮᠤᠩᠭᠤᠯ",        // Mongol
+  mn_Mong: "ᠮᠤᠩᠭᠤᠯ",        // Mongol
   // jp: "日本語",     // Nihongo
   // no: "Nynorsk",    // Nynorsk
   // pt: "Português",  // Português
@@ -69,12 +69,35 @@ export const ALL_LANG_OPTIONS: Record<Lang, string> = {
   // sk: "Slovensky",  // Slovensky
   // vi: "Tiếng Việt", // Tiếng Việt
   // tr: "Türkçe",     // Türkçe
-  cn: "简体中文",   // Zhōngwénjiǎntǐ
-  cnt: "繁體中文",  // Zhōngwénfántǐ
+  zh_Hans: "简体中文",   // Zhōngwénjiǎntǐ
+  zh_Hant: "繁體中文",  // Zhōngwénfántǐ
 };
 
+export const LOCAL_ALL_LANG_OPTIONS: Record<Lang, string> = {
+  ar: "阿拉伯文",
+  // bn: "孟加拉文",
+  // cs: "捷克文",
+  // de: "德文",
+  en: "英文",
+  es: "西班牙文",
+  fr: "法文",
+  // ko: "韩文",
+  // id: "印尼文",
+  // it: "意大利文",
+  mn_Mong: "蒙古文",
+  // jp: "日文",
+  // no: "挪威文",
+  // pt: "葡萄牙文",
+  ru: "俄文",
+  // sk: "斯洛伐克文",
+  // vi: "越南文",
+  // tr: "土耳其文",
+  zh_Hans: "简体中文",
+  zh_Hant: "繁体中文",
+}
+
 const LANG_KEY = "lang";
-const DEFAULT_LANG = "cn";
+const DEFAULT_LANG = "zh_Hans";
 
 const fallbackLang = en;
 const targetLang = ALL_LANGS[getLang()] as LocaleType;
@@ -132,13 +155,14 @@ export function changeLang(lang: Lang) {
 }
 
 export function getISOLang() {
-  const isoLangString: Record<string, string> = {
-    cn: "zh",
-    cnt: "zh",
-  };
+  return getLang().replace("_", "-");
+  // const isoLangString: Record<string, string> = {
+  //   cn: "zh",
+  //   cnt: "zh",
+  // };
 
-  const lang = getLang();
-  return isoLangString[lang] ?? lang;
+  // const lang = getLang();
+  // return isoLangString[lang] ?? lang;
 }
 
 export function isRtlLang(){
@@ -146,12 +170,12 @@ export function isRtlLang(){
 }
 
 export function isVerticalLang(){
-  return ["mn"].includes(getLang());
+  return ["mn_Mong"].includes(getLang());
 }
 
-export function getIndent(){
-  if(["cn", "cnt"].includes(getLang())){
-    return "2em";
-  }
-  return "1em";
-}
+// export function getIndent(){
+//   if(["zh_Hans", "zh_Hant"].includes(getLang())){
+//     return "2em";
+//   }
+//   return "1em";
+// }
