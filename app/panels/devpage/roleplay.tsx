@@ -20,7 +20,7 @@ import MarkdownIcon from "../../icons/file-icon-vectors/square-o/md.svg"
 import HTMLIcon from "../../icons/file-icon-vectors/classic/html.svg"
 import TxtIcon from "../../icons/file-icon-vectors/txt.svg"
 
-import Locale, { isRtlLang } from "../../locales";
+import Locale, { isRtlLang, LOCAL_ALL_LANG_OPTIONS } from "../../locales";
 import { KnowledgeBase } from "../../knowledgebase/knowledgebase";
 
 const IconMap = {
@@ -236,6 +236,15 @@ export function RolePlay(props: any) {
                 </Right>
             </Row>
         </ListItem>
+        <div style={{
+            position: "absolute",
+            top: 4,
+            right: 4,
+        }}>
+            <Select options={Object.values(LOCAL_ALL_LANG_OPTIONS)} value={LOCAL_ALL_LANG_OPTIONS[props.useLanguage[0]]} onChange={(v)=>{
+                props.switchLanguage(v)
+            }}/>
+        </div>
     </List>
     // </div>
 }

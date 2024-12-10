@@ -5,7 +5,7 @@ var lunar = require('lunar');
 
 const isApp = !!getClientConfig()?.isApp;
 
-const cnt: PartialLocaleType = {
+const zh_Hant: PartialLocaleType = {
 
   NextChat: {
     SystemPrompt: ()=>`
@@ -146,7 +146,7 @@ type DeepPartial<T> = T extends object
     }
   : T;
 
-export type LocaleType = typeof cnt;
+export type LocaleType = typeof zh_Hant;
 
-export default cnt;
+export default zh_Hant;
 // Translated by @chunkiuuu, feel free the submit new pr if there are typo/incorrect translations :D
