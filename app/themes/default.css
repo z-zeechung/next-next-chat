@@ -24,6 +24,7 @@
 
 .themeTextBlock{
     font-size: 1em;
+    white-space: pre-wrap;
 }
 
 .themeTextBlockRtl{
@@ -42,13 +43,13 @@
 
 .themeComponentHeader{
     flex-grow: 0;
-    margin: 0.5em;
+    margin: 12px;
 }
 
 .themeComponentBody{
     flex: 1;
     overflow: auto;
-    margin: 4px;
+    margin: 12px;
     gap: 12px;
     display: flex;
     flex-direction: column;
@@ -106,11 +107,15 @@
     box-shadow: none;
     padding-left: 0.5em;
     padding-right: 0.5em;
-    color: rgb(92, 90, 90);
+    color: #2F855A;
 }
 
 .themeButtonGhost:hover{
     background: #F0FFF4;
+}
+
+.themeButtonGhost.themeButtonTiny{
+    color: rgb(92, 90, 90);
 }
 
 .themeButtonPrimary{
@@ -124,7 +129,7 @@
 }
 
 .themeButtonDenseScript{
-    text-wrap: nowrap;
+    word-break: keep-all;
 }
 
 .themeButtonEmbedLeft{
@@ -208,4 +213,63 @@
     padding: 8px;
     border-radius: 12px;
     background: #EDF2F7;
+}
+
+
+
+.themeModal{
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    max-height: 80%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.themeModalHeader{
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    z-index: 100;
+}
+
+.themeModalTitle{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    padding: 1em;
+    padding-left: 2em;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.themeModalClose{
+    width: 50%;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding-right: 32px;
+}
+
+.themeModalBody{
+    overflow: auto;
+    flex-grow: 0;
+    width: 100%;
+    padding: 2em;
+}
+
+.themeModalBackground{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    z-index: 99;
 }

@@ -2029,7 +2029,7 @@ function _Chat() {
       {showOption && <Toolbox>
         <ButtonCard text={Locale.NextChat.ChatArea.RolePlay} icon={rolePlayIcon} onClick={() => { setIsSelectingPrompt(true) }} />
         <ButtonCard text={Locale.NextChat.ChatArea.SwitchModel} icon={changeModelIcon} onClick={changeModel} />
-        <PopoverCard text={"更改主题"}>
+        {/* <PopoverCard text={"更改主题"}>
           <PopoverItem text="灰色" onClick={() => { theme.setTheme("defaultGray") }} />
           <PopoverItem text="红色" onClick={() => { theme.setTheme("defaultRed") }} />
           <PopoverItem text="橙色" onClick={() => { theme.setTheme("defaultOrange") }} />
@@ -2040,7 +2040,7 @@ function _Chat() {
           <PopoverItem text="青色" onClick={() => { theme.setTheme("defaultCyan") }} />
           <PopoverItem text="紫色" onClick={() => { theme.setTheme("defaultPurple") }} />
           <PopoverItem text="粉色" onClick={() => { theme.setTheme("defaultPink") }} />
-        </PopoverCard>
+        </PopoverCard> */}
         <UploadFile />
         <PopoverCard text={Locale.NextChat.ChatArea.ChatPlugins} icon={<PluginIcon style={{ transform: "rotate(45deg)", scale: "1.15" }} />}>
           <PopoverItem text={Locale.NextChat.ChatArea.WebSearch} icon={<SearchIcon />} onClick={() => { setSearchPlugin(!searchPlugin); showToast(<TextBlock>{!searchPlugin ? Locale.NextChat.ChatArea.Activated(Locale.NextChat.ChatArea.WebSearch) : Locale.NextChat.ChatArea.Deactivated(Locale.NextChat.ChatArea.WebSearch)}</TextBlock>) }} />
