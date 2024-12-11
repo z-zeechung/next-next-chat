@@ -1,10 +1,11 @@
-import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, ChakraProvider, extendTheme, Flex, FormControl, FormLabel, Heading, IconButton, Menu, MenuButton, MenuItem, MenuList, Select, Switch, Tab, TabList, Tabs, Text, Textarea } from "@chakra-ui/react";
-import { Header, Theme } from "./theme";
+import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, ChakraProvider, extendTheme, Flex, FormControl, FormLabel, Heading, Icon, IconButton, Menu, MenuButton, MenuItem, MenuList, Select, Switch, Tab, TabList, Tabs, Text, Textarea } from "@chakra-ui/react";
+import { Header, Theme, TinyButton } from "./theme";
 import { getLang, isRtlLang, isVerticalLang } from "../locales";
 import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "../utils";
 import { nanoid } from "nanoid";
 import "./default.css"
+import { CloseIcon } from '@chakra-ui/icons'
 
 const FONT_FAMILY = "sans-serif, NotoSansMongolian"
 
@@ -40,13 +41,13 @@ export const Default = {
     },
     row(props: { children?: any }) {
         let { left, center, right } = enumRow(props.children)
-    
+
         if (isRtlLang()) {
             let tmp = left
             left = right
             right = tmp
         }
-    
+
         if (left && !center && !right) {
             return <table width={"100%"}>
                 <tr><td width={"100%"} align="left" style={{ verticalAlign: "middle" }}>{left}</td></tr>
@@ -78,8 +79,8 @@ export const Default = {
     component(props: { children?: any, type?: "primary" | "plain", subHeader?: boolean, bodyOnly?: boolean }) {
         let { header, body, footer } = enumChildren(props.children)
         body = Default.handleListItem(body)
-        return <div className={"themeComponent "+(props.type=="primary"?"themeComponentPrimary ":" ")}>
-            <div className={"themeComponentHeader"+(props.subHeader?" themeComponentSubHeader ":" ")}>{header?.props.children}</div>
+        return <div className={"themeComponent " + (props.type == "primary" ? "themeComponentPrimary " : " ")}>
+            <div className={"themeComponentHeader" + (props.subHeader ? " themeComponentSubHeader " : " ")}>{header?.props.children}</div>
             {(!props.type) && <hr />}
             <div className="themeComponentBody">{body}</div>
             {(!props.type) && <hr />}
@@ -129,16 +130,16 @@ export const Default = {
         type?: "text" | "primary" | "danger"
         disabled?: boolean
         embed?: "left" | "middle" | "right"
-        tiny?:boolean
+        tiny?: boolean
     }): JSX.Element {
         return <button onClick={props.onClick} disabled={props.disabled} className={`
             themeButton 
-            ${props.type=="primary" && " themeButtonPrimary"} 
-            ${props.type=="text" && " themeButtonGhost"}
-            ${["cn", "cnt"].includes(getLang())&&" themeButtonDenseScript"} 
-            ${props.embed=="left" && " themeButtonEmbedLeft"} 
-            ${props.embed=="middle" && " themeButtonEmbedMiddle"} 
-            ${props.embed=="right" && " themeButtonEmbedRight"} 
+            ${props.type == "primary" && " themeButtonPrimary"} 
+            ${props.type == "text" && " themeButtonGhost"}
+            ${["zh_Hans", "zh_Hant"].includes(getLang()) && " themeButtonDenseScript"} 
+            ${props.embed == "left" && " themeButtonEmbedLeft"} 
+            ${props.embed == "middle" && " themeButtonEmbedMiddle"} 
+            ${props.embed == "right" && " themeButtonEmbedRight"} 
             ${props.tiny && " themeButtonTiny"}
         `}>
             {props.icon}
@@ -153,7 +154,7 @@ export const Default = {
         disabled?: boolean
         embed?: "left" | "middle" | "right"
     }): JSX.Element {
-        return <Default.button {...props} tiny/>
+        return <Default.button {...props} tiny />
     },
     buttonCard(props: {
         icon?: JSX.Element
@@ -194,10 +195,10 @@ export const Default = {
         onClick?: () => void
     }) {
         const { header, body, footer } = enumChildren(props.children)
-    
+
         const [isHovered, setIsHovered] = useState(false);
         const ref = useRef(null)
-    
+
         const title = isVerticalLang() ? <span dangerouslySetInnerHTML={{ __html: splitMongolian(props.title) }}></span> : props.title
         const subTitle = isVerticalLang() ? <span dangerouslySetInnerHTML={{ __html: splitMongolian(props.subTitle) }}></span> : props.subTitle
 
@@ -261,14 +262,14 @@ export const Default = {
         const { width, height } = useWindowSize();
         const [rows, setRows] = useState(props.rows ?? 3)
         const ref = useRef(null)
-    
+
         const [areaHeight, setAreaHeight] = useState(36 * (props.rows ?? 1))
-    
+
         const tlRadius = (props.embed == "left" || props.embed == "middle") ? 0 : 10
         const trRadius = (props.embed == "right" || props.embed == "middle") ? 0 : 10
         const blRadius = (props.embed == "left" || props.embed == "middle") ? (rows >= 2 ? 10 : 0) : 10
         const brRadius = (props.embed == "right" || props.embed == "middle") ? (rows >= 2 ? 10 : 0) : 10
-    
+
         useEffect(() => {
             if (props.autoGrow && ref.current) {
                 if (isVerticalLang()) {
@@ -298,7 +299,7 @@ export const Default = {
                 }
             }
         })
-    
+
         return <Textarea
             ref={ref}
             resize="none"
@@ -347,7 +348,33 @@ export const Default = {
             </FormLabel>
         </FormControl>
     },
-    modal(props){return <></>},
+    modal(props: {
+        title?: string
+        children?: any
+        onClose?: () => void
+        headerActions?: boolean
+    }) {
+        const { header, body, footer } = enumChildren(props.children)
+        return <>
+            <div className="themeModalBackground" />
+            <div className="themeModal">
+                <div className="themeModalHeader">
+                    <div className="themeModalTitle">{props.title}</div>
+                    <div className="themeModalClose">
+                        <TinyButton type="text" icon={<CloseIcon width={"16px"} height={"16px"} />} onClick={props.onClose} />
+                    </div>
+                </div>
+                <hr />
+                <div className="themeModalBody">
+                    {body}
+                </div>
+                <hr />
+                <div className="themeModalFooter">
+                    {footer}
+                </div>
+            </div>
+        </>
+    },
     avatar(props: { icon?: JSX.Element | string }) {
         try {
             if (props?.icon?.["type"]?.()?.type == "svg") return <Avatar icon={<>{props.icon}</>} size={"sm"} />
@@ -355,7 +382,7 @@ export const Default = {
         return <Avatar icon={<div style={{ scale: "2" }}>{props.icon}</div>} size={"sm"} style={{ background: "#ffffff00" }} />
     },
     list(props: { children?: any, type?: "primary" | "plain" }): JSX.Element {
-        return <Default.component bodyOnly type={props.type}>
+        return <Default.component bodyOnly type={"plain"}>
             {props.children}
         </Default.component>
     },
@@ -463,7 +490,7 @@ export const Default = {
                 as={IconButton}
                 aria-label=''
                 {...(props.type == "text" ? { colorScheme: "brand", variant: "ghost", color: "gray.500" } : {})}
-                {...(props.type == "primary" ? { colorScheme: "brand", variant: "solid",background: c400 } : {})}
+                {...(props.type == "primary" ? { colorScheme: "brand", variant: "solid", background: c400 } : {})}
                 {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
                 {...(props.type == undefined ? { variant: "outline", background: "white", outline: "none", border: "1px lightgray solid" } : {})}
                 borderRadius={100}
@@ -472,7 +499,7 @@ export const Default = {
                 paddingLeft={2}
                 paddingRight={2}
             >
-                <div style={{ display: "inline-flex", gap: 8, justifyItems:"center", alignItems: "center" }}>
+                <div style={{ display: "inline-flex", gap: 8, justifyItems: "center", alignItems: "center" }}>
                     {props.icon && <div style={{ display: "inline-block", width: 16, height: 16 }}>
                         {props.icon}
                     </div>}
@@ -568,30 +595,30 @@ export const Default = {
     },
 
     // deprecated
-    messageCard(props){
+    messageCard(props) {
         const { header, body, footer } = enumChildren(props.children)
-        return <div className={"themeMessageCard "+props.type}>
-            <div className={"themeMessageCardHeader "+props.type}>{header}</div>
-            <div className={"themeMessageCardBody "+props.type}>
-                <div className={"themeMessageCardBodyItem "+props.type}>{body}</div>
+        return <div className={"themeMessageCard " + props.type}>
+            <div className={"themeMessageCardHeader " + props.type}>{header}</div>
+            <div className={"themeMessageCardBody " + props.type}>
+                <div className={"themeMessageCardBodyItem " + props.type}>{body}</div>
             </div>
-            <div className={"themeMessageCardFooter "+props.type}>{footer}</div>
+            <div className={"themeMessageCardFooter " + props.type}>{footer}</div>
         </div>
     },
-    chatHistory(props){
+    chatHistory(props) {
         return <></>
     },
-    buttonGroup(props){
+    buttonGroup(props) {
         return <></>
     },
-    chatCard(props){
+    chatCard(props) {
         return <></>
     },
-    listItem(props){
+    listItem(props) {
         return <></>
     },
-    showConfirm(){return undefined as any},
-    showToast(){return undefined as any}
+    showConfirm() { return undefined as any },
+    showToast() { return undefined as any }
 }
 
 function enumRow(children: any): { left?: any[], center?: any[], right?: any[] } {
