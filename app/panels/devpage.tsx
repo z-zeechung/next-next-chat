@@ -23,7 +23,7 @@ import { Scripting } from "./devpage/scripting";
 import { runPython } from "../utils/pyodide";
 import { DEFAULT_SYSTEM_TEMPLATE } from "../constant";
 
-import Locale, { ALL_LANG_OPTIONS, ALL_LANGS, AllLangs, changeLang, getISOLang, getLang, isRtlLang, LOCAL_ALL_LANG_OPTIONS } from "../locales";
+import Locale, { ALL_LANG_OPTIONS, AllLangs, changeLang, getISOLang, getLang, getLocale, isRtlLang } from "../locales";
 import { KnowledgeBase } from "../knowledgebase/knowledgebase";
 import { useNavigate } from "react-router-dom";
 import { Live2D } from "./devpage/live2d";
@@ -35,8 +35,10 @@ import { renderToString } from "react-dom/server";
 
 import brotliPromise from 'brotli-wasm';
 
-let i18nData = JSON.parse(JSON.stringify(LOCAL_ALL_LANG_OPTIONS))
-for(let lang in i18nData){i18nData[lang]={}}
+const i18nDataDefault = JSON.parse(JSON.stringify(Locale.LocalAllLangOptions))
+for(let lang in i18nDataDefault){i18nDataDefault[lang]={}}
+
+let i18nData = JSON.parse(JSON.stringify(i18nDataDefault))
 
 export function DevPage() {
 
@@ -47,25 +49,20 @@ export function DevPage() {
 
     const useLanguage = useState(getLang())
     function switchLanguage(language){
-        const code = Object.keys(LOCAL_ALL_LANG_OPTIONS).find(k=>LOCAL_ALL_LANG_OPTIONS[k]===language) ?? getLang()
+        const code = Object.keys(Locale.LocalAllLangOptions).find(k=>Locale.LocalAllLangOptions[k]===language) ?? getLang()
         useLanguage[1](code)
         _setRoleName(i18nData[code]["roleName"]??"N²CHAT")
-        _setPrompt(i18nData[code]["prompt"]??"")
-        _setGreeting(i18nData[code]["greeting"]??[{ type: "text", role: "assistant", content: ALL_LANGS[code].DevPage.Greeting }])
+        _setPrompt(i18nData[code]["prompt"]??getLocale(code).DevPage.DefaultPrompt)
+        _setGreeting(i18nData[code]["greeting"]??[{ type: "text", role: "assistant", content: getLocale(code).DevPage.Greeting }])
     }
-    useEffect(()=>{
-        return ()=>{
-            let i18nData = JSON.parse(JSON.stringify(LOCAL_ALL_LANG_OPTIONS))
-            for(let lang in i18nData){i18nData[lang]={}}
-        }
-    })
+    const [nativeLanguage, setNativeLanguage] = useState(getLang())
 
     const [roleName, _setRoleName] = useState("N²CHAT")
     const useRoleName = [roleName, (v)=>{
         i18nData[useLanguage[0]]["roleName"] = v
         _setRoleName(v)
     }]
-    const [prompt, _setPrompt] = useState("你是$N^2$CHAT，一个智能助手。")
+    const [prompt, _setPrompt] = useState(Locale.DevPage.DefaultPrompt)
     const usePrompt = [prompt, (v)=>{
         i18nData[useLanguage[0]]["prompt"] = v
         _setPrompt(v)
@@ -156,9 +153,14 @@ export function DevPage() {
                                                 const textDecoder = new TextDecoder()
                                                 const json = textDecoder.decode(brotli.decompress(arr))
                                                 const data = JSON.parse(json)
-                                                useRoleName[1](data?.i18n[getLang()]?.roleName ?? "N²CHAT")
-                                                usePrompt[1](data?.i18n[getLang()]?.prompt ?? "你是$N^2$CHAT，一个智能助手。")
-                                                useGreeting[1](data?.i18n[getLang()]?.greeting ?? [{ type: "text", role: "assistant", content: Locale.DevPage.Greeting }])
+                                                i18nData = data?.i18n ?? JSON.parse(JSON.stringify(i18nDataDefault))
+                                                for(let i in ALL_LANG_OPTIONS) {
+                                                    if(!i18nData[i]) {
+                                                        i18nData[i] = {}
+                                                    }
+                                                }
+                                                switchLanguage(Locale.LocalAllLangOptions[data?.nativeLanguage ?? getLang()])
+                                                setNativeLanguage(data?.nativeLanguage ?? getLang())
                                                 if (data?.avatar) { useAvatar[1](<div style={{ display: "inline-block" }} dangerouslySetInnerHTML={{ __html: data?.avatar ?? "" }} />) }
                                                 else { useAvatar[1](defaultAvatar) }
                                                 useSearch[1](data?.search ?? false)
@@ -211,6 +213,7 @@ export function DevPage() {
                                                 }
                                                 const data = {
                                                     i18n: i18nData,
+                                                    nativeLanguage: nativeLanguage,
                                                     avatar: renderToString(useAvatar[0]),
                                                     search: useSearch[0],
                                                     paint: usePaint[0],
@@ -247,8 +250,14 @@ export function DevPage() {
                                                 a.click();
                                             }} />
                                             <PopoverItem text="导出元数据" onClick={() => {
+                                                const names = {}
+                                                for(let i in i18nData){
+                                                    if(i18nData[i]?.roleName){
+                                                        names[i] = i18nData[i].roleName
+                                                    }
+                                                }
                                                 const data = {
-                                                    name: useRoleName[0],
+                                                    name: names,
                                                     avatar: renderToString(useAvatar[0])
                                                 }
                                                 const json = JSON.stringify(data)

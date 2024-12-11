@@ -3,8 +3,19 @@ import type { PartialLocaleType } from "./index";
 
 const es: PartialLocaleType = {
 
+  LocalAllLangOptions: {
+    "ar": "Árabe",
+    "zh_Hans": "Chino (Simplificado)",
+    "zh_Hant": "Chino (Tradicional)",
+    "es": "Español",
+    "fr": "Frances",
+    "en": "Ingles",
+    "mn_Mong": "Mongol",
+    "ru": "Ruso",
+  },
+
   NextChat: {
-    SystemPrompt: ()=>`
+    SystemPrompt: () => `
       Usted es $N^2$CHAT, un asistente inteligente desarrollado por el equipo de $N^2$CHAT.
       La hora actual es: ${new Date().toDateString()}
       Para incrustar LaTeX en línea, use por ejemplo $x^2$
@@ -42,12 +53,12 @@ const es: PartialLocaleType = {
       New: "Nuevo",
       Use: "Usar",
       StopUse: "Dejar de Usar",
-      SwitchedToModel: (model: string) => `Cambiado a ${model=="regular"?"Regular":"Avanzado"} modelo`,
+      SwitchedToModel: (model: string) => `Cambiado a ${model == "regular" ? "Regular" : "Avanzado"} modelo`,
       ManagePlugins: "Gestionar Plugins",
       AlreadyDeletedChat: "Chat Eliminado",
       ClearDataPrompt: "Esto limpiará todas las configuraciones y datos. ¿Continuar?",
-      Activated: (name:string) => `Activado ${name}`,
-      Deactivated: (name:string) => `Desactivado ${name}`,
+      Activated: (name: string) => `Activado ${name}`,
+      Deactivated: (name: string) => `Desactivado ${name}`,
       Copy: "Copiar",
       Delete: "Eliminar",
       Retry: "Reintentar",
@@ -103,38 +114,57 @@ const es: PartialLocaleType = {
     SystemSays: "Lo siguiente es un mensaje de aviso del sistema: ",
     UploadFile: "Subir archivo: ",
     Delete: "Eliminar",
-},
+    DefaultPrompt: `- el personaje -
+$N ^ 2 $CHAT, un asistente inteligente creado por el equipo de $N ^ 2 $CHAT, basado en un gran modelo en español.
+- objetivo -
+1. responder a las preguntas de los usuarios y proporcionar información útil a los usuarios
+- restricciones -
+1. garantizar la precisión y puntualidad de la información proporcionada y prohibir la fabricación de información falsa
+2. de acuerdo con la profundidad de la comprensión del usuario de un campo determinado, elija la redacción correspondiente para asegurarse de que la respuesta no sea demasiado profunda ni demasiado simple para el usuario.
+3. satisfacer las necesidades de los usuarios en la medida de lo posible, proporcionar la información más detallada posible en las respuestas y guiar a los usuarios a hacer más preguntas
+4. mantenga la cortesía y evite el uso de un lenguaje insultante o ofensivo
+    
+- cadena de pensamiento -
+1. leer la entrada del usuario
+2. analizar la entrada del usuario y comprender lo que el usuario necesita que hagas por él
+3. pensar en los pasos para satisfacer las necesidades de los usuarios debe ser un paso refinado
+4. siga los pasos para generar gradualmente las respuestas
+  `,
+    More: "Más",
+    SingleInteraction: "Interacción única",
+    SingleInteractionExplain: "El gran modelo responde directamente a esta ronda de entrada, ignorando los mensajes históricos"
+  },
 
-KnowledgeBase: {
-  New: "Nuevo",
-  WhatsThis: "¿Qué es esto?",
-  Explaination: `Los grandes modelos de lenguaje están limitados por la actualidad y la exhaustividad de sus datos de entrenamiento, lo que puede dar lugar a respuestas inexactas o no actualizadas a preguntas específicas. Esta situación puede mejorarse añadiendo documentos personalizados a una base de conocimientos y permitiendo que el gran modelo de lenguaje recupere información de la base de conocimientos cuando conteste preguntas.
+  KnowledgeBase: {
+    New: "Nuevo",
+    WhatsThis: "¿Qué es esto?",
+    Explaination: `Los grandes modelos de lenguaje están limitados por la actualidad y la exhaustividad de sus datos de entrenamiento, lo que puede dar lugar a respuestas inexactas o no actualizadas a preguntas específicas. Esta situación puede mejorarse añadiendo documentos personalizados a una base de conocimientos y permitiendo que el gran modelo de lenguaje recupere información de la base de conocimientos cuando conteste preguntas.
 
 Para crear una nueva base de conocimientos, puede hacer clic en el botón "Nuevo" en la esquina inferior derecha y seleccionar el tipo de base de conocimientos que quiere crear. Las bases de conocimientos tradicionales extraen palabras clave de documentos y llevan a cabo emparejamientos de palabras clave durante la recuperación. Las bases de conocimientos vectoriales asignan textos a información direccional en espacios de alta dimensionalidad (es decir, vectores), y llevan a cabo emparejamientos comparando los ángulos entre vectores. Las bases de conocimientos gráficos extraen entidades y relaciones entre entidades de textos fuente, conectándolos en una red, y recuperan información recorriendo los nodos que rodean el objetivo de búsqueda.
 
 Verá las bases de conocimientos que ya ha creado en la interfaz. En la interfaz de "Modificar", puede añadir nuevos documentos o navegar por los documentos que ya se han añadido.`,
-  ISee: "Entiendo",
-  KeywordKB: "Base de Conocimientos Tradicional",
-  VectorKB: "Base de Conocimientos Vectorial",
-  GraphKB: "Base de Conocimientos Gráfico",
-  NewKB: (type) => `Nueva ${type}`,
-  Name: "Nombre",
-  Cancel: "Cancelar",
-  Confirm: "Confirmar",
-  SubTitle: (type, count) => `${type}, ${count} Documento${count != 1 ? 's' : ''}`,
-  Edit: "Editar",
-  Delete: "Eliminar",
-  EditKB: (name) => `Editar Base de Conocimientos ${name}`,
-  AddDoc: "Añadir Documento(s)",
-  Done: "Terminado",
-  DeleteKB: "Eliminar Base de Conocimientos",
-  ConfirmDeleteKB: (name) => `¿Está seguro de querer eliminar la base de conocimientos ${name}?`,
-  KBNameNotEmpty: "El nombre de la base de conocimientos no puede estar vacío",
-  KBAlreadyExists: "La base de conocimientos ya existe",
-  SuccessfullyCreatedKB: (type, name) => `Creada satisfactoriamente ${type} ${name}`,
-  SuccessfullyAddDocument: "Documento añadido satisfactoriamente",
-  SuccessfullyDeletedDocument: (name) => `Documento ${name} eliminado satisfactoriamente`,
-},
+    ISee: "Entiendo",
+    KeywordKB: "Base de Conocimientos Tradicional",
+    VectorKB: "Base de Conocimientos Vectorial",
+    GraphKB: "Base de Conocimientos Gráfico",
+    NewKB: (type) => `Nueva ${type}`,
+    Name: "Nombre",
+    Cancel: "Cancelar",
+    Confirm: "Confirmar",
+    SubTitle: (type, count) => `${type}, ${count} Documento${count != 1 ? 's' : ''}`,
+    Edit: "Editar",
+    Delete: "Eliminar",
+    EditKB: (name) => `Editar Base de Conocimientos ${name}`,
+    AddDoc: "Añadir Documento(s)",
+    Done: "Terminado",
+    DeleteKB: "Eliminar Base de Conocimientos",
+    ConfirmDeleteKB: (name) => `¿Está seguro de querer eliminar la base de conocimientos ${name}?`,
+    KBNameNotEmpty: "El nombre de la base de conocimientos no puede estar vacío",
+    KBAlreadyExists: "La base de conocimientos ya existe",
+    SuccessfullyCreatedKB: (type, name) => `Creada satisfactoriamente ${type} ${name}`,
+    SuccessfullyAddDocument: "Documento añadido satisfactoriamente",
+    SuccessfullyDeletedDocument: (name) => `Documento ${name} eliminado satisfactoriamente`,
+  },
 
   /** LEGACY */
 

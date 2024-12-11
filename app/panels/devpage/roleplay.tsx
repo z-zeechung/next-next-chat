@@ -20,7 +20,7 @@ import MarkdownIcon from "../../icons/file-icon-vectors/square-o/md.svg"
 import HTMLIcon from "../../icons/file-icon-vectors/classic/html.svg"
 import TxtIcon from "../../icons/file-icon-vectors/txt.svg"
 
-import Locale, { isRtlLang, LOCAL_ALL_LANG_OPTIONS } from "../../locales";
+import Locale, { isRtlLang } from "../../locales";
 import { KnowledgeBase } from "../../knowledgebase/knowledgebase";
 
 const IconMap = {
@@ -81,7 +81,7 @@ export function RolePlay(props: any) {
             <TextArea rows={1} value={roleName} onChange={(v) => { setRoleName(v) }} />
         </ListItem>
         <ListItem title={Locale.DevPage.Prompt}>
-            <TextArea value={prompt} onChange={(v) => { setPrompt(v) }} />
+            <TextArea value={prompt} onChange={(v) => { setPrompt(v) }} autoGrow />
         </ListItem>
         <ListItem title={Locale.DevPage.InitDialog}>
             {greeting.map((msg: Message, i) => {
@@ -186,7 +186,7 @@ export function RolePlay(props: any) {
                 <InfoCard>
                     <Row>
                         <Left>
-                            <Button type="text" text="更多" icon={<AddIcon />} />
+                            <Button type="text" text={Locale.DevPage.More} icon={<AddIcon />} />
                         </Left>
                     </Row>
                 </InfoCard>
@@ -229,10 +229,10 @@ export function RolePlay(props: any) {
         <ListItem title="杂项：">
             <Row>
                 <Left>
-                    <CheckBox text="单次交互" />
+                    <CheckBox text={Locale.DevPage.SingleInteraction} />
                 </Left>
                 <Right>
-                    <TextBlock>大模型直接响应本轮输入，忽略历史消息</TextBlock>
+                    <TextBlock>{Locale.DevPage.SingleInteractionExplain}</TextBlock>
                 </Right>
             </Row>
         </ListItem>
@@ -241,7 +241,7 @@ export function RolePlay(props: any) {
             top: 4,
             right: 4,
         }}>
-            <Select options={Object.values(LOCAL_ALL_LANG_OPTIONS)} value={LOCAL_ALL_LANG_OPTIONS[props.useLanguage[0]]} onChange={(v)=>{
+            <Select options={Object.values(Locale.LocalAllLangOptions)} value={Locale.LocalAllLangOptions[props.useLanguage[0]]} onChange={(v)=>{
                 props.switchLanguage(v)
             }}/>
         </div>

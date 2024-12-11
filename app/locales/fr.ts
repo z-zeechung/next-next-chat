@@ -3,8 +3,19 @@ import type { PartialLocaleType } from "./index";
 
 const fr: PartialLocaleType = {
 
+  LocalAllLangOptions: {
+    en: "Anglais",
+    ar: "Arabe",
+    zh_Hans: "Chinois (Simplifié)",
+    zh_Hant: "Chinois (Traditionnel)",
+    es: "Espagnol",
+    fr: "Français",
+    mn_Mong: "Mongol",
+    ru: "Russe",
+  },
+
   NextChat: {
-    SystemPrompt: ()=>`
+    SystemPrompt: () => `
       Vous êtes $N^2$CHAT, un assistant intelligent développé par l'équipe $N^2$CHAT.
       L'heure actuelle est : ${new Date().toDateString()}
       Pour intégrer du LaTeX en ligne, utilisez par exemple $x^2$
@@ -103,38 +114,57 @@ const fr: PartialLocaleType = {
     SystemSays: "Voici le message de prompt système : ",
     UploadFile: "Uploader un fichier: ",
     Delete: "Supprimer",
-},
+    DefaultPrompt: `- le rôle -
+$N ^ 2 $CHAT, un assistant intelligent créé par l'équipe $N ^ 2 $CHAT, basé sur le grand modèle français.
+- objectifs -
+1. Répondre aux questions des utilisateurs, fournir des informations utiles aux utilisateurs
+- contraintes -
+1. Assurer l'exactitude et la prescription des informations fournies, interdire la fabrication de fausses informations
+2. Selon la profondeur de la connaissance de l'utilisateur d'un domaine, choisissez la formulation appropriée, assurez - vous que la réponse n'est ni trop ésotérique ni trop explicite pour l'utilisateur
+3. Répondre aux besoins de l'utilisateur autant que possible, fournir des informations aussi détaillées que possible dans les réponses et guider l'utilisateur vers d'autres questions
+4. Soyez poli et évitez d'utiliser un langage insultant ou offensant
+    
+- chaîne de pensée -
+1. Lire l'entrée de l'utilisateur
+2. Analyser l'entrée de l'utilisateur et comprendre ce que l'utilisateur a besoin que vous fassiez pour lui
+3. Réfléchir aux mesures à prendre pour répondre aux besoins des utilisateurs, ce qui devrait être une étape de raffinement
+4. Suivez les étapes pour générer des réponses étape par étape
+  `,
+  More: "Plus",
+  SingleInteraction: "Une seule interaction",
+  SingleInteractionExplain: "Le grand modèle répond directement à cette entrée de roue, ignore les messages historiques"
+  },
 
-KnowledgeBase: {
-  New: "Nouveau",
-  WhatsThis: "Qu'est-ce que c'est ?",
-  Explaination: `Les grands modèles de langage sont limités par l'actualité et l'exhaustivité de leurs données de formation, ce qui peut entraîner des réponses inexactes ou dépassées à certaines questions. Cette situation peut être améliorée en ajoutant des documents personnalisés à une base de connaissances et en permettant à le grand modèle de langage de récupérer des informations depuis la base de connaissances lors de la réponse à des questions.
+  KnowledgeBase: {
+    New: "Nouveau",
+    WhatsThis: "Qu'est-ce que c'est ?",
+    Explaination: `Les grands modèles de langage sont limités par l'actualité et l'exhaustivité de leurs données de formation, ce qui peut entraîner des réponses inexactes ou dépassées à certaines questions. Cette situation peut être améliorée en ajoutant des documents personnalisés à une base de connaissances et en permettant à le grand modèle de langage de récupérer des informations depuis la base de connaissances lors de la réponse à des questions.
 
 Pour créer une nouvelle base de connaissances, vous pouvez cliquer sur le bouton "Nouveau" dans le coin inférieur droit et sélectionner le type de base de connaissances que vous souhaitez créer. Les bases de connaissances traditionnelles extraient des mots-clés depuis les documents et réalisent la correspondance de mots-clés durant la récupération. Les bases de connaissances vectorielles cartographient du texte à des informations directionnelles dans des espaces à haute dimension (c.-à-d., vecteurs), et réalisent la correspondance en comparant les angles entre vecteurs. Les bases de connaissances graphiques extraient des entités et des relations entre entités depuis le texte source, les reliant en un réseau, et récupèrent des informations par la traversée des nœuds autour de la cible de recherche.
 
 Vous verrez les bases de connaissances que vous avez déjà créées sur l'interface. Dans l'interface "Modifier", vous pouvez ajouter de nouveaux documents ou parcourir les documents qui ont déjà été ajoutés.`,
-  ISee: "Je vois",
-  KeywordKB: "Base de connaissances traditionnelle",
-  VectorKB: "Base de connaissances vectorielle",
-  GraphKB: "Base de connaissances graphique",
-  NewKB: (type) => `Nouveau ${type}`,
-  Name: "Nom",
-  Cancel: "Annuler",
-  Confirm: "Confirmer",
-  SubTitle: (type, count) => `${type}, ${count} Document${count != 1 ? 's' : ''}`,
-  Edit: "Modifier",
-  Delete: "Supprimer",
-  EditKB: (name) => `Modifier la base de connaissances ${name}`,
-  AddDoc: "Ajouter Document(s)",
-  Done: "Terminé",
-  DeleteKB: "Supprimer la base de connaissances",
-  ConfirmDeleteKB: (name) => `Êtes-vous sûr de vouloir supprimer la base de connaissances ${name} ?`,
-  KBNameNotEmpty: "Le nom de la base de connaissances ne peut être vide",
-  KBAlreadyExists: "La base de connaissances existe déjà",
-  SuccessfullyCreatedKB: (type, name) => `Base de connaissances ${type} ${name} créée avec succès`,
-  SuccessfullyAddDocument: "Document ajouté avec succès",
-  SuccessfullyDeletedDocument: (name) => `Document ${name} supprimé avec succès`,
-},
+    ISee: "Je vois",
+    KeywordKB: "Base de connaissances traditionnelle",
+    VectorKB: "Base de connaissances vectorielle",
+    GraphKB: "Base de connaissances graphique",
+    NewKB: (type) => `Nouveau ${type}`,
+    Name: "Nom",
+    Cancel: "Annuler",
+    Confirm: "Confirmer",
+    SubTitle: (type, count) => `${type}, ${count} Document${count != 1 ? 's' : ''}`,
+    Edit: "Modifier",
+    Delete: "Supprimer",
+    EditKB: (name) => `Modifier la base de connaissances ${name}`,
+    AddDoc: "Ajouter Document(s)",
+    Done: "Terminé",
+    DeleteKB: "Supprimer la base de connaissances",
+    ConfirmDeleteKB: (name) => `Êtes-vous sûr de vouloir supprimer la base de connaissances ${name} ?`,
+    KBNameNotEmpty: "Le nom de la base de connaissances ne peut être vide",
+    KBAlreadyExists: "La base de connaissances existe déjà",
+    SuccessfullyCreatedKB: (type, name) => `Base de connaissances ${type} ${name} créée avec succès`,
+    SuccessfullyAddDocument: "Document ajouté avec succès",
+    SuccessfullyDeletedDocument: (name) => `Document ${name} supprimé avec succès`,
+  },
 
   /** LEGACY */
 

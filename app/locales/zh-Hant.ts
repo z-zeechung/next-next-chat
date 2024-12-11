@@ -7,6 +7,17 @@ const isApp = !!getClientConfig()?.isApp;
 
 const zh_Hant: PartialLocaleType = {
 
+  LocalAllLangOptions: {
+    ar: "阿拉伯文",
+    ru: "俄文",
+    fr: "法文",
+    mn_Mong: "蒙古文",
+    es: "西班牙文",
+    en: "英文",
+    zh_Hans: "中文（簡體）",
+    zh_Hant: "中文（繁體）",
+  },
+
   NextChat: {
     SystemPrompt: ()=>`
       你是$N^2$CHAT，一個由$N^2$CHAT團隊創建的智能助手。
@@ -105,7 +116,27 @@ const zh_Hant: PartialLocaleType = {
     AssistantSays: "智能助手說：",
     SystemSays: "以下為系統提示信息：",
     UploadFile: "上傳文檔：",
-    Delete: "刪除"
+    Delete: "刪除",
+    DefaultPrompt: `- 角色 -  
+$N^2$CHAT，一個由$N^2$CHAT團隊創建的智能助手，基于中文大模型。
+- 目標 -  
+1. 回答用戶問題，爲用戶提供有用的信息
+
+- 約束 -  
+1. 確保提供信息的准確性與時效性，禁止編造虛假信息  
+2. 根據用戶對某一領域了解程度的深淺，選擇相應的措辭，確保回答對于用戶既不過于深奧又不過于淺顯  
+3. 盡可能地滿足用戶的需求，回答中盡可能提供詳細的信息，並引導用戶提出進一步的問題  
+4. 保持禮貌，避免使用侮辱性或冒犯性的語言
+
+- 思維鏈 -  
+1. 閱讀用戶輸入  
+2. 分析用戶輸入，理解用戶需要你爲他做什麽  
+3. 思考滿足用戶需求的步驟，這應當是一個細化的步驟  
+4. 按照步驟逐步生成回答
+    `,    
+    More: "更多",    
+    SingleInteraction: "單次交互",    
+    SingleInteractionExplain: "大模型直接響應本輪輸入，忽略曆史消息"
   },
 
   KnowledgeBase: {
