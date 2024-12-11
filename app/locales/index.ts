@@ -23,7 +23,7 @@ import { merge } from "../utils/merge";
 import type { LocaleType } from "./zh-Hans";
 export type { LocaleType, PartialLocaleType } from "./zh-Hans";
 
-export const ALL_LANGS = {
+const ALL_LANGS = {
   zh_Hans: zh_Hans,
   zh_Hant: zh_Hant,
   en,
@@ -45,6 +45,16 @@ export const ALL_LANGS = {
   // sk,
   mn_Mong: mn_Mong,
 };
+
+export function getLocale(lang: Lang): LocaleType {
+  if(lang=="en"){
+    return en;
+  }
+  const localeLang = ALL_LANGS[lang];
+  const fallbackLang = JSON.parse(JSON.stringify(en));
+  merge(fallbackLang, localeLang);
+  return fallbackLang;
+}
 
 export type Lang = keyof typeof ALL_LANGS;
 
@@ -73,33 +83,10 @@ export const ALL_LANG_OPTIONS: Record<Lang, string> = {
   zh_Hant: "繁體中文",  // Zhōngwénfántǐ
 };
 
-export const LOCAL_ALL_LANG_OPTIONS: Record<Lang, string> = {
-  ar: "阿拉伯文",
-  // bn: "孟加拉文",
-  // cs: "捷克文",
-  // de: "德文",
-  en: "英文",
-  es: "西班牙文",
-  fr: "法文",
-  // ko: "韩文",
-  // id: "印尼文",
-  // it: "意大利文",
-  mn_Mong: "蒙古文",
-  // jp: "日文",
-  // no: "挪威文",
-  // pt: "葡萄牙文",
-  ru: "俄文",
-  // sk: "斯洛伐克文",
-  // vi: "越南文",
-  // tr: "土耳其文",
-  zh_Hans: "简体中文",
-  zh_Hant: "繁体中文",
-}
-
 const LANG_KEY = "lang";
 const DEFAULT_LANG = "zh_Hans";
 
-const fallbackLang = en;
+const fallbackLang = JSON.parse(JSON.stringify(en));
 const targetLang = ALL_LANGS[getLang()] as LocaleType;
 
 // if target lang missing some fields, it will use fallback lang string

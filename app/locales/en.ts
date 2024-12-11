@@ -7,8 +7,19 @@ import { LocaleType } from "./index";
 const isApp = !!getClientConfig()?.isApp;
 const en: LocaleType = {
 
+  LocalAllLangOptions: {
+    ar: "Arabic",
+    zh_Hans: "Chinese (Simplified)",
+    zh_Hant: "Chinese (Traditional)",
+    en: "English",
+    fr: "French",
+    mn_Mong: "Mongolian",
+    ru: "Russian",
+    es: "Spanish",
+  },
+
   NextChat: {
-    SystemPrompt: ()=>`
+    SystemPrompt: () => `
       You are $N^2$CHAT, an intelligent assistant developed by $N^2$CHAT team.
       Current time is: ${new Date().toDateString()}
       To embed inline LaTeX, use e.g. $x^2$
@@ -19,7 +30,7 @@ const en: LocaleType = {
       Manage: "Manage",
       Exit: "Return",
       NewChat: "New Chat",
-      CountOfChats: (count: number) => `${count} conversation${count>1?'s':''}`,
+      CountOfChats: (count: number) => `${count} conversation${count > 1 ? 's' : ''}`,
       Select: "Select"
     },
     ChatArea: {
@@ -46,12 +57,12 @@ const en: LocaleType = {
       New: "New",
       Use: "Activate",
       StopUse: "Deactivate",
-      SwitchedToModel: (model: string) => `Switched to ${model=="regular"?"Regular":"Advanced"} model`,
+      SwitchedToModel: (model: string) => `Switched to ${model == "regular" ? "Regular" : "Advanced"} model`,
       ManagePlugins: "Manage Plugins",
       AlreadyDeletedChat: "Deleted Chat",
       ClearDataPrompt: "This would clear all configurations and data. Continue?",
-      Activated: (name:string) => `Activated ${name}`,
-      Deactivated: (name:string) => `Deactivated ${name}`,
+      Activated: (name: string) => `Activated ${name}`,
+      Deactivated: (name: string) => `Deactivated ${name}`,
       Copy: "Copy",
       Delete: "Delete",
       Retry: "Retry",
@@ -106,7 +117,28 @@ const en: LocaleType = {
     AssistantSays: "The chatbot said: ",
     SystemSays: "Following is system prompt message: ",
     UploadFile: "Upload File: ",
-    Delete: "Delete"
+    Delete: "Delete",
+    DefaultPrompt: `-Role-
+  $N^2$CHAT, an AI assistant created by $N^2$CHAT team, based on a English LLM.
+
+-Goal-
+  1. Answer user questions and provide useful information to users
+
+-Constraint-
+  1. Ensure the accuracy and timeliness of the information provided, and prohibit the fabrication of false information
+  2. Choose appropriate wording based on the user's level of understanding in a certain field, ensuring that the answer is neither too profound nor too simplistic for the user
+  3. Meet the needs of users as much as possible, provide detailed information in the answers, and guide users to ask further questions
+  4. Maintain politeness and avoid using insulting or offensive language
+    
+-Chain of Thinking-
+  1. Read user input
+  2. Analyze user input and understand what the user needs you to do for them
+  3. Consider the steps to meet user needs, which should be a detailed step
+  4. Gradually generate answers according to the steps
+    `,
+    More: "More",
+    SingleInteraction: "Single Interaction",
+    SingleInteractionExplain: "Large model directly responds to this round of input, ignoring historical messages."
   },
 
   KnowledgeBase: {
@@ -121,23 +153,23 @@ You will see the knowledge bases you have already created on the interface. In t
     KeywordKB: "Traditional Knowledge Base",
     VectorKB: "Vector Knowledge Base",
     GraphKB: "Graph Knowledge Base",
-    NewKB: (type)=>`New ${type}`,
+    NewKB: (type) => `New ${type}`,
     Name: "Name",
     Cancel: "Cancel",
     Confirm: "Confirm",
-    SubTitle: (type, count)=>`${type}, ${count} Document${count!=1?'s':''}`,
+    SubTitle: (type, count) => `${type}, ${count} Document${count != 1 ? 's' : ''}`,
     Edit: "Modify",
     Delete: "Delete",
-    EditKB: (name)=>`Modify Knowledge Base ${name}`,
+    EditKB: (name) => `Modify Knowledge Base ${name}`,
     AddDoc: "Add Document(s)",
     Done: "Done",
     DeleteKB: "Delete Knowledge Base",
-    ConfirmDeleteKB: (name)=>`Are you sure you want to delete knowledge base ${name} ?`,
+    ConfirmDeleteKB: (name) => `Are you sure you want to delete knowledge base ${name} ?`,
     KBNameNotEmpty: "Knowledge base name cannot be empty",
     KBAlreadyExists: "Knowledge base already exists",
-    SuccessfullyCreatedKB: (type, name)=>`Successfully created ${type} ${name}`,
+    SuccessfullyCreatedKB: (type, name) => `Successfully created ${type} ${name}`,
     SuccessfullyAddDocument: "Successfully added document",
-    SuccessfullyDeletedDocument: (name)=>`Successfully deleted ${name}`,
+    SuccessfullyDeletedDocument: (name) => `Successfully deleted ${name}`,
   },
 
   /** LEGACY */

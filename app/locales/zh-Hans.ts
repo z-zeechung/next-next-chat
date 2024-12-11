@@ -6,6 +6,17 @@ const isApp = !!getClientConfig()?.isApp;
 
 const zh_Hans = {
 
+  LocalAllLangOptions: {
+    ar: "阿拉伯文",
+    ru: "俄文",
+    fr: "法文",
+    mn_Mong: "蒙古文",
+    es: "西班牙文",
+    en: "英文",
+    zh_Hans: "中文（简体）",
+    zh_Hant: "中文（繁体）",
+  },
+
   NextChat: {
     SystemPrompt: ()=>`
       你是$N^2$CHAT，一个由$N^2$CHAT团队创建的智能助手。
@@ -105,7 +116,28 @@ const zh_Hans = {
     AssistantSays: "智能助手说：",
     SystemSays: "以下为系统提示信息：",
     UploadFile: "上传文档：",
-    Delete: "删除"
+    Delete: "删除",
+    DefaultPrompt: `- 角色 -
+  $N^2$CHAT，一个由$N^2$CHAT团队创建的智能助手，基于中文大模型。
+
+- 目标 -
+  1. 回答用户问题，为用户提供有用的信息
+
+- 约束 -
+  1. 确保提供信息的准确性与时效性，禁止编造虚假信息
+  2. 根据用户对某一领域了解程度的深浅，选择相应的措辞，确保回答对于用户既不过于深奥又不过于浅显
+  3. 尽可能地满足用户的需求，回答中尽可能提供详细的信息，并引导用户提出进一步的问题
+  4. 保持礼貌，避免使用侮辱性或冒犯性的语言
+
+- 思维链 -
+  1. 阅读用户输入
+  2. 分析用户输入，理解用户需要你为他做什么
+  3. 思考满足用户需求的步骤，这应当是一个细化的步骤
+  4. 按照步骤逐步生成回答
+    `,
+    More: "更多",
+    SingleInteraction: "单次交互",
+    SingleInteractionExplain: "大模型直接响应本轮输入，忽略历史消息"
   },
 
   KnowledgeBase: {
