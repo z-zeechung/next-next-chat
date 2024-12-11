@@ -66,8 +66,8 @@
 }
 
 .themeComponentPrimary{
-    background: linear-gradient(135deg, #48BB78 0%, #ffffff 100%);
-    color: white;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(190,242,229,1) 42%, rgba(197,231,241,0.41) 93.6% );
+    color: black;
 }
 
 .themeComponentSubHeader{
@@ -154,12 +154,19 @@
     font-size: 12px;
 }
 
+/* MIT License adamgiebl (Adam Giebl) https://uiverse.io/adamgiebl/shaggy-grasshopper-91 */
 .themeButtonTiny.themeButtonPrimary{
     background: #48BB78 ;
+    background: linear-gradient(
+        0deg,
+        #48BB78 0%,
+        #68D391 100%
+    );
+    box-shadow: 0 0.1em 0.5em -0.2em #2F855A;
 }
 
 .themeButtonTiny.themeButtonPrimary:hover{
-    background: #38A169 ;
+    box-shadow: none;
 }
 
 
