@@ -11,6 +11,7 @@ import {
   // SERVER_URL,
   ServiceProvider,
   STT_API_URL,
+  VIDEO_CAPTION_URL,
 } from "../constant";
 import { ModelType, useAccessStore, useChatStore } from "../store";
 // import { ChatGPTApi } from "./platforms/openai";
@@ -475,6 +476,47 @@ export class ClientApi {
     })
     const data = await resp.json()
     return data
+  }
+
+  static async videoCaption(
+    video: FileLike,
+    prompt?: string,
+    onUpdate?: (chunk: string) => void,
+  ){
+    return new Promise(async (resolve, reject) => {
+      const resp = await fetch(VIDEO_CAPTION_URL, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          token: localStorage.getItem("nnchat-account-token"),
+          image: await parseFileLike(video),
+          prompt: prompt ?? "描述视频内容"
+        })
+      })
+      if (!resp.ok) { reject("[Connection Error]") }
+      const reader = resp.body?.getReader()
+      const decoder = new TextDecoder()
+      let chunk = ''
+      async function read() {
+        reader?.read().then(async ({ done, value }) => {
+          if(done){
+            resolve(chunk)
+          }else{
+            for(let json of decoder.decode(value).split("\n")){
+              try{
+                const resp = JSON.parse(json)
+                chunk += resp['result']
+                onUpdate?.(chunk)
+              }catch(e){}
+            }
+            read()
+          }
+        })
+      }
+      read()
+    })
   }
 
   // public llm: LLMApi;
