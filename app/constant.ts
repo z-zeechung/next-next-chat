@@ -5,6 +5,7 @@ export const CAPTION_API_URL = "http://127.114.51.4:19198/caption"
 export const PAINT_API_URL = "http://127.114.51.4:19198/paint"
 export const SEARCH_API_URL = "http://127.114.51.4:19198/search"
 export const STT_API_URL = ""
+export const VIDEO_CAPTION_URL = "http://127.114.51.4:19198/video_caption"
 
 
 /**

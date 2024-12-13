@@ -311,7 +311,7 @@ export function DevPage() {
             </div>
             <div style={{ height: "100%", width: "57%" }}>
                 <Plate>
-                    <ChatArea {...{ useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments, useLive2DUrl, useLive2DHeight, useCustomScript }} />
+                    <ChatArea {...{ useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments, useLive2DUrl, useLive2DHeight, useCustomScript, useLive2DMotions, useLive2DIdleMotion }} />
                 </Plate>
             </div>
         </div>
@@ -319,7 +319,7 @@ export function DevPage() {
 }
 
 function ChatArea(props: {
-    width?, height?, mobile?, useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments, useLive2DUrl, useLive2DHeight, useCustomScript
+    width?, height?, mobile?, useMessages, useMeta, useShow, usePromise, usePrompt, useGreeting, useAvatar, useSearch, usePaint, useScript, useDocuments, useLive2DUrl, useLive2DHeight, useCustomScript, useLive2DMotions, useLive2DIdleMotion
 }) {
     const [messages, setMessages] = props.useMessages
     const [meta, setMeta] = props.useMeta
@@ -504,8 +504,9 @@ function ChatArea(props: {
                         },
                         embed: ClientApi.embed,
                         async storeLargeData(data) { return "" },
-                        async execPython(code) { return "" },
-                        isSingleInteraction() { return false }
+                        async runPyodide(code) { return "" },
+                        isSingleInteraction() { return false },
+                        getLive2DMotions() { return props.useLive2DMotions[0].filter((m:File)=>m.name!=props.useLive2DIdleMotion[0]).map((m:File)=>{return{id:m.name, description:""}}) }
                     }
                     const onSendMessage = new Function('apis', props.useCustomScript[0])();
                     await onSendMessage(apis)

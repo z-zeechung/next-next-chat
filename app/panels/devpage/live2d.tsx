@@ -1,6 +1,7 @@
 import { Button, CheckBox, Footer, Group, InfoCard, Left, List, ListItem, Right, Row, Select, showToast, TextArea, TextBlock, TinyButton } from "@/app/themes/theme";
 import { compileLive2dModel } from "./compile-live2d-model";
 import { captureLive2DMotion, motionLive2D } from "../nextchat/Live2D";
+import { ClientApi } from "@/app/client/api";
 
 export function Live2D(props: any) {
 
@@ -35,17 +36,14 @@ export function Live2D(props: any) {
                         <Group isAttached>
                             <TextArea rows={1} />
                             <Button text="自动生成" type="primary" onClick={() => {
-                                showToast(<TextBlock>
-                                    录制开始，请不要摇晃鼠标
-                                </TextBlock>)
+                                // showToast(<TextBlock>
+                                //     录制开始，请不要摇晃鼠标
+                                // </TextBlock>)
                                 captureLive2DMotion(file.name).then(blob => {
                                     console.log(blob)
-                                    const url = URL.createObjectURL(blob);
-                                    const a = document.createElement('a');
-                                    a.href = url;
-                                    a.download = 'recorded-canvas.webm'; // 设置下载文件的名称
-                                    a.click();
-                                    URL.revokeObjectURL(url); // 释放URL对象
+                                    ClientApi.videoCaption(blob, "描述视频中人物的动作神态，并根据动作神态判断人物想要表达的情绪，尤其注意人物面部活动所传达的情绪，返回内容以“我感到……”开头。不要解释、不要标点、不要语气词、不要多余文本。返回内容示例：1. 我感到很开心 2. 我感到十分的沮丧 3. 我很生气 4. 我感觉被冷落 5. 我对此充满信心 6. 我对此感兴趣", (m)=>{
+                                        console.log(m)
+                                    })
                                 })
                             }} />
                         </Group>
