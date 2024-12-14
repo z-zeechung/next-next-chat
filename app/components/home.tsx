@@ -73,6 +73,10 @@ const KnowledgeBase = dynamic(async () => (await import("../panels/knowledge")).
   loading: () => <Loading noLogo />,
 })
 
+const FileManager = dynamic(async () => (await import("../panels/file-manager")).FileManager, {
+  loading: () => <Loading noLogo />,
+})
+
 let TestPage = dynamic(async () => (await import("../panels/testpage.template")).TestPage, {
   loading: () => <Loading noLogo />,
 })
@@ -229,6 +233,7 @@ function Screen() {
     <Route path="/devrole" element={<DevPage />} />
     <Route path="/audio" element={<Embedded element={<AudioPage />} />} />
     <Route path="/knowledge" element={<KnowledgeBase />} />
+    <Route path="/file-manager" element={<FileManager/>}/>
   </Routes>
 
   return (
