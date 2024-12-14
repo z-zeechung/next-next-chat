@@ -185,7 +185,7 @@ export interface Theme {
 }
 
 const themes = {
-    default: () => { return Default },
+    default: () => { return Default("#BEF2E5", "#C5E7F1", "#79CEED") },
 }
 
 export const useTheme = createPersistStore(
