@@ -66,8 +66,8 @@
 }
 
 .themeComponentPrimary{
-    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(190,242,229,1) 42%, rgba(197,231,241,0.41) 93.6% );
-    color: black;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  var(--theme-color-1) 42%, var(--theme-color-2) 93.6% );
+    color: white;
 }
 
 .themeComponentSubHeader{
@@ -81,16 +81,18 @@
     display: inline-flex;
     flex-direction: row;
     padding: 0.5em;
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-left: 1em !important;
+    padding-right: 1em !important;
     gap: 0.5em;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 12px;
+    border-radius: 12px !important;
     height: 36px;
     background: white;
     color: black;
+    font-weight: normal !important;
+    font-size: 13px !important;
 }
 
 .themeButton:hover{
@@ -107,7 +109,7 @@
     box-shadow: none;
     padding-left: 0.5em;
     padding-right: 0.5em;
-    color: #2F855A;
+    color: var(--button-color-500);
 }
 
 .themeButtonGhost:hover{
@@ -119,13 +121,13 @@
 }
 
 .themeButtonPrimary{
-    color: white;
-    background: linear-gradient(to right, #38A169, #48BB78);
+    color: white !important;
+    background: linear-gradient(to right, var(--button-color-400), var(--button-color-300));
     border: none;
 }
 
 .themeButtonPrimary:hover{
-    background: linear-gradient(to right, #2F855A, #38A169);
+    background: linear-gradient(to right, var(--button-color-500), var(--button-color-400)) !important;
 }
 
 .themeButtonDenseScript{
@@ -133,20 +135,20 @@
 }
 
 .themeButtonEmbedLeft{
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
 }
 
 .themeButtonEmbedMiddle{
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
 }
 
 .themeButtonEmbedRight{
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
 }
 
 .themeButtonTiny{
@@ -156,13 +158,13 @@
 
 /* MIT License adamgiebl (Adam Giebl) https://uiverse.io/adamgiebl/shaggy-grasshopper-91 */
 .themeButtonTiny.themeButtonPrimary{
-    background: #48BB78 ;
+    background: var(--button-color-300) ;
     background: linear-gradient(
         0deg,
-        #48BB78 0%,
-        #68D391 100%
+        var(--button-color-400) 0%,
+        var(--button-color-300) 100%
     );
-    box-shadow: 0 0.1em 0.5em -0.2em #2F855A;
+    box-shadow: 0 0.1em 0.5em -0.2em var(--button-color-400);
 }
 
 .themeButtonTiny.themeButtonPrimary:hover{
@@ -212,7 +214,7 @@
 .themeMessageCardBodyItem.user{
     padding: 8px;
     border-radius: 12px;
-    background: #48BB78;
+    background: var(--button-color-400);
     color: white;
 }
 
@@ -279,4 +281,20 @@
     height: 100%;
     background: rgba(0,0,0,0.3);
     z-index: 99;
+}
+
+
+.themeTextArea{
+    width: 100%;
+    resize: none;
+    background: white;
+    /* border: solid !important;
+    border-color: lightgray !important;
+    border-width: 2px !important; */
+}
+
+.themeTextArea:focus{
+    /* border: solid !important; */
+    /* border-color: var(--ornament-color) !important; */
+    /* border-width: 2px !important; */
 }
