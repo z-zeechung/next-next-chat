@@ -503,6 +503,7 @@ function ChatArea(props: {
                             ], onUpdate, options)
                         },
                         embed: ClientApi.embed,
+                        tts: (text:string)=>{return ClientApi.tts(text)},
                         async storeLargeData(data) { return "" },
                         async runPyodide(code) { return "" },
                         isSingleInteraction() { return false },

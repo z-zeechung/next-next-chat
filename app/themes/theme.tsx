@@ -4,6 +4,7 @@ import { FormEvent } from "react";
 import { MessageRole } from "../typing";
 import { Default } from "./default";
 import { createPersistStore } from "../utils/store";
+import { renderToString } from "react-dom/server";
 
 export interface Theme {
     wrapper:
@@ -188,149 +189,41 @@ const themes = {
     default: () => { return Default("#BEF2E5", "#C5E7F1", "#79CEED") },
 }
 
-export const useTheme = createPersistStore(
-    {
-        theme: "default"
-    },
-    (set, get) => ({
-        setTheme(theme) {
-            set(() => ({
-                theme: theme
-            }))
-        },
-        get(componentName, props) {
-            const theme_name = get().theme
-            const theme: Theme = (themes[theme_name]??themes["default"])()
-            return theme[componentName](props)
-        }
-    }),
-    {
-        name: "nnchat-theme-state-storage"
-    }
-)
-
-const WrapperTheme: Theme = {
-    wrapper(props) {
-        return useTheme().get("wrapper", props)
-    },
-    heading(props) {
-        return useTheme().get("heading", props)
-    },
-    textBlock(props) {
-        return useTheme().get("textBlock", props)
-    },
-    row(props) {
-        return useTheme().get("row", props)
-    },
-    component(props) {
-        return useTheme().get("component", props)
-    },
-    plate(props) {
-        return useTheme().get("plate", props)
-    },
-    group(props) {
-        return useTheme().get("group", props)
-    },
-    messageCard(props) {
-        return useTheme().get("messageCard", props)
-    },
-    chatHistory(props) {
-        return useTheme().get("chatHistory", props)
-    },
-    button(props) {
-        return useTheme().get("button", props)
-    },
-    tinyButton(props) {
-        return useTheme().get("tinyButton", props)
-    },
-    buttonGroup(props) {
-        return useTheme().get("buttonGroup", props)
-    },
-    buttonCard(props) {
-        return useTheme().get("buttonCard", props)
-    },
-    chatCard(props) {
-        return useTheme().get("chatCard", props)
-    },
-    infoCard(props) {
-        return useTheme().get("infoCard", props)
-    },
-    textArea(props) {
-        return useTheme().get("textArea", props)
-    },
-    checkBox(props) {
-        return useTheme().get("checkBox", props)
-    },
-    modal(props) {
-        return useTheme().get("modal", props)
-    },
-    avatar(props) {
-        return useTheme().get("avatar", props)
-    },
-    list(props) {
-        return useTheme().get("list", props)
-    },
-    tabs(props) {
-        return useTheme().get("tabs", props)
-    },
-    select(props) {
-        return useTheme().get("select", props)
-    },
-    showConfirm(props) {
-        return useTheme().get("showConfirm", props)
-    },
-    showToast(props) {
-        return useTheme().get("showToast", props)
-    },
-    popover(props) {
-        return useTheme().get("popover", props)
-    },
-    tinyPopover(props) {
-        return useTheme().get("tinyPopover", props)
-    },
-    popoverCard(props) {
-        return useTheme().get("popoverCard", props)
-    },
-    popoverItem(props) {
-        return useTheme().get("popoverItem", props)
-    }
-}
-
-export let ThemeWrapper = WrapperTheme.wrapper
-export let Heading = WrapperTheme.heading
-export let TextBlock = WrapperTheme.textBlock
-export let Row = WrapperTheme.row
-export let Component = WrapperTheme.component
-export let Plate = WrapperTheme.plate
-export let Group = WrapperTheme.group
+export let ThemeWrapper = themes["default"]().wrapper
+export let Heading = themes["default"]().heading
+export let TextBlock = themes["default"]().textBlock
+export let Row = themes["default"]().row
+export let Component = themes["default"]().component
+export let Plate = themes["default"]().plate
+export let Group = themes["default"]().group
 /** @deprecated */
-export let MessageCard = WrapperTheme.messageCard
+export let MessageCard = themes["default"]().messageCard
 /** @deprecated */
-export let ChatHistory = WrapperTheme.chatHistory
-export let Button = WrapperTheme.button
-export let TinyButton = WrapperTheme.tinyButton
+export let ChatHistory = themes["default"]().chatHistory
+export let Button = themes["default"]().button
+export let TinyButton = themes["default"]().tinyButton
 /** @deprecated */
-export let ButtonGroup = WrapperTheme.buttonGroup
-export let ButtonCard = WrapperTheme.buttonCard
+export let ButtonGroup = themes["default"]().buttonGroup
+export let ButtonCard = themes["default"]().buttonCard
 /** @deprecated */
-export let ChatCard = WrapperTheme.chatCard
-export let InfoCard = WrapperTheme.infoCard
-export let TextArea = WrapperTheme.textArea
-export let CheckBox = WrapperTheme.checkBox
+export let ChatCard = themes["default"]().chatCard
+export let InfoCard = themes["default"]().infoCard
+export let TextArea = themes["default"]().textArea
+export let CheckBox = themes["default"]().checkBox
 /** @deprecated */
-export let Modal = WrapperTheme.modal
-export let Avatar = WrapperTheme.avatar
+export let Modal = themes["default"]().modal
+export let Avatar = themes["default"]().avatar
 /** @deprecated */
-export let List = WrapperTheme.list
+export let List = themes["default"]().list
 // export let ListItem = theme.listItem
-export let Tabs = WrapperTheme.tabs
-export let Select = WrapperTheme.select
-export let showConfirm = WrapperTheme.showConfirm
-export let showToast = WrapperTheme.showToast
-export let Popover = WrapperTheme.popover
-export let TinyPopover = WrapperTheme.tinyPopover
-export let PopoverCard = WrapperTheme.popoverCard
-export let PopoverItem = WrapperTheme.popoverItem
+export let Tabs = themes["default"]().tabs
+export let Select = themes["default"]().select
+export let showConfirm = themes["default"]().showConfirm
+export let showToast = themes["default"]().showToast
+export let Popover = themes["default"]().popover
+export let TinyPopover = themes["default"]().tinyPopover
+export let PopoverCard = themes["default"]().popoverCard
+export let PopoverItem = themes["default"]().popoverItem
 
 export function Header(props: { children: any }) {
     return <>{props.children}</>

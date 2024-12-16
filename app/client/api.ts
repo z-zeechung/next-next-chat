@@ -11,6 +11,7 @@ import {
   // SERVER_URL,
   ServiceProvider,
   STT_API_URL,
+  TTS_API_URL,
   VIDEO_CAPTION_URL,
 } from "../constant";
 import { ModelType, useAccessStore, useChatStore } from "../store";
@@ -517,6 +518,20 @@ export class ClientApi {
       }
       read()
     })
+  }
+
+  static async tts(
+    text: string,
+    style?: "male" | "female"
+  ):Promise<string>{
+    const resp = await fetch(TTS_API_URL, {
+      method:"POST",
+      body: JSON.stringify({
+        text,
+        style: style ?? "female"
+      })
+    })
+    return await resp.text()
   }
 
   // public llm: LLMApi;
