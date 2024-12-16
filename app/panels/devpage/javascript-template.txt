@@ -24,6 +24,7 @@
 *          }
 *      ) => Promise<string>
 *      embed: (texts: string[]) => Promise<number[][]>
+*      tts: (text: string) => Promise<string>
 *      storeLargeData: (data: Uint8Array) => Promise<string>
 *      runPyodide: (code: string) => Promise<string>
 *      getLive2DMotions: ()=>{id: string, description: string}[]
@@ -108,7 +109,7 @@ async function onSendMessageLive2D(apis) {
                 const phrases = sentence.split(PHR_DIV)
                 for (let i = 0; i < phrases.length; i++) {
                     buffer.push([
-                        "this is audio",
+                        await apis.tts(phrases[i]),
                         i==0?sentence:undefined,
                         phrases[i]+(phrDivs[i]??"")
                     ])
@@ -128,8 +129,15 @@ async function onSendMessageLive2D(apis) {
         async function playCb(resolve, reject, abort, i){
             if(buffer.length>i){
                 if(buffer[i]==0){resolve(""); return;}
-                const [audio, motionText, text] = buffer[i]
-                console.log(text)
+                const [url, motionText, text] = buffer[i]
+                await new Promise(async resolve=>{
+                    const a = document.createElement("audio")
+                    a.src = url
+                    a.addEventListener('ended', () => {
+                        resolve();
+                    });
+                    a.play()
+                })
                 playCb(resolve, reject, abort, i+1)
             }else{
                 setTimeout(() => {

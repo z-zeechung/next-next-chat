@@ -120,7 +120,7 @@ import { Message, MessageElement, revokeMessage } from "../message/Message";
 
 // import btnstyles from "../components/button.module.scss";
 // import { contentOfVecDB, createVecDB, deleteVecDB, insertIntoVecDB, queryVecDBs } from "../utils/vectordb";
-import { Avatar, Button, ButtonCard, ButtonGroup, Component, Footer, Group, Header, Heading, InfoCard, Left, List, ListItem, MessageCard, Modal, Popover, PopoverCard, PopoverItem, Right, Row, Select, showConfirm, showToast, TextArea, TextBlock, TinyButton, TinyPopover, useTheme } from "../themes/theme";
+import { Avatar, Button, ButtonCard, ButtonGroup, Component, Footer, Group, Header, Heading, InfoCard, Left, List, ListItem, MessageCard, Modal, Popover, PopoverCard, PopoverItem, Right, Row, Select, showConfirm, showToast, TextArea, TextBlock, TinyButton, TinyPopover } from "../themes/theme";
 import { Card, grid, SimpleGrid } from "@chakra-ui/react";
 // import emoji from "../emoji.json"
 // import { title } from "process";
@@ -933,8 +933,6 @@ function _Chat() {
   const config = useAppConfig();
   // const fontSize = config.fontSize;
   // const [showExport, setShowExport] = useState(false);
-
-  const theme = useTheme()
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [userInput, setUserInput] = useState("");
