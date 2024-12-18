@@ -8,6 +8,7 @@ import "./default.css"
 import { CloseIcon } from '@chakra-ui/icons'
 import styled from 'styled-components';
 import { rgb2hsl, hsl2rgb } from "../utils/color";
+import { createRoot } from "react-dom/client";
 
 const FONT_FAMILY = "sans-serif, NotoSansMongolian"
 
@@ -70,7 +71,6 @@ export const Default = (
         },
         row(props: { children?: any }) {
             let { left, center, right } = enumRow(props.children)
-
             if (isRtlLang()) {
                 let tmp = left
                 left = right
@@ -265,13 +265,13 @@ export const Default = (
                         </Flex>
                     </Flex>
                 </CardHeader>}
-                {body && <CardBody>
+                <CardBody>
                     <Flex
                         flex={1} gap={4} direction={"column"} padding={0}
                     >
-                        {...body}
+                        {...(body??[])}
                     </Flex>
-                </CardBody>}
+                </CardBody>
                 {footer && <CardFooter padding={3} paddingTop={0} paddingBottom={2}>
                     {footer}
                 </CardFooter>}
@@ -484,18 +484,15 @@ export const Default = (
         }) {
             return <Menu>
                 <MenuButton
-                    as={IconButton}
+                    as={Button}
                     aria-label=''
-                    icon={props.icon}
-                    {...(props.type == "text" ? { colorScheme: "brand", variant: "ghost" } : {})}
-                    {...(props.type == "primary" ? { colorScheme: "brand", variant: "solid" } : {})}
-                    {...(props.type == "danger" ? { variant: "solid", background: "red.400", color: "white" } : {})}
-                    {...(props.type == undefined ? { variant: "outline", background: "white", outline: "none", border: "none", shadow: "0 4px 8px rgba(0,0,0,0.1)" } : {})}
-                    borderLeftRadius={12}
-                    borderRightRadius={12}
-                    fontWeight={"normal"}
-                    fontSize={"small"}
-                    style={{ height: 36, paddingLeft: 12, paddingRight: 12 }}
+                    leftIcon={props.icon}
+                    className={`
+                        themeButton 
+                        ${props.type == "primary" && " themeButtonPrimary"} 
+                        ${props.type == "text" && " themeButtonGhost"}
+                        ${["zh_Hans", "zh_Hant"].includes(getLang()) && " themeButtonDenseScript"}
+                    `}
                 >
                     {props.text}
                 </MenuButton>
@@ -603,7 +600,7 @@ export const Default = (
             const width = mdiv.clientWidth + 10
             mdiv.remove()
             return body.map(elem => elem?.type?.name == "ListItem" ? <div style={{ width: "100%", height: "100%", fontSize: 14, display: "flex", ...(isRtlLang() ? { flexDirection: "row-reverse" } : {}) }}>
-                <div style={{ width: width, fontFamily: FONT_FAMILY, fontWeight: "bold", color: c700, ...(isRtlLang() ? { direction: "rtl" } : {}) }}>
+                <div style={{ width: width, fontFamily: FONT_FAMILY, fontWeight: "bold", color: "#143b6e", ...(isRtlLang() ? { direction: "rtl" } : {}) }}>
                     {isVerticalLang() ? <div dangerouslySetInnerHTML={{ __html: splitMongolian(elem.props.title) }} /> : elem?.props?.title}
                 </div>
                 <div style={{ flex: 1, maxHeight: window.innerHeight * (1 - 0.618), overflowY: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
@@ -638,7 +635,33 @@ export const Default = (
             return <></>
         },
         showConfirm() { return undefined as any },
-        showToast() { return undefined as any }
+        async showToast(children: any): Promise<void> { 
+            return new Promise<void>(resolve => {
+                const div = document.createElement("div");
+                document.body.appendChild(div);
+        
+                const root = createRoot(div);
+                const close = () => {        
+                    setTimeout(() => {
+                        root.unmount();
+                        div.remove();
+                        resolve()
+                    }, 300);
+                };
+        
+                setTimeout(() => {
+                    close();
+                }, 5000);
+        
+                root.render(
+                    <self.wrapper>
+                        <div className="themeToast">
+                            {children}
+                        </div>
+                    </self.wrapper>
+                );
+            })
+        }
     }
 
     function enumRow(children: any): { left?: any[], center?: any[], right?: any[] } {

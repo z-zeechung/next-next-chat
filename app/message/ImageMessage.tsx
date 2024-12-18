@@ -6,6 +6,7 @@ import { getFromSessionIDB, removeFromSessionIDB } from "../utils/indexedDB"
 import { Card } from "@chakra-ui/react";
 import { TinyButton } from "../themes/theme";
 import DownloadIcon from "../icons/bootstrap/download.svg"
+import { FileFrame } from "../file-frame/file-frame";
 
 export interface ImageMessage {
     type: "image"
@@ -16,10 +17,25 @@ export interface ImageMessage {
 
 export const ImageMessageElement = memo(_ImageMessageElement)
 
-function _ImageMessageElement(props: { message: ImageMessage }) {
+function _ImageMessageElement(props: { message: ImageMessage, getLfsData: (string)=>Promise<string> }) {
+
+    const [url, setUrl] = useState("")
+
+    useEffect(() => {
+        props.getLfsData(props.message.src).then(src=>{setUrl(src)})
+    })
+
+    return <div style={{
+            width: window.innerWidth / 2.5,
+        height: window.innerHeight / 2.5,
+        overflow: "scroll",
+    }}>
+        <FileFrame src={url} name={".png"}/>
+    </div>
+
     return <div style={{ position: "relative" }}>
-        <img src={props.message.src} style={{ borderRadius: "10px" }} />
-        <div style={{
+        <img src={url} style={{ borderRadius: "10px" }} />
+        {/* <div style={{
             display: "flex",
             flexDirection: "row",
             position: "absolute",
@@ -32,7 +48,7 @@ function _ImageMessageElement(props: { message: ImageMessage }) {
             borderRadius: "1000px",
         }}>
             <div style={{ color: "black" }}>{props.message.src.split("/").reverse()[0]}</div>
-        </div>
+        </div> */}
     </div>
 }
 

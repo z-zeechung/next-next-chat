@@ -3,6 +3,7 @@ import { Button, ButtonCard } from "@/app/themes/theme";
 import { nanoid } from "nanoid";
 import UploadIcon from "../../icons/bootstrap/box-arrow-up.svg"
 import Locale from "../../locales"
+import { Message } from "@/app/message/Message";
 
 export function UploadFile() {
     const chatStore = useChatStore()
@@ -20,18 +21,14 @@ export function uploadFile(chatStore){
         const file = input.files?.[0] as File
         let reader = new FileReader()
         reader.onload = async (e) => {
-            var id = `/idb/${nanoid()}/${file.name}`
-            await fetch(id, {
-                method: "PUT",
-                body: e.target?.result
-            })
+            var id = await chatStore.setLfsData(e.target?.result)
             chatStore.updateCurrentSession(
                 session => (session.messages = session.messages.concat([
-                    { type: isImageOrDocument(file), src: id, role: "user", content: `用户上传文件：${file.name}` }
+                    { type: isImageOrDocument(file), src: id, role: "user", content: `用户上传文件：${file.name}`, fileName: file.name } as Message
                 ]))
             )
         }
-        reader.readAsArrayBuffer(file)
+        reader.readAsDataURL(file)
     }
     input.click()
 }

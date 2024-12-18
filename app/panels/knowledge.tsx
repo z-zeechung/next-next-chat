@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, ButtonCard, ButtonGroup, Component, Footer, Header, InfoCard, Left, List, ListItem, Modal, Right, Row, Select, showConfirm, TextArea, TextBlock } from "../themes/theme";
+import { Button, ButtonCard, ButtonGroup, Component, Footer, Group, Header, InfoCard, Left, List, ListItem, Modal, Popover, PopoverItem, Right, Row, Select, showConfirm, TextArea, TextBlock, TinyButton } from "../themes/theme";
 import { showToast } from "../components/ui-lib";
 import { KnowledgeBase as KnowledgeBaseClass } from "../knowledgebase/knowledgebase";
 import { SimpleGrid } from "@chakra-ui/react";
@@ -67,37 +67,37 @@ export function KnowledgeBase() {
     <SimpleGrid templateColumns={`repeat(auto-fill, minmax(${250}px, 1fr))`} gap={4}>
       {storeList.map(kb =>
         <InfoCard icon={typeIconMap[kb.type]} title={kb.id} subTitle={Locale.KnowledgeBase.SubTitle(typeNameMap[kb.type], kb.docs.length)}>
-          <Row>
-            <Right>
-              <ButtonGroup>
-                <Button text={Locale.KnowledgeBase.Edit} icon={<EditIcon />} type="primary" onClick={() => {
-                  setEditingKB(kb.id)
-                }} />
-                <Button text={Locale.KnowledgeBase.Delete} icon={<DeleteIcon />} type="primary" onClick={() => {
-                  showConfirm(Locale.KnowledgeBase.DeleteKB, <>{Locale.KnowledgeBase.ConfirmDeleteKB(kb.id)}</>).then(async _ => {
-                    await new KnowledgeBaseClass(kb.id).delete()
-                    setStoreList(KnowledgeBaseClass.list())
-                  })
-                }} />
-              </ButtonGroup>
-            </Right>
-          </Row>
+          <Footer>
+            <Row>
+              <Right>
+                <Group>
+                  <TinyButton text={Locale.KnowledgeBase.Edit} icon={<EditIcon />} type="primary" onClick={() => {
+                    setEditingKB(kb.id)
+                  }} />
+                  <TinyButton text={Locale.KnowledgeBase.Delete} icon={<DeleteIcon />} type="primary" onClick={() => {
+                    showConfirm(Locale.KnowledgeBase.DeleteKB, <>{Locale.KnowledgeBase.ConfirmDeleteKB(kb.id)}</>).then(async _ => {
+                      await new KnowledgeBaseClass(kb.id).delete()
+                      setStoreList(KnowledgeBaseClass.list())
+                    })
+                  }} />
+                </Group>
+              </Right>
+            </Row>
+          </Footer>
         </InfoCard>
       )}
     </SimpleGrid>
     <Footer>
       <Row>
         <Right>
-          <ButtonGroup>
-            <Button text={Locale.KnowledgeBase.New} type="primary" icon={<AddIcon />} popover={
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                <Button text={Locale.KnowledgeBase.KeywordKB} icon={<KeywordIcon />} onClick={() => setCreatingKB("keyword")} />
-                <Button text={Locale.KnowledgeBase.VectorKB} icon={<VectorIcon />} onClick={() => setCreatingKB("vector")} />
-                <Button text={Locale.KnowledgeBase.GraphKB} icon={<GraphIcon />} onClick={() => setCreatingKB("graph")} />
-              </div>
-            } />
+          <Group>
+            <Popover text={Locale.KnowledgeBase.New} type="primary" icon={<AddIcon />}>
+                <PopoverItem text={Locale.KnowledgeBase.KeywordKB} icon={<KeywordIcon />} onClick={() => setCreatingKB("keyword")} />
+                <PopoverItem text={Locale.KnowledgeBase.VectorKB} icon={<VectorIcon />} onClick={() => setCreatingKB("vector")} />
+                <PopoverItem text={Locale.KnowledgeBase.GraphKB} icon={<GraphIcon />} onClick={() => setCreatingKB("graph")} />
+            </Popover>
             <Button text={Locale.KnowledgeBase.WhatsThis} icon={<WhatsThisIcon />} onClick={() => setShowWhatsThis(true)} />
-          </ButtonGroup>
+          </Group>
         </Right>
       </Row>
     </Footer>

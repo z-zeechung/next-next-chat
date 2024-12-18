@@ -1921,7 +1921,7 @@ function _Chat() {
           />}
         </>}
       </Header>
-      <MessageElement message={msg} />
+      <MessageElement message={msg} getLfsData={chatStore.getLfsData} />
     </MessageCard>)}
     {session.messages.length <= 0 && userInput.trim().length <= 0 && <InfoCard title={Locale.NextChat.ChatArea.QuickStart} icon={"🚀"} type="plain">
       <TextBlock>{Locale.NextChat.ChatArea.YouCanSeeInMore}</TextBlock>
