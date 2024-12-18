@@ -91,6 +91,17 @@ const SEN_DIV = /\n|。|\./
 const PHR_DIV = /，|！|？|；|,|!|\?|;/
 async function onSendMessageLive2D(apis) {
     new Promise(async (resolve, reject) => {
+
+        let chunk = ""
+        // historical messages
+        const messages = apis.isSingleInteraction() ? [] : // ignore historical messages if set to single-round interaction
+            apis.getMessages()
+        // display user input
+        apis.updateMessages([
+            ...messages,
+            { role: "user", content: apis.getInput() }
+        ])
+
         let dividers = []
         let sentences = []
         let buffer = []
@@ -128,8 +139,23 @@ async function onSendMessageLive2D(apis) {
         )
         async function playCb(resolve, reject, abort, i){
             if(buffer.length>i){
-                if(buffer[i]==0){resolve(""); return;}
+                if(buffer[i]==0){
+                    // display the result
+                    apis.updateMessages([
+                        ...messages,
+                        { role: "user", content: apis.getInput() },
+                        { role: "assistant", content: result }
+                    ])
+                    resolve(""); 
+                    return;
+                }
                 const [url, motionText, text] = buffer[i]
+                chunk += text
+                apis.updateMessages([
+                    ...messages,
+                    { role: "user", content: apis.getInput() },
+                    { role: "assistant", content: chunk }
+                ])
                 await new Promise(async resolve=>{
                     const a = document.createElement("audio")
                     a.src = url
@@ -151,15 +177,6 @@ async function onSendMessageLive2D(apis) {
             }
         )
 
-        // historical messages
-        const messages = apis.isSingleInteraction() ? [] : // ignore historical messages if set to single-round interaction
-            apis.getMessages()
-        // display user input
-        apis.updateMessages([
-            ...messages,
-            { role: "user", content: apis.getInput() }
-        ])
-
         // call llm
         const promise = apis.chat(
             [
@@ -179,13 +196,6 @@ async function onSendMessageLive2D(apis) {
         const result = await promise    // wait for the result to be returned
         dividers = result.split("").filter(c => (c.match(SEN_DIV)))
         sentences = result.split(SEN_DIV).concat([0])
-
-        // display the result
-        apis.updateMessages([
-            ...messages,
-            { role: "user", content: apis.getInput() },
-            { role: "assistant", content: result }
-        ])
     })
 }
 

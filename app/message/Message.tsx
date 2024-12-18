@@ -20,11 +20,12 @@ export type Message = (TextMessage | ImageMessage | DocumentMessage | CompositeM
 
 export function MessageElement(props:{
     message:Message
+    getLfsData: (string)=>Promise<string>
 }){
     switch(props.message.type){
         case "text": return <TextMessageElement message={props.message}/>
-        case "image": return <ImageMessageElement message={props.message}/>
-        case "document": return <DocumentMessageElement message={props.message}/>
+        case "image": return <ImageMessageElement message={props.message} getLfsData={props.getLfsData}/>
+        case "document": return <DocumentMessageElement message={props.message} getLfsData={props.getLfsData}/>
         case "composite": return <CompositeMessageElement message={props.message}/>
     }
 }

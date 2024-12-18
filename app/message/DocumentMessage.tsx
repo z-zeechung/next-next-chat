@@ -10,18 +10,35 @@ import * as docx from 'docx-preview';
 import { useWindowSize } from "../utils"
 import { TinyButton } from "../themes/theme"
 import { DocxDisplay } from "./document/DocxDisplay"
+import { FileFrame } from "../file-frame/file-frame"
 
 export interface DocumentMessage {
     type: "document"
+    fileName?: string
     src: string
     role: MessageRole
     content: string
 }
 
-export function DocumentMessageElement(props: { message: DocumentMessage }) {
-    const fileName = props.message.src.split("/").reverse()[0]
+export function DocumentMessageElement(props: { message: DocumentMessage, getLfsData: (string)=>Promise<string> }) {
     const [small, setSmall] = useState(true)
     const { width, height } = useWindowSize();
+    const [src, setSrc] = useState("")
+
+    const fileName = props.message.fileName ?? ""
+
+    useEffect(()=>{
+        props.getLfsData(props.message.src).then(src=>{setSrc(src)})
+    })
+
+    return <div style={{
+        width: window.innerWidth / 2.5,
+        height: window.innerHeight / 2.5,
+        overflow: "scroll",
+    }}>
+        <FileFrame src={src} name={fileName}/>
+    </div>
+
     return <>
         <div style={{
             overflow: "scroll",
@@ -38,10 +55,10 @@ export function DocumentMessageElement(props: { message: DocumentMessage }) {
                     width: "100%",
                     height: "100%"
                 }}>
-                    {fileName.endsWith(".docx") && <DocxDisplay src={props.message.src} />}
+                    {fileName.endsWith(".docx") && <DocxDisplay src={src} />}
                 </div>
             </div>
-            <div style={{
+            {/* <div style={{
                 display: "flex",
                 flexDirection: "row",
                 position: "absolute",
@@ -62,7 +79,7 @@ export function DocumentMessageElement(props: { message: DocumentMessage }) {
                         setSmall(!small)
                     }}
                 />
-            </div>
+            </div> */}
         </div>
     </>
 }

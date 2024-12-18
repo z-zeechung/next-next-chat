@@ -67,7 +67,7 @@
 
 .themeComponentPrimary{
     /* https://gradienthunt.com/gradient/16639 */
-    background-image: linear-gradient( 45deg,  rgba(173,252,234,1) 26.8%, rgba(192,229,246,1) 64% );
+    background-image: linear-gradient( 45deg,  rgb(173, 252, 245) 20%, rgba(192,229,246,1) 64% );
     color: rgb(12, 75, 104);
 }
 
@@ -89,15 +89,15 @@
     justify-content: center;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 12px !important;
-    height: 36px;
-    background: white;
+    height: 36px !important;
+    background: white !important;
     color: black;
     font-weight: normal !important;
     font-size: 13px !important;
 }
 
 .themeButton:hover{
-    background: #eeeeee;
+    background: #eeeeee !important;
 }
 
 .themeButtonText{
@@ -106,7 +106,7 @@
 }
 
 .themeButtonGhost{
-    background: none;
+    background: none !important;
     box-shadow: none;
     padding-left: 0.5em;
     padding-right: 0.5em;
@@ -114,7 +114,7 @@
 }
 
 .themeButtonGhost:hover{
-    background: #F0FFF4;
+    background: #f0f6ff !important;
 }
 
 .themeButtonGhost.themeButtonTiny{
@@ -123,12 +123,12 @@
 
 .themeButtonPrimary{
     color: white !important;
-    background: linear-gradient(135deg, #5fa2fb, #68aee7);
+    background: linear-gradient(135deg, #5fa2fb, #68aee7) !important;
     border: none;
 }
 
 .themeButtonPrimary:hover{
-    background: linear-gradient(135deg, #6eabfb, #77b2e3);
+    background: linear-gradient(135deg, #6eabfb, #77b2e3) !important;
 }
 
 .themeButtonDenseScript{
@@ -153,13 +153,13 @@
 }
 
 .themeButtonTiny{
-    height: 24px;
-    font-size: 12px;
+    height: 24px !important;
+    font-size: 12px !important;
 }
 
 /* MIT License adamgiebl (Adam Giebl) https://uiverse.io/adamgiebl/shaggy-grasshopper-91 */
 .themeButtonTiny.themeButtonPrimary{
-    background: #c4d8f9;
+    background: #c4d8f9 !important;
     box-shadow: 0 0.05em 0.4em -0.25em black;
     color: #143b6e !important;
 }
@@ -211,7 +211,7 @@
 .themeMessageCardBodyItem.user{
     padding: 8px;
     border-radius: 12px;
-    background: var(--button-color-400);
+    background: #32A9CD;
     color: white;
 }
 
@@ -294,4 +294,18 @@
     /* border: solid !important; */
     /* border-color: var(--ornament-color) !important; */
     /* border-width: 2px !important; */
+}
+
+
+.themeToast{
+    position: fixed;
+    bottom: 10%;
+    width: 38.2%;
+    left: 30.9%;
+    right: 30.9%;
+    background: white;
+    padding: 12px;
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
 }

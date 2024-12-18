@@ -1,0 +1,9 @@
+.textFrame{
+    background: white;
+    color: black;
+    padding: 10px;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    border-radius: 10px;
+}

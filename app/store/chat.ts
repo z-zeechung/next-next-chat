@@ -30,6 +30,7 @@ import { Message, revokeMessage } from "../message/Message";
 // import { MarkdownMessage } from "../message/TextMessage";
 import { ControllablePromise } from "../utils/controllable-promise";
 import { deteteSessionToast } from "../components/delete-session-toast";
+import localforage from "localforage";
 
 const VECDB_PREFIX = "SESSION_VECDB_"
 
@@ -68,6 +69,7 @@ export interface ChatSession {
     src: string
     height: number
   }
+  lfsIds?: string[]  // pointer ids for large file storage
 
   memoryPrompt: string;
   messages: Message[];
@@ -100,6 +102,7 @@ export function createEmptySession(): ChatSession {
     },
     lastUpdate: Date.now(),
     lastSummarizeIndex: 0,
+    lfsIds: [],
 
     mask: createEmptyMask(),
     vectorDBs: []
@@ -319,7 +322,6 @@ export const useChatStore = createPersistStore(
         //     //存在的问题：要是程序在这个过程中被关闭了咋办？答：算它倒霉，懒得管了
         //   }
         // );
-        console.log(deteteSessionToast)
         deteteSessionToast(() => {
           removeVecDB = false
           set(() => restoreState);
@@ -775,6 +777,19 @@ export const useChatStore = createPersistStore(
         await require("../utils/indexedDB").clearAllSessionIDBs()
         location.reload();
       },
+
+      async setLfsData(data: any){
+        let pointers:string[] = get().currentSession().lfsIds ?? []
+        const pointer = "nnchat-session-lfs-pointer-"+nanoid()
+        pointers.push(pointer)
+        await localforage.setItem(pointer, data)
+        get().updateCurrentSession((session)=>{ session.lfsIds = pointers })
+        return pointer
+      },
+
+      async getLfsData(pointer:string):Promise<any>{
+        return await localforage.getItem(pointer)
+      }
     };
 
     return methods;
