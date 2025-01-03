@@ -265,7 +265,7 @@ export const Default = (
                         </Flex>
                     </Flex>
                 </CardHeader>}
-                <CardBody>
+                <CardBody padding={body?4:0}>
                     <Flex
                         flex={1} gap={4} direction={"column"} padding={0}
                     >

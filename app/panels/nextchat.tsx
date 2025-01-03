@@ -139,12 +139,12 @@ import { uploadFile, UploadFile } from "./nextchat/fileUpload";
 // import ReactDOM from "react-dom";
 import { DocxPopoverItem, PDFPopoverItem } from "./document-docx";
 import { AudioPopoverItem } from "./audio";
-import { ClientApi } from "../client/api";
-import { runPyodide } from "../utils/pyodide";
+import { ClientApi, useApiConfig } from "../client/api";
 import { SelectPromptModal } from "./nextchat/mask";
 import { KnowledgeBaseButton } from "./knowledge";
 import { Markdown } from "../components/markdown";
 import { SideBar } from "../components/sidebar";
+import { runPyodide } from "../pyodide/pyodide";
 
 // const Markdown = dynamic(async () => (await import("../components/markdown")).Markdown, {
 //   loading: () => <LoadingIcon />,
@@ -1864,6 +1864,9 @@ function _Chat() {
 
   const [isShowingWhatsThis, setIsShowingWhatsThis] = useState(false)
 
+  const [isShowingConfigProviders, setIsShowingConfigProviders] = useState(false)
+  const apiConfig = useApiConfig()
+
   return <Component>
     <Header>
       <Row>
@@ -1871,16 +1874,100 @@ function _Chat() {
           <Heading>{session.topic.length > 0 ? (session.emoji + " " + session.topic) : Locale.NextChat.ChatArea.DefaultTopic}</Heading>
         </Left>
         <Right>
-          <Select options={Object.values(ALL_LANG_OPTIONS)}
-            value={ALL_LANG_OPTIONS[getLang()]}
-            onChange={(value) => {
-              changeLang(Object.values(ALL_LANG_OPTIONS).reduce((acc, key, index) => Object.assign(acc, { [key]: Object.keys(ALL_LANG_OPTIONS)[index] }), {})[value])
-            }
-            }
-          />
+          <Group>
+            <Button text="模型设置" type="primary" onClick={() => setIsShowingConfigProviders(true)} />
+            <Select options={Object.values(ALL_LANG_OPTIONS)}
+              value={ALL_LANG_OPTIONS[getLang()]}
+              onChange={(value) => {
+                changeLang(Object.values(ALL_LANG_OPTIONS).reduce((acc, key, index) => Object.assign(acc, { [key]: Object.keys(ALL_LANG_OPTIONS)[index] }), {})[value])
+              }
+              }
+            />
+          </Group>
         </Right>
       </Row>
     </Header>
+    {isShowingConfigProviders && <Modal title="模型设置" onClose={() => setIsShowingConfigProviders(false)}>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <List>
+          {apiConfig.getFields().map(({ provider, fields }) => {
+            return [
+              <Row>
+                <Left>
+                  <Heading>{provider}</Heading>
+                </Left>
+              </Row>,
+              ...(fields.map(field=>{
+                return <ListItem title={field+": "}>
+                  <TextArea rows={1} onChange={(v)=>apiConfig.setField(provider, field, v)} value={apiConfig.getField(provider, field)??""} />
+                </ListItem>
+              }))
+            ]
+          }).flatMap(item => item)}
+        </List>
+        <List>
+          <Row>
+            <Left>
+              <Heading>文字模型</Heading>
+            </Left>
+          </Row>
+          <ListItem title="常规模型">
+            <Group>
+              <TextBlock>服务商：</TextBlock>
+              <Select
+                options={[...(apiConfig.getProvider("chat") ? [] : ["选择服务商……"]), ...apiConfig.getProviders("chat")]}
+                value={apiConfig.getProvider("chat") ?? "选择服务商……"}
+                onChange={(v) => {
+                  if (v == "选择服务商…") return
+                  apiConfig.setProvider("chat", v)
+                }} />
+              <TextBlock>模型：</TextBlock>
+              {apiConfig.getProvider("chat") && <Select
+                options={apiConfig.getModels("chat")}
+                value={apiConfig.getModel("chat")}
+                onChange={(v) => { apiConfig.setModel("chat", v) }}
+              />}
+            </Group>
+          </ListItem>
+          <ListItem title="高级模型">
+            <Group>
+              <TextBlock>服务商：</TextBlock>
+              <Select
+                options={[...(apiConfig.getProvider("chat-smart") ? [] : ["选择服务商……"]), ...apiConfig.getProviders("chat-smart")]}
+                value={apiConfig.getProvider("chat-smart") ?? "选择服务商……"}
+                onChange={(v) => {
+                  if (v == "选择服务商…") return
+                  apiConfig.setProvider("chat-smart", v)
+                }} />
+              <TextBlock>模型：</TextBlock>
+              {apiConfig.getProvider("chat-smart") && <Select
+                options={apiConfig.getModels("chat-smart")}
+                value={apiConfig.getModel("chat-smart")}
+                onChange={(v) => { apiConfig.setModel("chat-smart", v) }}
+              />}
+            </Group>
+          </ListItem>
+          <ListItem title="长文本模型">
+            <Group>
+              <TextBlock>服务商：</TextBlock>
+              <Select
+                options={[...(apiConfig.getProvider("chat-long") ? [] : ["选择服务商……"]), ...apiConfig.getProviders("chat-long")]}
+                value={apiConfig.getProvider("chat-long") ?? "选择服务商……"}
+                onChange={(v) => {
+                  if (v == "选择服务商…") return
+                  apiConfig.setProvider("chat-long", v)
+                }} />
+              <TextBlock>模型：</TextBlock>
+              {apiConfig.getProvider("chat-long") && <Select
+                options={apiConfig.getModels("chat-long")}
+                value={apiConfig.getModel("chat-long")}
+                onChange={(v) => { apiConfig.setModel("chat-long", v) }}
+              />}
+            </Group>
+          </ListItem>
+        </List>
+      </div>
+    </Modal>}
 
     {[
       { type: "text", role: "assistant", content: session.greeting ?? Locale.NextChat.ChatArea.Greeting },
@@ -2079,8 +2166,15 @@ function _Chat() {
 
     {isSelectingPrompt && <SelectPromptModal onClose={() => { setIsSelectingPrompt(false) }} />}
 
-    {isShowingWhatsThis && <Modal title={Locale.KnowledgeBase.WhatsThis} onClose={() => { setIsShowingWhatsThis(false) }} footer={<Button text={Locale.KnowledgeBase.ISee} icon={<ISeeIcon />} onClick={() => { setIsShowingWhatsThis(false) }} />}>
+    {isShowingWhatsThis && <Modal title={Locale.KnowledgeBase.WhatsThis} onClose={() => { setIsShowingWhatsThis(false) }} >
       <TextBlock>{Locale.KnowledgeBase.Explaination}</TextBlock>
+      <Footer>
+        <Row>
+          <Right>
+            <Button text={Locale.KnowledgeBase.ISee} type="primary" icon={<ISeeIcon />} onClick={() => { setIsShowingWhatsThis(false) }} />
+          </Right>
+        </Row>
+      </Footer>
     </Modal>}
 
   </Component>
