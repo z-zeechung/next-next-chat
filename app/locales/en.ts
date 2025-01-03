@@ -19,6 +19,7 @@ const en: LocaleType = {
   },
 
   NextChat: {
+    Name: "N²CHAT",
     SystemPrompt: () => `
       You are $N^2$CHAT, an intelligent assistant developed by $N^2$CHAT team.
       Current time is: ${new Date().toDateString()}

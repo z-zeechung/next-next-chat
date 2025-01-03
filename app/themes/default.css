@@ -280,6 +280,12 @@
     z-index: 99;
 }
 
+.themeModalFooter{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+
 
 .themeTextArea{
     width: 100%;

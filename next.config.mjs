@@ -19,8 +19,13 @@ const nextConfig = {
     });
 
     config.module.rules.push({
-      test: /\.txt$/,
+      test: /\.raw(\..+)?$/,
       use: 'raw-loader'
+    })
+
+    config.module.rules.push({
+      test: /\.worker\.js$/,
+      use: { loader: 'worker-loader' }
     })
 
     if (disableChunk) {

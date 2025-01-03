@@ -86,6 +86,10 @@ try {
   })
 } catch (e) { }
 
+let DevTools = dynamic(async () => (await import("../panels/devtools")).DevTools, {
+  loading: () => <Loading noLogo />,
+})
+
 
 // const NewChat = dynamic(async () => (await import("./new-chat")).NewChat, {
 //   loading: () => <Loading noLogo />,
@@ -234,6 +238,7 @@ function Screen() {
     <Route path="/audio" element={<Embedded element={<AudioPage />} />} />
     <Route path="/knowledge" element={<KnowledgeBase />} />
     <Route path="/file-manager" element={<FileManager/>}/>
+    <Route path="devtools" element={<DevTools/>}/>
   </Routes>
 
   return (

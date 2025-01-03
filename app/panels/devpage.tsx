@@ -29,7 +29,7 @@ import { useNavigate } from "react-router-dom";
 import { Live2D } from "./devpage/live2d";
 import { Live2D as Live2DComponent } from "./nextchat/Live2D";
 
-import JAVASCRIPT_TEMPLATE from "./devpage/javascript-template.txt"
+import JAVASCRIPT_TEMPLATE from "./devpage/javascript-template.raw.js"
 import { blobToBase64, compileLive2dModel } from "./devpage/compile-live2d-model";
 import { renderToString } from "react-dom/server";
 

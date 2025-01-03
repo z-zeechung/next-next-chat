@@ -18,6 +18,7 @@ const zh_Hans = {
   },
 
   NextChat: {
+    Name: "N²CHAT",
     SystemPrompt: ()=>`
       你是$N^2$CHAT，一个由$N^2$CHAT团队创建的智能助手。
       当前时间为：${new Date().toLocaleString()}，${lunar(new Date()).toString()}
