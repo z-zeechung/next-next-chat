@@ -30,7 +30,7 @@ import { SideBar } from "./sidebar";
 import { useAppConfig } from "../store/config";
 import { getClientConfig } from "../config/client";
 // import { ClientApi } from "../client/api";
-import { useAccessStore } from "../store";
+import { useAccessStore, useChatStore } from "../store";
 // import { identifyDefaultClaudeModel } from "../utils/checkers";
 // import { useAccount } from "../store/account";
 import { Button, Select } from "../themes/theme";
@@ -304,7 +304,10 @@ export function Home() {
   useLoadData();
   useHtmlLang();
 
+  const chatStore = useChatStore()
+
   useEffect(() => {
+    navigator.serviceWorker.register(new URL('../service-worker.js', import.meta.url), { scope: '/' });
     console.log("[Config] got config from build time", getClientConfig());
     useAccessStore.getState().fetch();
   }, []);

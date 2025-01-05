@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import * as docx from 'docx-preview';
 
-export function DocxFrame(props:{src}) {
+function _DocxFrame(props:{src}) {
     const ref = useRef(null)
     useEffect(() => {
         fetch(props.src, {method:"GET"}).then(value=>{
@@ -15,3 +15,5 @@ export function DocxFrame(props:{src}) {
     })
     return <div ref={ref} />
 }
+
+export const DocxFrame = memo(_DocxFrame)

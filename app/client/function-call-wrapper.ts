@@ -22,9 +22,9 @@ export function wrapFunctionCall(
     onUpdate?: (message: string) => void, 
     tools?: {
         function: Function,
-        description?: {
-            function?: string,
-            params?: {}
+        schemas: {
+            function: z.ZodLiteral<string>,
+            params: {[key: string]: z.ZodAny}
         }
     }[]
 ) => ControllablePromise<string>{
@@ -33,13 +33,13 @@ export function wrapFunctionCall(
         onUpdate?: (message: string) => void, 
         tools?: {
             function: Function,
-            description?: {
-                function?: string,
-                params?: {}
+            schemas: {
+                function: z.ZodLiteral<string>,
+                params: {[key: string]: z.ZodAny}
             }
         }[]
     ): ControllablePromise<string> => {
-        const msgs: BaseMessage[] = messages.map(msg => new (msg.role == "user" ? HumanMessage : msg.role == "assistant" ? AIMessage : SystemMessage)(msg.content))
+        let msgs: BaseMessage[] = messages.map(msg => new (msg.role == "user" ? HumanMessage : msg.role == "assistant" ? AIMessage : SystemMessage)(msg.content))
         let chunk = ""
         class StreamCallbackHandler extends BaseCallbackHandler {
             name: string = "onUpdate";
@@ -48,99 +48,110 @@ export function wrapFunctionCall(
                 onUpdate?.(chunk)
             }
         }
-        async function generate(){
-            const chat = new ChatNNCHAT({fn, callbacks: [new StreamCallbackHandler()]})
-            const result = (await chat.invoke([
-                new SystemMessage(`
-                    as an ai agent, you have access to the following tools:
-                        ${JSON.stringify(tools!.map(tool=>{return {[tool.function.name]: tool.description}}))}
-                    currently, you are directly responding to the user. if you wanna invoke a tool, stop current generation and standby for further instructions.
-                    note that you'll have to output tool call params in the follwing round of generation, RATHER THAN the current one. so FOR NOW, you should not output any tool call params.
-                `),
-                ...msgs
-            ])).text
-            msgs.push(new AIMessage(result))
-            chunk += "\n\n"
 
-            const _tools = tools?.map(tool=>new NNCHATTool(tool))??[]
-            const schemas = _tools.map(tool=>tool.zodSchema).concat([
-                z.object({
-                    toolName: z.literal("stop").describe("when you finished tool call, call this to terminate current generation"),
-                }
-            )])
-            const parser = StructuredOutputParser.fromZodSchema(schemas.length>1?z.union(schemas):schemas[0])
-            const parserModel = new ChatNNCHAT({ fn })
-            let parserMessages: BaseMessage[] = [new SystemMessage(parser.getFormatInstructions()), ...msgs, new SystemMessage("determine your next step based on the history messages, output in the format specified in the system prompt.")]
-            const parserResponse = (await parserModel.invoke(parserMessages)).text;
-            const fixParser = OutputFixingParser.fromLLM(parserModel, parser);
+        // const chat = new ChatNNCHAT({fn, callbacks: [new StreamCallbackHandler()]})
+
+        const _tools = tools?.map(tool=>z.object({
+            toolName: tool["schemas"]["function"],
+            ...tool["schemas"]["params"]
+        }))??[]
+        const schemas = _tools.concat([
+            z.object({
+                toolName: z.literal("respond").describe("directly respond to the user input"),
+            }
+        )])
+        const parser = StructuredOutputParser.fromZodSchema(schemas.length>1?z.union(schemas):schemas[0])
+        const parserModel = new ChatNNCHAT({ fn })
+        const fixParser = OutputFixingParser.fromLLM(parserModel, parser);
+
+        // let toolcall_counter = 0
+
+        async function generate(){
+
+            msgs = [new SystemMessage(parser.getFormatInstructions())].concat(msgs)
+            const parserResponse = (await parserModel.invoke(msgs)).text;
             const fixedResponse = await fixParser.parse(parserResponse);
 
-            if(fixedResponse.toolName=="stop"){
-                return true
+            if(fixedResponse.toolName=="respond"){
+                return await fn(messages, onUpdate)
             }else{
-                const result = await _tools.find(tool=>tool.name==fixedResponse.toolName)?._call(fixedResponse)
-                msgs.push(new SystemMessage(`
-                    TOOL CALL MESSAGE
-                    you, the agent, has just invoked a tool with following command:
-                        ${JSON.stringify(fixedResponse)}
-                    this is the return value of this tool:
-                        ${JSON.stringify(result)}
-                `))
-                return false
+                return fixedResponse
+                // const fn = (tools??[]).find(tool=>tool.schemas.function.value==fixedResponse.toolName).function
+                // const paramNames = getFunctionParams(fn)
+                // const params = paramNames.map(param=>fixedResponse[param])
+                // const result = await fn(...params)
+                // msgs.push(new SystemMessage(`
+                //     TOOL CALL MESSAGE
+                //     you, the agent, has just invoked a tool with following command:
+                //         ${JSON.stringify(fixedResponse)}
+                //     this is the return value of this tool:
+                //         ${JSON.stringify(result)}
+                // `))
+                // return false
             }
         }
         return new ControllablePromise(async resolve=>{
-            while(true){
-                const finish = await generate()
-                if(finish){
-                    resolve(chunk.slice(0, -2))
-                    return
-                }
-            }
+            resolve(await generate())
+            // while(true){
+            //     const finish = await generate()
+            //     toolcall_counter++
+            //     if(finish || toolcall_counter>3){
+            //         resolve(chunk)
+            //         return
+            //     }
+            // }
         })
     }
 }
 
-class NNCHATTool extends Tool {
-    name: string;
-    description: string;
-    info: {
-        name: string;
-        type: string;
-        description: string;
-        params: {
-            name: string;
-            type: string;
-            description: any;
-        }[];
-    }
-    fn
-    zodSchema
-    constructor(nntool: {
-        function: Function,
-        description?: {
-            function?: string,
-            params?: {}
-        }
-    }) {
-        super();
-        this.info = wrapFunction(nntool.function, nntool.description)
-        this.name = this.info.name
-        this.description = this.info.description
-        this.fn = nntool.function
-        this.zodSchema = z.object({
-            toolName: z.literal(this.name),
-            ...Object.fromEntries(this.info.params.map(param=>[param.name, z.string().describe(param.description)]))
-        })
-    }
-    async _call(arg: any): Promise<any> {
-        const params: any[] = []
-        for(let p of this.info.params){
-            params.push(arg[p.name])
-        }
-        return this.fn(...params)
-    }
+function getFunctionParams(func:Function):string[] {
+    var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+    var ARGUMENT_NAMES = /([^\s,]+)/g;
+    var fnStr = func.toString().replace(STRIP_COMMENTS, '');
+    var result = fnStr.slice(fnStr.indexOf('(')+1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
+    return result || [];
 }
+
+// class NNCHATTool extends Tool {
+//     name: string;
+//     description: string;
+//     info: {
+//         name: string;
+//         type: string;
+//         description: string;
+//         params: {
+//             name: string;
+//             type: string;
+//             description: any;
+//         }[];
+//     }
+//     fn
+//     zodSchema
+//     constructor(nntool: {
+//         function: Function,
+//         description?: {
+//             function?: string,
+//             params?: {}
+//         }
+//     }) {
+//         super();
+//         this.info = wrapFunction(nntool.function, nntool.description)
+//         this.name = this.info.name
+//         this.description = this.info.description
+//         this.fn = nntool.function
+//         this.zodSchema = z.object({
+//             toolName: z.literal(this.name),
+//             ...Object.fromEntries(this.info.params.map(param=>[param.name, z.string().describe(param.description)]))
+//         })
+//     }
+//     async _call(arg: any): Promise<any> {
+//         const params: any[] = []
+//         for(let p of this.info.params){
+//             params.push(arg[p.name])
+//         }
+//         return this.fn(...params)
+//     }
+// }
 
 class ChatNNCHAT extends BaseChatModel {
     fn: (messages: Message[], onUpdate?: (message: string) => void) => ControllablePromise<string>

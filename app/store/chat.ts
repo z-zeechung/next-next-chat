@@ -784,7 +784,7 @@ export const useChatStore = createPersistStore(
         pointers.push(pointer)
         await localforage.setItem(pointer, data)
         get().updateCurrentSession((session)=>{ session.lfsIds = pointers })
-        return pointer
+        return "https://lfs.nnchat.sw/getItem/"+pointer
       },
 
       async getLfsData(pointer:string):Promise<any>{

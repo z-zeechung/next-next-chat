@@ -2,6 +2,23 @@ import { showConfirm } from "../components/ui-lib";
 import mammoth from 'mammoth'
 import { parse } from 'pptxtojson'
 
+export async function readDocument(f: File){
+    switch(f.name.split('.').pop()!.toLowerCase()){
+        case 'docx':
+            return await readDocx(f)
+        case 'pptx':
+            return await readPPTx(f)
+        case 'html': case 'htm': case 'mhtml':
+            return await readHTML(f)
+        case 'doc':
+            return await readDoc(f)
+        case 'pdf':
+            return await readPDF(f)
+        default:
+            return await readTxt(f)
+    }
+}
+
 export async function readTxt(f: File) {
     return await f.text()
 }

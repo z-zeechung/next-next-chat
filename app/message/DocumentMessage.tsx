@@ -23,12 +23,12 @@ export interface DocumentMessage {
 export function DocumentMessageElement(props: { message: DocumentMessage, getLfsData: (string)=>Promise<string> }) {
     const [small, setSmall] = useState(true)
     const { width, height } = useWindowSize();
-    const [src, setSrc] = useState("")
+    // const [src, setSrc] = useState("")
 
     const fileName = props.message.fileName ?? ""
 
     useEffect(()=>{
-        props.getLfsData(props.message.src).then(src=>{setSrc(src)})
+        // props.getLfsData(props.message.src).then(src=>{setSrc(src)})
     })
 
     return <div style={{
@@ -36,7 +36,7 @@ export function DocumentMessageElement(props: { message: DocumentMessage, getLfs
         height: window.innerHeight / 2.5,
         overflow: "scroll",
     }}>
-        <FileFrame src={src} name={fileName}/>
+        <FileFrame src={props.message.src} name={fileName}/>
     </div>
 
     return <>

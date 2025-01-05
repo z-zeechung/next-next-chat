@@ -58,6 +58,19 @@ const nextConfig = {
   experimental: {
     forceSwcTransforms: true,
   },
+  async headers() {
+    return [
+      {
+        source: '/:path*service-worker:path*', // 匹配所有包含 "service-worker" 的文件
+        headers: [
+          {
+            key: 'Service-Worker-Allowed',
+            value: '/', // 允许根路径作用域
+          },
+        ],
+      },
+    ];
+  },
 };
 
 /*const CorsHeaders = [
