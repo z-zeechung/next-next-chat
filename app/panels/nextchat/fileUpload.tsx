@@ -21,14 +21,14 @@ export function uploadFile(chatStore){
         const file = input.files?.[0] as File
         let reader = new FileReader()
         reader.onload = async (e) => {
-            var id = await chatStore.setLfsData(e.target?.result)
+            var src = await chatStore.setLfsData(e.target?.result)
             chatStore.updateCurrentSession(
                 session => (session.messages = session.messages.concat([
-                    { type: isImageOrDocument(file), src: id, role: "user", content: `用户上传文件：${file.name}`, fileName: file.name } as Message
+                    { type: isImageOrDocument(file), src, role: "system", content: `用户上传文件：${file.name}`, fileName: file.name } as Message
                 ]))
             )
         }
-        reader.readAsDataURL(file)
+        reader.readAsArrayBuffer(file)
     }
     input.click()
 }

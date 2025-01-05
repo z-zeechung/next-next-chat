@@ -132,7 +132,8 @@ export function DevPage() {
         <div style={{ width: "100%", height: "100%", display: "flex", gap: 16, flexDirection: isRtlLang() ? "row-reverse" : "row" }}>
             <div style={{ height: "100%", width: "43%" }}>
                 <Plate>
-                    <Tabs type="plain" tab={tab} labels={tabs} onChange={setTab} >
+                    <RolePlay {...{ usePrompt, useGreeting, usePromise, useAvatar, useSearch, usePaint, useScript, useRoleName, useDocuments, useLanguage, switchLanguage }} />
+                    {/* <Tabs type="plain" tab={tab} labels={tabs} onChange={setTab} >
                         {tab == tabs[0] && <RolePlay {...{ usePrompt, useGreeting, usePromise, useAvatar, useSearch, usePaint, useScript, useRoleName, useDocuments, useLanguage, switchLanguage }} />}
                         {tab == tabs[1] && <Live2D {...{ useLive2DConfig, useLive2DModel, useLive2DPhysics, useLive2DTextures, useLive2DMotions, useLive2DIdleMotion, useLive2DUrl, useLive2DHeight }} />}
                         {tab == tabs[2] && <Scripting useCustomScript={useCustomScript} />}
@@ -306,7 +307,7 @@ export function DevPage() {
                                 </Right>
                             </Row>
                         </Footer>
-                    </Tabs>
+                    </Tabs> */}
                 </Plate>
             </div>
             <div style={{ height: "100%", width: "57%" }}>

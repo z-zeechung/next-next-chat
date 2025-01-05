@@ -19,18 +19,18 @@ export const ImageMessageElement = memo(_ImageMessageElement)
 
 function _ImageMessageElement(props: { message: ImageMessage, getLfsData: (string)=>Promise<string> }) {
 
-    const [url, setUrl] = useState("")
+    // const [url, setUrl] = useState("")
 
-    useEffect(() => {
-        props.getLfsData(props.message.src).then(src=>{setUrl(src)})
-    })
+    // useEffect(() => {
+    //     props.getLfsData(props.message.src).then(src=>{setUrl(src)})
+    // })
 
     return <div style={{
             width: window.innerWidth / 2.5,
         height: window.innerHeight / 2.5,
         overflow: "scroll",
     }}>
-        <FileFrame src={url} name={".png"}/>
+        <FileFrame src={props.message.src} name={".png"}/>
     </div>
 
     return <div style={{ position: "relative" }}>

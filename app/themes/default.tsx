@@ -448,7 +448,7 @@ export const Default = (
             const select = <Select
                 onChange={(e) => { props.onChange?.(e.currentTarget.value) }}
                 value={props.value}
-                style={{ padding: 4, paddingRight: 36, height: 36 }}
+                style={{ padding: 4, paddingRight: 36, height: 36, borderColor:"lightgray", boxShadow: "none"}}
                 width={width}
                 fontSize={14}
                 size={"sm"}
@@ -600,7 +600,7 @@ export const Default = (
             const width = mdiv.clientWidth + 10
             mdiv.remove()
             return body.map(elem => elem?.type?.name == "ListItem" ? <div style={{ width: "100%", height: "100%", fontSize: 14, display: "flex", ...(isRtlLang() ? { flexDirection: "row-reverse" } : {}) }}>
-                <div style={{ width: width, fontFamily: FONT_FAMILY, fontWeight: "bold", color: "#143b6e", ...(isRtlLang() ? { direction: "rtl" } : {}) }}>
+                <div style={{ width: width, fontFamily: FONT_FAMILY, fontWeight: "bold", ...(isRtlLang() ? { direction: "rtl" } : {}) }}>
                     {isVerticalLang() ? <div dangerouslySetInnerHTML={{ __html: splitMongolian(elem.props.title) }} /> : elem?.props?.title}
                 </div>
                 <div style={{ flex: 1, maxHeight: window.innerHeight * (1 - 0.618), overflowY: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
