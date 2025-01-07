@@ -40,6 +40,7 @@ import ConfigIcon from "../icons/bootstrap/gear.svg";
 
 import OnnxIcon from "../icons/onnx.svg"
 import NNCHATIcon from "../icons/nnchat.svg"
+import NNCHATBanner from "../icons/nnchat-banner.svg"
 
 import {
   SubmitKey,
@@ -81,14 +82,15 @@ import { Markdown } from "../components/markdown";
 import { SideBar } from "../components/sidebar";
 import { runPyodide } from "../pyodide/pyodide";
 
-import { Avatar, Button, Col, Flex, Layout, Menu, Row, Select, Typography } from 'antd';
+import { Avatar, Button, Col, Flex, Input, Layout, List, Menu, Modal, Row, Select, Typography } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import { Attachments, Bubble, BubbleProps, Conversations, Prompts, Sender } from '@ant-design/x';
 import { GPTVis } from '@antv/gpt-vis';
 import { AddIcon } from "@chakra-ui/icons";
 import Title from "antd/es/typography/Title";
 import { DocumentMessage } from "../message/DocumentMessage";
-import { DownCircleOutlined, DownOutlined, EditOutlined, GlobalOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined } from '@ant-design/icons'
+import { ArrowsAltOutlined, CheckOutlined, DownCircleOutlined, DownOutlined, EditOutlined, FullscreenExitOutlined, FullscreenOutlined, GlobalOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined } from '@ant-design/icons'
+import { FileFrame } from "../file-frame/file-frame";
 
 function useSubmitHandler() {
   const config = useAppConfig();
@@ -421,7 +423,7 @@ function _Chat() {
   const [isShowingConfigProviders, setIsShowingConfigProviders] = useState(false)
   const apiConfig = useApiConfig()
 
-  const RenderMarkdown: BubbleProps['messageRender'] = (content) => <div style={{userSelect:"text"}}><Markdown content={content} /></div>;
+  const RenderMarkdown: BubbleProps['messageRender'] = (content) => <div style={{ userSelect: "text" }}><Markdown content={content} /></div>;
 
   const { width, height } = useWindowSize()
 
@@ -429,8 +431,17 @@ function _Chat() {
 
   const [showMoreOptions, setShowMoreOptions] = useState(false)
 
-  return <Layout style={{ height: "100%" }}>
-    <Sider width={"20%"} collapsed={collapseSidebar} style={{
+  const sidebarWidth = width > 900 ? 300 : 250
+  const bodyWidth = width - sidebarWidth
+  const chatWidth = bodyWidth > 3 * sidebarWidth
+    ? bodyWidth * 0.8
+    : collapseSidebar ? width - 150 : bodyWidth - 50
+  const quickStartCount = Math.floor(chatWidth / 300)
+  const quickStartWidth = chatWidth / quickStartCount * 0.9
+  const maxMsgWidth = chatWidth * 0.8
+
+  return <Layout style={{ height: "100%", userSelect: "text" }}>
+    <Sider width={sidebarWidth} collapsed={collapseSidebar} style={{
       background: "#f5f5f5",
       padding: 12,
     }}>
@@ -438,12 +449,9 @@ function _Chat() {
         <Flex style={{ width: "100%", paddingTop: 8 }}>
           <Row style={{ width: "100%" }}>
             <Col span={18}>
-            <Flex gap={"small"}>
-              <div style={{zoom: 2}}>
-                <NNCHATIcon/>
-              </div>
-              <Markdown content="## $N^2\text{CHAT}$" />
-            </Flex>
+              <Flex gap={"small"} style={{ paddingLeft: 8 }}>
+                <NNCHATBanner height={"32"} width={"128"} style={{ userSelect: "none" }} />
+              </Flex>
             </Col>
           </Row>
           <Row>
@@ -472,7 +480,8 @@ function _Chat() {
           })}
           style={{
             background: "white",
-            borderRadius: 12
+            borderRadius: 12,
+            userSelect: "none"
           }}
           menu={(c) => {
             return {
@@ -522,7 +531,7 @@ function _Chat() {
               },
               {
                 key: "divider1",
-                type:"divider"
+                type: "divider"
               },
               {
                 key: "new",
@@ -536,7 +545,7 @@ function _Chat() {
               },
               {
                 key: "divider2",
-                type:"divider"
+                type: "divider"
               },
             ]}
             onClick={(info) => {
@@ -559,13 +568,160 @@ function _Chat() {
         <Row style={{ height: "100%" }}>
           <Col span={12}>
             <Flex style={{ height: "100%" }} align="center">
-              <Title level={5} style={{ marginBottom: 0 }}>{session.topic.length == 0 ? Locale.NextChat.ChatArea.DefaultTopic : session.topic}</Title>
+              <Title level={5} style={{ marginBottom: 0, userSelect: "none" }}>{session.topic.length == 0 ? Locale.NextChat.ChatArea.DefaultTopic : session.topic}</Title>
             </Flex>
           </Col>
           <Col span={12}>
             <Flex style={{ width: "100%", height: "100%" }} align="center" justify="end" gap={"small"}>
-              <Button icon={<NNCHATIcon/>}>模型设置</Button>
+              <Button icon={<OnnxIcon />} onClick={() => { setIsShowingConfigProviders(true) }}>
+                模型设置
+              </Button>
+              <Modal
+                style={{ userSelect: "none" }}
+                width={1000}
+                title="模型设置"
+                open={isShowingConfigProviders}
+                onCancel={() => { setIsShowingConfigProviders(false) }}
+                footer={<Button type="primary" icon={<CheckOutlined />} onClick={() => { setIsShowingConfigProviders(false) }}>完成</Button>}
+              >
+                <Row>
+                  <Col span={12} style={{ padding: 12 }}>
+                    <div style={{ height: 20 }} />
+                    <Title level={3}>账户信息</Title>
+                    <hr />
+                    {apiConfig.getFields().map(p => <>
+                      <div style={{ height: 16 }} />
+                      <Title level={4}>{apiConfig.getProviderName(p.provider)}</Title>
+                      <List
+                        itemLayout="horizontal"
+                        dataSource={p.fields}
+                        renderItem={(item, idx) => <List.Item>
+                          <List.Item.Meta
+                            title={<b>{item + ":"}</b>}
+                          />
+                          <Input
+                            value={apiConfig.getField(p.provider, item) ?? ""}
+                            onChange={(e) => { apiConfig.setField(p.provider, item, e.currentTarget.value) }}
+                          />
+                        </List.Item>}
+                      />
+                      <hr />
+                    </>)}
+                  </Col>
+                  <Col span={12} style={{ padding: 12 }}>
+                    <div style={{ height: 20 }} />
+                    <Title level={4}>文字模型</Title>
+                    <List
+                      header={<Title level={5}>常规模型</Title>}
+                      dataSource={[
+                        {
+                          name: "服务商：",
+                          elem: <Select
+                            popupMatchSelectWidth={false}
+                            options={[
+                              ...(apiConfig.getProvider("chat") ? [] : [undefined]),
+                              ...apiConfig.getProviders("chat")
+                            ].map(t => { return { value: t??"", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
+                            value={apiConfig.getProvider("chat")??""}
+                            onChange={(v) => {
+                              if (v == "") return
+                              apiConfig.setProvider("chat", v)
+                            }}
+                          />
+                        },
+                        ...(apiConfig.getProvider("chat") ? [{
+                          name: "模型：",
+                          elem: <Select
+                            popupMatchSelectWidth={false}
+                            options={apiConfig.getModels("chat").map(t => { return { value: t, label: t } })}
+                            value={apiConfig.getModel("chat")}
+                            onChange={(v) => { apiConfig.setModel("chat", v) }}
+                          />
+                        }] : [])
+                      ]}
+                      renderItem={(item) => <List.Item>
+                        <List.Item.Meta
+                          title={<b>{item.name}</b>}
+                        />
+                        {item.elem}
+                      </List.Item>}
+                    />
+                    <List
+                      header={<Title level={5}>高级模型</Title>}
+                      dataSource={[
+                        {
+                          name: "服务商：",
+                          elem: <Select
+                            popupMatchSelectWidth={false}
+                            options={[
+                              ...(apiConfig.getProvider("chat-smart") ? [] : [undefined]),
+                              ...apiConfig.getProviders("chat-smart")
+                            ].map(t => { return { value: t??"", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
+                            value={apiConfig.getProvider("chat-smart")??""}
+                            onChange={(v) => {
+                              if (v == "") return
+                              apiConfig.setProvider("chat-smart", v)
+                            }}
+                          />
+                        },
+                        ...(apiConfig.getProvider("chat-smart") ? [{
+                          name: "模型：",
+                          elem: <Select
+                            popupMatchSelectWidth={false}
+                            options={apiConfig.getModels("chat-smart").map(t => { return { value: t, label: t } })}
+                            value={apiConfig.getModel("chat-smart")}
+                            onChange={(v) => { apiConfig.setModel("chat-smart", v) }}
+                          />
+                        }] : [])
+                      ]}
+                      renderItem={(item) => <List.Item>
+                        <List.Item.Meta
+                          title={<b>{item.name}</b>}
+                        />
+                        {item.elem}
+                      </List.Item>}
+                    />
+                    <List
+                      header={<Title level={5}>长文本模型</Title>}
+                      dataSource={[
+                        {
+                          name: "服务商：",
+                          elem: <Select
+                            popupMatchSelectWidth={false}
+                            options={[
+                              ...(apiConfig.getProvider("chat-long") ? [] : [undefined]),
+                              ...apiConfig.getProviders("chat-long")
+                            ].map(t => { return { value: t??"", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
+                            value={apiConfig.getProvider("chat-long")??""}
+                            onChange={(v) => {
+                              if (v == "") return
+                              apiConfig.setProvider("chat-long", v)
+                            }}
+                          />
+                        },
+                        ...(apiConfig.getProvider("chat-long") ? [{
+                          name: "模型：",
+                          elem: <Select
+                            popupMatchSelectWidth={false}
+                            options={apiConfig.getModels("chat-long").map(t => { return { value: t, label: t } })}
+                            value={apiConfig.getModel("chat-long")}
+                            onChange={(v) => { apiConfig.setModel("chat-long", v) }}
+                          />
+                        }] : [])
+                      ]}
+                      renderItem={(item) => <List.Item>
+                        <List.Item.Meta
+                          title={<b>{item.name}</b>}
+                        />
+                        {item.elem}
+                      </List.Item>}
+                    />
+                  </Col>
+                </Row>
+              </Modal>
               <Select
+                style={{ userSelect: "none" }}
+                prefix={"🌐"}
                 popupMatchSelectWidth={false}
                 defaultValue={ALL_LANG_OPTIONS[getLang()]}
                 options={Object.values(ALL_LANG_OPTIONS).map(o => { return { value: o, label: o } })}
@@ -578,29 +734,29 @@ function _Chat() {
         </Row>
       </Header>
       <Content style={{ padding: "32px", justifyItems: "center", paddingTop: 0 }}>
-        <Flex justify={"center"} align={"center"} vertical gap={"middle"} style={{ height: "100%", width: width * 0.618 }}>
+        <Flex justify={"center"} align={"center"} vertical gap={"middle"} style={{ height: "100%", width: chatWidth, margin:"auto" }}>
           <Bubble.List
             style={{ width: "100%" }}
             roles={{
               system: {
                 placement: "start",
-                avatar: { icon:<SettingOutlined/>, style:{background:"none", color:"darkgray"} },
+                avatar: { icon: <SettingOutlined />, style: { background: "none", color: "darkgray" } },
                 variant: "borderless",
                 messageRender: RenderMarkdown,
                 footer: <Flex gap={"small"}>
-                  <Button type="text" size="small" icon={<CopyIcon/>}>{Locale.NextChat.ChatArea.Copy}</Button>
-                  <Button type="text" size="small" icon={<DeleteIcon/>}>{Locale.NextChat.ChatArea.Delete}</Button>
+                  <Button type="text" size="small" icon={<CopyIcon />}>{Locale.NextChat.ChatArea.Copy}</Button>
+                  <Button type="text" size="small" icon={<DeleteIcon />}>{Locale.NextChat.ChatArea.Delete}</Button>
                 </Flex>
               },
               assistant: {
                 placement: "start",
-                avatar: { icon: <NNCHATIcon width={32} height={32}/>, style:{background:"none"} },
+                avatar: { icon: <NNCHATIcon width={32} height={32} />, style: { background: "none" } },
                 variant: "borderless",
                 messageRender: RenderMarkdown,
                 footer: <Flex gap={"small"}>
-                  <Button type="text" size="small" icon={<CopyIcon/>}>{Locale.NextChat.ChatArea.Copy}</Button>
-                  <Button type="text" size="small" icon={<DeleteIcon/>}>{Locale.NextChat.ChatArea.Delete}</Button>
-                  <Button type="text" size="small" icon={<ResetIcon/>}>{Locale.NextChat.ChatArea.Retry}</Button>
+                  <Button type="text" size="small" icon={<CopyIcon />}>{Locale.NextChat.ChatArea.Copy}</Button>
+                  <Button type="text" size="small" icon={<DeleteIcon />}>{Locale.NextChat.ChatArea.Delete}</Button>
+                  <Button type="text" size="small" icon={<ResetIcon />}>{Locale.NextChat.ChatArea.Retry}</Button>
                 </Flex>
               },
               user: {
@@ -610,17 +766,17 @@ function _Chat() {
                 variant: "filled",
                 shape: "corner",
                 footer: <Flex gap={"small"}>
-                  <Button type="text" size="small" icon={<CopyIcon/>}>{Locale.NextChat.ChatArea.Copy}</Button>
-                  <Button type="text" size="small" icon={<DeleteIcon/>}>{Locale.NextChat.ChatArea.Delete}</Button>
+                  <Button type="text" size="small" icon={<CopyIcon />}>{Locale.NextChat.ChatArea.Copy}</Button>
+                  <Button type="text" size="small" icon={<DeleteIcon />}>{Locale.NextChat.ChatArea.Delete}</Button>
                   <Button type="text" size="small" icon={<EditOutlined />}>修改</Button>
                 </Flex>
               },
             }}
             items={
               [
-                ...(session.messages.length==0&&userInput.trim().length==0?[{ type: "text", role: "assistant", content: Locale.NextChat.ChatArea.Greeting, greeting: true}]:[]),
+                ...(session.messages.length == 0 && userInput.trim().length == 0 ? [{ type: "text", role: "assistant", content: Locale.NextChat.ChatArea.Greeting, greeting: true }] : []),
                 ...session.messages,
-                ...(userInput.trim().length > 0 ? [{ type: "text", role: "user", content: userInput, userInput: true}] : [])
+                ...(userInput.trim().length > 0 ? [{ type: "text", role: "user", content: userInput, userInput: true }] : [])
               ].map(
                 (msg, idx) => {
                   if (msg.type == "document") {
@@ -632,9 +788,38 @@ function _Chat() {
                       }),
                       messageRender: (content) => {
                         const { fileName, src } = JSON.parse(content)
-                        return <Attachments.FileCard item={{
+                        if (msg["expand"]) {
+                          return <div style={{ width: maxMsgWidth, height: height / 2, borderRadius: 16, overflow: "hidden", position: "relative" }}>
+                            <div style={{ width: "100%", height: "100%", overflow: "scroll" }}>
+                              <FileFrame src={src} name={fileName} />
+                            </div>
+                            <Button
+                              style={{ position: "absolute", right: 24, bottom: 16 }} size="small" variant="filled" color="primary" shape="round" icon={<FullscreenExitOutlined />} iconPosition="end"
+                              onClick={() => {
+                                chatStore.updateCurrentSession(session => {
+                                  session.messages[idx]["expand"] = false
+                                })
+                              }}
+                            >
+                              收起
+                            </Button>
+                          </div>
+                        }
+                        return <Attachments.FileCard style={{ userSelect: "none", width: 236 }} item={{
                           uid: `${idx}`,
-                          name: fileName
+                          name: fileName,
+                          description: <Flex justify="right" style={{ width: 165 }}>
+                            <Button
+                              style={{ width: 72 }} type="text" shape="round" iconPosition="end" size="small" icon={<FullscreenOutlined />}
+                              onClick={() => {
+                                chatStore.updateCurrentSession(session => {
+                                  session.messages[idx]["expand"] = true
+                                })
+                              }}
+                            >
+                              展开
+                            </Button>
+                          </Flex>
                         }} />
                       }
                     }
@@ -642,7 +827,7 @@ function _Chat() {
                     return {
                       role: msg.role,
                       content: msg.content,
-                      ...(msg["greeting"]||msg["userInput"]?{footer:undefined}:{})
+                      ...(msg["greeting"] || msg["userInput"] ? { footer: undefined } : {})
                     }
                   }
                 }
@@ -650,6 +835,7 @@ function _Chat() {
             }
           />
           {session.messages.length == 0 && <Prompts
+            style={{ maxHeight: height / 3, overflowY: "scroll", userSelect: "none" }}
             title={<Flex gap={"small"}>
               <Title level={4}>🚀</Title>
               <Flex vertical>
@@ -714,7 +900,7 @@ function _Chat() {
             styles={{
               item: {
                 flex: 'none',
-                width: 'calc(33% - 6px)',
+                width: quickStartWidth,
                 border: 0,
               },
             }}
@@ -728,10 +914,10 @@ function _Chat() {
             onChange={(v) => {
               setUserInput(v)
             }}
-            header={<Sender.Header open={showMoreOptions} onOpenChange={()=>{setShowMoreOptions(!showMoreOptions)}}>
-
-            </Sender.Header>}
-            prefix={<Button icon={showMoreOptions?<DownOutlined />:<AddIcon/>} type="default" shape="circle" onClick={()=>{setShowMoreOptions(!showMoreOptions)}}/>}
+            header={<Sender.Header title={<Flex style={{width: "100%", height:"100%"}} gap={"small"}>
+              <Button size="small" shape="round" icon={<UploadIcon/>} onClick={()=>{ uploadFile(chatStore)}}>{Locale.NextChat.ChatArea.UploadFile}</Button>
+            </Flex>} open={showMoreOptions} onOpenChange={() => { setShowMoreOptions(!showMoreOptions) }}/>}
+            prefix={<Button icon={showMoreOptions ? <DownOutlined /> : <AddIcon />} type="default" shape="circle" onClick={() => { setShowMoreOptions(!showMoreOptions) }} />}
           />
         </Flex>
       </Content>
@@ -1049,8 +1235,8 @@ export function NextChat() {
   const [isHovered, setIsHovered] = useState(false);
   const { width, height } = useWindowSize();
 
-  useEffect(()=>{
-    if(!hadMadeNewChat&&chatStore.sessions[0].messages.length>0){
+  useEffect(() => {
+    if (!hadMadeNewChat && chatStore.sessions[0].messages.length > 0) {
       chatStore.newSession()
     }
     hadMadeNewChat = true

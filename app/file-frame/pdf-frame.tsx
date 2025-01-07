@@ -8,7 +8,7 @@ function _PdfFrame(props:{src:string}){
             const url = URL.createObjectURL(blob)
             setSrc(url)
         })
-    })
+    }, [props.src])
     return <div style={{
         width: "100%",
         height: "100%",
