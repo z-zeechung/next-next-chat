@@ -97,6 +97,7 @@
     "html-to-image": "^1.11.11",
     "jieba-wasm": "^2.2.0",
     "joplin-turndown-plugin-gfm": "^1.0.12",
+    "jquery": "^3.7.1",
     "jsonwebtoken": "^9.0.2",
     "jszip": "^3.10.1",
     "llamaindex": "^0.8.9",

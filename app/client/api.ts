@@ -177,6 +177,9 @@ export const useApiConfig = createPersistStore(
         getProviders(api: "chat" | "chat-smart" | "chat-long"): string[] {
             return Array.from(ChatProviders.keys()).sort()
         },
+        getProviderName(id){
+            return Providers.get(id)?.name
+        },
         setModel(api: "chat" | "chat-smart" | "chat-long", model: string) {
             const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong" }[api]
             set({
