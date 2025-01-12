@@ -265,7 +265,7 @@ export const useChatStore = createPersistStore(
         get().selectSession(limit(i + delta));
       },
 
-      deleteSession(index: number) {
+      deleteSession(index: number, silent=false) {
 
         const deletingLastSession = get().sessions.length === 1;
         const deletedSession = get().sessions.at(index);
@@ -300,41 +300,14 @@ export const useChatStore = createPersistStore(
           sessions,
         }));
 
-        let removeVecDB = true
-        // showToast(
-        //   Locale.NextChat.ChatArea.AlreadyDeletedChat,
-        //   {
-        //     text: Locale.NextChat.ChatArea.Revert,
-        //     onClick() {
-        //       removeVecDB = false
-        //       set(() => restoreState);
-        //     },
-        //   },
-        //   ()=>{
-        //     if(!removeVecDB) return
-        //     //新增逻辑，在删除对话之后，等撤销吐司消失后，清除专属知识库和indexedDB内容
-        //     deleteVecDB(VECDB_PREFIX+deletedSessionId)
-        //     const IDB = require("../utils/indexedDB")
-        //     IDB.clearSessionIDB(deletedSessionId)
-        //     for(let msg of deletedMessages){
-        //       revokeMessage(msg)
-        //     }
-        //     //存在的问题：要是程序在这个过程中被关闭了咋办？答：算它倒霉，懒得管了
-        //   }
-        // );
+        let del = true
         deteteSessionToast(() => {
-          removeVecDB = false
           set(() => restoreState);
-        }).then(_ => {
-          if (!removeVecDB) return
-          //新增逻辑，在删除对话之后，等撤销吐司消失后，清除专属知识库和indexedDB内容
-          deleteVecDB(VECDB_PREFIX + deletedSessionId)
-          const IDB = require("../utils/indexedDB")
-          IDB.clearSessionIDB(deletedSessionId)
-          for (let msg of deletedMessages) {
-            revokeMessage(msg)
+          del = false
+        }, silent).then(_ => {
+          if(del){
+            this.clearLfsData()
           }
-          //存在的问题：要是程序在这个过程中被关闭了咋办？答：算它倒霉，懒得管了
         })
       },
 
@@ -772,6 +745,7 @@ export const useChatStore = createPersistStore(
         set(() => ({ sessions }));
       },
 
+      /** @deprecated */
       async clearAllData() {
         localStorage.clear();
         await require("../utils/indexedDB").clearAllSessionIDBs()
@@ -789,6 +763,14 @@ export const useChatStore = createPersistStore(
 
       async getLfsData(pointer:string):Promise<any>{
         return await localforage.getItem(pointer)
+      },
+
+      async clearLfsData(){
+        let pointers:string[] = get().currentSession().lfsIds ?? []
+        for(let pointer of pointers){
+          await localforage.removeItem(pointer)
+        }
+        get().updateCurrentSession((session)=>{ session.lfsIds = [] })
       }
     };
 

@@ -11,6 +11,7 @@ import { FileFrame } from "../file-frame/file-frame";
 export interface ImageMessage {
     type: "image"
     src: string
+    fileName: string,
     role: MessageRole
     content: string
 }

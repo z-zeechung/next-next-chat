@@ -11,8 +11,8 @@ export function FileFrame(props:{
     name: string
 }) {
     switch(props.name.split(".").slice(-1)[0].toLowerCase()){
-        case "jpg": case "jpeg": case "png": case "gif": case "tif": case "tiff": case "bmp":
-            return <ImageFrame src={props.src}/>
+        case "jpg": case "jpeg": case "png": case "gif": case "tif": case "tiff": case "bmp": case "webp": case "svg":
+            return <ImageFrame src={props.src} name={props.name}/>
         case "docx":
             return <DocxFrame src={props.src}/>
         case "pdf":
