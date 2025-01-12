@@ -38,9 +38,14 @@ import ISeeIcon from "../icons/bootstrap/lightbulb.svg"
 import CheckOutIcon from "../icons/bootstrap/arrow-right-circle.svg"
 import ConfigIcon from "../icons/bootstrap/gear.svg";
 
+import DownloadIcon from "../icons/bootstrap/download.svg"
+
 import OnnxIcon from "../icons/onnx.svg"
 import NNCHATIcon from "../icons/nnchat.svg"
 import NNCHATBanner from "../icons/nnchat-banner.svg"
+
+import RegularModelIcon from "../icons/nnchat-regular-model.svg"
+import AdvancedModelIcon from "../icons/nnchat-advanced-model.svg"
 
 import {
   SubmitKey,
@@ -65,7 +70,7 @@ import {
   CHAT_PAGE_SIZE,
   DEFAULT_SYSTEM_TEMPLATE,
 } from "../constant";
-import { Message, MessageElement, revokeMessage } from "../message/Message";
+import { copyMessage, Message, MessageElement, revokeMessage } from "../message/Message";
 
 // import { Avatar, Button, ButtonCard, ButtonGroup, Component, Footer, Group, Header, Heading, InfoCard, Left, List, ListItem, MessageCard, Modal, Popover, PopoverCard, PopoverItem, Right, Row, Select, showConfirm, showToast, TextArea, TextBlock, TinyButton, TinyPopover } from "../themes/theme";
 import { Card, grid, SimpleGrid } from "@chakra-ui/react";
@@ -82,15 +87,18 @@ import { Markdown } from "../components/markdown";
 import { SideBar } from "../components/sidebar";
 import { runPyodide } from "../pyodide/pyodide";
 
-import { Avatar, Button, Col, Flex, Input, Layout, List, Menu, Modal, Row, Select, Typography } from 'antd';
+import { Avatar, Button, Checkbox, Col, Dropdown, Flex, Input, Layout, List, Menu, message, Modal, Row, Select, Typography } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import { Attachments, Bubble, BubbleProps, Conversations, Prompts, Sender } from '@ant-design/x';
 import { GPTVis } from '@antv/gpt-vis';
 import { AddIcon } from "@chakra-ui/icons";
 import Title from "antd/es/typography/Title";
 import { DocumentMessage } from "../message/DocumentMessage";
-import { ArrowsAltOutlined, CheckOutlined, DownCircleOutlined, DownOutlined, EditOutlined, FullscreenExitOutlined, FullscreenOutlined, GlobalOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined } from '@ant-design/icons'
+import { ArrowsAltOutlined, CheckOutlined, CloudDownloadOutlined, DownCircleOutlined, DownloadOutlined, DownOutlined, EditOutlined, EllipsisOutlined, FullscreenExitOutlined, FullscreenOutlined, GlobalOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined } from '@ant-design/icons'
 import { FileFrame } from "../file-frame/file-frame";
+import { ImageMessage } from "../message/ImageMessage";
+import confirm from "antd/es/modal/confirm";
+import localforage from "localforage";
 
 function useSubmitHandler() {
   const config = useAppConfig();
@@ -431,7 +439,20 @@ function _Chat() {
 
   const [showMoreOptions, setShowMoreOptions] = useState(false)
 
-  const sidebarWidth = width > 900 ? 300 : 250
+  const [modifiedMessage, setModifiedMessage] = useState("")
+
+  const [managingMessages, setManagingMessages] = useState(false)
+  const [selectedMessages, setSelectedMessages] = useState([] as string[])
+  function clearSelectedMessages() { setSelectedMessages([]) }
+  function addSelectedMessage(id: string) { setSelectedMessages((prev) => [...prev, id]) }
+  function removeSelectedMessage(id: string) { setSelectedMessages((prev) => prev.filter((item) => item !== id)) }
+  function isMessageSelected(id: string) { return selectedMessages.includes(id) }
+  function isSelectedAllMessages() { return selectedMessages.length === chatStore.sessions.length }
+  function selectAllMessages() { setSelectedMessages(chatStore.sessions.map((item) => item.id)) }
+  function isNoneMessageSelected() { return selectedMessages.length === 0 }
+
+  // const sidebarWidth = width > 900 ? 300 : 270
+  const sidebarWidth = 300
   const bodyWidth = width - sidebarWidth
   const chatWidth = bodyWidth > 3 * sidebarWidth
     ? bodyWidth * 0.8
@@ -456,26 +477,87 @@ function _Chat() {
           </Row>
           <Row>
             <Col span={6} style={{ paddingRight: 36 }}>
-              <Button type="text" icon={<MenuFoldOutlined />} iconPosition={"end"} onClick={() => { setCollapseSidebar(true) }}>收起</Button>
+              <Button type="text" icon={<MenuFoldOutlined />} iconPosition={"end"}
+                onClick={() => {
+                  setCollapseSidebar(true)
+                  clearSelectedMessages()
+                  setManagingMessages(false)
+                }}
+              >收起</Button>
             </Col>
           </Row>
         </Flex>
-        <Flex gap={"small"}>
+        {!managingMessages && <Flex gap={"small"}>
           <Button icon={<AddIcon />} onClick={() => {
             chatStore.newSession()
           }}>
             {Locale.NextChat.SideBar.NewChat}
           </Button>
-          <Button icon={<SettingOutlined />}>
+          <Button icon={<SettingOutlined />} onClick={() => { clearSelectedMessages(); setManagingMessages(true); }}>
             {Locale.NextChat.SideBar.Manage}
           </Button>
-        </Flex>
+        </Flex>}
+        {managingMessages && <Flex gap={"small"} align="center" style={{ paddingLeft: 8 }}>
+          <Checkbox
+            checked={isSelectedAllMessages()}
+            indeterminate={!isNoneMessageSelected() && !isSelectedAllMessages()}
+            onClick={() => { isSelectedAllMessages() ? clearSelectedMessages() : selectAllMessages() }}
+          >全选</Checkbox>
+          <Dropdown
+            disabled={isNoneMessageSelected()}
+            menu={{
+              items: [
+                {
+                  key: 'delete',
+                  label: "删除选中对话",
+                  danger: true,
+                  icon: <DeleteIcon />,
+                  onClick: () => {
+                    confirm({
+                      title: '确认要删除这些对话吗？',
+                      okCancel: true,
+                      okText: "确认",
+                      cancelText: "取消",
+                      onOk: () => {
+                        let sessions = chatStore.sessions.map(sess => sess.id).slice()
+                        for (let id of selectedMessages) {
+                          let idx = 0
+                          for (let i = 0; i < sessions.length; i++) {
+                            if (sessions[i] == id) {
+                              idx = i
+                              break
+                            }
+                          }
+                          chatStore.deleteSession(idx, true)
+                          sessions = sessions.filter(s => s != id)
+                        }
+                        clearSelectedMessages()
+                        setManagingMessages(false)
+                      },
+                      onCancel: () => {
+                        clearSelectedMessages()
+                        setManagingMessages(false)
+                      }
+                    })
+                  }
+                }
+              ]
+            }}
+            arrow
+          >
+            <Button icon={<EllipsisOutlined />}>选项</Button>
+          </Dropdown>
+          <Button onClick={() => { setManagingMessages(false); clearSelectedMessages() }}>完成</Button>
+        </Flex>}
         <Conversations
+          activeKey={!managingMessages ? session.id : undefined}
           items={chatStore.sessions.map(sess => {
             return {
               key: sess.id,
               label: sess.topic.length == 0 ? Locale.NextChat.ChatArea.DefaultTopic : sess.topic,
-              icon: sess.emoji ?? "✨",
+              icon: managingMessages ? <Checkbox checked={isMessageSelected(sess.id)} onClick={() => {
+                isMessageSelected(sess.id) ? removeSelectedMessage(sess.id) : addSelectedMessage(sess.id)
+              }} /> : (sess.emoji ?? "✨"),
             }
           })}
           style={{
@@ -483,7 +565,7 @@ function _Chat() {
             borderRadius: 12,
             userSelect: "none"
           }}
-          menu={(c) => {
+          menu={!managingMessages ? (c) => {
             return {
               items: [
                 {
@@ -507,8 +589,19 @@ function _Chat() {
                 }
               }
             }
-          }}
+          } : undefined}
           onActiveChange={(v) => {
+            setModifiedMessage("")
+            setSelectedMessages([])
+            setUseSmart(false)
+            setShowMoreOptions(false)
+            chatStore.updateCurrentSession(session => {
+              for (let message of session.messages) {
+                message["modify"] = false;
+                message["expand"] = false;
+              }
+            })
+            if (managingMessages) return
             let idx = 0
             for (let i = 0; i < chatStore.sessions.length; i++) {
               if (chatStore.sessions[i].id == v) {
@@ -557,6 +650,11 @@ function _Chat() {
                   chatStore.newSession()
                   setCollapseSidebar(false)
                   break
+                case "manage":
+                  clearSelectedMessages();
+                  setManagingMessages(true);
+                  setCollapseSidebar(false)
+                  break
               }
             }}
           />
@@ -585,7 +683,7 @@ function _Chat() {
                 footer={<Button type="primary" icon={<CheckOutlined />} onClick={() => { setIsShowingConfigProviders(false) }}>完成</Button>}
               >
                 <Row>
-                  <Col span={12} style={{ padding: 12 }}>
+                  <Col span={12} style={{ padding: 12, height: height - 300, overflowY: "scroll" }}>
                     <div style={{ height: 20 }} />
                     <Title level={3}>账户信息</Title>
                     <hr />
@@ -608,7 +706,7 @@ function _Chat() {
                       <hr />
                     </>)}
                   </Col>
-                  <Col span={12} style={{ padding: 12 }}>
+                  <Col span={12} style={{ padding: 12, height: height - 300, overflowY: "scroll" }}>
                     <div style={{ height: 20 }} />
                     <Title level={4}>文字模型</Title>
                     <List
@@ -621,8 +719,8 @@ function _Chat() {
                             options={[
                               ...(apiConfig.getProvider("chat") ? [] : [undefined]),
                               ...apiConfig.getProviders("chat")
-                            ].map(t => { return { value: t??"", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
-                            value={apiConfig.getProvider("chat")??""}
+                            ].map(t => { return { value: t ?? "", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
+                            value={apiConfig.getProvider("chat") ?? ""}
                             onChange={(v) => {
                               if (v == "") return
                               apiConfig.setProvider("chat", v)
@@ -656,8 +754,8 @@ function _Chat() {
                             options={[
                               ...(apiConfig.getProvider("chat-smart") ? [] : [undefined]),
                               ...apiConfig.getProviders("chat-smart")
-                            ].map(t => { return { value: t??"", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
-                            value={apiConfig.getProvider("chat-smart")??""}
+                            ].map(t => { return { value: t ?? "", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
+                            value={apiConfig.getProvider("chat-smart") ?? ""}
                             onChange={(v) => {
                               if (v == "") return
                               apiConfig.setProvider("chat-smart", v)
@@ -691,8 +789,8 @@ function _Chat() {
                             options={[
                               ...(apiConfig.getProvider("chat-long") ? [] : [undefined]),
                               ...apiConfig.getProviders("chat-long")
-                            ].map(t => { return { value: t??"", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
-                            value={apiConfig.getProvider("chat-long")??""}
+                            ].map(t => { return { value: t ?? "", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
+                            value={apiConfig.getProvider("chat-long") ?? ""}
                             onChange={(v) => {
                               if (v == "") return
                               apiConfig.setProvider("chat-long", v)
@@ -734,7 +832,7 @@ function _Chat() {
         </Row>
       </Header>
       <Content style={{ padding: "32px", justifyItems: "center", paddingTop: 0 }}>
-        <Flex justify={"center"} align={"center"} vertical gap={"middle"} style={{ height: "100%", width: chatWidth, margin:"auto" }}>
+        <Flex justify={"center"} align={"center"} vertical gap={"middle"} style={{ height: "100%", width: chatWidth, margin: "auto" }}>
           <Bubble.List
             style={{ width: "100%" }}
             roles={{
@@ -743,21 +841,12 @@ function _Chat() {
                 avatar: { icon: <SettingOutlined />, style: { background: "none", color: "darkgray" } },
                 variant: "borderless",
                 messageRender: RenderMarkdown,
-                footer: <Flex gap={"small"}>
-                  <Button type="text" size="small" icon={<CopyIcon />}>{Locale.NextChat.ChatArea.Copy}</Button>
-                  <Button type="text" size="small" icon={<DeleteIcon />}>{Locale.NextChat.ChatArea.Delete}</Button>
-                </Flex>
               },
               assistant: {
                 placement: "start",
                 avatar: { icon: <NNCHATIcon width={32} height={32} />, style: { background: "none" } },
                 variant: "borderless",
                 messageRender: RenderMarkdown,
-                footer: <Flex gap={"small"}>
-                  <Button type="text" size="small" icon={<CopyIcon />}>{Locale.NextChat.ChatArea.Copy}</Button>
-                  <Button type="text" size="small" icon={<DeleteIcon />}>{Locale.NextChat.ChatArea.Delete}</Button>
-                  <Button type="text" size="small" icon={<ResetIcon />}>{Locale.NextChat.ChatArea.Retry}</Button>
-                </Flex>
               },
               user: {
                 placement: "end",
@@ -765,11 +854,6 @@ function _Chat() {
                 messageRender: RenderMarkdown,
                 variant: "filled",
                 shape: "corner",
-                footer: <Flex gap={"small"}>
-                  <Button type="text" size="small" icon={<CopyIcon />}>{Locale.NextChat.ChatArea.Copy}</Button>
-                  <Button type="text" size="small" icon={<DeleteIcon />}>{Locale.NextChat.ChatArea.Delete}</Button>
-                  <Button type="text" size="small" icon={<EditOutlined />}>修改</Button>
-                </Flex>
               },
             }}
             items={
@@ -779,6 +863,57 @@ function _Chat() {
                 ...(userInput.trim().length > 0 ? [{ type: "text", role: "user", content: userInput, userInput: true }] : [])
               ].map(
                 (msg, idx) => {
+                  const footer = <Flex gap={"small"} style={{ opacity: 0.7 }}>
+                    {["text", "image"].includes(msg.type) && <Button
+                      type="text" size="small" icon={<CopyIcon />}
+                      onClick={() => {
+                        copyMessage(msg as Message)
+                      }}
+                    >{Locale.NextChat.ChatArea.Copy}</Button>}
+                    {["document", "image"].includes(msg.type) && <Button
+                      type="text" size="small" icon={<DownloadIcon />}
+                      onClick={async ()=>{
+                        const data = await (await fetch((msg as ImageMessage | DocumentMessage).src)).blob()
+                        const url = URL.createObjectURL(data)
+                        const a = document.createElement("a")
+                        a.href = url
+                        a.download = (msg as ImageMessage | DocumentMessage).fileName??""
+                        a.click()
+                      }}
+                    >下载</Button>}
+                    <Button
+                      type="text" size="small" icon={<DeleteIcon />}
+                      onClick={() => {
+                        chatStore.updateCurrentSession(session => {
+                          session.messages.splice(idx, 1)
+                        })
+                      }}
+                    >
+                      {Locale.NextChat.ChatArea.Delete}
+                    </Button>
+                    {msg.role == "user" && <Button
+                      type="text" size="small" icon={<EditOutlined />}
+                      onClick={() => {
+                        chatStore.updateCurrentSession(session => {
+                          for (let idx = 0; idx < session.messages.length; idx++) {
+                            session.messages[idx]["modify"] = false
+                          }
+                          session.messages[idx]["modify"] = true
+                        })
+                        setModifiedMessage(msg.content)
+                      }}
+                    >修改</Button>}
+                    {msg.role == "assistant" && <Button
+                      type="text" size="small" icon={<ResetIcon />}
+                      onClick={() => {
+                        chatStore.updateCurrentSession(session => { session.messages = session.messages.slice(0, idx) })
+                        const userMsgs = session.messages.filter(msg => msg.role == "user")
+                        const input = userMsgs[userMsgs.length - 1]?.content ?? ""
+                        chatStore.updateCurrentSession(session => { session.messages = session.messages.slice(0, session.messages.length - 1) })
+                        doSubmit(input)
+                      }}
+                    >{Locale.NextChat.ChatArea.Retry}</Button>}
+                  </Flex>
                   if (msg.type == "document") {
                     return {
                       role: msg.role,
@@ -786,6 +921,7 @@ function _Chat() {
                         fileName: (msg as DocumentMessage).fileName,
                         src: (msg as DocumentMessage).src
                       }),
+                      footer: footer,
                       messageRender: (content) => {
                         const { fileName, src } = JSON.parse(content)
                         if (msg["expand"]) {
@@ -823,11 +959,45 @@ function _Chat() {
                         }} />
                       }
                     }
+                  } else if (msg.type == "image") {
+                    return {
+                      role: msg.role,
+                      content: JSON.stringify({
+                        src: (msg as ImageMessage).src,
+                        fileName: (msg as ImageMessage).fileName
+                      }),
+                      footer: footer,
+                      messageRender: (content) => {
+                        const { fileName, src } = JSON.parse(content)
+                        return <div style={{ borderRadius: 16, maxWidth: chatWidth / 2, pointerEvents: "none", userSelect: "none", overflow: "hidden", background: "white" }}>
+                          <FileFrame src={src} name={fileName} />
+                        </div>
+                      }
+                    }
                   } else {
                     return {
                       role: msg.role,
                       content: msg.content,
-                      ...(msg["greeting"] || msg["userInput"] ? { footer: undefined } : {})
+                      ...(msg["greeting"] || msg["userInput"] || msg["modify"] ? { footer: undefined } : { footer }),
+                      loading: chatPromise && idx == session.messages.length - 1 && msg.role == "assistant" && msg.content.trim().length == 0,
+                      ...(msg["modify"] ? {
+                        messageRender: (msg) => {
+                          return <Flex vertical gap={"small"}>
+                            <Input.TextArea value={modifiedMessage} onChange={(e) => { setModifiedMessage(e.currentTarget.value) }} autoSize={{ minRows: 3, maxRows: Math.max(3, height / 3 / 24) }} style={{ width: chatWidth }} />
+                            <Flex justify="end" gap={"middle"}>
+                              <Button onClick={() => {
+                                setModifiedMessage("")
+                                chatStore.updateCurrentSession(session => { session.messages[idx]["modify"] = false })
+                              }}>取消</Button>
+                              <Button type="primary" onClick={() => {
+                                chatStore.updateCurrentSession(session => { session.messages = session.messages.slice(0, idx - 2) })
+                                doSubmit(modifiedMessage)
+                                setModifiedMessage("")
+                              }}>发送</Button>
+                            </Flex>
+                          </Flex>
+                        }, variant: "borderless"
+                      } : {}),
                     }
                   }
                 }
@@ -914,10 +1084,36 @@ function _Chat() {
             onChange={(v) => {
               setUserInput(v)
             }}
-            header={<Sender.Header title={<Flex style={{width: "100%", height:"100%"}} gap={"small"}>
-              <Button size="small" shape="round" icon={<UploadIcon/>} onClick={()=>{ uploadFile(chatStore)}}>{Locale.NextChat.ChatArea.UploadFile}</Button>
-            </Flex>} open={showMoreOptions} onOpenChange={() => { setShowMoreOptions(!showMoreOptions) }}/>}
+            header={<Sender.Header title={<Flex style={{ width: "100%", height: "100%" }} gap={"small"} wrap>
+              <Button size="small" shape="round"
+                icon={useSmart ? <AdvancedModelIcon /> : <RegularModelIcon />}
+                onClick={() => {
+                  message.open({
+                    content: Locale.NextChat.ChatArea.SwitchedToModel(useSmart ? "regular" : "smart"),
+                    icon: <div style={{ width: 16, height: 16, marginRight: 8 }}>{!useSmart ? <AdvancedModelIcon /> : <RegularModelIcon />}</div>,
+                  })
+                  setUseSmart(!useSmart)
+                }}
+              >{Locale.NextChat.ChatArea.SwitchModel}</Button>
+              <Button size="small" shape="round" icon={<UploadIcon />} onClick={() => { uploadFile(chatStore) }}>{Locale.NextChat.ChatArea.UploadFile}</Button>
+              <Button size="small" shape="round" icon={<BreakIcon style={{ fill: "red", opacity: "0.8" }} />} onClick={() => { chatStore.deleteSession(chatStore.currentSessionIndex); }}>{Locale.NextChat.ChatArea.DeleteChat}</Button>
+              <Button size="small" shape="round" icon={<DeleteIcon style={{ fill: "red", opacity: "0.8" }} />} onClick={async () => {
+                confirm({
+                  title: Locale.NextChat.ChatArea.ClearDataPrompt,
+                  okCancel: true,
+                  okText: "确认",
+                  cancelText: "取消",
+                  okButtonProps: {danger: true},
+                  onOk: async () => {
+                    localStorage.clear();
+                    await localforage.clear()
+                    location.reload();
+                  }
+                })
+              }}>{Locale.NextChat.ChatArea.ClearData}</Button>
+            </Flex>} open={showMoreOptions} onOpenChange={() => { setShowMoreOptions(!showMoreOptions) }} />}
             prefix={<Button icon={showMoreOptions ? <DownOutlined /> : <AddIcon />} type="default" shape="circle" onClick={() => { setShowMoreOptions(!showMoreOptions) }} />}
+            placeholder={Locale.NextChat.ChatArea.SendPrompt}
           />
         </Flex>
       </Content>
