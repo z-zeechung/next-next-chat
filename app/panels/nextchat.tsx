@@ -214,24 +214,6 @@ function _Chat() {
   const navigate = useNavigate();
 
   const [useSmart, setUseSmart] = useState(false)
-  const changeModelIcon = <div style={{ position: "relative" }}>
-    <RobotIcon style={{ fill: (useSmart ? "#FFFB2B" : "#1D93AB"), opacity: "0.8" }} />
-    <div style={{
-      position: "absolute",
-      right: useSmart ? -8 : -16,
-      bottom: -8,
-      background: "#0007",
-      borderRadius: 1000,
-      fontSize: 10,
-      color: "white",
-      fontStyle: "initial"
-    }}>&nbsp;&nbsp;{useSmart ? "4" : "3.5"}&nbsp;&nbsp;</div>
-  </div>
-  const changeModel = () => {
-    // showToast(`已切换至${!useSmart ? "高级" : "普通"}模型`)
-    showToast(<TextBlock>{Locale.NextChat.ChatArea.SwitchedToModel(useSmart ? "regular" : "smart")}</TextBlock>)
-    setUseSmart(!useSmart)
-  }
 
   // auto grow input
   const [inputRows, setInputRows] = useState(2);
@@ -262,8 +244,6 @@ function _Chat() {
   const [paintPlugin, setPaintPlugin] = useState(false)
   const [scriptPlugin, setScriptPlugin] = useState(false)
 
-  const tools = (appendMessage: (message: Message) => void) => []
-
   const [chatPromise, setChatPromise] = useState(undefined as ControllablePromise<any> | undefined)
 
   const doSubmit = (userInput: string) => {
@@ -290,7 +270,93 @@ function _Chat() {
       },
       {
         model: useSmart ? "smart" : "regular",
-        tools: tools((m) => { _messages.push(m) })
+        tools: [
+          {type:"function", function:{name:"vision"}},
+          {type:"function", function:{name:"long_context"}},
+          {
+            type: "function",
+            function:{
+              name: "generate_image",
+              description: "调用绘画模型生成图片",
+              parameters: {
+                type: "object",
+                properties:{
+                  "positive_prompt": {
+                    type:"string",
+                    description: "正向提示词，用来指定希望模型生成的内容"
+                  },
+                  "negative_prompt":{
+                    type:"string",
+                    description: "反向提示词，用来指定不希望模型生成的内容"
+                  },
+                  "file_name":{
+                    type:"string",
+                    description: "生成的图片的文件名，注意不要和历史记录中已有的图片重名"
+                  }
+                }
+              },
+              required: ["positive_prompt", "negative_prompt", "file_name"]
+            },
+            async call(params: {positive_prompt:string, negative_prompt:string, file_name:string}){
+              chatStore.updateCurrentSession(sess => {
+                sess.messages = [
+                  ..._messages,
+                  { type: "text", role: "assistant", content: `\`\`\` toolcall
+                    ${JSON.stringify([{
+                      title:"正在绘制图片",
+                      status: "pending",
+                      description: params.positive_prompt
+                    }])}
+\`\`\`            ` }
+                ]
+              })
+              const url = await ClientApi.paint(params.positive_prompt, params.negative_prompt)
+              const blob = await (await fetch(url)).blob()
+              const lfsUrl = await chatStore.setLfsData(await blob.arrayBuffer())
+              return `
+                已成功生成图片“${params.file_name}”！
+                图片尚未插入到对话记录中，你可以通过(${params.file_name})[${lfsUrl}]来向用户展示图片。
+              `
+            }
+          },
+          {
+            type:"function",
+            function:{
+              name:"web_search",
+              description:"搜索网络内容，或是用户说的你不理解的事物",
+              parameters:{
+                type:"object",
+                properties:{
+                  "query":{
+                    type:"string",
+                    description: "你要查询的内容"
+                  },
+                  "count":{
+                    type:"number",
+                    description:"要查询的条数"
+                  }
+                }
+              },
+              required: ["query"]
+            },
+            async call(params:{query: string, count?: number}){
+              chatStore.updateCurrentSession(sess => {
+                sess.messages = [
+                  ..._messages,
+                  { type: "text", role: "assistant", content: `\`\`\` toolcall
+                    ${JSON.stringify([{
+                      title:"正在搜索",
+                      status: "pending",
+                      description: params.query
+                    }])}
+\`\`\`            ` }
+                ]
+              })
+              const result = await ClientApi.search(params.query, params.count)
+              return JSON.stringify(result)
+            }
+          }
+        ]
       }
     )
     setChatPromise(promise)
@@ -806,6 +872,105 @@ function _Chat() {
                             onChange={(v) => { apiConfig.setModel("chat-long", v) }}
                           />
                         }] : [])
+                      ]}
+                      renderItem={(item) => <List.Item>
+                        <List.Item.Meta
+                          title={<b>{item.name}</b>}
+                        />
+                        {item.elem}
+                      </List.Item>}
+                    />
+                    <div style={{ height: 20 }} />
+                    <Title level={4}>视觉模型</Title>
+                    <List
+                      dataSource={[
+                        {
+                          name: "服务商：",
+                          elem: <Select
+                            popupMatchSelectWidth={false}
+                            options={[
+                              ...(apiConfig.getProvider("caption") ? [] : [undefined]),
+                              ...apiConfig.getProviders("caption")
+                            ].map(t => { return { value: t ?? "", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
+                            value={apiConfig.getProvider("caption") ?? ""}
+                            onChange={(v) => {
+                              if (v == "") return
+                              apiConfig.setProvider("caption", v)
+                            }}
+                          />
+                        },
+                        ...(apiConfig.getProvider("caption") ? [{
+                          name: "模型：",
+                          elem: <Select
+                            popupMatchSelectWidth={false}
+                            options={apiConfig.getModels("caption").map(t => { return { value: t, label: t } })}
+                            value={apiConfig.getModel("caption")}
+                            onChange={(v) => { apiConfig.setModel("caption", v) }}
+                          />
+                        }] : [])
+                      ]}
+                      renderItem={(item) => <List.Item>
+                        <List.Item.Meta
+                          title={<b>{item.name}</b>}
+                        />
+                        {item.elem}
+                      </List.Item>}
+                    />
+                    <div style={{ height: 20 }} />
+                    <Title level={4}>绘画模型</Title>
+                    <List
+                      dataSource={[
+                        {
+                          name: "服务商：",
+                          elem: <Select
+                            popupMatchSelectWidth={false}
+                            options={[
+                              ...(apiConfig.getProvider("paint") ? [] : [undefined]),
+                              ...apiConfig.getProviders("paint")
+                            ].map(t => { return { value: t ?? "", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
+                            value={apiConfig.getProvider("paint") ?? ""}
+                            onChange={(v) => {
+                              if (v == "") return
+                              apiConfig.setProvider("paint", v)
+                            }}
+                          />
+                        },
+                        ...(apiConfig.getProvider("paint") ? [{
+                          name: "模型：",
+                          elem: <Select
+                            popupMatchSelectWidth={false}
+                            options={apiConfig.getModels("paint").map(t => { return { value: t, label: t } })}
+                            value={apiConfig.getModel("paint")}
+                            onChange={(v) => { apiConfig.setModel("paint", v) }}
+                          />
+                        }] : [])
+                      ]}
+                      renderItem={(item) => <List.Item>
+                        <List.Item.Meta
+                          title={<b>{item.name}</b>}
+                        />
+                        {item.elem}
+                      </List.Item>}
+                    />
+                    <div style={{ height: 20 }} />
+                    <Title level={4}>搜索接口</Title>
+                    <List
+                      dataSource={[
+                        {
+                          name: "服务商：",
+                          elem: <Select
+                            popupMatchSelectWidth={false}
+                            options={[
+                              ...(apiConfig.getProvider("search") ? [] : [undefined]),
+                              ...apiConfig.getProviders("search")
+                            ].map(t => { return { value: t ?? "", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
+                            value={apiConfig.getProvider("search") ?? ""}
+                            onChange={(v) => {
+                              if (v == "") return
+                              apiConfig.setProvider("search", v)
+                            }}
+                          />
+                        }
                       ]}
                       renderItem={(item) => <List.Item>
                         <List.Item.Meta

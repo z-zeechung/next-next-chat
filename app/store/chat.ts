@@ -15,7 +15,7 @@ import {
   DEFAULT_EMOJI,
 } from "../constant";
 import { ClientApi, MultimodalContent } from "../client/api";
-import { ChatControllerPool } from "../client/controller";
+// import { ChatControllerPool } from "../client/controller";
 import { prettyObject } from "../utils/format";
 import { estimateTokenLength } from "../utils/token";
 import { nanoid } from "nanoid";
@@ -472,7 +472,7 @@ export const useChatStore = createPersistStore(
                 get().onNewMessage(botMessage);
                 resolve(message)
               }
-              ChatControllerPool.remove(session.id, botMessage.id??"");
+              // ChatControllerPool.remove(session.id, botMessage.id??"");
           })
         })
       },

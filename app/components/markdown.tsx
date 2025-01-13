@@ -7,7 +7,7 @@ import RemarkGfm from "remark-gfm";
 import RehypeHighlight from "rehype-highlight";
 import rehypeRaw from 'rehype-raw'
 import { useRef, useState, RefObject, useEffect, useMemo } from "react";
-import { copyToClipboard } from "../utils";
+import { copyToClipboard, useWindowSize } from "../utils";
 import mermaid from "mermaid";
 
 import LoadingIcon from "../icons/three-dots.svg";
@@ -15,6 +15,9 @@ import React from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { showImageModal } from "./ui-lib";
 import { renderToString } from "react-dom/server";
+import { ThoughtChain } from "@ant-design/x";
+import { CheckOutlined, LoadingOutlined } from "@ant-design/icons";
+import { Button, Flex } from "antd";
 
 export function Mermaid(props: { code: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -60,6 +63,29 @@ export function Mermaid(props: { code: string }) {
       {props.code}
     </div>
   );
+}
+
+function ToolCall(props:{code}){
+  try{
+    return <ThoughtChain items={JSON.parse(props.code).map(o=>{return {
+      title: o["title"],
+      content: o["content"]?<div style={{all:"initial"}}><Markdown content={o["content"]}/></div>:undefined,
+      status: o["status"],
+      icon: {success: <CheckOutlined />, pending: <LoadingOutlined />}[o["status"]],
+      description: o["description"]?o["description"]:undefined
+    }})}/>
+  }catch(e){
+    return <></>
+  }
+}
+
+function Code(props: {children, className?}){
+  if(props.className == "hljs language-mermaid"){
+    return <Mermaid code={props.children}/>
+  }else if(props.className == "hljs language-toolcall"){
+    return <ToolCall code={props.children}/>
+  }
+  return <code className={props.className}>{props.children}</code>
 }
 
 export function PreCode(props: { children: any }) {
@@ -156,7 +182,9 @@ function _MarkDownContent(props: { content: string }) {
         ],
       ]}
       components={{
-        pre: PreCode,
+        // pre: PreCode,
+        pre: (props: {children})=><pre style={{background:"#0000"}}>{props.children}</pre>,
+        code: Code,
         p: (pProps) => <p {...pProps} dir="auto" />,
         a: (aProps) => {
           const href = aProps.href || "";
@@ -164,6 +192,11 @@ function _MarkDownContent(props: { content: string }) {
           const target = isInternal ? "_self" : aProps.target ?? "_blank";
           return <a {...aProps} target={target} />;
         },
+        img: (props:{src?})=>{
+          return <div style={{ borderRadius: 16, maxWidth: "50%", pointerEvents: "none", userSelect: "none", overflow: "hidden", background: "white" }}>
+            <img src={props.src}/>
+          </div>
+        }
       }}
     >
       {escapedContent}
