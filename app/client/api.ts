@@ -5,9 +5,10 @@ import { Message } from "../message/Message"
 import { useAccessStore, useChatStore } from "../store"
 import { readDocument, readDocx } from "../utils/readfile"
 import { createPersistStore } from "../utils/store"
-import { wrapFunctionCall } from "./function-call-wrapper"
-import { getLangChainChatModel, LangChainChatProviders } from "./langchain"
-import { z } from "zod";
+import { getOpenAiApi } from "./openai"
+import { ControllablePromise } from "../utils/controllable-promise"
+import { Tool } from "../typing"
+import { ImageMessage } from "../message/ImageMessage"
 
 interface Provider {
     name: string,
@@ -41,7 +42,7 @@ const Providers = new Map<string, Provider>([
     }],
     ["tongyi", {
         name: "Tongyi (通义千问)",
-        fields: ["alibabaApiKey"],
+        fields: ["apiKey"],
     }],
     ["minimax", {
         name: "Minimax",
@@ -54,83 +55,238 @@ const Providers = new Map<string, Provider>([
     ["deepseek", {
         name: "DeepSeek (深度求索)",
         fields: ["apiKey"],
+    }],
+    ["bochaai", {
+        name: "BochaAI (博查)",
+        fields: ["apiKey"]
+    }],
+    ["exa", {
+        name: "Exa",
+        fields: []
+    }],
+    ["duckduckgo", {
+        name: "DuckDuckGo",
+        fields: []
     }]
 ])
 
 
-interface ChatModel {
-    models: string[],
+interface ChatProvider {
+    models: ChatModel[],
     default: string,
     defaultSmart: string,
     defaultLong: string,
-    untested?: boolean
+    getApi: (options?: any) => ChatApi
 }
+interface ChatModel {
+    name: string,
+    context: number
+}
+export type ChatApi = (
+    messages: Message[],
+    onUpdate?: (message: string) => void,
+    tools?: Tool[]
+) => ControllablePromise<string>
 
-const ChatProviders = new Map<string, ChatModel>([
-    ["anthropic", {
-        models: ["claude-3-5-sonnet-20241022", "claude-3-5-haiku", "claude-3-opus", "claude-3-sonnet", "claude-3-haiku"],
-        default: "claude-3-5-sonnet-20241022",
-        defaultSmart: "claude-3-opus",
-        defaultLong: "claude-3-5-haiku",
-        untested: true
-    }],
-    ["openai", {
-        models: ["gpt-4o", "gpt-4o-mini", "o1", "o1-mini", "gpt-4-turbo", "gpt-4", "gpt-3.5-turbo", "gpt-3.5-turbo-instruct"],
-        default: "gpt-4o-mini",
-        defaultSmart: "o1",
-        defaultLong: "o1-mini"
-    }],
-    // ["groq", {
-    //     models: ["gemma2-9b-it", "llama-3.3-70b-versatile", "llama-3.1-8b-instant", "llama-guard-3-8b", "llama3-70b-8192", "llama3-8b-8192", "mixtral-8x7b-32768"],
-    //     default: "llama-3.3-70b-versatile",
-    //     defaultSmart: "llama-3.3-70b-versatile",
-    //     defaultLong: "llama-3.3-70b-versatile",
-    //     untested: true
-    // }],
-    // ["mistral", {
-    //     models: ["mistral-large-latest", "pixtral-large-latest", "ministral-3b-latest", "ministral-8b-latest", "mistral-small-latest", "codestral-latest", "open-mistral-nemo", "open-codestral-mamba"],
-    //     default: "mistral-small-latest",
-    //     defaultSmart: "mistral-large-latest",
-    //     defaultLong: "ministral-8b-latest",
-    //     untested: true
-    // }],
-    // ["cohere", {
-    //     models: ["command-r-plus", "command-r", "command", "command-light", "c4ai-aya-expanse-8b", "c4ai-aya-expanse-32b"],
-    //     default: "command-light",
-    //     defaultSmart: "command",
-    //     defaultLong: "command-r",
-    //     untested: true
-    // }],
-    // ["yandex", {
-    //     models: ["yandexgpt-lite", "yandexgpt", "yandexgpt-32k", "llama-lite", "llama"],
-    //     default: "yandexgpt-lite",
-    //     defaultSmart: "yandexgpt",
-    //     defaultLong: "yandexgpt-32k",
-    //     untested: true
-    // }],
+const ChatProviders = new Map<string, ChatProvider>([
     ["tongyi", {
-        models: ["qwen-max", "qwen-plus", "qwen-turbo", "qwen-long", "qwen-math-plus", "qwen-math-turbo", "qwen-coder-plus", "qwen-coder-turbo", "qwq-32b-preview", "qwen2.5-72b-instruct", "qwen2.5-32b-instruct", "qwen2.5-14b-instruct", "qwen2.5-7b-instruct", "qwen2.5-3b-instruct", "qwen2.5-1.5b-instruct", "qwen2.5-0.5b-instruct", "qwen2-72b-instruct", "qwen2-57b-a14b-instruct", "qwen2-7b-instruct", "qwen2-1.5b-instruct", "qwen2-0.5b-instruct", "qwen1.5-110b-chat", "qwen1.5-72b-chat", "qwen1.5-32b-chat", "qwen1.5-14b-chat", "qwen1.5-7b-chat", "qwen1.5-1.8b-chat", "qwen1.5-0.5b-chat", "qwen-72b-chat", "qwen-14b-chat", "qwen-7b-chat", "qwen-1.8b-chat", "qwen2.5-math-72b-instruct", "qwen2.5-math-7b-instruct", "qwen2.5-math-1.5b-instruct", "qwen2-math-72b-instruct", "qwen2-math-7b-instruct", "qwen2.5-coder-32b-instruct", "qwen2.5-coder-14b-instruct", "qwen2.5-coder-7b-instruct", "qwen2.5-coder-3b-instruct", "qwen2.5-coder-1.5b-instruct", "qwen2.5-coder-0.5b-instruct", "baichuan2-13b-chat-v1", "baichuan2-7b-chat-v1", "chatglm-6b-v2"],
+        models: [
+            {
+                name: "qwen-max",
+                context: 32768
+            },
+            {
+                name: "qwen-plus",
+                context: 131072
+            },
+            {
+                name: "qwen-turbo",
+                context: 1000000
+            },
+            {
+                name: "qwen-long",
+                context: 10000000
+            }
+        ],
         default: "qwen-plus",
         defaultSmart: "qwen-max",
         defaultLong: "qwen-long",
+        getApi(options: { apiKey: string, model: string }) {
+            return getOpenAiApi(
+                "https://dashscope.aliyuncs.com/compatible-mode/v1",
+                options.apiKey,
+                options.model
+            )
+        },
     }],
-    // ["minimax", {
-    //     models: ["abab7-chat-preview", "abab6.5s-chat", "abab6.5g-chat", "abab6.5t-chat", "abab5.5s-chat", "abab5.5-chat"],
-    //     default: "abab6.5s-chat",
-    //     defaultSmart: "abab7-chat-preview",
-    //     defaultLong: "abab6.5s-chat",
-    // }],
-    // ["moonshot", {
-    //     models: ["moonshot-v1-8k", "moonshot-v1-32k", "moonshot-v1-128k"],
-    //     default: "moonshot-v1-8k",
-    //     defaultSmart: "moonshot-v1-8k",
-    //     defaultLong: "moonshot-v1-128k",
-    // }],
-    ["deepseek", {
-        models: ["deepseek-chat"],
-        default: "deepseek-chat",
-        defaultSmart: "deepseek-chat",
-        defaultLong: "deepseek-chat",
+])
+
+
+interface CaptionProvider {
+    models: CaptionModel[],
+    default: string,
+    getApi: (options?: any) => CaptionApi
+}
+interface CaptionModel {
+    name: string
+}
+export type CaptionApi = (
+    img: string,
+    prompt?: string,
+    onUpdate?: (message: string) => void
+) => ControllablePromise<string>
+const CaptionProviders = new Map<string, CaptionProvider>([
+    ["tongyi", {
+        models: [
+            { name: "qwen-vl-max" },
+            { name: "qwen-vl-plus" }
+        ],
+        default: "qwen-vl-plus",
+        getApi: (options: { apiKey: string, model: string }) => {
+            return (
+                img: string,
+                prompt?: string,
+                onUpdate?: (message: string) => void
+            ) => {
+                const api = getOpenAiApi(
+                    "https://dashscope.aliyuncs.com/compatible-mode/v1",
+                    options.apiKey,
+                    options.model
+                )
+                return new ControllablePromise(async (resolve, reject, abort) => {
+                    resolve(await api(
+                        [
+                            {
+                                "role": "user", "content": [
+                                    { "type": "image_url", "image_url": { "url": await resizeImage(img, 56, 768) } },
+                                    { "type": "text", "text": prompt }
+                                ]
+                            }
+                        ] as any,
+                        onUpdate
+                    ))
+                })
+            }
+        }
+    }]
+])
+
+
+interface PaintProvider {
+    models: PaintModel[],
+    default: string,
+    getApi: (options?: any) => PaintApi
+}
+interface PaintModel {
+    name: string
+}
+export type PaintApi = (
+    prompt: string,
+    negativePrompt: string
+) => Promise<string>
+const PaintProviders = new Map<string, PaintProvider>([
+    ["tongyi", {
+        models: [
+            { name: "wanx2.1-t2i-turbo" },
+            { name: "wanx2.1-t2i-plus" }
+        ],
+        default: "wanx2.1-t2i-turbo",
+        getApi: (options: { apiKey: string, model: string }) => {
+            return (
+                prompt: string,
+                negativePrompt: string
+            ) => {
+                return new Promise(async resolve => {
+                    const url = 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text2image/image-synthesis';
+                    const _options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${options.apiKey}`,
+                            'X-DashScope-Async': 'enable'
+                        },
+                        body: JSON.stringify({
+                            model: options.model,
+                            input: {
+                                prompt: prompt,
+                                negative_prompt: negativePrompt
+                            },
+                            parameters: {
+                                size: '1024*768',
+                                n: 1
+                            }
+                        })
+                    };
+                    const response = await fetch(url, _options);
+                    const data = await response.json();
+                    const taskId = data.output.task_id;
+
+                    async function check() {
+                        const url = `https://dashscope.aliyuncs.com/api/v1/tasks/${taskId}`;
+                        const _options = {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${options.apiKey}`
+                            }
+
+                        };
+                        const response = await fetch(url, _options);
+                        const data = await response.json();
+                        if (data.output.task_status === 'SUCCEEDED') {
+                            const imageUrl = data.output.results[0].url;
+                            const blob = await (await fetch(imageUrl)).blob()
+                            const url = blobToDataURL(blob, "image/png")
+                            resolve(url)
+                        } else {
+                            setTimeout(check, 3000)
+                        }
+                    }
+                    check()
+                })
+            }
+        }
+    }]
+])
+
+
+interface SearchProvider {
+    getApi: (options?: any) => SearchApi
+}
+export type SearchApi = (
+    query: string,
+    count: number
+) => Promise<{ url: string, digest: string }[]>
+const SearchProviders = new Map<string, SearchProvider>([
+    ["bochaai", {
+        getApi(options: { apiKey: string }) {
+            return (
+                query: string,
+                count: number
+            ) => {
+                return new Promise(async resolve => {
+                    const url = 'https://api.bochaai.com/v1/web-search';
+                    const headers = {
+                        'Authorization': `Bearer ${options.apiKey}`,
+                        'Content-Type': 'application/json'
+                    };
+                    const data = {
+                        "query": query,
+                        "freshness": "noLimit",
+                        "summary": true,
+                        "count": Math.max(count, 10)
+                    };
+                    const resp = await (await fetch(url, {
+                        method: "POST",
+                        headers,
+                        body: JSON.stringify(data)
+                    })).json();
+                    resolve(resp.data.webPages.value.map(r=>{return {
+                        url: r.displayUrl, 
+                        digest: r.snippet
+                    }}));
+                })
+            }
+        },
     }]
 ])
 
@@ -148,6 +304,17 @@ const DEFAULT_STATE = {
     chatLong: {
         provider: undefined as string | undefined,
         model: undefined as string | undefined,
+    },
+    caption: {
+        provider: undefined as string | undefined,
+        model: undefined as string | undefined,
+    },
+    paint: {
+        provider: undefined as string | undefined,
+        model: undefined as string | undefined,
+    },
+    search: {
+        provider: undefined as string | undefined,
     }
 }
 
@@ -156,7 +323,34 @@ const STORAGE_NAME = "nnchat-client-api-states"
 export const useApiConfig = createPersistStore(
     DEFAULT_STATE,
     (set, get) => ({
-        setProvider: (api: "chat" | "chat-smart" | "chat-long", provider: string) => {
+        setProvider: (api: "chat" | "chat-smart" | "chat-long" | "caption" | "paint" | "search", provider: string) => {
+            if (api == "caption") {
+                set({
+                    ...(get()),
+                    caption: {
+                        provider,
+                        model: CaptionProviders.get(provider)!.default
+                    }
+                })
+                return
+            } else if (api == "paint") {
+                set({
+                    ...(get()),
+                    paint: {
+                        provider,
+                        model: PaintProviders.get(provider)!.default
+                    }
+                })
+                return
+            } else if (api == "search") {
+                set({
+                    ...(get()),
+                    search: {
+                        provider,
+                    }
+                })
+                return
+            }
             const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong" }[api]
             const current = get()[name].provider
             if (current == provider) {
@@ -170,17 +364,50 @@ export const useApiConfig = createPersistStore(
                 },
             })
         },
-        getProvider(api: "chat" | "chat-smart" | "chat-long") {
+        getProvider(api: "chat" | "chat-smart" | "chat-long" | "caption" | "paint" | "search") {
+            if (api == "caption") {
+                return get().caption.provider
+            } else if (api == "paint") {
+                return get().paint.provider
+            } else if (api == "search") {
+                return get().search.provider
+            }
             const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong" }[api]
             return get()[name].provider
         },
-        getProviders(api: "chat" | "chat-smart" | "chat-long"): string[] {
+        getProviders(api: "chat" | "chat-smart" | "chat-long" | "caption" | "paint" | "search"): string[] {
+            if (api == "caption") {
+                return Array.from(CaptionProviders.keys()).sort()
+            } else if (api == "paint") {
+                return Array.from(PaintProviders.keys()).sort()
+            } else if (api == "search") {
+                return Array.from(SearchProviders.keys()).sort()
+            }
             return Array.from(ChatProviders.keys()).sort()
         },
-        getProviderName(id){
+        getProviderName(id) {
             return Providers.get(id)?.name
         },
-        setModel(api: "chat" | "chat-smart" | "chat-long", model: string) {
+        setModel(api: "chat" | "chat-smart" | "chat-long" | "caption" | "paint", model: string) {
+            if (api == "caption") {
+                set({
+                    ...(get()),
+                    caption: {
+                        ...(get().caption),
+                        model
+                    }
+                })
+                return
+            } else if (api == "paint") {
+                set({
+                    ...(get()),
+                    paint: {
+                        ...(get().paint),
+                        model
+                    }
+                })
+                return
+            }
             const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong" }[api]
             set({
                 ...(get()),
@@ -190,14 +417,24 @@ export const useApiConfig = createPersistStore(
                 },
             })
         },
-        getModel(api: "chat" | "chat-smart" | "chat-long") {
+        getModel(api: "chat" | "chat-smart" | "chat-long" | "caption" | "paint") {
+            if (api == "caption") {
+                return get().caption.model
+            } else if (api == "paint") {
+                return get().paint.model
+            }
             const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong" }[api]
             return get()[name].model
         },
-        getModels(api: "chat" | "chat-smart" | "chat-long") {
+        getModels(api: "chat" | "chat-smart" | "chat-long" | "caption" | "paint") {
+            if (api == "caption") {
+                return CaptionProviders.get(get().caption.provider!)!.models.map(model => model.name)
+            } else if (api == "paint") {
+                return PaintProviders.get(get().paint.provider!)!.models.map(model => model.name)
+            }
             const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong" }[api]
             const provider = get()[name].provider
-            return ChatProviders.get(provider)!.models
+            return ChatProviders.get(provider)!.models.map(model => model.name)
         },
         setField(provider: string, field: string, value: string) {
             const _fields = JSON.parse(JSON.stringify(get().fields))
@@ -222,6 +459,15 @@ export const useApiConfig = createPersistStore(
             if (get().chatLong.provider) {
                 ret.push({ provider: get().chatLong.provider!, fields: Providers.get(get().chatLong.provider!)!.fields })
             }
+            if (get().caption.provider) {
+                ret.push({ provider: get().caption.provider!, fields: Providers.get(get().caption.provider!)!.fields })
+            }
+            if (get().paint.provider) {
+                ret.push({ provider: get().paint.provider!, fields: Providers.get(get().paint.provider!)!.fields })
+            }
+            if (get().search.provider) {
+                ret.push({ provider: get().search.provider!, fields: Providers.get(get().search.provider!)!.fields })
+            }
             ret = ret.filter((item, index, self) => index === self.findIndex((t) => t.provider === item.provider))
             ret.sort((a, b) => {
                 return a.provider.localeCompare(b.provider)
@@ -236,114 +482,244 @@ export const useApiConfig = createPersistStore(
 
 
 export class ClientApi {
-    static async chat(
+    static chat(
         messages: Message[],
         onUpdate?: (message: string) => void,
         options?: {
             model?: "regular" | "smart" | "long"
-            tools?: {
-                function: Function,
-                schemas: {
-                    function: z.ZodLiteral<string>,
-                    params: {[key: string]: z.ZodAny}
-                }
-            }[]
+            tools?: Tool[]
         }
-    ) {
+    ): ControllablePromise<string> {
         const state: typeof DEFAULT_STATE = localStorage.getItem(STORAGE_NAME) ? JSON.parse(localStorage.getItem(STORAGE_NAME)!).state : DEFAULT_STATE
         const name = { "regular": "chat", "smart": "chatSmart", "long": "chatLong" }[options?.model ?? "regular"]
         const provider = state[name].provider
-        if (!provider) { return "" }
         const fields = state.fields[provider]
-        const model = state[name].model!
-        let fn
-        if (LangChainChatProviders.keys().find((item) => item === provider)) {
-            fn = getLangChainChatModel(provider, fields, model) // (messages, onUpdate)
-        }
+        fields["model"] = state[name].model!
 
-        const tools = options?.tools??[]
-        if(options?.model!="long" && messages.find(msg=>msg.type=="document")){
+        const api = ChatProviders.get(provider)?.getApi(fields)
+
+        const tools: Tool[] = options?.tools ?? []
+        if (options?.tools?.find(tool => tool.function.name == "vision")) {
             tools.push({
-                function: async (fileName: string, prompt: string) => {
-                    function washImages(text: string){
-                        text = text.replace(/\!\[(.*?)\]\(.*?\)/g, " image:[$1] ")
-                        text = text.replace(/\[(.*?)\]\(.*?\)/g, " href:[$1] ")
-                        return text
-                    }
-                    const blob = (await (await fetch((messages.find(msg=>msg.type=="document"&&msg.fileName==fileName) as DocumentMessage).src)).blob())
-                    const file = new File([blob], fileName)
-                    let text = await readDocument(file)
-                    if(["docx", "htm", "html", "mhtml", "md", "pptx"].includes((fileName.split(".").pop()??"").toLowerCase())){
-                        text = washImages(text)
-                    }
-                    const ret = await ClientApi.chat([{type:"text", role:"system", content:text}, {type:"text", role:"user", content:prompt}], undefined, {model: "long"})
-                    return ret
-                },
-                schemas: {
-                    function: z.literal("readDocument").describe(
-                        "Use this tool to ask questions about the content of a user-uploaded document. " +
-                        "The tool will read the document and provide answers based on its content."
-                    ),
-                    params: {
-                        fileName: (()=>{
-                            const files: string[] = []
-                            for(let msg of messages){
-                                if(msg.type=="document" && msg.fileName){
-                                    files.push(msg.fileName)
-                                }
+                type: "function",
+                function: {
+                    name: "image_caption",
+                    description: "询问视觉模型以获取图像内容",
+                    parameters: {
+                        type: "object",
+                        properties: {
+                            "image": {
+                                type: "string",
+                                description: "图像的文件名称，你可以在历史记录中看到可用的图像名称",
+                                enum: messages.filter(m => m.type == "image").map(m => m.fileName)
+                            },
+                            "prompt": {
+                                type: "string",
+                                description: "你想询问的关于图像的内容。请注意，由于视觉模型看不到你与用户的历史对话，因此你要替用户把问题问清楚"
                             }
-                            if(files.length==1){
-                                return z.literal(files[0])
-                            }else{
-                                return z.union(files.map((file)=>z.literal(file)))
+                        }
+                    },
+                    required: ["image"]
+                }
+            })
+        }
+        if (options?.model != "long" && options?.tools?.find(tool => tool.function.name == "long_context")) {
+            tools.push({
+                type: "function",
+                function: {
+                    name: "parse_document",
+                    description: "调用长文本模型来解析文档",
+                    parameters: {
+                        type: "object",
+                        properties: {
+                            "doc": {
+                                type: "string",
+                                description: "文档的文件名称，你可以在历史记录中看到可用的文档名称",
+                                enum: messages.filter(m => m.type == "document").map(m => m.fileName)
+                            },
+                            "prompt": {
+                                type: "string",
+                                description: "你想询问的关于文档的内容。"
                             }
-                        })().describe(
-                            "The name of the document to ask about. " +
-                            `Available documents are listed above.`
-                        ),
-                        prompt: z.string().describe(
-                            "The question or prompt to ask about the document. " +
-                            "Be specific and clear to get the best results."
-                        )
-                    }
+                        }
+                    },
+                    required: ["doc"]
                 }
             })
         }
 
-        fn = wrapFunctionCall(fn)
+        return new ControllablePromise<string>(async (resolve, reject, abort) => {
+            const resp = await api?.(
+                messages,
+                (m) => {
+                    if (abort(m)) {
+                        return
+                    }
+                    onUpdate?.(m)
+                },
+                tools
+            )!
+            if (typeof resp != "string") {
+                const toolName = resp["toolName"]
+                if (toolName == "image_caption") {
+                    onUpdate?.(`\`\`\` toolcall
+                        [{
+                            "title": "正在观察图片",
+                            "status": "pending",
+                            "description": ${JSON.stringify(resp["prompt"])}
+                        }]
+\`\`\`              `)
+                    const url = (messages.find(m => m.type == "image" && m.fileName == resp["image"]) as ImageMessage).src
+                    resolve(await ClientApi.caption(
+                        url,
+                        resp["prompt"],
+                        (m) => {
+                            if (abort(m)) {
+                                return
+                            }
+                            onUpdate?.(`\`\`\` toolcall
+                                ${JSON.stringify([
+                                {
+                                    title: "完成",
+                                    status: "success"
+                                },
+                                {
+                                    status: "pending",
+                                    content: m
+                                }
+                            ])}
+\`\`\`                      `)
+                        }
+                    ))
+                } else if (toolName == "parse_document") {
+                    onUpdate?.(`\`\`\` toolcall
+                        [{
+                            "title": "正在阅读文档",
+                            "status": "pending",
+                            "description": ${JSON.stringify(resp["prompt"])}
+                        }]
+\`\`\`              `)
+                    const url = (messages.find(m => m.type == "document" && m.fileName == resp["doc"]) as DocumentMessage).src
+                    const blob = (await (await fetch(url)).blob())
+                    const text = await readDocument(new File([blob], resp["doc"]))
+                    resolve(await ClientApi.chat(
+                        [
+                            {
+                                type: "text", role: "system", content: `
+                                ################################################
+                                    ${resp["doc"]}
+                                ################################################
 
-        const ret = await fn(messages, onUpdate, tools)
-        if(typeof ret != "string"){
-            const tfn = (tools ?? []).find(tool => tool.schemas.function.value == ret.toolName).function
-            const paramNames = getFunctionParams(tfn)
-            const params = paramNames.map(param => ret[param])
-            const result = await tfn(...params)
-            messages.push({type:"text", role:"system", content:`
-                TOOL CALL MESSAGE
-                you, the agent, has just invoked a tool with following command:
-                    ${JSON.stringify(ret)}
-                this is the return value of this tool:
-                    ${JSON.stringify(result)}
-            `})
-            return await fn(messages, onUpdate, [])
-        }
-        return ret
+                                ${text}
+                            `},
+                            { type: "text", role: "user", content: resp["prompt"] }
+                        ],
+                        (m) => {
+                            if (abort(m)) {
+                                return
+                            }
+                            onUpdate?.(`\`\`\` toolcall
+                                ${JSON.stringify([
+                                {
+                                    title: "完成",
+                                    status: "success"
+                                },
+                                {
+                                    status: "pending",
+                                    content: m
+                                }
+                            ])}
+\`\`\`                     `)
+                        },
+                        { model: "long" }
+                    ))
+                } else {
+                    const result = await tools.find(tool => tool.function.name == resp["toolName"])!.call!(resp)
+                    const _messages = messages.slice()
+                    _messages.push({
+                        role: "assistant", content: "",
+                        tool_calls: [{ function: { arguments: JSON.stringify(resp), name: resp["toolName"] } }]
+                    } as any)
+                    _messages.push({ type: "text", role: "tool", content: `调用${resp["toolName"]}工具的返回结果：${result}` })
+                    resolve(ClientApi.chat(
+                        _messages,
+                        (m) => {
+                            if (abort(m)) {
+                                return
+                            }
+                            onUpdate?.(m)
+                        },
+                        { model: options?.model }
+                    ))
+                }
+            } else {
+                resolve(resp)
+            }
+        })
     }
-    caption
+    static caption(
+        img: string,
+        prompt?: string,
+        onUpdate?: (message: string) => void
+    ): ControllablePromise<string> {
+        const state: typeof DEFAULT_STATE = localStorage.getItem(STORAGE_NAME) ? JSON.parse(localStorage.getItem(STORAGE_NAME)!).state : DEFAULT_STATE
+        const provider = state.caption.provider!
+        const fields = state.fields[provider]
+        fields["model"] = state.caption.model!
+
+        const api = CaptionProviders.get(provider)?.getApi(fields)
+
+        return new ControllablePromise<string>(async (resolve, rejects, abort) => {
+            resolve(await api?.(
+                img, prompt, onUpdate
+            ) ?? "")
+        })
+    }
     embed
     stt
-    paint
-    search
+    static paint(
+        prompt: string,
+        negativePrompt: string
+    ): Promise<string> {
+        const state: typeof DEFAULT_STATE = localStorage.getItem(STORAGE_NAME) ? JSON.parse(localStorage.getItem(STORAGE_NAME)!).state : DEFAULT_STATE
+        const provider = state.paint.provider!
+        const fields = state.fields[provider]
+        fields["model"] = state.paint.model!
+
+        const api = PaintProviders.get(provider)?.getApi(fields)
+
+        return new Promise<string>(async resolve => {
+            resolve(await api!(
+                prompt, negativePrompt
+            ))
+        })
+    }
+    static search(
+        query: string,
+        count = 4,
+    ):Promise<{url:string, digest:string}[]> {
+        const state: typeof DEFAULT_STATE = localStorage.getItem(STORAGE_NAME) ? JSON.parse(localStorage.getItem(STORAGE_NAME)!).state : DEFAULT_STATE
+        const provider = state.search.provider!
+        const fields = state.fields[provider]
+
+        const api = SearchProviders.get(provider)?.getApi(fields)
+
+        return new Promise(async resolve => {
+            resolve(await api!(
+                query, count
+            ))
+        })
+    }
     videoCaption
     tts
 }
 
 
-function getFunctionParams(func:Function):string[] {
+function getFunctionParams(func: Function): string[] {
     var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
     var ARGUMENT_NAMES = /([^\s,]+)/g;
     var fnStr = func.toString().replace(STRIP_COMMENTS, '');
-    var result = fnStr.slice(fnStr.indexOf('(')+1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
+    var result = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
     return result || [];
 }
 
@@ -383,4 +759,67 @@ export function getHeaders() {
     }
 
     return headers;
+}
+
+function blobToDataURL(blob, type): Promise<string> {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            resolve(reader.result);
+        };
+        reader.onerror = () => {
+            reject(reader.error);
+        };
+        reader.readAsDataURL(new File([blob], "", { type }));
+    });
+}
+
+async function resizeImage(src, min, max): Promise<string> {
+    return new Promise(async resolve => {
+        const img = new Image();
+        img.src = src
+        const newSize = handleImageSize(img, min, max)
+        const canvas = document.createElement("canvas")
+        canvas.width = newSize.width
+        canvas.height = newSize.height
+        const ctx = canvas.getContext('2d')
+        ctx?.drawImage(img, 0, 0, newSize.width, newSize.height)
+        canvas.toBlob(async (blob) => {
+            const url = await blobToDataURL(blob, "image/jpeg")
+            resolve(url)
+        })
+    })
+}
+function handleImageSize(image, min, max) {
+    const minSize = min; // 最小尺寸
+    const maxSize = max; // 最大尺寸
+
+    let width = image.width;
+    let height = image.height;
+
+    // 计算当前尺寸与最大尺寸的比例
+    const scaleWidth = width / maxSize;
+    const scaleHeight = height / maxSize;
+
+    // 取较大的比例作为缩放比例
+    const scaleFactor = Math.max(scaleWidth, scaleHeight);
+
+    // 如果图片尺寸超过最大尺寸，则进行缩放
+    if (scaleFactor > 1) {
+        width /= scaleFactor;
+        height /= scaleFactor;
+    }
+
+    // 确保尺寸不小于最小尺寸
+    if (width < minSize || height < minSize) {
+        const minScaleFactor = Math.min(image.width / minSize, image.height / minSize);
+        width = image.width / minScaleFactor;
+        height = image.height / minScaleFactor;
+    }
+
+    // 返回缩放后的尺寸
+    return {
+        width: Math.round(width),
+        height: Math.round(height)
+    };
 }

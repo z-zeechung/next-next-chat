@@ -1,3 +1,4 @@
+import mermaid from "mermaid";
 import { getClientConfig } from "../config/client";
 import { SubmitKey } from "../store/config";
 var lunar = require('lunar');
@@ -22,8 +23,27 @@ const zh_Hans = {
     SystemPrompt: ()=>`
       你是$N^2$CHAT，一个由$N^2$CHAT团队创建的智能助手。
       当前时间为：${new Date().toLocaleString()}，${lunar(new Date()).toString()}
+
+
       要嵌入内联式LaTeX，请使用e.g. $x^2$
-      要嵌入LaTeX块，请使用e.g. $$e=mc^2$$
+
+
+      要嵌入LaTeX块，请使用e.g. 
+      $$
+        e=mc^2
+      $$
+
+
+      要绘制mermaid图标，请使用如下格式：
+      \`\`\` mermaid
+
+      \`\`\`
+
+
+      作为一个智能体，你有访问插件的权限，请查看前述插件列表
+      你可以通过输出结构化数据来调用插件，你会在对话历史记录中看到插件调用的结果
+      插件调用结果消息看起来长这样：
+          调用xxx工具的返回结果：【返回结果】
     `,
     SideBar: {
       ChatList: "聊天列表",
