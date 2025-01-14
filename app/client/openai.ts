@@ -33,7 +33,7 @@ export function getOpenAiApi(
                         toolcall = chunk.choices[0].delta.tool_calls[0].function?.name
                     }
                 }else if(!toolcall){
-                    fullContent = fullContent + chunk.choices[0].delta.content;
+                    fullContent = fullContent + (chunk.choices[0].delta.content??"");
                     onUpdate?.(fullContent)
                 }
                 if(abort(fullContent)){
@@ -41,9 +41,13 @@ export function getOpenAiApi(
                 }
             }
             if(toolcall){
-                const ret = JSON.parse(fullContent)
-                ret["toolName"] = toolcall
-                resolve(ret)
+                try{
+                    const ret = JSON.parse(fullContent)
+                    ret["toolName"] = toolcall
+                    resolve(ret)
+                }catch{
+                    resolve(fullContent)
+                }
             }else{
                 resolve(fullContent)
             }

@@ -9,57 +9,29 @@ import { getOpenAiApi } from "./openai"
 import { ControllablePromise } from "../utils/controllable-promise"
 import { Tool } from "../typing"
 import { ImageMessage } from "../message/ImageMessage"
+import { Tongyi } from "./tongyi"
+import { DeepSeek } from "./deepseek"
+import { BochaAI } from "./bochaai"
+import { Qianfan } from "./qianfan"
+import { Moonshot } from "./moonshot"
+import { Spark } from "./spark"
 
-interface Provider {
+export interface Provider {
     name: string,
-    fields: string[]
+    fields: string[],
+    chat?: ChatProvider,
+    caption?: CaptionProvider,
+    paint?: PaintProvider,
+    search?: SearchProvider
 }
 
 const Providers = new Map<string, Provider>([
-    ["anthropic", {
-        name: "Anthropic",
-        fields: ["apiKey"],
-    }],
-    ["openai", {
-        name: "OpenAI",
-        fields: ["apiKey"],
-    }],
-    ["groq", {
-        name: "Groq",
-        fields: ["apiKey"],
-    }],
-    ["mistral", {
-        name: "Mistral AI",
-        fields: ["apiKey"],
-    }],
-    ["cohere", {
-        name: "Cohere",
-        fields: ["apiKey"],
-    }],
-    ["yandex", {
-        name: "YandexGPT",
-        fields: ["folderID", "apiKey", "iamToken"],
-    }],
-    ["tongyi", {
-        name: "Tongyi (通义千问)",
-        fields: ["apiKey"],
-    }],
-    ["minimax", {
-        name: "Minimax",
-        fields: ["minimaxGroupId", "minimaxApiKey"],
-    }],
-    ["moonshot", {
-        name: "Moonshot (月之暗面)",
-        fields: ["apiKey"],
-    }],
-    ["deepseek", {
-        name: "DeepSeek (深度求索)",
-        fields: ["apiKey"],
-    }],
-    ["bochaai", {
-        name: "BochaAI (博查)",
-        fields: ["apiKey"]
-    }],
+    ["tongyi", Tongyi],
+    ["deepseek", DeepSeek],
+    ["qianfan", Qianfan],
+    ["moonshot", Moonshot],
+    ["spark", Spark],
+    ["bochaai", BochaAI],
     ["exa", {
         name: "Exa",
         fields: []
@@ -89,36 +61,11 @@ export type ChatApi = (
 ) => ControllablePromise<string>
 
 const ChatProviders = new Map<string, ChatProvider>([
-    ["tongyi", {
-        models: [
-            {
-                name: "qwen-max",
-                context: 32768
-            },
-            {
-                name: "qwen-plus",
-                context: 131072
-            },
-            {
-                name: "qwen-turbo",
-                context: 1000000
-            },
-            {
-                name: "qwen-long",
-                context: 10000000
-            }
-        ],
-        default: "qwen-plus",
-        defaultSmart: "qwen-max",
-        defaultLong: "qwen-long",
-        getApi(options: { apiKey: string, model: string }) {
-            return getOpenAiApi(
-                "https://dashscope.aliyuncs.com/compatible-mode/v1",
-                options.apiKey,
-                options.model
-            )
-        },
-    }],
+    ["tongyi", Tongyi.chat!],
+    ["deepseek", DeepSeek.chat!],
+    ["qianfan", Qianfan.chat!],
+    ["moonshot", Moonshot.chat!],
+    ["spark", Spark.chat!]
 ])
 
 
@@ -136,39 +83,9 @@ export type CaptionApi = (
     onUpdate?: (message: string) => void
 ) => ControllablePromise<string>
 const CaptionProviders = new Map<string, CaptionProvider>([
-    ["tongyi", {
-        models: [
-            { name: "qwen-vl-max" },
-            { name: "qwen-vl-plus" }
-        ],
-        default: "qwen-vl-plus",
-        getApi: (options: { apiKey: string, model: string }) => {
-            return (
-                img: string,
-                prompt?: string,
-                onUpdate?: (message: string) => void
-            ) => {
-                const api = getOpenAiApi(
-                    "https://dashscope.aliyuncs.com/compatible-mode/v1",
-                    options.apiKey,
-                    options.model
-                )
-                return new ControllablePromise(async (resolve, reject, abort) => {
-                    resolve(await api(
-                        [
-                            {
-                                "role": "user", "content": [
-                                    { "type": "image_url", "image_url": { "url": await resizeImage(img, 56, 768) } },
-                                    { "type": "text", "text": prompt }
-                                ]
-                            }
-                        ] as any,
-                        onUpdate
-                    ))
-                })
-            }
-        }
-    }]
+    ["tongyi", Tongyi.caption!],
+    ["qianfan", Qianfan.caption!],
+    ["moonshot", Moonshot.caption!]
 ])
 
 
@@ -185,67 +102,8 @@ export type PaintApi = (
     negativePrompt: string
 ) => Promise<string>
 const PaintProviders = new Map<string, PaintProvider>([
-    ["tongyi", {
-        models: [
-            { name: "wanx2.1-t2i-turbo" },
-            { name: "wanx2.1-t2i-plus" }
-        ],
-        default: "wanx2.1-t2i-turbo",
-        getApi: (options: { apiKey: string, model: string }) => {
-            return (
-                prompt: string,
-                negativePrompt: string
-            ) => {
-                return new Promise(async resolve => {
-                    const url = 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text2image/image-synthesis';
-                    const _options = {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${options.apiKey}`,
-                            'X-DashScope-Async': 'enable'
-                        },
-                        body: JSON.stringify({
-                            model: options.model,
-                            input: {
-                                prompt: prompt,
-                                negative_prompt: negativePrompt
-                            },
-                            parameters: {
-                                size: '1024*768',
-                                n: 1
-                            }
-                        })
-                    };
-                    const response = await fetch(url, _options);
-                    const data = await response.json();
-                    const taskId = data.output.task_id;
-
-                    async function check() {
-                        const url = `https://dashscope.aliyuncs.com/api/v1/tasks/${taskId}`;
-                        const _options = {
-                            method: 'GET',
-                            headers: {
-                                'Authorization': `Bearer ${options.apiKey}`
-                            }
-
-                        };
-                        const response = await fetch(url, _options);
-                        const data = await response.json();
-                        if (data.output.task_status === 'SUCCEEDED') {
-                            const imageUrl = data.output.results[0].url;
-                            const blob = await (await fetch(imageUrl)).blob()
-                            const url = blobToDataURL(blob, "image/png")
-                            resolve(url)
-                        } else {
-                            setTimeout(check, 3000)
-                        }
-                    }
-                    check()
-                })
-            }
-        }
-    }]
+    ["tongyi", Tongyi.paint!],
+    ["qianfan", Qianfan.paint!]
 ])
 
 
@@ -257,37 +115,7 @@ export type SearchApi = (
     count: number
 ) => Promise<{ url: string, digest: string }[]>
 const SearchProviders = new Map<string, SearchProvider>([
-    ["bochaai", {
-        getApi(options: { apiKey: string }) {
-            return (
-                query: string,
-                count: number
-            ) => {
-                return new Promise(async resolve => {
-                    const url = 'https://api.bochaai.com/v1/web-search';
-                    const headers = {
-                        'Authorization': `Bearer ${options.apiKey}`,
-                        'Content-Type': 'application/json'
-                    };
-                    const data = {
-                        "query": query,
-                        "freshness": "noLimit",
-                        "summary": true,
-                        "count": Math.max(count, 10)
-                    };
-                    const resp = await (await fetch(url, {
-                        method: "POST",
-                        headers,
-                        body: JSON.stringify(data)
-                    })).json();
-                    resolve(resp.data.webPages.value.map(r=>{return {
-                        url: r.displayUrl, 
-                        digest: r.snippet
-                    }}));
-                })
-            }
-        },
-    }]
+    ["bochaai", BochaAI.search!]
 ])
 
 
@@ -519,7 +347,7 @@ export class ClientApi {
                             }
                         }
                     },
-                    required: ["image"]
+                    required: ["image", "prompt"]
                 }
             })
         }
@@ -543,7 +371,7 @@ export class ClientApi {
                             }
                         }
                     },
-                    required: ["doc"]
+                    required: ["doc", "prompt"]
                 }
             })
         }
@@ -601,7 +429,9 @@ export class ClientApi {
 \`\`\`              `)
                     const url = (messages.find(m => m.type == "document" && m.fileName == resp["doc"]) as DocumentMessage).src
                     const blob = (await (await fetch(url)).blob())
-                    const text = await readDocument(new File([blob], resp["doc"]))
+                    let text = await readDocument(new File([blob], resp["doc"]))
+                    text = text.replace(/\!\[(.*?)\]\(.*?\)/g, " image:[$1] ")
+                    text = text.replace(/\[(.*?)\]\(.*?\)/g, " href:[$1] ")
                     resolve(await ClientApi.chat(
                         [
                             {
@@ -638,9 +468,11 @@ export class ClientApi {
                     const _messages = messages.slice()
                     _messages.push({
                         role: "assistant", content: "",
-                        tool_calls: [{ function: { arguments: JSON.stringify(resp), name: resp["toolName"] } }]
+                        tool_calls: [{ id: resp["toolName"], type:"function", function: { arguments: JSON.stringify(resp), name: resp["toolName"] } }],
                     } as any)
-                    _messages.push({ type: "text", role: "tool", content: `调用${resp["toolName"]}工具的返回结果：${result}` })
+                    _messages.push({ type: "text", role: "tool", content: `调用${resp["toolName"]}工具的返回结果：${result}`,
+                        tool_call_id: resp["toolName"]
+                    } as any)
                     resolve(ClientApi.chat(
                         _messages,
                         (m) => {
@@ -761,11 +593,11 @@ export function getHeaders() {
     return headers;
 }
 
-function blobToDataURL(blob, type): Promise<string> {
+export function blobToDataURL(blob, type): Promise<string> {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => {
-            resolve(reader.result);
+            resolve(reader.result as string);
         };
         reader.onerror = () => {
             reject(reader.error);
@@ -774,7 +606,7 @@ function blobToDataURL(blob, type): Promise<string> {
     });
 }
 
-async function resizeImage(src, min, max): Promise<string> {
+export async function resizeImage(src, min, max): Promise<string> {
     return new Promise(async resolve => {
         const img = new Image();
         img.src = src

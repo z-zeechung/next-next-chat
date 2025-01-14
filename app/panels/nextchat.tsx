@@ -100,145 +100,17 @@ import { ImageMessage } from "../message/ImageMessage";
 import confirm from "antd/es/modal/confirm";
 import localforage from "localforage";
 
-function useSubmitHandler() {
-  const config = useAppConfig();
-  const submitKey = config.submitKey;
-  const isComposing = useRef(false);
-
-  useEffect(() => {
-    const onCompositionStart = () => {
-      isComposing.current = true;
-    };
-    const onCompositionEnd = () => {
-      isComposing.current = false;
-    };
-
-    window.addEventListener("compositionstart", onCompositionStart);
-    window.addEventListener("compositionend", onCompositionEnd);
-
-    return () => {
-      window.removeEventListener("compositionstart", onCompositionStart);
-      window.removeEventListener("compositionend", onCompositionEnd);
-    };
-  }, []);
-
-  const shouldSubmit = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // Fix Chinese input method "Enter" on Safari
-    if (e.keyCode == 229) return false;
-    if (e.key !== "Enter") return false;
-    if (e.key === "Enter" && (e.nativeEvent.isComposing || isComposing.current))
-      return false;
-    return (
-      (config.submitKey === SubmitKey.AltEnter && e.altKey) ||
-      (config.submitKey === SubmitKey.CtrlEnter && e.ctrlKey) ||
-      (config.submitKey === SubmitKey.ShiftEnter && e.shiftKey) ||
-      (config.submitKey === SubmitKey.MetaEnter && e.metaKey) ||
-      (config.submitKey === SubmitKey.Enter &&
-        !e.altKey &&
-        !e.ctrlKey &&
-        !e.shiftKey &&
-        !e.metaKey)
-    );
-  };
-
-  return {
-    submitKey,
-    shouldSubmit,
-  };
-}
-
-function Toolbox(props: { children: any[] }) {
-  return <SimpleGrid templateColumns={`repeat(auto-fill, minmax(${72}px, 1fr))`} gap={4}>
-    {props.children.map((elem, idx) => <Card key={idx} background={"#00000000"} shadow={"none"} align={"center"}>
-      {elem}
-    </Card>)}
-  </SimpleGrid>
-}
-
-function useScrollToBottom(
-  scrollRef: RefObject<HTMLDivElement>,
-  detach: boolean = false,
-) {
-  // for auto-scroll
-
-  const [autoScroll, setAutoScroll] = useState(true);
-  function scrollDomToBottom() {
-    const dom = scrollRef.current;
-    if (dom) {
-      requestAnimationFrame(() => {
-        setAutoScroll(true);
-        dom.scrollTo(0, dom.scrollHeight);
-      });
-    }
-  }
-
-  // auto scroll
-  useEffect(() => {
-    if (autoScroll && !detach) {
-      scrollDomToBottom();
-    }
-  });
-
-  return {
-    scrollRef,
-    autoScroll,
-    setAutoScroll,
-    scrollDomToBottom,
-  };
-}
-
 function _Chat() {
-  type RenderMessage = Message & { preview?: boolean };
 
   const chatStore = useChatStore();
   const session = chatStore.currentSession();
   const config = useAppConfig();
 
-  const inputRef = useRef<HTMLTextAreaElement>(null);
   const [userInput, setUserInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const { submitKey, shouldSubmit } = useSubmitHandler();
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const isScrolledToBottom = scrollRef?.current
-    ? Math.abs(
-      scrollRef.current.scrollHeight -
-      (scrollRef.current.scrollTop + scrollRef.current.clientHeight),
-    ) <= 1
-    : false;
-  const { setAutoScroll, scrollDomToBottom } = useScrollToBottom(
-    scrollRef,
-    isScrolledToBottom,
-  );
-  const [hitBottom, setHitBottom] = useState(true);
-  const isMobileScreen = useMobileScreen();
+
   const navigate = useNavigate();
 
   const [useSmart, setUseSmart] = useState(false)
-
-  // auto grow input
-  const [inputRows, setInputRows] = useState(2);
-  const measure = useDebouncedCallback(
-    () => {
-      const rows = inputRef.current ? autoGrowTextArea(inputRef.current) : 1;
-      const inputRows = Math.min(
-        20,
-        Math.max(2 + Number(!isMobileScreen), rows),
-      );
-      setInputRows(inputRows);
-    },
-    100,
-    {
-      leading: true,
-      trailing: true,
-    },
-  );
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(measure, [userInput]);
-
-  const onInput = (text: string) => {
-    setUserInput(text);
-  };
 
   const [searchPlugin, setSearchPlugin] = useState(false)
   const [paintPlugin, setPaintPlugin] = useState(false)
@@ -247,9 +119,16 @@ function _Chat() {
   const [chatPromise, setChatPromise] = useState(undefined as ControllablePromise<any> | undefined)
 
   const doSubmit = (userInput: string) => {
-    let _messages = session.messages.slice()
+    const sessionId = session.id
+    const getCurrentSession = ()=>{return chatStore.sessions.find(s=>s.id==sessionId)!}
+    const updateCurrentSession = (cb:(sess)=>void)=>{
+      chatStore.update(({sessions, currentSessionIndex})=>{
+        cb(sessions.find(s=>s.id==sessionId))
+      })
+    }
+    let _messages = getCurrentSession().messages.slice()
     _messages = _messages.concat([{ type: "text", role: "user", content: userInput }])
-    chatStore.updateCurrentSession(sess => {
+    updateCurrentSession(sess => {
       sess.messages = [
         ..._messages,
         { type: "text", role: "assistant", content: "" }
@@ -261,7 +140,7 @@ function _Chat() {
         ..._messages
       ],
       msg => {
-        chatStore.updateCurrentSession(sess => {
+        updateCurrentSession(sess => {
           sess.messages = [
             ..._messages,
             { type: "text", role: "assistant", content: msg }
@@ -298,7 +177,7 @@ function _Chat() {
               required: ["positive_prompt", "negative_prompt", "file_name"]
             },
             async call(params: {positive_prompt:string, negative_prompt:string, file_name:string}){
-              chatStore.updateCurrentSession(sess => {
+              updateCurrentSession(sess => {
                 sess.messages = [
                   ..._messages,
                   { type: "text", role: "assistant", content: `\`\`\` toolcall
@@ -340,7 +219,7 @@ function _Chat() {
               required: ["query"]
             },
             async call(params:{query: string, count?: number}){
-              chatStore.updateCurrentSession(sess => {
+              updateCurrentSession(sess => {
                 sess.messages = [
                   ..._messages,
                   { type: "text", role: "assistant", content: `\`\`\` toolcall
@@ -362,7 +241,7 @@ function _Chat() {
     setChatPromise(promise)
     promise.then(async (msg) => {
       setChatPromise(undefined)
-      chatStore.updateCurrentSession(sess => {
+      updateCurrentSession(sess => {
         sess.messages = [
           ..._messages,
           { type: "text", role: "assistant", content: msg }
@@ -374,7 +253,7 @@ function _Chat() {
           ...(session.messages),
           { type: "text", role: "system", content: Locale.NextChat.ChatArea.MakeTopicPrompt }
         ], undefined, { model: "smart" })
-        chatStore.updateCurrentSession(sess => {
+        updateCurrentSession(sess => {
           const matchResult = emojiRe.exec(topic)
           const emoji = matchResult?.[1] ?? topic[0]
           const _topic = matchResult?.[5] ?? topic
@@ -385,94 +264,6 @@ function _Chat() {
     })
     setUserInput("");
   }
-
-  const context: RenderMessage[] = useMemo(() => {
-    return session.mask.hideContext ? [] : session.mask.context.slice();
-  }, [session.mask.context, session.mask.hideContext]);
-  const accessStore = useAccessStore();
-
-  if (
-    context.length === 0 &&
-    session.messages.at(0)?.content !== BOT_HELLO.content
-  ) {
-    const copiedHello = Object.assign({}, BOT_HELLO);
-    if (!accessStore.isAuthorized()) {
-      copiedHello.content = Locale.Error.Unauthorized;
-    }
-    context.push(copiedHello);
-  }
-
-  // preview messages
-  const renderMessages = useMemo(() => {
-    return context
-      .concat(session.messages as RenderMessage[])
-      .concat(
-        isLoading
-          ? [
-            { type: "text", role: "assistant", content: "......" }
-            // new MarkdownMessage("assistant", "......")
-            // {
-            //   ...new MarkdownMessage("assistant", "......"),
-            //   preview: true,
-            // },
-          ]
-          : [],
-      )
-      .concat(
-        userInput.length > 0 && config.sendPreviewBubble
-          ? [
-            { type: "text", role: "user", content: userInput }
-            // new MarkdownMessage("user", userInput)
-            // {
-            //   ...createMessage({
-            //     role: "user",
-            //     content: userInput,
-            //   }),
-            //   preview: true,
-            // },
-          ]
-          : [],
-      );
-  }, [
-    config.sendPreviewBubble,
-    context,
-    isLoading,
-    session.messages,
-    userInput,
-  ]);
-
-  const [msgRenderIndex, _setMsgRenderIndex] = useState(
-    Math.max(0, renderMessages.length - CHAT_PAGE_SIZE),
-  );
-  function setMsgRenderIndex(newIndex: number) {
-    newIndex = Math.min(renderMessages.length - CHAT_PAGE_SIZE, newIndex);
-    newIndex = Math.max(0, newIndex);
-    _setMsgRenderIndex(newIndex);
-  }
-
-  const onChatBodyScroll = (e: HTMLElement) => {
-    const bottomHeight = e.scrollTop + e.clientHeight;
-    const edgeThreshold = e.clientHeight;
-
-    const isTouchTopEdge = e.scrollTop <= edgeThreshold;
-    const isTouchBottomEdge = bottomHeight >= e.scrollHeight - edgeThreshold;
-    const isHitBottom =
-      bottomHeight >= e.scrollHeight - (isMobileScreen ? 4 : 10);
-
-    const prevPageMsgIndex = msgRenderIndex - CHAT_PAGE_SIZE;
-    const nextPageMsgIndex = msgRenderIndex + CHAT_PAGE_SIZE;
-
-    if (isTouchTopEdge && !isTouchBottomEdge) {
-      setMsgRenderIndex(prevPageMsgIndex);
-    } else if (isTouchBottomEdge) {
-      setMsgRenderIndex(nextPageMsgIndex);
-    }
-
-    setHitBottom(isHitBottom);
-    setAutoScroll(isHitBottom);
-  };
-
-  const autoFocus = !isMobileScreen; // wont auto focus on mobile screen
 
   const [showOption, setShowOption] = useState(false);
   function handleShowOption(shown: boolean) {
@@ -656,7 +447,8 @@ function _Chat() {
               }
             }
           } : undefined}
-          onActiveChange={(v) => {
+          onActiveChange={async (v) => {
+            if (managingMessages) return
             setModifiedMessage("")
             setSelectedMessages([])
             setUseSmart(false)
@@ -667,7 +459,8 @@ function _Chat() {
                 message["expand"] = false;
               }
             })
-            if (managingMessages) return
+            chatPromise?.abort()
+            setChatPromise(undefined)
             let idx = 0
             for (let i = 0; i < chatStore.sessions.length; i++) {
               if (chatStore.sessions[i].id == v) {
@@ -1028,7 +821,9 @@ function _Chat() {
                 ...(userInput.trim().length > 0 ? [{ type: "text", role: "user", content: userInput, userInput: true }] : [])
               ].map(
                 (msg, idx) => {
-                  const footer = <Flex gap={"small"} style={{ opacity: 0.7 }}>
+                  const footer = msg.role=="assistant" && idx == session.messages.length - 1 && chatPromise 
+                  ? <Button type="text" size="small" icon={<StopIcon />} onClick={()=>{chatPromise.abort()}} style={{opacity: 0.7}}>停止</Button>
+                  : <Flex gap={"small"} style={{ opacity: 0.7 }}>
                     {["text", "image"].includes(msg.type) && <Button
                       type="text" size="small" icon={<CopyIcon />}
                       onClick={() => {
@@ -1279,6 +1074,8 @@ function _Chat() {
             </Flex>} open={showMoreOptions} onOpenChange={() => { setShowMoreOptions(!showMoreOptions) }} />}
             prefix={<Button icon={showMoreOptions ? <DownOutlined /> : <AddIcon />} type="default" shape="circle" onClick={() => { setShowMoreOptions(!showMoreOptions) }} />}
             placeholder={Locale.NextChat.ChatArea.SendPrompt}
+            loading={chatPromise&&true}
+            onCancel={()=>{chatPromise?.abort()}}
           />
         </Flex>
       </Content>
