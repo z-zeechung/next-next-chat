@@ -35,7 +35,7 @@ export function nextchatSession(
           onUpdate?.(message, meta)
         }
       },
-      options
+      options as any
     );
     chatPromise.then(async message=>{
       resolve({message, meta:meta})

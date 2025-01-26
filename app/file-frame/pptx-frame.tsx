@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from "react";
 import "./style.css"
 
-function _PptxFrame(props:{src:string}) {
+function PptxFrame_(props:{src:string}) {
     const [url, setUrl] = useState("")
     useEffect(()=>{
         fetch(props.src).then(res=>res.arrayBuffer()).then(data=>{
@@ -29,4 +29,4 @@ function _PptxFrame(props:{src:string}) {
     </div>
 }
 
-export const PptxFrame = memo(_PptxFrame)
+export const PptxFrame = memo(PptxFrame_)

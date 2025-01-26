@@ -65,7 +65,7 @@ const ChatProviders = new Map<string, ChatProvider>([
     ["deepseek", DeepSeek.chat!],
     ["qianfan", Qianfan.chat!],
     ["moonshot", Moonshot.chat!],
-    ["spark", Spark.chat!]
+    // ["spark", Spark.chat!]
 ])
 
 
@@ -326,12 +326,13 @@ export class ClientApi {
 
         const api = ChatProviders.get(provider)?.getApi(fields)
 
-        const tools: Tool[] = options?.tools ?? []
+        let tools: Tool[] = options?.tools ?? []
         if (options?.tools?.find(tool => tool.function.name == "vision")) {
+            tools = tools.filter(tool => tool.function.name != "vision")
             tools.push({
                 type: "function",
                 function: {
-                    name: "image_caption",
+                    name: "vision",
                     description: "询问视觉模型以获取图像内容",
                     parameters: {
                         type: "object",
@@ -339,23 +340,24 @@ export class ClientApi {
                             "image": {
                                 type: "string",
                                 description: "图像的文件名称，你可以在历史记录中看到可用的图像名称",
-                                enum: messages.filter(m => m.type == "image").map(m => m.fileName)
+                                enum: messages.filter(m => m.type == "image").map(m => (m as ImageMessage).fileName)
                             },
                             "prompt": {
                                 type: "string",
                                 description: "你想询问的关于图像的内容。请注意，由于视觉模型看不到你与用户的历史对话，因此你要替用户把问题问清楚"
                             }
-                        }
+                        },
+                        required: ["image", "prompt"]
                     },
-                    required: ["image", "prompt"]
                 }
             })
         }
         if (options?.model != "long" && options?.tools?.find(tool => tool.function.name == "long_context")) {
+            tools = tools.filter(tool => tool.function.name != "long_context")
             tools.push({
                 type: "function",
                 function: {
-                    name: "parse_document",
+                    name: "long_context",
                     description: "调用长文本模型来解析文档",
                     parameters: {
                         type: "object",
@@ -363,15 +365,15 @@ export class ClientApi {
                             "doc": {
                                 type: "string",
                                 description: "文档的文件名称，你可以在历史记录中看到可用的文档名称",
-                                enum: messages.filter(m => m.type == "document").map(m => m.fileName)
+                                enum: messages.filter(m => m.type == "document").map(m => (m as DocumentMessage).fileName)
                             },
                             "prompt": {
                                 type: "string",
                                 description: "你想询问的关于文档的内容。"
                             }
-                        }
+                        },
+                        required: ["doc", "prompt"]
                     },
-                    required: ["doc", "prompt"]
                 }
             })
         }
@@ -388,101 +390,115 @@ export class ClientApi {
                 tools
             )!
             if (typeof resp != "string") {
-                const toolName = resp["toolName"]
-                if (toolName == "image_caption") {
-                    onUpdate?.(`\`\`\` toolcall
+                try {
+                    const toolName = resp["toolName"]
+                    if (toolName == "vision") {
+                        onUpdate?.(`\`\`\` toolcall
                         [{
                             "title": "正在观察图片",
                             "status": "pending",
                             "description": ${JSON.stringify(resp["prompt"])}
                         }]
 \`\`\`              `)
-                    const url = (messages.find(m => m.type == "image" && m.fileName == resp["image"]) as ImageMessage).src
-                    resolve(await ClientApi.caption(
-                        url,
-                        resp["prompt"],
-                        (m) => {
-                            if (abort(m)) {
-                                return
-                            }
-                            onUpdate?.(`\`\`\` toolcall
-                                ${JSON.stringify([
-                                {
-                                    title: "完成",
-                                    status: "success"
-                                },
-                                {
-                                    status: "pending",
-                                    content: m
+                        const url = (messages.find(m => m.type == "image" && m.fileName == resp["image"]) as ImageMessage).src
+                        resolve(await ClientApi.caption(
+                            url,
+                            resp["prompt"],
+                            (m) => {
+                                if (abort(m)) {
+                                    return
                                 }
-                            ])}
+                                onUpdate?.(`\`\`\` toolcall
+                                ${JSON.stringify([
+                                    {
+                                        title: "完成",
+                                        status: "success"
+                                    },
+                                    {
+                                        status: "pending",
+                                        content: m
+                                    }
+                                ])}
 \`\`\`                      `)
-                        }
-                    ))
-                } else if (toolName == "parse_document") {
-                    onUpdate?.(`\`\`\` toolcall
+                            }
+                        ))
+                    } else if (toolName == "long_context") {
+                        onUpdate?.(`\`\`\` toolcall
                         [{
                             "title": "正在阅读文档",
                             "status": "pending",
                             "description": ${JSON.stringify(resp["prompt"])}
                         }]
 \`\`\`              `)
-                    const url = (messages.find(m => m.type == "document" && m.fileName == resp["doc"]) as DocumentMessage).src
-                    const blob = (await (await fetch(url)).blob())
-                    let text = await readDocument(new File([blob], resp["doc"]))
-                    text = text.replace(/\!\[(.*?)\]\(.*?\)/g, " image:[$1] ")
-                    text = text.replace(/\[(.*?)\]\(.*?\)/g, " href:[$1] ")
-                    resolve(await ClientApi.chat(
-                        [
-                            {
-                                type: "text", role: "system", content: `
+                        const url = (messages.find(m => m.type == "document" && m.fileName == resp["doc"]) as DocumentMessage).src
+                        const blob = (await (await fetch(url)).blob())
+                        let text = await readDocument(new File([blob], resp["doc"]))
+                        text = text.replace(/\!\[(.*?)\]\(.*?\)/g, " image:[$1] ")
+                        text = text.replace(/\[(.*?)\]\(.*?\)/g, " href:[$1] ")
+                        resolve(await ClientApi.chat(
+                            [
+                                {
+                                    type: "text", role: "system", content: `
                                 ################################################
                                     ${resp["doc"]}
                                 ################################################
 
                                 ${text}
                             `},
-                            { type: "text", role: "user", content: resp["prompt"] }
-                        ],
-                        (m) => {
-                            if (abort(m)) {
-                                return
-                            }
-                            onUpdate?.(`\`\`\` toolcall
-                                ${JSON.stringify([
-                                {
-                                    title: "完成",
-                                    status: "success"
-                                },
-                                {
-                                    status: "pending",
-                                    content: m
+                                { type: "text", role: "user", content: resp["prompt"] }
+                            ],
+                            (m) => {
+                                if (abort(m)) {
+                                    return
                                 }
-                            ])}
+                                onUpdate?.(`\`\`\` toolcall
+                                ${JSON.stringify([
+                                    {
+                                        title: "完成",
+                                        status: "success"
+                                    },
+                                    {
+                                        status: "pending",
+                                        content: m
+                                    }
+                                ])}
 \`\`\`                     `)
-                        },
-                        { model: "long" }
-                    ))
-                } else {
-                    const result = await tools.find(tool => tool.function.name == resp["toolName"])!.call!(resp)
-                    const _messages = messages.slice()
-                    _messages.push({
-                        role: "assistant", content: "",
-                        tool_calls: [{ id: resp["toolName"], type:"function", function: { arguments: JSON.stringify(resp), name: resp["toolName"] } }],
-                    } as any)
-                    _messages.push({ type: "text", role: "tool", content: `调用${resp["toolName"]}工具的返回结果：${result}`,
-                        tool_call_id: resp["toolName"]
-                    } as any)
-                    resolve(ClientApi.chat(
-                        _messages,
+                            },
+                            { model: "long" }
+                        ))
+                    } else {
+                        const result = await tools.find(tool => tool.function.name == resp["toolName"])!.call!(resp)
+                        const _messages = messages.slice()
+                        _messages.push({
+                            role: "assistant", content: "",
+                            tool_calls: [{ id: resp["toolName"], type: "function", function: { arguments: JSON.stringify(resp), name: resp["toolName"] } }],
+                        } as any)
+                        _messages.push({
+                            type: "text", role: "tool", content: `调用${resp["toolName"]}工具的返回结果：${result}`,
+                            tool_call_id: resp["toolName"]
+                        } as any)
+                        resolve(ClientApi.chat(
+                            _messages,
+                            (m) => {
+                                if (abort(m)) {
+                                    return
+                                }
+                                onUpdate?.(m)
+                            },
+                            { model: options?.model }
+                        ))
+                    }
+                } catch(e) {
+                    console.log("[TOOLCALL ERROR]", e)
+                    resolve(await api?.(
+                        messages,
                         (m) => {
                             if (abort(m)) {
                                 return
                             }
                             onUpdate?.(m)
-                        },
-                        { model: options?.model }
-                    ))
+                        }
+                    ) ?? "")
                 }
             } else {
                 resolve(resp)
@@ -507,7 +523,7 @@ export class ClientApi {
             ) ?? "")
         })
     }
-    embed
+    static async embed(strs: string[]):Promise<number[][]>{return []}
     stt
     static paint(
         prompt: string,
@@ -529,7 +545,7 @@ export class ClientApi {
     static search(
         query: string,
         count = 4,
-    ):Promise<{url:string, digest:string}[]> {
+    ): Promise<{ url: string, digest: string }[]> {
         const state: typeof DEFAULT_STATE = localStorage.getItem(STORAGE_NAME) ? JSON.parse(localStorage.getItem(STORAGE_NAME)!).state : DEFAULT_STATE
         const provider = state.search.provider!
         const fields = state.fields[provider]

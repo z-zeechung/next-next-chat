@@ -136,13 +136,14 @@ export const Default = (
                         const position: "left" | "middle" | "right"
                             = i == 0 ? "right" : i == children.length - 1 ? "left" : "middle"
                         if (elem?.type?.name == "select") {
-                            return <self.select {...elem.props} embed={position} />
+                            return <self.select key={i} {...elem.props} embed={position} />
                         }
                         if (elem?.type?.name == "button") {
-                            return <self.button {...elem.props} embed={position} />
+                            return <self.button key={i} {...elem.props} embed={position} />
                         }
                         if (elem?.type?.name == "textArea") {
-                            return <self.textArea {...elem.props} embed={position} />
+                            // return <self.textArea key={i} {...elem.props} embed={position} />
+                            return <></>
                         }
                         return elem
                     })}
@@ -223,59 +224,59 @@ export const Default = (
             type?: "primary" | "plain"
             onClick?: () => void
         }) {
-            const { header, body, footer } = enumChildren(props.children)
+            // const { header, body, footer } = enumChildren(props.children)
 
-            const [isHovered, setIsHovered] = useState(false);
-            const ref = useRef(null)
+            // const [isHovered, setIsHovered] = useState(false);
+            // const ref = useRef(null)
 
-            const title = isVerticalLang() ? <span dangerouslySetInnerHTML={{ __html: splitMongolian(props.title) }}></span> : props.title
-            const subTitle = isVerticalLang() ? <span dangerouslySetInnerHTML={{ __html: splitMongolian(props.subTitle) }}></span> : props.subTitle
+            // const title = isVerticalLang() ? <span dangerouslySetInnerHTML={{ __html: splitMongolian(props.title) }}></span> : props.title
+            // const subTitle = isVerticalLang() ? <span dangerouslySetInnerHTML={{ __html: splitMongolian(props.subTitle) }}></span> : props.subTitle
 
-            return <Card
-                width={"100%"}
-                {...(props.type ? {} : {
-                    background: isHovered ? "#EDF2F7" : "#F7FAFC"
-                })}
-                {...(props.onClick ? {
-                    onClick: props.onClick,
-                    onMouseEnter: () => { setIsHovered(true) },
-                    onMouseLeave: () => { setIsHovered(false) }
-                } : {})}
-                variant={props.type == "plain" ? "outline" : "elevated"}
-            >
-                {(props.title || props.icon || props.subTitle) && <CardHeader padding={3} paddingBottom={0}>
-                    <Flex>
-                        <Flex
-                            flex='1' gap='4' alignItems='center' flexWrap="nowrap" padding={0}
-                            flexDirection={isRtlLang() ? "row-reverse" : "row"}
-                        >
-                            {props.icon ? <self.avatar icon={props.icon} /> : <div style={{ width: 4 }}></div>}
-                            <Box width={"100%"}>
-                                {isVerticalLang() && <Flex flexDirection={"row"}>
-                                    <Heading width={"100%"} size='sm' whiteSpace={"nowrap"} overflow={"hidden"} fontFamily={FONT_FAMILY}>
-                                        {title}
-                                    </Heading>
-                                    {props.subTitle && <Text fontSize={"12px"}>{subTitle}</Text>}
-                                </Flex>}
-                                {!isVerticalLang() && <><Heading size='sm' whiteSpace={"nowrap"} overflow={"hidden"} fontFamily={FONT_FAMILY}>
-                                    {title}
-                                </Heading>
-                                    {props.subTitle && <Text fontSize={"12px"}>{subTitle}</Text>}</>}
-                            </Box>
-                        </Flex>
-                    </Flex>
-                </CardHeader>}
-                <CardBody padding={body?4:0}>
-                    <Flex
-                        flex={1} gap={4} direction={"column"} padding={0}
-                    >
-                        {...(body??[])}
-                    </Flex>
-                </CardBody>
-                {footer && <CardFooter padding={3} paddingTop={0} paddingBottom={2}>
-                    {footer}
-                </CardFooter>}
-            </Card>
+            // return <Card
+            //     width={"100%"}
+            //     {...(props.type ? {} : {
+            //         background: isHovered ? "#EDF2F7" : "#F7FAFC"
+            //     })}
+            //     {...(props.onClick ? {
+            //         onClick: props.onClick,
+            //         onMouseEnter: () => { setIsHovered(true) },
+            //         onMouseLeave: () => { setIsHovered(false) }
+            //     } : {})}
+            //     variant={props.type == "plain" ? "outline" : "elevated"}
+            // >
+            //     {(props.title || props.icon || props.subTitle) && <CardHeader padding={3} paddingBottom={0}>
+            //         <Flex>
+            //             <Flex
+            //                 flex='1' gap='4' alignItems='center' flexWrap="nowrap" padding={0}
+            //                 flexDirection={isRtlLang() ? "row-reverse" : "row"}
+            //             >
+            //                 {props.icon ? <self.avatar icon={props.icon} /> : <div style={{ width: 4 }}></div>}
+            //                 <Box width={"100%"}>
+            //                     {isVerticalLang() && <Flex flexDirection={"row"}>
+            //                         <Heading width={"100%"} size='sm' whiteSpace={"nowrap"} overflow={"hidden"} fontFamily={FONT_FAMILY}>
+            //                             {title}
+            //                         </Heading>
+            //                         {props.subTitle && <Text fontSize={"12px"}>{subTitle}</Text>}
+            //                     </Flex>}
+            //                     {!isVerticalLang() && <><Heading size='sm' whiteSpace={"nowrap"} overflow={"hidden"} fontFamily={FONT_FAMILY}>
+            //                         {title}
+            //                     </Heading>
+            //                         {props.subTitle && <Text fontSize={"12px"}>{subTitle}</Text>}</>}
+            //                 </Box>
+            //             </Flex>
+            //         </Flex>
+            //     </CardHeader>}
+            //     <CardBody padding={body?4:0}>
+            //         <Flex
+            //             flex={1} gap={4} direction={"column"} padding={0}
+            //         >
+            //             {...(body??[])}
+            //         </Flex>
+            //     </CardBody>
+            //     {footer && <CardFooter padding={3} paddingTop={0} paddingBottom={2}>
+            //         {footer}
+            //     </CardFooter>}
+            // </Card>
         },
         textArea(props: {
             placeholder?: string
@@ -288,70 +289,70 @@ export const Default = (
             disabled?: boolean
             embed?: "left" | "middle" | "right"
         }) {
-            const { width, height } = useWindowSize();
-            const [rows, setRows] = useState(props.rows ?? 3)
-            const ref = useRef(null)
+            // const { width, height } = useWindowSize();
+            // const [rows, setRows] = useState(props.rows ?? 3)
+            // const ref = useRef(null)
 
-            const [areaHeight, setAreaHeight] = useState(36 * (props.rows ?? 1))
+            // const [areaHeight, setAreaHeight] = useState(36 * (props.rows ?? 1))
 
-            const tlRadius = (props.embed == "left" || props.embed == "middle") ? 0 : 10
-            const trRadius = (props.embed == "right" || props.embed == "middle") ? 0 : 10
-            const blRadius = (props.embed == "left" || props.embed == "middle") ? (rows >= 2 ? 10 : 0) : 10
-            const brRadius = (props.embed == "right" || props.embed == "middle") ? (rows >= 2 ? 10 : 0) : 10
+            // const tlRadius = (props.embed == "left" || props.embed == "middle") ? 0 : 10
+            // const trRadius = (props.embed == "right" || props.embed == "middle") ? 0 : 10
+            // const blRadius = (props.embed == "left" || props.embed == "middle") ? (rows >= 2 ? 10 : 0) : 10
+            // const brRadius = (props.embed == "right" || props.embed == "middle") ? (rows >= 2 ? 10 : 0) : 10
 
-            useEffect(() => {
-                if (props.autoGrow && ref.current) {
-                    if (isVerticalLang()) {
-                        const text = (ref.current as any)?.value
-                        const width = (ref.current as any)?.offsetWidth
-                        if (text.length * 256 / width < 100) {
-                            const mdiv = document.createElement("div")
-                            mdiv.style.opacity = "0"
-                            mdiv.style.fontFamily = FONT_FAMILY
-                            mdiv.innerText = text.split(" ").join("\n")
-                            document.body.appendChild(mdiv)
-                            // console.log(mdiv.clientWidth)
-                            setAreaHeight(Math.max(mdiv.clientWidth + 16, 36 * rows))
-                            mdiv.remove()
-                        } else {
-                            setAreaHeight(Math.max(text.length * 256 / width, 128, 36 * rows))
-                        }
-                    } else {
-                        const mdiv = document.createElement("div")
-                        mdiv.style.opacity = "0"
-                        mdiv.innerText = (ref.current as any)?.value
-                        mdiv.style.width = (ref.current as any)?.offsetWidth + "px"
-                        mdiv.style.fontFamily = FONT_FAMILY
-                        document.body.appendChild(mdiv)
-                        setRows(Math.max(mdiv.offsetHeight / 24, props.rows || 3))
-                        mdiv.remove()
-                    }
-                }
-            })
+            // useEffect(() => {
+            //     if (props.autoGrow && ref.current) {
+            //         if (isVerticalLang()) {
+            //             const text = (ref.current as any)?.value
+            //             const width = (ref.current as any)?.offsetWidth
+            //             if (text.length * 256 / width < 100) {
+            //                 const mdiv = document.createElement("div")
+            //                 mdiv.style.opacity = "0"
+            //                 mdiv.style.fontFamily = FONT_FAMILY
+            //                 mdiv.innerText = text.split(" ").join("\n")
+            //                 document.body.appendChild(mdiv)
+            //                 // console.log(mdiv.clientWidth)
+            //                 setAreaHeight(Math.max(mdiv.clientWidth + 16, 36 * rows))
+            //                 mdiv.remove()
+            //             } else {
+            //                 setAreaHeight(Math.max(text.length * 256 / width, 128, 36 * rows))
+            //             }
+            //         } else {
+            //             const mdiv = document.createElement("div")
+            //             mdiv.style.opacity = "0"
+            //             mdiv.innerText = (ref.current as any)?.value
+            //             mdiv.style.width = (ref.current as any)?.offsetWidth + "px"
+            //             mdiv.style.fontFamily = FONT_FAMILY
+            //             document.body.appendChild(mdiv)
+            //             setRows(Math.max(mdiv.offsetHeight / 24, props.rows || 3))
+            //             mdiv.remove()
+            //         }
+            //     }
+            // })
 
-            return <Textarea
-                className="themeTextArea"
-                ref={ref}
-                rows={rows}
-                placeholder={props.placeholder}
-                onInput={(e) => { if (props.onInput) props.onInput(e.currentTarget.value) }}
-                onChange={(e) => { if (props.onChange) props.onChange(e.currentTarget.value) }}
-                autoFocus={props.autoFocus}
-                value={(rows == 1 && !props.autoGrow) ? props.value?.replaceAll("\n", "") : props.value}
-                disabled={props.disabled}
-                style={{
-                    maxHeight:height / 2,
-                    borderTopLeftRadius: tlRadius,
-                    borderTopRightRadius: trRadius,
-                    borderBottomLeftRadius: blRadius,
-                    borderBottomRightRadius: brRadius,
-                    ...(isRtlLang() ? { direction: "rtl" } : {}),
-                    ...(isVerticalLang() ? {
-                        ...(areaHeight == 36 ? {} : { writingMode: "vertical-lr" }),
-                        height: areaHeight
-                    } : {})
-                }}
-            />
+            // return <Textarea
+            //     className="themeTextArea"
+            //     ref={ref}
+            //     rows={rows}
+            //     placeholder={props.placeholder}
+            //     onInput={(e) => { if (props.onInput) props.onInput(e.currentTarget.value) }}
+            //     onChange={(e) => { if (props.onChange) props.onChange(e.currentTarget.value) }}
+            //     autoFocus={props.autoFocus}
+            //     value={(rows == 1 && !props.autoGrow) ? props.value?.replaceAll("\n", "") : props.value}
+            //     disabled={props.disabled}
+            //     style={{
+            //         maxHeight:height / 2,
+            //         borderTopLeftRadius: tlRadius,
+            //         borderTopRightRadius: trRadius,
+            //         borderBottomLeftRadius: blRadius,
+            //         borderBottomRightRadius: brRadius,
+            //         ...(isRtlLang() ? { direction: "rtl" } : {}),
+            //         ...(isVerticalLang() ? {
+            //             ...(areaHeight == 36 ? {} : { writingMode: "vertical-lr" }),
+            //             height: areaHeight
+            //         } : {})
+            //     }}
+            // />
         },
         checkBox(props: {
             checked?: boolean
@@ -424,12 +425,12 @@ export const Default = (
                 <Header>
                     <Tabs transform={isRtlLang() ? "scaleX(-1)" : undefined} isFitted index={props.labels?.indexOf(props?.tab ?? "")} onChange={i => { props?.onChange?.((props.labels?.[i]) ?? "") }} width={"100%"}>
                         <TabList>
-                            {props.labels?.map(label => {
+                            {props.labels?.map((label, i) => {
                                 let _label: any = label
                                 if (isVerticalLang()) {
                                     _label = <div dangerouslySetInnerHTML={{ __html: splitMongolian(label) }} />
                                 }
-                                return <Tab transform={isRtlLang() ? "scaleX(-1)" : undefined} fontSize={14}>{_label}</Tab>
+                                return <Tab key={i} transform={isRtlLang() ? "scaleX(-1)" : undefined} fontSize={14}>{_label}</Tab>
                             })}
                         </TabList>
                     </Tabs>
@@ -443,38 +444,39 @@ export const Default = (
             value?: string
             onChange?: (value: string) => void
             embed?: "left" | "middle" | "right"
-        }): JSX.Element {
-            const [width, setWidth] = useState(0)
-            const select = <Select
-                onChange={(e) => { props.onChange?.(e.currentTarget.value) }}
-                value={props.value}
-                style={{ padding: 4, paddingRight: 36, height: 36, borderColor:"lightgray", boxShadow: "none"}}
-                width={width}
-                fontSize={14}
-                size={"sm"}
-                borderRadius={12}
-                fontFamily={FONT_FAMILY}
-                {...props.embed == "left" && { borderLeftRadius: 0 }}
-                {...props.embed == "middle" && { borderRadius: 0 }}
-                {...props.embed == "right" && { borderRightRadius: 0 }}
-            >
-                {props.options?.map((v, i) => {
-                    const mdiv = document.createElement("div")
-                    mdiv.innerText = v
-                    mdiv.style.opacity = "0"
-                    mdiv.style.fontSize = "16px"
-                    document.body.appendChild(mdiv)
-                    const _width = mdiv.clientWidth + 48
-                    if (_width > width) { setWidth(_width) }
-                    mdiv.remove()
-                    return <option value={v}>
-                        {v}
-                    </option>
-                })}
-            </Select>
-            return <div style={{ display: "inline-block" }}>
-                {select}
-            </div>
+        }) {
+            return <></>
+            // const [width, setWidth] = useState(0)
+            // const select = <Select
+            //     onChange={(e) => { props.onChange?.(e.currentTarget.value) }}
+            //     value={props.value}
+            //     style={{ padding: 4, paddingRight: 36, height: 36, borderColor:"lightgray", boxShadow: "none"}}
+            //     width={width}
+            //     fontSize={14}
+            //     size={"sm"}
+            //     borderRadius={12}
+            //     fontFamily={FONT_FAMILY}
+            //     {...props.embed == "left" && { borderLeftRadius: 0 }}
+            //     {...props.embed == "middle" && { borderRadius: 0 }}
+            //     {...props.embed == "right" && { borderRightRadius: 0 }}
+            // >
+            //     {props.options?.map((v, i) => {
+            //         const mdiv = document.createElement("div")
+            //         mdiv.innerText = v
+            //         mdiv.style.opacity = "0"
+            //         mdiv.style.fontSize = "16px"
+            //         document.body.appendChild(mdiv)
+            //         const _width = mdiv.clientWidth + 48
+            //         if (_width > width) { setWidth(_width) }
+            //         mdiv.remove()
+            //         return <option key={i} value={v}>
+            //             {v}
+            //         </option>
+            //     })}
+            // </Select>
+            // return <div style={{ display: "inline-block" }}>
+            //     {select}
+            // </div>
         },
         popover(props: {
             children?: any
@@ -599,7 +601,7 @@ export const Default = (
             document.body.appendChild(mdiv)
             const width = mdiv.clientWidth + 10
             mdiv.remove()
-            return body.map(elem => elem?.type?.name == "ListItem" ? <div style={{ width: "100%", height: "100%", fontSize: 14, display: "flex", ...(isRtlLang() ? { flexDirection: "row-reverse" } : {}) }}>
+            return body.map((elem, i) => elem?.type?.name == "ListItem" ? <div key={i} style={{ width: "100%", height: "100%", fontSize: 14, display: "flex", ...(isRtlLang() ? { flexDirection: "row-reverse" } : {}) }}>
                 <div style={{ width: width, fontFamily: FONT_FAMILY, fontWeight: "bold", ...(isRtlLang() ? { direction: "rtl" } : {}) }}>
                     {isVerticalLang() ? <div dangerouslySetInnerHTML={{ __html: splitMongolian(elem.props.title) }} /> : elem?.props?.title}
                 </div>

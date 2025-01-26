@@ -1,4 +1,5 @@
-import { LLMModel } from "../client/api";
+// import { LLMModel } from "../client/api";
+type LLMModel = any
 
 const customProvider = (modelName: string) => ({
   id: modelName,

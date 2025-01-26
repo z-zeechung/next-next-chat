@@ -85,7 +85,7 @@ function Code(props: {children, className?}){
   }else if(props.className == "hljs language-toolcall"){
     return <ToolCall code={props.children}/>
   }
-  return <code className={props.className}>{props.children}</code>
+  return <code className={props.className??"hljs"}>{props.children}</code>
 }
 
 export function PreCode(props: { children: any }) {
@@ -162,7 +162,7 @@ function escapeBrackets(text: string) {
   );
 }
 
-function _MarkDownContent(props: { content: string }) {
+function MarkDownContent_(props: { content: string }) {
   const escapedContent = useMemo(() => {
     return escapeBrackets(escapeDollarNumber(props.content));
   }, [props.content]);
@@ -204,7 +204,7 @@ function _MarkDownContent(props: { content: string }) {
   );
 }
 
-export const MarkdownContent = React.memo(_MarkDownContent);
+export const MarkdownContent = React.memo(MarkDownContent_);
 
 export function Markdown(
   props: {

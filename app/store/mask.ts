@@ -13,10 +13,12 @@ export type Mask = {
   avatar: string;
   name: string;
   hideContext?: boolean;
-  context: Message[];
+  // context: Message[];
+  context;
   syncGlobalConfig?: boolean;
   modelConfig: ModelConfig;
-  lang: Lang;
+  // lang: Lang;
+  lang;
   builtin: boolean;
 };
 

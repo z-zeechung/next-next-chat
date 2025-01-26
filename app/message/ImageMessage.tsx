@@ -34,23 +34,23 @@ function _ImageMessageElement(props: { message: ImageMessage, getLfsData: (strin
         <FileFrame src={props.message.src} name={".png"}/>
     </div>
 
-    return <div style={{ position: "relative" }}>
-        <img src={url} style={{ borderRadius: "10px" }} />
-        {/* <div style={{
-            display: "flex",
-            flexDirection: "row",
-            position: "absolute",
-            right: "4px",
-            bottom: "4px",
-            background: "#fff7",
-            alignItems: "center",
-            padding: "1px",
-            paddingLeft: "6px",
-            borderRadius: "1000px",
-        }}>
-            <div style={{ color: "black" }}>{props.message.src.split("/").reverse()[0]}</div>
-        </div> */}
-    </div>
+    // return <div style={{ position: "relative" }}>
+    //     <img src={url} style={{ borderRadius: "10px" }} />
+    //     {/* <div style={{
+    //         display: "flex",
+    //         flexDirection: "row",
+    //         position: "absolute",
+    //         right: "4px",
+    //         bottom: "4px",
+    //         background: "#fff7",
+    //         alignItems: "center",
+    //         padding: "1px",
+    //         paddingLeft: "6px",
+    //         borderRadius: "1000px",
+    //     }}>
+    //         <div style={{ color: "black" }}>{props.message.src.split("/").reverse()[0]}</div>
+    //     </div> */}
+    // </div>
 }
 
 // export class ImageMessage implements Message {

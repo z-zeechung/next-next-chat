@@ -18,7 +18,7 @@ export function getOpenAiApi(
         return new ControllablePromise(async (resolve, reject, abort)=>{
             const completion = await openai.chat.completions.create({
                 model: model,
-                messages: messages,
+                messages: messages as any,
                 stream: true,
                 tools: tools?.length??0>=1?tools:undefined
             })
