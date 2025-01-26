@@ -8,6 +8,5 @@ export const ROLES = ["system", "user", "assistant", "tool"] as const;
 export type MessageRole = (typeof ROLES)[number];
 
 export type Tool = ChatCompletionTool & {
-    call?:(params:object)=>Promise<string>,
-    function: {required:string[]}
+    call?:(params:any)=>Promise<string>
 }

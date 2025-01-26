@@ -1,4 +1,4 @@
-import { LLMModel } from "../client/api";
+// import { LLMModel } from "../client/api";
 import { getClientConfig } from "../config/client";
 import {
   DEFAULT_INPUT_TEMPLATE,
@@ -45,7 +45,8 @@ export const DEFAULT_CONFIG = {
   hideBuiltinMasks: false, // dont add builtin masks
 
   customModels: "",
-  models: DEFAULT_MODELS as any as LLMModel[],
+  // models: DEFAULT_MODELS as any as LLMModel[],
+  models: DEFAULT_MODELS as any,
 
   modelConfig: {
     model: "gpt-3.5-turbo" as ModelType,
@@ -107,13 +108,15 @@ export const useAppConfig = createPersistStore(
       set(() => ({ ...DEFAULT_CONFIG }));
     },
 
-    mergeModels(newModels: LLMModel[]) {
+    // mergeModels(newModels: LLMModel[]) {
+    mergeModels(newModels) {
       if (!newModels || newModels.length === 0) {
         return;
       }
 
       const oldModels = get().models;
-      const modelMap: Record<string, LLMModel> = {};
+      // const modelMap: Record<string, LLMModel> = {};
+      const modelMap: Record<string, any> = {};
 
       for (const model of oldModels) {
         model.available = false;

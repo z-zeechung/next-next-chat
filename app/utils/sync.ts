@@ -87,7 +87,7 @@ const MergeStates: StateMerger = {
 
         // sort local messages with date field in asc order
         localSession.messages.sort(
-          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+          // (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
         );
       }
     });

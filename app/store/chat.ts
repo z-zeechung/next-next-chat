@@ -14,7 +14,7 @@ import {
   GEMINI_SUMMARIZE_MODEL,
   DEFAULT_EMOJI,
 } from "../constant";
-import { ClientApi, MultimodalContent } from "../client/api";
+import { ClientApi, /*MultimodalContent*/ } from "../client/api";
 // import { ChatControllerPool } from "../client/controller";
 import { prettyObject } from "../utils/format";
 import { estimateTokenLength } from "../utils/token";

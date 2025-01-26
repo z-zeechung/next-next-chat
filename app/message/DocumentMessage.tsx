@@ -39,49 +39,49 @@ export function DocumentMessageElement(props: { message: DocumentMessage, getLfs
         <FileFrame src={props.message.src} name={fileName}/>
     </div>
 
-    return <>
-        <div style={{
-            overflow: "scroll",
-            borderRadius: "10px"
-        }}>
-            <div style={{
-                width: small ? 1000 / 3 : width * 0.7,
-                height: small ? 618 / 3 : height * 0.7,
-                overflow: "scroll",
-                position: "relative"
-            }}>
-                <div style={{
-                    zoom: small ? 0.5 : 1,
-                    width: "100%",
-                    height: "100%"
-                }}>
-                    {fileName.endsWith(".docx") && <DocxDisplay src={src} />}
-                </div>
-            </div>
-            {/* <div style={{
-                display: "flex",
-                flexDirection: "row",
-                position: "absolute",
-                right: "4px",
-                bottom: "4px",
-                background: "#EDF2F77f",
-                alignItems: "center",
-                padding: "1px",
-                paddingLeft: "6px",
-                borderRadius: "1000px"
-            }}>
-                <div style={{ opacity: 0.7 }}>{fileName}</div>
-                <div style={{ width: "4px" }} />
-                <TinyButton
-                    text={small ? "放大" : "缩小"}
-                    type="text"
-                    onClick={() => {
-                        setSmall(!small)
-                    }}
-                />
-            </div> */}
-        </div>
-    </>
+    // return <>
+    //     <div style={{
+    //         overflow: "scroll",
+    //         borderRadius: "10px"
+    //     }}>
+    //         <div style={{
+    //             width: small ? 1000 / 3 : width * 0.7,
+    //             height: small ? 618 / 3 : height * 0.7,
+    //             overflow: "scroll",
+    //             position: "relative"
+    //         }}>
+    //             <div style={{
+    //                 zoom: small ? 0.5 : 1,
+    //                 width: "100%",
+    //                 height: "100%"
+    //             }}>
+    //                 {fileName.endsWith(".docx") && <DocxDisplay src={src} />}
+    //             </div>
+    //         </div>
+    //         {/* <div style={{
+    //             display: "flex",
+    //             flexDirection: "row",
+    //             position: "absolute",
+    //             right: "4px",
+    //             bottom: "4px",
+    //             background: "#EDF2F77f",
+    //             alignItems: "center",
+    //             padding: "1px",
+    //             paddingLeft: "6px",
+    //             borderRadius: "1000px"
+    //         }}>
+    //             <div style={{ opacity: 0.7 }}>{fileName}</div>
+    //             <div style={{ width: "4px" }} />
+    //             <TinyButton
+    //                 text={small ? "放大" : "缩小"}
+    //                 type="text"
+    //                 onClick={() => {
+    //                     setSmall(!small)
+    //                 }}
+    //             />
+    //         </div> */}
+    //     </div>
+    // </>
 }
 
 // export class DocumentMessage implements Message {

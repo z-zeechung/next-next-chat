@@ -148,7 +148,7 @@ export function ChatList(props: { narrow?: boolean, managing?:boolean }) {
             }}
           >
             {sessions.map((item, i) => (<>
-              <InfoCard
+              {/* <InfoCard
                 icon={item.avatar?<div dangerouslySetInnerHTML={{__html:item.avatar}}/>:(item.emoji??emoji[DEFAULT_EMOJI])}
                 title={item.topic.length>0?item.topic:Locale.NextChat.ChatArea.DefaultTopic}
                 subTitle={Locale.NextChat.SideBar.CountOfChats(item.messages.length)}
@@ -175,7 +175,7 @@ export function ChatList(props: { narrow?: boolean, managing?:boolean }) {
                     </Right>
                   </Row>
                 </Footer>
-              </InfoCard>
+              </InfoCard> */}
               {false && `<ChatCard
                 icon={item.avatar?<div dangerouslySetInnerHTML={{__html:item.avatar}}/>:(item.emoji??emoji[DEFAULT_EMOJI])}
                 title={item.topic}

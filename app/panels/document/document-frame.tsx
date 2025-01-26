@@ -30,7 +30,7 @@ export function DocumentFrame(props: {
         height:"100%",
         width:"100%"
     }}>
-        <div style={{
+        {/* <div style={{
             position:"absolute",
             overflow:"scroll",
             left:0,
@@ -101,7 +101,7 @@ export function DocumentFrame(props: {
                     flexDirection:"column",
                     gap:10
                 }}>
-                    {[{type:"text", role:"assistant", content:"有什么我可以帮助您的吗🪄"} as Message].concat(session.messages).map((msg, i) => <div>
+                    {[{type:"text", role:"assistant", content:"有什么我可以帮助您的吗🪄"} as Message].concat(session.messages).map((msg, i) => <div key={i}>
                         {msg.role == "user" ? <UserIcon /> : 
                             (msg.role == "system" ? <SystemIcon /> :
                                 (session.avatar ? <div dangerouslySetInnerHTML={{ __html: session.avatar}} /> : <AssistantIcon />)
@@ -116,6 +116,6 @@ export function DocumentFrame(props: {
                     <ThemeButton text="发送" type="primary" />
                 } />
             </div>
-        }
+        } */}
     </div>
 }

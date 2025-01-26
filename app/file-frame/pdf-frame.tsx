@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from "react"
 
-function _PdfFrame(props:{src:string}){
+function PdfFrame_(props:{src:string}){
     const [src, setSrc] = useState("")
     useEffect(()=>{
         fetch(props.src).then(res=>res.arrayBuffer()).then(data=>{
@@ -17,4 +17,4 @@ function _PdfFrame(props:{src:string}){
     </div>
 }
 
-export const PdfFrame = memo(_PdfFrame)
+export const PdfFrame = memo(PdfFrame_)

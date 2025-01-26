@@ -28,7 +28,7 @@ export const BochaAI: Provider = {
                     })).json();
                     resolve(resp.data.webPages.value.map(r=>{return {
                         url: r.displayUrl, 
-                        digest: r.snippet
+                        digest: r.summary
                     }}));
                 })
             }

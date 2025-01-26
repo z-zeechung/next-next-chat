@@ -676,7 +676,7 @@ import { ALL_LANG_OPTIONS, changeLang, getLang } from "../locales";
 //   );
 // }
 
-function _Chat() {
+function Chat_() {
 
   // type RenderMessage = Message & { preview?: boolean };
 
@@ -1352,5 +1352,5 @@ function _Chat() {
 export function Chat() {
   const chatStore = useChatStore();
   const sessionIndex = chatStore.currentSessionIndex;
-  return <_Chat key={sessionIndex}></_Chat>;
+  return <Chat_ key={sessionIndex}></Chat_>;
 }

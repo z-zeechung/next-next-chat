@@ -61,17 +61,17 @@ const DocumentDocx = dynamic(async () => (await import("../panels/document-docx"
   loading: () => <Loading noLogo />,
 });
 
-const DevPage = dynamic(async () => (await import("../panels/devpage")).DevPage, {
-  loading: () => <Loading noLogo />,
-});
+// const DevPage = dynamic(async () => (await import("../panels/devpage")).DevPage, {
+//   loading: () => <Loading noLogo />,
+// });
 
 const AudioPage = dynamic(async () => (await import("../panels/audio")).AudioPage, {
   loading: () => <Loading noLogo />,
 })
 
-const KnowledgeBase = dynamic(async () => (await import("../panels/knowledge")).KnowledgeBase, {
-  loading: () => <Loading noLogo />,
-})
+// const KnowledgeBase = dynamic(async () => (await import("../panels/knowledge")).KnowledgeBase, {
+//   loading: () => <Loading noLogo />,
+// })
 
 const FileManager = dynamic(async () => (await import("../panels/file-manager")).FileManager, {
   loading: () => <Loading noLogo />,
@@ -234,49 +234,49 @@ function Screen() {
     <Route path="/chat" element={<Chat />}/>
     <Route path="/test" element={<TestPage />} />
     <Route path="/docx" element={<Embedded element={<DocumentDocx />} />} />
-    <Route path="/devrole" element={<DevPage />} />
+    {/* <Route path="/devrole" element={<DevPage />} /> */}
     <Route path="/audio" element={<Embedded element={<AudioPage />} />} />
-    <Route path="/knowledge" element={<KnowledgeBase />} />
+    {/* <Route path="/knowledge" element={<KnowledgeBase />} /> */}
     <Route path="/file-manager" element={<FileManager/>}/>
     <Route path="devtools" element={<DevTools/>}/>
   </Routes>
 
-  return (
-    <div
-      className={
-        styles.container
-        //  + ` ${shouldTightBorder ? styles["tight-container"] : styles.container} ${
-        //   getLang() === "ar" ? styles["rtl-screen"] : ""
-        // }`
-        + ` ${styles["tight-container"]} `
-      }
-      style={{
-        display: "flex"
-      }}
-    >
-      {/*<SideBar className={isHome ? styles["sidebar-show"] : ""} />*/}
-      {[
-        "/",
-        "/chat"
-      ].includes(location.pathname) && <SideBar show={isHome} />}
+  // return (
+  //   <div
+  //     className={
+  //       styles.container
+  //       //  + ` ${shouldTightBorder ? styles["tight-container"] : styles.container} ${
+  //       //   getLang() === "ar" ? styles["rtl-screen"] : ""
+  //       // }`
+  //       + ` ${styles["tight-container"]} `
+  //     }
+  //     style={{
+  //       display: "flex"
+  //     }}
+  //   >
+  //     {/*<SideBar className={isHome ? styles["sidebar-show"] : ""} />*/}
+  //     {[
+  //       "/",
+  //       "/chat"
+  //     ].includes(location.pathname) && <SideBar show={isHome} />}
 
-      <div className={styles["window-content"]} id={SlotID.AppBody} style={{ flex: 1 }}>
-        <Routes>
-          <Route path="/" element={<Chat />} />
-          <Route path="/chat" element={<Chat />} />
-          {/* <Route path="/auth" element={<AuthPage />}/> */}
-          <Route path="/test" element={<TestPage />} />
-          <Route path="/docx" element={<Embedded element={<DocumentDocx />} />} />
-          <Route path="/devrole" element={<Embedded element={<DevPage />} />} />
-          <Route path="/audio" element={<Embedded element={<AudioPage />} />} />
-          <Route path="/knowledge" element={<Embedded element={<KnowledgeBase />} />} />
-          {/* <Route path={Path.NewChat} element={<NewChat />} /> */}
-          {/* <Route path={Path.Masks} element={<MaskPage />} /> */}
-          {/* <Route path={Path.Settings} element={<Settings />} /> */}
-        </Routes>
-      </div>
-    </div>
-  );
+  //     <div className={styles["window-content"]} id={SlotID.AppBody} style={{ flex: 1 }}>
+  //       <Routes>
+  //         <Route path="/" element={<Chat />} />
+  //         <Route path="/chat" element={<Chat />} />
+  //         {/* <Route path="/auth" element={<AuthPage />}/> */}
+  //         <Route path="/test" element={<TestPage />} />
+  //         <Route path="/docx" element={<Embedded element={<DocumentDocx />} />} />
+  //         <Route path="/devrole" element={<Embedded element={<DevPage />} />} />
+  //         <Route path="/audio" element={<Embedded element={<AudioPage />} />} />
+  //         <Route path="/knowledge" element={<Embedded element={<KnowledgeBase />} />} />
+  //         {/* <Route path={Path.NewChat} element={<NewChat />} /> */}
+  //         {/* <Route path={Path.Masks} element={<MaskPage />} /> */}
+  //         {/* <Route path={Path.Settings} element={<Settings />} /> */}
+  //       </Routes>
+  //     </div>
+  //   </div>
+  // );
 }
 
 export function useLoadData() {

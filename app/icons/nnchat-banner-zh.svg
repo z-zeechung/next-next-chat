@@ -1,463 +1,1380 @@
-<svg width="68" height="20" viewBox="0 0 900 265" xmlns="http://www.w3.org/2000/svg">
- <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
-
- <g>
-  <title>background</title>
-  <rect fill="#fff0" id="canvas_background" height="265" width="900" y="-1" x="-1"/>
-  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
-   <rect fill="url(#gridpattern)" stroke-width="0" y="1" x="1" height="598" width="1276"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="68"
+   height="20"
+   viewBox="0 0 900 265"
+   version="1.1"
+   id="svg3"
+   sodipodi:docname="banner-zh.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     id="namedview3"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="9.2183847"
+     inkscape:cx="23.973831"
+     inkscape:cy="2.1153381"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg_284" />
+  <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+  <g
+     id="g3">
+    <title
+       id="title2">Layer 1</title>
+    <metadata
+       transform="matrix(1.7380261796679406,0,0,1.7380261796679406,0,0) "
+       id="svg_563">image/svg+xml</metadata>
+    <defs
+       id="svg_513">
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_511">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,-0.431505l113.4,0l0,113.4l-113.4,0l0,-113.4z"
+           id="svg_562"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_492">
+        <path
+           clip-rule="evenodd"
+           d="m0.431504,112.968475l113.40002,0l0,-113.39998l-113.40002,0"
+           id="svg_561"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_488">
+        <path
+           clip-rule="evenodd"
+           d="m0.431504,112.968475l113.40002,0l0,-113.39998l-113.40002,0"
+           id="svg_560"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_484">
+        <path
+           clip-rule="evenodd"
+           d="m0.431504,112.968475l113.40002,0l0,-113.39998l-113.40002,0"
+           id="svg_559"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_480">
+        <path
+           clip-rule="evenodd"
+           d="m0.431504,112.968475l113.40002,0l0,-113.39998l-113.40002,0"
+           id="svg_558"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_476">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.39999l-113.40001,0.00001"
+           id="svg_557"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_472">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.39999l-113.40001,0.00001"
+           id="svg_556"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_468">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.40001,0.00001"
+           id="svg_555"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_464">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.40001,0.00001"
+           id="svg_554"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_460">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.39999l-113.4,0.00001"
+           id="svg_553"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_456">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.39999l-113.4,0.00001"
+           id="svg_552"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_452">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.39998l-113.40002,0"
+           id="svg_551"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_448">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.39998l-113.40002,0"
+           id="svg_550"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_444">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.39997l-113.40001,0"
+           id="svg_549"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_440">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.39997l-113.40001,0"
+           id="svg_548"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_436">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39996l-113.40001,-0.00002"
+           id="svg_547"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_432">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39996l-113.40001,-0.00002"
+           id="svg_546"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_428">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.39999l-113.40001,0"
+           id="svg_545"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_424">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.39999l-113.40001,0"
+           id="svg_544"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_420">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.40001l-113.4,0.00001"
+           id="svg_543"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_416">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.40001l-113.4,0.00001"
+           id="svg_542"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_412">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.4l-113.40001,0.00001"
+           id="svg_541"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_408">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.4l-113.40001,0.00001"
+           id="svg_540"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_404">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.40001,0"
+           id="svg_539"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_400">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.40001,0"
+           id="svg_538"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_384">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.4,0.00001"
+           id="svg_537"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_380">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.4,0.00001"
+           id="svg_536"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_376">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.4,0"
+           id="svg_535"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_372">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.4,0"
+           id="svg_534"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_368">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.40002,0"
+           id="svg_533"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_364">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.40002,0"
+           id="svg_532"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_360">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.40001,0"
+           id="svg_531"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_356">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.40001,0"
+           id="svg_530"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_352">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.40001,0"
+           id="svg_529"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_348">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.40001,0"
+           id="svg_528"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_344">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.4,0.00001"
+           id="svg_527"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_340">
+        <path
+           clip-rule="evenodd"
+           d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.4,0.00001"
+           id="svg_526"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_336">
+        <path
+           clip-rule="evenodd"
+           d="m0.431504,112.968475l113.40002,0l0,-113.39999l-113.40002,0"
+           id="svg_525"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_332">
+        <path
+           clip-rule="evenodd"
+           d="m0.431504,112.968475l113.40002,0l0,-113.39999l-113.40002,0"
+           id="svg_524"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_328">
+        <path
+           clip-rule="evenodd"
+           d="m0.431504,112.968475l113.40002,0l0,-113.4l-113.40002,0"
+           id="svg_523"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_324">
+        <path
+           clip-rule="evenodd"
+           d="m0.431504,112.968475l113.40002,0l0,-113.4l-113.40002,0"
+           id="svg_522"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_320">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.39997l-113.40002,0"
+           id="svg_521"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_316">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.39997l-113.40002,0"
+           id="svg_520"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_312">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.39997l-113.40001,0"
+           id="svg_519"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_308">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.39997l-113.40001,0"
+           id="svg_518"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_304">
+        <path
+           clip-rule="evenodd"
+           d="m0.431504,112.968475l113.40002,0l0,-113.39996l-113.40002,-0.00001"
+           id="svg_517"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_300">
+        <path
+           clip-rule="evenodd"
+           d="m0.431504,112.968475l113.40002,0l0,-113.39996l-113.40002,-0.00001"
+           id="svg_516"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_296">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.40001l-113.40002,0.00001"
+           id="svg_515"
+           style="clip-rule:evenodd" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="svg_292">
+        <path
+           clip-rule="evenodd"
+           d="m0.431514,112.968475l113.40001,0l0,-113.40001l-113.40002,0.00001"
+           id="svg_514"
+           style="clip-rule:evenodd" />
+      </clipPath>
+    </defs>
+    <g
+       id="svg_565">
+      <g
+         id="svg_284"
+         transform="matrix(2.3173681816230483,0,0,-2.3173681816230483,0,262.7895583657926) ">
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="1.56"
+           stroke-miterlimit="10"
+           d="m46.331524,37.729475l27.495,18.419"
+           id="svg_508" />
+        <path
+           fill="#deebf7"
+           fill-rule="evenodd"
+           d="m66.251524,56.088475c0,4.208 3.412,7.62 7.62,7.62c4.208,0 7.62,-3.412 7.62,-7.62c0,-4.208 -3.412,-7.62 -7.62,-7.62c-4.208,0 -7.62,3.412 -7.62,7.62z"
+           id="svg_507" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="1.56"
+           stroke-miterlimit="10"
+           d="m66.251524,56.088475c0,4.208 3.412,7.62 7.62,7.62c4.208,0 7.62,-3.412 7.62,-7.62c0,-4.208 -3.412,-7.62 -7.62,-7.62c-4.208,0 -7.62,3.412 -7.62,7.62z"
+           id="svg_506" />
+        <path
+           fill="#9dc3e6"
+           fill-rule="evenodd"
+           d="m57.311524,20.688475l10.26,17.64l10.26,-17.64l-20.52,0z"
+           id="svg_505" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="0.96"
+           stroke-linejoin="round"
+           stroke-miterlimit="10"
+           d="m57.311524,20.688475l10.26,17.64l10.26,-17.64l-20.52,0z"
+           id="svg_504" />
+        <path
+           fill="#bdd7ee"
+           fill-rule="evenodd"
+           d="m46.991524,2.928475l10.32,17.76l10.32,-17.76l-20.64,0z"
+           id="svg_503" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="0.96"
+           stroke-linejoin="round"
+           stroke-miterlimit="10"
+           d="m46.991524,2.928475l10.32,17.76l10.32,-17.76l-20.64,0z"
+           id="svg_502" />
+        <path
+           fill="#deebf7"
+           fill-rule="evenodd"
+           d="m57.311524,20.688475l-10.26,-17.76l-10.26,17.76l20.52,0z"
+           id="svg_501" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="0.96"
+           stroke-linejoin="round"
+           stroke-miterlimit="10"
+           d="m57.311524,20.688475l-10.26,-17.76l-10.26,17.76l20.52,0z"
+           id="svg_500" />
+        <path
+           fill="#deebf7"
+           fill-rule="evenodd"
+           d="m77.831524,20.688475l-10.26,-17.76l-10.26,17.76l20.52,0z"
+           id="svg_499" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="0.96"
+           stroke-linejoin="round"
+           stroke-miterlimit="10"
+           d="m77.831524,20.688475l-10.26,-17.76l-10.26,17.76l20.52,0z"
+           id="svg_498" />
+        <path
+           fill="#deebf7"
+           fill-rule="evenodd"
+           d="m67.631524,38.328475l-10.32,-17.64l-10.32,17.64l20.64,0z"
+           id="svg_497" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="0.96"
+           stroke-linejoin="round"
+           stroke-miterlimit="10"
+           d="m67.631524,38.328475l-10.32,-17.64l-10.32,17.64l20.64,0z"
+           id="svg_496" />
+        <path
+           fill="#9dc3e6"
+           fill-rule="evenodd"
+           d="m36.671524,20.688475l10.32,17.64l10.32,-17.64l-20.64,0z"
+           id="svg_495" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="0.96"
+           stroke-linejoin="round"
+           stroke-miterlimit="10"
+           d="m36.671524,20.688475l10.32,17.64l10.32,-17.64l-20.64,0z"
+           id="svg_494" />
+        <g
+           id="svg_490">
+          <g
+             id="svg_491"
+             clip-path="url(#svg_492)">
+            <path
+               fill="#9dc3e6"
+               fill-rule="evenodd"
+               d="m88.153524,38.391475l-10.24,17.751l20.493,0.075l-10.253,-17.826z"
+               id="svg_493" />
+          </g>
+        </g>
+        <g
+           id="svg_486">
+          <g
+             id="svg_487"
+             clip-path="url(#svg_488)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m88.153524,38.391475l-10.24,17.751l20.493,0.075l-10.253,-17.826z"
+               id="svg_489" />
+          </g>
+        </g>
+        <g
+           id="svg_482">
+          <g
+             id="svg_483"
+             clip-path="url(#svg_484)">
+            <path
+               fill="#bdd7ee"
+               fill-rule="evenodd"
+               d="m98.394524,20.640475l-10.241,17.751l20.498,0.074l-10.257,-17.825z"
+               id="svg_485" />
+          </g>
+        </g>
+        <g
+           id="svg_478">
+          <g
+             id="svg_479"
+             clip-path="url(#svg_480)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m98.394524,20.640475l-10.241,17.751l20.498,0.074l-10.257,-17.825z"
+               id="svg_481" />
+          </g>
+        </g>
+        <g
+           id="svg_474">
+          <g
+             id="svg_475"
+             clip-path="url(#svg_476)">
+            <path
+               fill="#deebf7"
+               fill-rule="evenodd"
+               d="m88.153524,38.391475l10.241,-17.751l-20.493,-0.074l10.252,17.825z"
+               id="svg_477" />
+          </g>
+        </g>
+        <g
+           id="svg_470">
+          <g
+             id="svg_471"
+             clip-path="url(#svg_472)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m88.153524,38.391475l10.241,-17.751l-20.493,-0.074l10.252,17.825z"
+               id="svg_473" />
+          </g>
+        </g>
+        <g
+           id="svg_466">
+          <g
+             id="svg_467"
+             clip-path="url(#svg_468)">
+            <path
+               fill="#deebf7"
+               fill-rule="evenodd"
+               d="m98.406524,56.217475l10.245,-17.751l-20.498,-0.075l10.253,17.826z"
+               id="svg_469" />
+          </g>
+        </g>
+        <g
+           id="svg_462">
+          <g
+             id="svg_463"
+             clip-path="url(#svg_464)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m98.406524,56.217475l10.245,-17.751l-20.498,-0.075l10.253,17.826z"
+               id="svg_465" />
+          </g>
+        </g>
+        <g
+           id="svg_458">
+          <g
+             id="svg_459"
+             clip-path="url(#svg_460)">
+            <path
+               fill="#deebf7"
+               fill-rule="evenodd"
+               d="m77.913524,56.142475l10.24,-17.751l-20.493,-0.074l10.253,17.825z"
+               id="svg_461" />
+          </g>
+        </g>
+        <g
+           id="svg_454">
+          <g
+             id="svg_455"
+             clip-path="url(#svg_456)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m77.913524,56.142475l10.24,-17.751l-20.493,-0.074l10.253,17.825z"
+               id="svg_457" />
+          </g>
+        </g>
+        <g
+           id="svg_450">
+          <g
+             id="svg_451"
+             clip-path="url(#svg_452)">
+            <path
+               fill="#9dc3e6"
+               fill-rule="evenodd"
+               d="m77.884524,20.536475l-10.241,17.752l20.494,0.074l-10.253,-17.826z"
+               id="svg_453" />
+          </g>
+        </g>
+        <g
+           id="svg_446">
+          <g
+             id="svg_447"
+             clip-path="url(#svg_448)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m77.884524,20.536475l-10.241,17.752l20.494,0.074l-10.253,-17.826z"
+               id="svg_449" />
+          </g>
+        </g>
+        <g
+           id="svg_442">
+          <g
+             id="svg_443"
+             clip-path="url(#svg_444)">
+            <path
+               fill="#9dc3e6"
+               fill-rule="evenodd"
+               d="m26.539524,38.458475l20.493,-0.041l-10.211,-17.768l-10.282,17.809z"
+               id="svg_445" />
+          </g>
+        </g>
+        <g
+           id="svg_438">
+          <g
+             id="svg_439"
+             clip-path="url(#svg_440)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m26.539524,38.458475l20.493,-0.041l-10.211,-17.768l-10.282,17.809z"
+               id="svg_441" />
+          </g>
+        </g>
+        <g
+           id="svg_434">
+          <g
+             id="svg_435"
+             clip-path="url(#svg_436)">
+            <path
+               fill="#bdd7ee"
+               fill-rule="evenodd"
+               d="m6.046324,38.499475l20.4932,-0.041l-10.212,-17.768l-10.2812,17.809z"
+               id="svg_437" />
+          </g>
+        </g>
+        <g
+           id="svg_430">
+          <g
+             id="svg_431"
+             clip-path="url(#svg_432)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m6.046324,38.499475l20.4932,-0.041l-10.212,-17.768l-10.2812,17.809z"
+               id="svg_433" />
+          </g>
+        </g>
+        <g
+           id="svg_426">
+          <g
+             id="svg_427"
+             clip-path="url(#svg_428)">
+            <path
+               fill="#deebf7"
+               fill-rule="evenodd"
+               d="m26.539524,38.458475l-20.4933,0.041l10.2113,17.768l10.282,-17.809z"
+               id="svg_429" />
+          </g>
+        </g>
+        <g
+           id="svg_422">
+          <g
+             id="svg_423"
+             clip-path="url(#svg_424)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m26.539524,38.458475l-20.4933,0.041l10.2113,17.768l10.282,-17.809z"
+               id="svg_425" />
+          </g>
+        </g>
+        <g
+           id="svg_418">
+          <g
+             id="svg_419"
+             clip-path="url(#svg_420)">
+            <path
+               fill="#deebf7"
+               fill-rule="evenodd"
+               d="m36.821524,20.649475l-20.494,0.041l10.212,17.768l10.282,-17.809z"
+               id="svg_421" />
+          </g>
+        </g>
+        <g
+           id="svg_414">
+          <g
+             id="svg_415"
+             clip-path="url(#svg_416)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m36.821524,20.649475l-20.494,0.041l10.212,17.768l10.282,-17.809z"
+               id="svg_417" />
+          </g>
+        </g>
+        <g
+           id="svg_410">
+          <g
+             id="svg_411"
+             clip-path="url(#svg_412)">
+            <path
+               fill="#deebf7"
+               fill-rule="evenodd"
+               d="m47.032524,38.417475l-20.493,0.041l10.212,17.768l10.281,-17.809z"
+               id="svg_413" />
+          </g>
+        </g>
+        <g
+           id="svg_406">
+          <g
+             id="svg_407"
+             clip-path="url(#svg_408)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m47.032524,38.417475l-20.493,0.041l10.212,17.768l10.281,-17.809z"
+               id="svg_409" />
+          </g>
+        </g>
+        <g
+           id="svg_402">
+          <g
+             id="svg_403"
+             clip-path="url(#svg_404)">
+            <path
+               fill="#9dc3e6"
+               fill-rule="evenodd"
+               d="m16.241524,56.296475l20.493,-0.041l-10.212,-17.768l-10.281,17.809z"
+               id="svg_405" />
+          </g>
+        </g>
+        <g
+           id="svg_398">
+          <g
+             id="svg_399"
+             clip-path="url(#svg_400)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m16.241524,56.296475l20.493,-0.041l-10.212,-17.768l-10.281,17.809z"
+               id="svg_401" />
+          </g>
+        </g>
+        <path
+           fill="#9dc3e6"
+           fill-rule="evenodd"
+           d="m57.311524,91.608475l-10.26,-17.64l-10.26,17.64l20.52,0z"
+           id="svg_397" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="0.96"
+           stroke-linejoin="round"
+           stroke-miterlimit="10"
+           d="m57.311524,91.608475l-10.26,-17.64l-10.26,17.64l20.52,0z"
+           id="svg_396" />
+        <path
+           fill="#bdd7ee"
+           fill-rule="evenodd"
+           d="m67.631524,109.368475l-10.32,-17.76l-10.32,17.76l20.64,0z"
+           id="svg_395" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="0.96"
+           stroke-linejoin="round"
+           stroke-miterlimit="10"
+           d="m67.631524,109.368475l-10.32,-17.76l-10.32,17.76l20.64,0z"
+           id="svg_394" />
+        <path
+           fill="#deebf7"
+           fill-rule="evenodd"
+           d="m57.311524,91.608475l10.26,17.76l10.26,-17.76l-20.52,0z"
+           id="svg_393" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="0.96"
+           stroke-linejoin="round"
+           stroke-miterlimit="10"
+           d="m57.311524,91.608475l10.26,17.76l10.26,-17.76l-20.52,0z"
+           id="svg_392" />
+        <path
+           fill="#deebf7"
+           fill-rule="evenodd"
+           d="m36.791524,91.608475l10.26,17.76l10.26,-17.76l-20.52,0z"
+           id="svg_391" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="0.96"
+           stroke-linejoin="round"
+           stroke-miterlimit="10"
+           d="m36.791524,91.608475l10.26,17.76l10.26,-17.76l-20.52,0z"
+           id="svg_390" />
+        <path
+           fill="#deebf7"
+           fill-rule="evenodd"
+           d="m46.991524,73.968475l10.32,17.64l10.32,-17.64l-20.64,0z"
+           id="svg_389" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="0.96"
+           stroke-linejoin="round"
+           stroke-miterlimit="10"
+           d="m46.991524,73.968475l10.32,17.64l10.32,-17.64l-20.64,0z"
+           id="svg_388" />
+        <path
+           fill="#9dc3e6"
+           fill-rule="evenodd"
+           d="m77.951524,91.608475l-10.32,-17.64l-10.32,17.64l20.64,0z"
+           id="svg_387" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="0.96"
+           stroke-linejoin="round"
+           stroke-miterlimit="10"
+           d="m77.951524,91.608475l-10.32,-17.64l-10.32,17.64l20.64,0z"
+           id="svg_386" />
+        <g
+           id="svg_382">
+          <g
+             id="svg_383"
+             clip-path="url(#svg_384)">
+            <path
+               fill="#9dc3e6"
+               fill-rule="evenodd"
+               d="m26.450524,73.907475l10.241,-17.751l-20.494,-0.074l10.253,17.825z"
+               id="svg_385" />
+          </g>
+        </g>
+        <g
+           id="svg_378">
+          <g
+             id="svg_379"
+             clip-path="url(#svg_380)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m26.450524,73.907475l10.241,-17.751l-20.494,-0.074l10.253,17.825z"
+               id="svg_381" />
+          </g>
+        </g>
+        <g
+           id="svg_374">
+          <g
+             id="svg_375"
+             clip-path="url(#svg_376)">
+            <path
+               fill="#bdd7ee"
+               fill-rule="evenodd"
+               d="m16.210524,91.659475l10.24,-17.752l-20.493,-0.074l10.253,17.826z"
+               id="svg_377" />
+          </g>
+        </g>
+        <g
+           id="svg_370">
+          <g
+             id="svg_371"
+             clip-path="url(#svg_372)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m16.210524,91.659475l10.24,-17.752l-20.493,-0.074l10.253,17.826z"
+               id="svg_373" />
+          </g>
+        </g>
+        <g
+           id="svg_366">
+          <g
+             id="svg_367"
+             clip-path="url(#svg_368)">
+            <path
+               fill="#deebf7"
+               fill-rule="evenodd"
+               d="m26.450524,73.907475l-10.24,17.752l20.493,0.074l-10.253,-17.826z"
+               id="svg_369" />
+          </g>
+        </g>
+        <g
+           id="svg_362">
+          <g
+             id="svg_363"
+             clip-path="url(#svg_364)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m26.450524,73.907475l-10.24,17.752l20.493,0.074l-10.253,-17.826z"
+               id="svg_365" />
+          </g>
+        </g>
+        <g
+           id="svg_358">
+          <g
+             id="svg_359"
+             clip-path="url(#svg_360)">
+            <path
+               fill="#deebf7"
+               fill-rule="evenodd"
+               d="m16.197524,56.082475l-10.2401,17.751l20.4931,0.074l-10.253,-17.825z"
+               id="svg_361" />
+          </g>
+        </g>
+        <g
+           id="svg_354">
+          <g
+             id="svg_355"
+             clip-path="url(#svg_356)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m16.197524,56.082475l-10.2401,17.751l20.4931,0.074l-10.253,-17.825z"
+               id="svg_357" />
+          </g>
+        </g>
+        <g
+           id="svg_350">
+          <g
+             id="svg_351"
+             clip-path="url(#svg_352)">
+            <path
+               fill="#deebf7"
+               fill-rule="evenodd"
+               d="m36.691524,56.156475l-10.241,17.751l20.493,0.075l-10.252,-17.826z"
+               id="svg_353" />
+          </g>
+        </g>
+        <g
+           id="svg_346">
+          <g
+             id="svg_347"
+             clip-path="url(#svg_348)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m36.691524,56.156475l-10.241,17.751l20.493,0.075l-10.252,-17.826z"
+               id="svg_349" />
+          </g>
+        </g>
+        <g
+           id="svg_342">
+          <g
+             id="svg_343"
+             clip-path="url(#svg_344)">
+            <path
+               fill="#9dc3e6"
+               fill-rule="evenodd"
+               d="m36.719524,91.762475l10.241,-17.751l-20.493,-0.074l10.252,17.825z"
+               id="svg_345" />
+          </g>
+        </g>
+        <g
+           id="svg_338">
+          <g
+             id="svg_339"
+             clip-path="url(#svg_340)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m36.719524,91.762475l10.241,-17.751l-20.493,-0.074l10.252,17.825z"
+               id="svg_341" />
+          </g>
+        </g>
+        <g
+           id="svg_334">
+          <g
+             id="svg_335"
+             clip-path="url(#svg_336)">
+            <path
+               fill="#9dc3e6"
+               fill-rule="evenodd"
+               d="m88.064524,73.841475l-20.493,0.041l10.212,17.768l10.281,-17.809z"
+               id="svg_337" />
+          </g>
+        </g>
+        <g
+           id="svg_330">
+          <g
+             id="svg_331"
+             clip-path="url(#svg_332)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m88.064524,73.841475l-20.493,0.041l10.212,17.768l10.281,-17.809z"
+               id="svg_333" />
+          </g>
+        </g>
+        <g
+           id="svg_326">
+          <g
+             id="svg_327"
+             clip-path="url(#svg_328)">
+            <path
+               fill="#bdd7ee"
+               fill-rule="evenodd"
+               d="m108.561524,73.799475l-20.497,0.042l10.212,17.767l10.285,-17.809z"
+               id="svg_329" />
+          </g>
+        </g>
+        <g
+           id="svg_322">
+          <g
+             id="svg_323"
+             clip-path="url(#svg_324)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m108.561524,73.799475l-20.497,0.042l10.212,17.767l10.285,-17.809z"
+               id="svg_325" />
+          </g>
+        </g>
+        <g
+           id="svg_318">
+          <g
+             id="svg_319"
+             clip-path="url(#svg_320)">
+            <path
+               fill="#deebf7"
+               fill-rule="evenodd"
+               d="m88.064524,73.840475l20.497,-0.041l-10.215,-17.767l-10.282,17.808z"
+               id="svg_321" />
+          </g>
+        </g>
+        <g
+           id="svg_314">
+          <g
+             id="svg_315"
+             clip-path="url(#svg_316)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m88.064524,73.840475l20.497,-0.041l-10.215,-17.767l-10.282,17.808z"
+               id="svg_317" />
+          </g>
+        </g>
+        <g
+           id="svg_310">
+          <g
+             id="svg_311"
+             clip-path="url(#svg_312)">
+            <path
+               fill="#deebf7"
+               fill-rule="evenodd"
+               d="m77.783524,91.649475l20.493,-0.041l-10.212,-17.767l-10.281,17.808z"
+               id="svg_313" />
+          </g>
+        </g>
+        <g
+           id="svg_306">
+          <g
+             id="svg_307"
+             clip-path="url(#svg_308)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m77.783524,91.649475l20.493,-0.041l-10.212,-17.767l-10.281,17.808z"
+               id="svg_309" />
+          </g>
+        </g>
+        <g
+           id="svg_302">
+          <g
+             id="svg_303"
+             clip-path="url(#svg_304)">
+            <path
+               fill="#deebf7"
+               fill-rule="evenodd"
+               d="m67.571524,73.882475l20.493,-0.041l-10.211,-17.768l-10.282,17.809z"
+               id="svg_305" />
+          </g>
+        </g>
+        <g
+           id="svg_298">
+          <g
+             id="svg_299"
+             clip-path="url(#svg_300)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m67.571524,73.882475l20.493,-0.041l-10.211,-17.768l-10.282,17.809z"
+               id="svg_301" />
+          </g>
+        </g>
+        <g
+           id="svg_294">
+          <g
+             id="svg_295"
+             clip-path="url(#svg_296)">
+            <path
+               fill="#9dc3e6"
+               fill-rule="evenodd"
+               d="m98.363524,56.003475l-20.493,0.041l10.211,17.767l10.282,-17.808z"
+               id="svg_297" />
+          </g>
+        </g>
+        <g
+           id="svg_290">
+          <g
+             id="svg_291"
+             clip-path="url(#svg_292)">
+            <path
+               fill="none"
+               stroke="#41719c"
+               stroke-linejoin="round"
+               stroke-miterlimit="10"
+               d="m98.363524,56.003475l-20.493,0.041l10.211,17.767l10.282,-17.808z"
+               id="svg_293" />
+          </g>
+        </g>
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="1.56"
+           stroke-miterlimit="8"
+           d="m46.331524,37.153475l0.308,34.355"
+           id="svg_289" />
+        <path
+           fill="#deebf7"
+           fill-rule="evenodd"
+           d="m38.771524,70.848475c0,4.208 3.412,7.62 7.62,7.62c4.208,0 7.62,-3.412 7.62,-7.62c0,-4.208 -3.412,-7.62 -7.62,-7.62c-4.208,0 -7.62,3.412 -7.62,7.62z"
+           id="svg_288" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="1.56"
+           stroke-miterlimit="8"
+           d="m38.771524,70.848475c0,4.208 3.412,7.62 7.62,7.62c4.208,0 7.62,-3.412 7.62,-7.62c0,-4.208 -3.412,-7.62 -7.62,-7.62c-4.208,0 -7.62,3.412 -7.62,7.62z"
+           id="svg_287" />
+        <path
+           fill="#bdd7ee"
+           fill-rule="evenodd"
+           d="m38.531524,37.188475c0,4.242 3.412,7.68 7.62,7.68c4.208,0 7.62,-3.438 7.62,-7.68c0,-4.242 -3.412,-7.68 -7.62,-7.68c-4.208,0 -7.62,3.438 -7.62,7.68z"
+           id="svg_286" />
+        <path
+           fill="none"
+           stroke="#41719c"
+           stroke-width="1.56"
+           stroke-miterlimit="8"
+           d="m38.531524,37.188475c0,4.242 3.412,7.68 7.62,7.68c4.208,0 7.62,-3.438 7.62,-7.68c0,-4.242 -3.412,-7.68 -7.62,-7.68c-4.208,0 -7.62,3.438 -7.62,7.68z"
+           id="svg_285" />
+      </g>
+    </g>
+    <metadata
+       transform="matrix(0.8516327840328728,0,0,0.8516327840328728,0,0) "
+       id="metadata2">Created by potrace 1.16, written by Peter Selinger 2001-2019</metadata>
+    <g
+       stroke="null"
+       id="svg_574">
+      <g
+         id="svg_569"
+         fill="#000000"
+         transform="matrix(0.11117965913803703,0,0,-0.11117965913803703,-99.0843164404796,221.43069485636084) ">
+        <path
+           stroke="null"
+           id="svg_570"
+           d="m4642.98194,1613.423975c-16,-8 -31,-21 -34,-29c-8,-21 107,-130 145,-139c16,-3 38,-15 48,-26c16,-18 16,-19 0,-19c-9,0 -49,-16 -89,-35c-39,-19 -78,-35 -85,-35c-7,0 -20,-4 -30,-9c-25,-13 -61,-26 -112,-42c-62,-19 -63,-41 -4,-79c26,-16 58,-30 70,-30c12,0 24,-6 27,-13c8,-20 -4,-68 -25,-102c-20,-33 -24,-85 -8,-101c19,-19 29,-72 17,-87c-13,-16 -103,-41 -116,-32c-13,8 -32,-21 -25,-38c3,-9 14,-19 25,-22c10,-4 19,-10 19,-14c0,-14 80,-43 93,-33c7,5 45,22 86,38c68,26 74,27 86,11c13,-18 8,-59 -10,-88c-5,-8 -62,-42 -125,-74c-63,-32 -137,-70 -165,-86c-27,-16 -57,-29 -66,-29c-9,0 -27,-8 -40,-18c-30,-24 -83,-34 -97,-20c-8,8 -15,8 -27,-2c-21,-17 -19,-59 3,-67c9,-4 27,-14 40,-24c29,-22 91,-15 149,18c23,12 52,23 64,23c21,0 22,-2 17,-105c-5,-120 0,-133 62,-165c49,-25 70,-25 70,-2c0,24 19,42 46,42c12,0 24,7 28,15c7,18 36,20 36,2c0,-7 -5,-18 -11,-24c-8,-8 -6,-16 10,-29c11,-10 21,-24 21,-31c0,-16 57,-46 71,-37c6,3 18,23 27,43c12,30 15,76 13,267c-2,181 1,233 11,241c7,6 40,18 73,28c116,36 159,79 119,120c-14,13 -31,16 -88,12c-39,-3 -86,-8 -104,-12c-22,-5 -43,-2 -67,9c-32,15 -47,36 -27,36c5,0 17,8 28,18c26,22 61,42 75,42c7,0 17,7 24,16c6,9 23,18 37,19c14,2 50,15 81,31c48,23 57,32 57,53c0,20 -7,29 -30,38c-57,21 -24,100 39,95c19,-1 37,6 54,24c18,18 32,24 44,19c16,-6 16,-8 -5,-18c-18,-8 -22,-16 -17,-35c3,-13 1,-30 -5,-38c-8,-8 -10,-36 -6,-76c3,-35 6,-74 6,-88c0,-159 -2,-203 -10,-252c-31,-180 -30,-170 -9,-200c11,-15 29,-28 39,-28c11,0 31,-12 45,-27c21,-24 27,-26 35,-13c6,8 9,22 8,30c0,8 2,22 5,30c9,24 19,128 22,227c1,50 5,102 8,115c9,32 50,49 103,41c24,-3 49,-1 56,4c7,5 40,16 73,23c33,7 66,18 72,23c7,5 28,9 47,9c26,0 37,5 41,19c8,25 22,24 30,-1c8,-26 15,-25 59,5c20,14 41,25 47,25c5,0 14,11 18,23c5,13 25,32 45,41c20,9 36,19 36,22c0,12 -24,51 -48,77c-29,30 -53,34 -72,12c-7,-9 -21,-13 -35,-9c-22,6 -202,-71 -234,-100c-9,-8 -29,-18 -46,-22c-35,-8 -114,-60 -133,-86c-8,-11 -23,-18 -35,-16c-19,3 -23,11 -27,56c-5,47 -10,57 -49,90c-41,35 -44,41 -37,74c8,43 31,64 69,62c16,0 58,14 94,32c36,19 75,34 86,34c11,0 31,10 44,21c18,18 25,20 38,9c20,-17 40,0 55,46c15,44 11,54 -37,87c-35,24 -42,26 -73,16c-65,-21 -85,-34 -99,-67c-9,-18 -20,-31 -27,-28c-7,3 -15,0 -17,-7c-3,-9 -9,-9 -26,1c-11,6 -23,12 -26,12c-3,0 -5,-6 -5,-12c0,-12 -20,-26 -95,-70c-16,-9 -42,-17 -57,-18c-18,0 -28,-5 -28,-15c0,-20 -58,-20 -87,0c-11,8 -37,14 -57,13c-30,-1 -37,-6 -43,-27c-3,-14 -11,-33 -18,-41c-7,-8 -25,-40 -39,-72c-15,-31 -33,-59 -41,-62c-8,-3 -15,-16 -15,-30c0,-32 -12,-39 -36,-22c-15,12 -17,18 -7,37c6,13 17,40 24,59c7,19 21,47 31,62c23,34 23,41 -2,33c-14,-5 -20,-2 -20,10c0,20 11,32 73,73c26,18 47,39 47,47c0,8 9,15 21,15c11,0 30,5 42,11c12,7 30,12 41,13c12,1 22,9 24,21c2,11 11,28 20,38c21,23 8,46 -38,69c-31,16 -37,16 -57,3c-25,-17 -70,-19 -92,-6c-11,7 -11,15 -1,44c7,19 10,42 7,51c-9,23 -128,76 -168,75c-19,-1 -47,-8 -62,-16zm620,-365c-3,-8 -6,-5 -6,6c-1,11 2,17 5,13c3,-3 4,-12 1,-19zm-33,-59c-3,-5 -10,-7 -15,-3c-5,3 -7,10 -3,15c3,5 10,7 15,3c5,-3 7,-10 3,-15zm-459,-54c0,-13 -8,-21 -22,-23c-19,-3 -23,1 -23,23c0,22 4,26 23,23c14,-2 22,-10 22,-23zm-35,-50c0,-8 -7,-15 -15,-15c-8,0 -15,7 -15,15c0,8 7,15 15,15c8,0 15,-7 15,-15zm-17,-552c3,-5 8,-59 11,-121c4,-62 9,-118 12,-125c5,-14 -44,-47 -70,-47c-20,0 -38,35 -34,68c3,24 0,27 -24,24c-22,-2 -37,7 -72,44c-43,45 -44,46 -26,64c11,11 32,26 47,35c15,9 46,27 68,40c40,24 80,31 88,18z" />
+        <path
+           stroke="null"
+           id="svg_571"
+           d="m4835.98194,1179.423975c0,-5 5,-7 10,-4c6,3 10,8 10,11c0,2 -4,4 -10,4c-5,0 -10,-5 -10,-11z" />
+        <path
+           stroke="null"
+           id="svg_572"
+           d="m5559.98194,832.423975c-11,-7 -11,-82 0,-462c2,-96 7,-237 10,-312l6,-138l-25,-16c-26,-17 -32,-42 -16,-72c5,-9 12,-24 15,-32c20,-51 67,-102 81,-88c9,8 11,290 5,721c-4,355 -4,359 -26,383c-24,25 -32,28 -50,16z" />
+        <path
+           stroke="null"
+           id="svg_573"
+           d="m4937.98194,492.423975c-8,-6 -10,-22 -6,-54c5,-36 16,-55 49,-90c92,-93 108,-97 123,-38c13,54 1,96 -42,146c-29,33 -42,41 -73,42c-21,1 -44,-2 -51,-6z" />
+      </g>
+    </g>
+    <metadata
+       transform="matrix(0.8209457681767987,0,0,0.8209457681767987,0,0) "
+       id="metadata3">Created by potrace 1.16, written by Peter Selinger 2001-2019</metadata>
+    <g
+       stroke="null"
+       id="svg_583">
+      <g
+         id="svg_578"
+         fill="#000000"
+         transform="matrix(0.11217711637176751,0,0,-0.11217711637176751,-308.6286094222228,166.9081064036169) ">
+        <path
+           stroke="null"
+           id="svg_579"
+           d="m9030.770172,1100.509844c0,-11 11,-36 25,-54c14,-18 25,-39 25,-46c0,-17 66,-110 85,-121c8,-4 15,-13 15,-20c0,-7 9,-18 20,-25c35,-21 25,-56 -30,-102c-47,-39 -73,-52 -150,-70c-19,-5 -66,-18 -105,-29c-38,-11 -80,-21 -93,-21c-13,0 -37,-7 -55,-17c-54,-27 -162,-35 -254,-18l-43,8l0,-37c0,-29 7,-45 31,-68l30,-31l110,6c99,5 113,8 140,31c17,14 38,26 47,26c10,0 49,12 87,26c39,14 84,30 102,35c18,6 35,14 38,19c4,6 16,10 29,10c12,0 26,3 30,7c13,13 82,33 116,33c20,0 47,8 60,17c44,31 411,62 543,47c66,-9 86,-8 104,4c49,31 35,81 -37,130c-39,26 -105,29 -138,6c-13,-9 -31,-14 -41,-11c-10,2 -51,-6 -91,-19c-92,-30 -140,-32 -147,-4c-3,11 -14,20 -24,20c-26,0 -32,16 -18,54c15,42 4,61 -42,70c-28,5 -30,9 -27,43c3,35 1,38 -25,41c-18,2 -32,12 -39,27c-15,34 -50,50 -75,34c-17,-10 -24,-9 -44,4c-16,12 -44,17 -91,17c-63,0 -68,-2 -68,-22z" />
+        <path
+           stroke="null"
+           id="svg_580"
+           d="m9450.770172,554.509844c-14,-1 -43,-11 -65,-22c-22,-10 -60,-25 -84,-33c-23,-8 -55,-25 -70,-39c-26,-25 -52,-32 -168,-44c-40,-4 -63,-11 -63,-19c0,-22 33,-54 80,-79c27,-15 44,-31 44,-41c-2,-17 18,-14 68,11c15,8 49,14 76,14c50,0 100,19 122,45c7,8 16,13 20,10c13,-8 62,17 96,48c26,25 30,35 28,74c-2,25 -4,46 -6,47c-36,23 -58,31 -78,28z" />
+        <path
+           stroke="null"
+           id="svg_581"
+           d="m9435.770172,276.509844c-44,-11 -83,-29 -138,-66c-32,-21 -63,-38 -68,-38c-5,0 -33,-12 -61,-26c-34,-17 -60,-24 -79,-20c-20,4 -29,1 -34,-12c-6,-14 -11,-12 -36,18c-34,40 -50,32 -52,-26c-1,-31 5,-42 38,-71c37,-31 42,-33 118,-33c45,0 94,4 111,10c17,5 43,12 57,14c14,3 38,17 55,31c16,14 38,25 49,25c29,0 136,54 161,82c25,27 36,84 19,98c-13,11 -111,21 -140,14z" />
+        <path
+           stroke="null"
+           id="svg_582"
+           d="m9525.770172,-29.490156c-22,-11 -48,-24 -57,-29c-10,-5 -24,-9 -31,-9c-8,0 -22,-9 -32,-20c-10,-11 -29,-20 -42,-20c-12,0 -23,-4 -23,-9c0,-15 -68,-50 -104,-54c-19,-2 -42,-10 -52,-18c-30,-25 -76,-18 -117,18c-38,34 -61,40 -87,23c-13,-8 -12,-13 3,-40c11,-17 16,-38 13,-47c-4,-9 1,-26 9,-39c9,-14 20,-55 25,-92c9,-66 24,-116 48,-159c13,-24 80,-63 107,-63c8,0 15,-4 15,-10c0,-5 11,-10 25,-10c26,0 33,18 14,37c-15,15 18,47 67,64c37,12 145,17 229,11c49,-4 101,6 114,22c6,7 3,24 -9,49c-10,21 -22,51 -25,68c-4,16 -15,35 -26,42c-24,15 -25,47 -1,54c19,5 92,146 92,179c0,25 -26,50 -60,56c-14,3 -32,8 -40,11c-8,3 -33,-4 -55,-15zm-230,-239c102,2 116,-6 86,-48c-12,-17 -33,-34 -46,-37c-13,-3 -33,-17 -46,-30c-12,-13 -28,-24 -35,-24c-7,0 -33,27 -59,61c-51,67 -54,96 -7,84c15,-3 63,-6 107,-6z" />
+      </g>
+    </g>
   </g>
- </g>
- <g>
-  <title>Layer 1</title>
-  <metadata transform="matrix(1.7380261796679406,0,0,1.7380261796679406,0,0) " id="svg_563">image/svg+xml</metadata>
-  <defs id="svg_513">
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_511">
-    <path clip-rule="evenodd" d="m0.431524,-0.431505l113.4,0l0,113.4l-113.4,0l0,-113.4z" id="svg_562" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_492">
-    <path clip-rule="evenodd" d="m0.431504,112.968475l113.40002,0l0,-113.39998l-113.40002,0" id="svg_561" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_488">
-    <path clip-rule="evenodd" d="m0.431504,112.968475l113.40002,0l0,-113.39998l-113.40002,0" id="svg_560" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_484">
-    <path clip-rule="evenodd" d="m0.431504,112.968475l113.40002,0l0,-113.39998l-113.40002,0" id="svg_559" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_480">
-    <path clip-rule="evenodd" d="m0.431504,112.968475l113.40002,0l0,-113.39998l-113.40002,0" id="svg_558" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_476">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.39999l-113.40001,0.00001" id="svg_557" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_472">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.39999l-113.40001,0.00001" id="svg_556" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_468">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.40001,0.00001" id="svg_555" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_464">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.40001,0.00001" id="svg_554" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_460">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.39999l-113.4,0.00001" id="svg_553" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_456">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.39999l-113.4,0.00001" id="svg_552" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_452">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.39998l-113.40002,0" id="svg_551" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_448">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.39998l-113.40002,0" id="svg_550" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_444">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.39997l-113.40001,0" id="svg_549" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_440">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.39997l-113.40001,0" id="svg_548" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_436">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39996l-113.40001,-0.00002" id="svg_547" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_432">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39996l-113.40001,-0.00002" id="svg_546" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_428">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.39999l-113.40001,0" id="svg_545" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_424">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.39999l-113.40001,0" id="svg_544" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_420">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.40001l-113.4,0.00001" id="svg_543" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_416">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.40001l-113.4,0.00001" id="svg_542" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_412">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.4l-113.40001,0.00001" id="svg_541" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_408">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.4l-113.40001,0.00001" id="svg_540" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_404">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.40001,0" id="svg_539" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_400">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.40001,0" id="svg_538" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_384">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.4,0.00001" id="svg_537" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_380">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.4,0.00001" id="svg_536" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_376">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.4,0" id="svg_535" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_372">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.4,0" id="svg_534" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_368">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.40002,0" id="svg_533" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_364">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.40002,0" id="svg_532" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_360">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.40001,0" id="svg_531" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_356">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.40001,0" id="svg_530" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_352">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.40001,0" id="svg_529" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_348">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39998l-113.40001,0" id="svg_528" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_344">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.4,0.00001" id="svg_527" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_340">
-    <path clip-rule="evenodd" d="m0.431524,112.968475l113.4,0l0,-113.39999l-113.4,0.00001" id="svg_526" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_336">
-    <path clip-rule="evenodd" d="m0.431504,112.968475l113.40002,0l0,-113.39999l-113.40002,0" id="svg_525" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_332">
-    <path clip-rule="evenodd" d="m0.431504,112.968475l113.40002,0l0,-113.39999l-113.40002,0" id="svg_524" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_328">
-    <path clip-rule="evenodd" d="m0.431504,112.968475l113.40002,0l0,-113.4l-113.40002,0" id="svg_523" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_324">
-    <path clip-rule="evenodd" d="m0.431504,112.968475l113.40002,0l0,-113.4l-113.40002,0" id="svg_522" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_320">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.39997l-113.40002,0" id="svg_521" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_316">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.39997l-113.40002,0" id="svg_520" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_312">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.39997l-113.40001,0" id="svg_519" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_308">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.39997l-113.40001,0" id="svg_518" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_304">
-    <path clip-rule="evenodd" d="m0.431504,112.968475l113.40002,0l0,-113.39996l-113.40002,-0.00001" id="svg_517" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_300">
-    <path clip-rule="evenodd" d="m0.431504,112.968475l113.40002,0l0,-113.39996l-113.40002,-0.00001" id="svg_516" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_296">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.40001l-113.40002,0.00001" id="svg_515" style="clip-rule:evenodd"/>
-   </clipPath>
-   <clipPath clipPathUnits="userSpaceOnUse" id="svg_292">
-    <path clip-rule="evenodd" d="m0.431514,112.968475l113.40001,0l0,-113.40001l-113.40002,0.00001" id="svg_514" style="clip-rule:evenodd"/>
-   </clipPath>
-  </defs>
-  <g id="svg_565">
-   <g id="svg_284" transform="matrix(2.3173681816230483,0,0,-2.3173681816230483,0,262.7895583657926) ">
-    <g id="svg_509">
-     <g id="svg_510" clip-path="url(#svg_511)">
-      <path fill="#ffffff00" fill-rule="evenodd" d="m0.431524,-0.431515l113.4,0l0,113.4l-113.4,0l0,-113.4z" id="svg_512"/>
-     </g>
-    </g>
-    <path fill="none" stroke="#41719c" stroke-width="1.56" stroke-miterlimit="10" d="m46.331524,37.729475l27.495,18.419" id="svg_508"/>
-    <path fill="#deebf7" fill-rule="evenodd" d="m66.251524,56.088475c0,4.208 3.412,7.62 7.62,7.62c4.208,0 7.62,-3.412 7.62,-7.62c0,-4.208 -3.412,-7.62 -7.62,-7.62c-4.208,0 -7.62,3.412 -7.62,7.62z" id="svg_507"/>
-    <path fill="none" stroke="#41719c" stroke-width="1.56" stroke-miterlimit="10" d="m66.251524,56.088475c0,4.208 3.412,7.62 7.62,7.62c4.208,0 7.62,-3.412 7.62,-7.62c0,-4.208 -3.412,-7.62 -7.62,-7.62c-4.208,0 -7.62,3.412 -7.62,7.62z" id="svg_506"/>
-    <path fill="#9dc3e6" fill-rule="evenodd" d="m57.311524,20.688475l10.26,17.64l10.26,-17.64l-20.52,0z" id="svg_505"/>
-    <path fill="none" stroke="#41719c" stroke-width="0.96" stroke-linejoin="round" stroke-miterlimit="10" d="m57.311524,20.688475l10.26,17.64l10.26,-17.64l-20.52,0z" id="svg_504"/>
-    <path fill="#bdd7ee" fill-rule="evenodd" d="m46.991524,2.928475l10.32,17.76l10.32,-17.76l-20.64,0z" id="svg_503"/>
-    <path fill="none" stroke="#41719c" stroke-width="0.96" stroke-linejoin="round" stroke-miterlimit="10" d="m46.991524,2.928475l10.32,17.76l10.32,-17.76l-20.64,0z" id="svg_502"/>
-    <path fill="#deebf7" fill-rule="evenodd" d="m57.311524,20.688475l-10.26,-17.76l-10.26,17.76l20.52,0z" id="svg_501"/>
-    <path fill="none" stroke="#41719c" stroke-width="0.96" stroke-linejoin="round" stroke-miterlimit="10" d="m57.311524,20.688475l-10.26,-17.76l-10.26,17.76l20.52,0z" id="svg_500"/>
-    <path fill="#deebf7" fill-rule="evenodd" d="m77.831524,20.688475l-10.26,-17.76l-10.26,17.76l20.52,0z" id="svg_499"/>
-    <path fill="none" stroke="#41719c" stroke-width="0.96" stroke-linejoin="round" stroke-miterlimit="10" d="m77.831524,20.688475l-10.26,-17.76l-10.26,17.76l20.52,0z" id="svg_498"/>
-    <path fill="#deebf7" fill-rule="evenodd" d="m67.631524,38.328475l-10.32,-17.64l-10.32,17.64l20.64,0z" id="svg_497"/>
-    <path fill="none" stroke="#41719c" stroke-width="0.96" stroke-linejoin="round" stroke-miterlimit="10" d="m67.631524,38.328475l-10.32,-17.64l-10.32,17.64l20.64,0z" id="svg_496"/>
-    <path fill="#9dc3e6" fill-rule="evenodd" d="m36.671524,20.688475l10.32,17.64l10.32,-17.64l-20.64,0z" id="svg_495"/>
-    <path fill="none" stroke="#41719c" stroke-width="0.96" stroke-linejoin="round" stroke-miterlimit="10" d="m36.671524,20.688475l10.32,17.64l10.32,-17.64l-20.64,0z" id="svg_494"/>
-    <g id="svg_490">
-     <g id="svg_491" clip-path="url(#svg_492)">
-      <path fill="#9dc3e6" fill-rule="evenodd" d="m88.153524,38.391475l-10.24,17.751l20.493,0.075l-10.253,-17.826z" id="svg_493"/>
-     </g>
-    </g>
-    <g id="svg_486">
-     <g id="svg_487" clip-path="url(#svg_488)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m88.153524,38.391475l-10.24,17.751l20.493,0.075l-10.253,-17.826z" id="svg_489"/>
-     </g>
-    </g>
-    <g id="svg_482">
-     <g id="svg_483" clip-path="url(#svg_484)">
-      <path fill="#bdd7ee" fill-rule="evenodd" d="m98.394524,20.640475l-10.241,17.751l20.498,0.074l-10.257,-17.825z" id="svg_485"/>
-     </g>
-    </g>
-    <g id="svg_478">
-     <g id="svg_479" clip-path="url(#svg_480)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m98.394524,20.640475l-10.241,17.751l20.498,0.074l-10.257,-17.825z" id="svg_481"/>
-     </g>
-    </g>
-    <g id="svg_474">
-     <g id="svg_475" clip-path="url(#svg_476)">
-      <path fill="#deebf7" fill-rule="evenodd" d="m88.153524,38.391475l10.241,-17.751l-20.493,-0.074l10.252,17.825z" id="svg_477"/>
-     </g>
-    </g>
-    <g id="svg_470">
-     <g id="svg_471" clip-path="url(#svg_472)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m88.153524,38.391475l10.241,-17.751l-20.493,-0.074l10.252,17.825z" id="svg_473"/>
-     </g>
-    </g>
-    <g id="svg_466">
-     <g id="svg_467" clip-path="url(#svg_468)">
-      <path fill="#deebf7" fill-rule="evenodd" d="m98.406524,56.217475l10.245,-17.751l-20.498,-0.075l10.253,17.826z" id="svg_469"/>
-     </g>
-    </g>
-    <g id="svg_462">
-     <g id="svg_463" clip-path="url(#svg_464)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m98.406524,56.217475l10.245,-17.751l-20.498,-0.075l10.253,17.826z" id="svg_465"/>
-     </g>
-    </g>
-    <g id="svg_458">
-     <g id="svg_459" clip-path="url(#svg_460)">
-      <path fill="#deebf7" fill-rule="evenodd" d="m77.913524,56.142475l10.24,-17.751l-20.493,-0.074l10.253,17.825z" id="svg_461"/>
-     </g>
-    </g>
-    <g id="svg_454">
-     <g id="svg_455" clip-path="url(#svg_456)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m77.913524,56.142475l10.24,-17.751l-20.493,-0.074l10.253,17.825z" id="svg_457"/>
-     </g>
-    </g>
-    <g id="svg_450">
-     <g id="svg_451" clip-path="url(#svg_452)">
-      <path fill="#9dc3e6" fill-rule="evenodd" d="m77.884524,20.536475l-10.241,17.752l20.494,0.074l-10.253,-17.826z" id="svg_453"/>
-     </g>
-    </g>
-    <g id="svg_446">
-     <g id="svg_447" clip-path="url(#svg_448)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m77.884524,20.536475l-10.241,17.752l20.494,0.074l-10.253,-17.826z" id="svg_449"/>
-     </g>
-    </g>
-    <g id="svg_442">
-     <g id="svg_443" clip-path="url(#svg_444)">
-      <path fill="#9dc3e6" fill-rule="evenodd" d="m26.539524,38.458475l20.493,-0.041l-10.211,-17.768l-10.282,17.809z" id="svg_445"/>
-     </g>
-    </g>
-    <g id="svg_438">
-     <g id="svg_439" clip-path="url(#svg_440)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m26.539524,38.458475l20.493,-0.041l-10.211,-17.768l-10.282,17.809z" id="svg_441"/>
-     </g>
-    </g>
-    <g id="svg_434">
-     <g id="svg_435" clip-path="url(#svg_436)">
-      <path fill="#bdd7ee" fill-rule="evenodd" d="m6.046324,38.499475l20.4932,-0.041l-10.212,-17.768l-10.2812,17.809z" id="svg_437"/>
-     </g>
-    </g>
-    <g id="svg_430">
-     <g id="svg_431" clip-path="url(#svg_432)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m6.046324,38.499475l20.4932,-0.041l-10.212,-17.768l-10.2812,17.809z" id="svg_433"/>
-     </g>
-    </g>
-    <g id="svg_426">
-     <g id="svg_427" clip-path="url(#svg_428)">
-      <path fill="#deebf7" fill-rule="evenodd" d="m26.539524,38.458475l-20.4933,0.041l10.2113,17.768l10.282,-17.809z" id="svg_429"/>
-     </g>
-    </g>
-    <g id="svg_422">
-     <g id="svg_423" clip-path="url(#svg_424)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m26.539524,38.458475l-20.4933,0.041l10.2113,17.768l10.282,-17.809z" id="svg_425"/>
-     </g>
-    </g>
-    <g id="svg_418">
-     <g id="svg_419" clip-path="url(#svg_420)">
-      <path fill="#deebf7" fill-rule="evenodd" d="m36.821524,20.649475l-20.494,0.041l10.212,17.768l10.282,-17.809z" id="svg_421"/>
-     </g>
-    </g>
-    <g id="svg_414">
-     <g id="svg_415" clip-path="url(#svg_416)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m36.821524,20.649475l-20.494,0.041l10.212,17.768l10.282,-17.809z" id="svg_417"/>
-     </g>
-    </g>
-    <g id="svg_410">
-     <g id="svg_411" clip-path="url(#svg_412)">
-      <path fill="#deebf7" fill-rule="evenodd" d="m47.032524,38.417475l-20.493,0.041l10.212,17.768l10.281,-17.809z" id="svg_413"/>
-     </g>
-    </g>
-    <g id="svg_406">
-     <g id="svg_407" clip-path="url(#svg_408)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m47.032524,38.417475l-20.493,0.041l10.212,17.768l10.281,-17.809z" id="svg_409"/>
-     </g>
-    </g>
-    <g id="svg_402">
-     <g id="svg_403" clip-path="url(#svg_404)">
-      <path fill="#9dc3e6" fill-rule="evenodd" d="m16.241524,56.296475l20.493,-0.041l-10.212,-17.768l-10.281,17.809z" id="svg_405"/>
-     </g>
-    </g>
-    <g id="svg_398">
-     <g id="svg_399" clip-path="url(#svg_400)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m16.241524,56.296475l20.493,-0.041l-10.212,-17.768l-10.281,17.809z" id="svg_401"/>
-     </g>
-    </g>
-    <path fill="#9dc3e6" fill-rule="evenodd" d="m57.311524,91.608475l-10.26,-17.64l-10.26,17.64l20.52,0z" id="svg_397"/>
-    <path fill="none" stroke="#41719c" stroke-width="0.96" stroke-linejoin="round" stroke-miterlimit="10" d="m57.311524,91.608475l-10.26,-17.64l-10.26,17.64l20.52,0z" id="svg_396"/>
-    <path fill="#bdd7ee" fill-rule="evenodd" d="m67.631524,109.368475l-10.32,-17.76l-10.32,17.76l20.64,0z" id="svg_395"/>
-    <path fill="none" stroke="#41719c" stroke-width="0.96" stroke-linejoin="round" stroke-miterlimit="10" d="m67.631524,109.368475l-10.32,-17.76l-10.32,17.76l20.64,0z" id="svg_394"/>
-    <path fill="#deebf7" fill-rule="evenodd" d="m57.311524,91.608475l10.26,17.76l10.26,-17.76l-20.52,0z" id="svg_393"/>
-    <path fill="none" stroke="#41719c" stroke-width="0.96" stroke-linejoin="round" stroke-miterlimit="10" d="m57.311524,91.608475l10.26,17.76l10.26,-17.76l-20.52,0z" id="svg_392"/>
-    <path fill="#deebf7" fill-rule="evenodd" d="m36.791524,91.608475l10.26,17.76l10.26,-17.76l-20.52,0z" id="svg_391"/>
-    <path fill="none" stroke="#41719c" stroke-width="0.96" stroke-linejoin="round" stroke-miterlimit="10" d="m36.791524,91.608475l10.26,17.76l10.26,-17.76l-20.52,0z" id="svg_390"/>
-    <path fill="#deebf7" fill-rule="evenodd" d="m46.991524,73.968475l10.32,17.64l10.32,-17.64l-20.64,0z" id="svg_389"/>
-    <path fill="none" stroke="#41719c" stroke-width="0.96" stroke-linejoin="round" stroke-miterlimit="10" d="m46.991524,73.968475l10.32,17.64l10.32,-17.64l-20.64,0z" id="svg_388"/>
-    <path fill="#9dc3e6" fill-rule="evenodd" d="m77.951524,91.608475l-10.32,-17.64l-10.32,17.64l20.64,0z" id="svg_387"/>
-    <path fill="none" stroke="#41719c" stroke-width="0.96" stroke-linejoin="round" stroke-miterlimit="10" d="m77.951524,91.608475l-10.32,-17.64l-10.32,17.64l20.64,0z" id="svg_386"/>
-    <g id="svg_382">
-     <g id="svg_383" clip-path="url(#svg_384)">
-      <path fill="#9dc3e6" fill-rule="evenodd" d="m26.450524,73.907475l10.241,-17.751l-20.494,-0.074l10.253,17.825z" id="svg_385"/>
-     </g>
-    </g>
-    <g id="svg_378">
-     <g id="svg_379" clip-path="url(#svg_380)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m26.450524,73.907475l10.241,-17.751l-20.494,-0.074l10.253,17.825z" id="svg_381"/>
-     </g>
-    </g>
-    <g id="svg_374">
-     <g id="svg_375" clip-path="url(#svg_376)">
-      <path fill="#bdd7ee" fill-rule="evenodd" d="m16.210524,91.659475l10.24,-17.752l-20.493,-0.074l10.253,17.826z" id="svg_377"/>
-     </g>
-    </g>
-    <g id="svg_370">
-     <g id="svg_371" clip-path="url(#svg_372)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m16.210524,91.659475l10.24,-17.752l-20.493,-0.074l10.253,17.826z" id="svg_373"/>
-     </g>
-    </g>
-    <g id="svg_366">
-     <g id="svg_367" clip-path="url(#svg_368)">
-      <path fill="#deebf7" fill-rule="evenodd" d="m26.450524,73.907475l-10.24,17.752l20.493,0.074l-10.253,-17.826z" id="svg_369"/>
-     </g>
-    </g>
-    <g id="svg_362">
-     <g id="svg_363" clip-path="url(#svg_364)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m26.450524,73.907475l-10.24,17.752l20.493,0.074l-10.253,-17.826z" id="svg_365"/>
-     </g>
-    </g>
-    <g id="svg_358">
-     <g id="svg_359" clip-path="url(#svg_360)">
-      <path fill="#deebf7" fill-rule="evenodd" d="m16.197524,56.082475l-10.2401,17.751l20.4931,0.074l-10.253,-17.825z" id="svg_361"/>
-     </g>
-    </g>
-    <g id="svg_354">
-     <g id="svg_355" clip-path="url(#svg_356)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m16.197524,56.082475l-10.2401,17.751l20.4931,0.074l-10.253,-17.825z" id="svg_357"/>
-     </g>
-    </g>
-    <g id="svg_350">
-     <g id="svg_351" clip-path="url(#svg_352)">
-      <path fill="#deebf7" fill-rule="evenodd" d="m36.691524,56.156475l-10.241,17.751l20.493,0.075l-10.252,-17.826z" id="svg_353"/>
-     </g>
-    </g>
-    <g id="svg_346">
-     <g id="svg_347" clip-path="url(#svg_348)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m36.691524,56.156475l-10.241,17.751l20.493,0.075l-10.252,-17.826z" id="svg_349"/>
-     </g>
-    </g>
-    <g id="svg_342">
-     <g id="svg_343" clip-path="url(#svg_344)">
-      <path fill="#9dc3e6" fill-rule="evenodd" d="m36.719524,91.762475l10.241,-17.751l-20.493,-0.074l10.252,17.825z" id="svg_345"/>
-     </g>
-    </g>
-    <g id="svg_338">
-     <g id="svg_339" clip-path="url(#svg_340)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m36.719524,91.762475l10.241,-17.751l-20.493,-0.074l10.252,17.825z" id="svg_341"/>
-     </g>
-    </g>
-    <g id="svg_334">
-     <g id="svg_335" clip-path="url(#svg_336)">
-      <path fill="#9dc3e6" fill-rule="evenodd" d="m88.064524,73.841475l-20.493,0.041l10.212,17.768l10.281,-17.809z" id="svg_337"/>
-     </g>
-    </g>
-    <g id="svg_330">
-     <g id="svg_331" clip-path="url(#svg_332)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m88.064524,73.841475l-20.493,0.041l10.212,17.768l10.281,-17.809z" id="svg_333"/>
-     </g>
-    </g>
-    <g id="svg_326">
-     <g id="svg_327" clip-path="url(#svg_328)">
-      <path fill="#bdd7ee" fill-rule="evenodd" d="m108.561524,73.799475l-20.497,0.042l10.212,17.767l10.285,-17.809z" id="svg_329"/>
-     </g>
-    </g>
-    <g id="svg_322">
-     <g id="svg_323" clip-path="url(#svg_324)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m108.561524,73.799475l-20.497,0.042l10.212,17.767l10.285,-17.809z" id="svg_325"/>
-     </g>
-    </g>
-    <g id="svg_318">
-     <g id="svg_319" clip-path="url(#svg_320)">
-      <path fill="#deebf7" fill-rule="evenodd" d="m88.064524,73.840475l20.497,-0.041l-10.215,-17.767l-10.282,17.808z" id="svg_321"/>
-     </g>
-    </g>
-    <g id="svg_314">
-     <g id="svg_315" clip-path="url(#svg_316)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m88.064524,73.840475l20.497,-0.041l-10.215,-17.767l-10.282,17.808z" id="svg_317"/>
-     </g>
-    </g>
-    <g id="svg_310">
-     <g id="svg_311" clip-path="url(#svg_312)">
-      <path fill="#deebf7" fill-rule="evenodd" d="m77.783524,91.649475l20.493,-0.041l-10.212,-17.767l-10.281,17.808z" id="svg_313"/>
-     </g>
-    </g>
-    <g id="svg_306">
-     <g id="svg_307" clip-path="url(#svg_308)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m77.783524,91.649475l20.493,-0.041l-10.212,-17.767l-10.281,17.808z" id="svg_309"/>
-     </g>
-    </g>
-    <g id="svg_302">
-     <g id="svg_303" clip-path="url(#svg_304)">
-      <path fill="#deebf7" fill-rule="evenodd" d="m67.571524,73.882475l20.493,-0.041l-10.211,-17.768l-10.282,17.809z" id="svg_305"/>
-     </g>
-    </g>
-    <g id="svg_298">
-     <g id="svg_299" clip-path="url(#svg_300)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m67.571524,73.882475l20.493,-0.041l-10.211,-17.768l-10.282,17.809z" id="svg_301"/>
-     </g>
-    </g>
-    <g id="svg_294">
-     <g id="svg_295" clip-path="url(#svg_296)">
-      <path fill="#9dc3e6" fill-rule="evenodd" d="m98.363524,56.003475l-20.493,0.041l10.211,17.767l10.282,-17.808z" id="svg_297"/>
-     </g>
-    </g>
-    <g id="svg_290">
-     <g id="svg_291" clip-path="url(#svg_292)">
-      <path fill="none" stroke="#41719c" stroke-linejoin="round" stroke-miterlimit="10" d="m98.363524,56.003475l-20.493,0.041l10.211,17.767l10.282,-17.808z" id="svg_293"/>
-     </g>
-    </g>
-    <path fill="none" stroke="#41719c" stroke-width="1.56" stroke-miterlimit="8" d="m46.331524,37.153475l0.308,34.355" id="svg_289"/>
-    <path fill="#deebf7" fill-rule="evenodd" d="m38.771524,70.848475c0,4.208 3.412,7.62 7.62,7.62c4.208,0 7.62,-3.412 7.62,-7.62c0,-4.208 -3.412,-7.62 -7.62,-7.62c-4.208,0 -7.62,3.412 -7.62,7.62z" id="svg_288"/>
-    <path fill="none" stroke="#41719c" stroke-width="1.56" stroke-miterlimit="8" d="m38.771524,70.848475c0,4.208 3.412,7.62 7.62,7.62c4.208,0 7.62,-3.412 7.62,-7.62c0,-4.208 -3.412,-7.62 -7.62,-7.62c-4.208,0 -7.62,3.412 -7.62,7.62z" id="svg_287"/>
-    <path fill="#bdd7ee" fill-rule="evenodd" d="m38.531524,37.188475c0,4.242 3.412,7.68 7.62,7.68c4.208,0 7.62,-3.438 7.62,-7.68c0,-4.242 -3.412,-7.68 -7.62,-7.68c-4.208,0 -7.62,3.438 -7.62,7.68z" id="svg_286"/>
-    <path fill="none" stroke="#41719c" stroke-width="1.56" stroke-miterlimit="8" d="m38.531524,37.188475c0,4.242 3.412,7.68 7.62,7.68c4.208,0 7.62,-3.438 7.62,-7.68c0,-4.242 -3.412,-7.68 -7.62,-7.68c-4.208,0 -7.62,3.438 -7.62,7.68z" id="svg_285"/>
-   </g>
-  </g>
-  <metadata transform="matrix(0.8516327840328728,0,0,0.8516327840328728,0,0) ">Created by potrace 1.16, written by Peter Selinger 2001-2019</metadata>
-  <g stroke="null" id="svg_574">
-   <g id="svg_569" fill="#000000" transform="matrix(0.11117965913803703,0,0,-0.11117965913803703,-99.0843164404796,221.43069485636084) ">
-    <path stroke="null" id="svg_570" d="m4642.98194,1613.423975c-16,-8 -31,-21 -34,-29c-8,-21 107,-130 145,-139c16,-3 38,-15 48,-26c16,-18 16,-19 0,-19c-9,0 -49,-16 -89,-35c-39,-19 -78,-35 -85,-35c-7,0 -20,-4 -30,-9c-25,-13 -61,-26 -112,-42c-62,-19 -63,-41 -4,-79c26,-16 58,-30 70,-30c12,0 24,-6 27,-13c8,-20 -4,-68 -25,-102c-20,-33 -24,-85 -8,-101c19,-19 29,-72 17,-87c-13,-16 -103,-41 -116,-32c-13,8 -32,-21 -25,-38c3,-9 14,-19 25,-22c10,-4 19,-10 19,-14c0,-14 80,-43 93,-33c7,5 45,22 86,38c68,26 74,27 86,11c13,-18 8,-59 -10,-88c-5,-8 -62,-42 -125,-74c-63,-32 -137,-70 -165,-86c-27,-16 -57,-29 -66,-29c-9,0 -27,-8 -40,-18c-30,-24 -83,-34 -97,-20c-8,8 -15,8 -27,-2c-21,-17 -19,-59 3,-67c9,-4 27,-14 40,-24c29,-22 91,-15 149,18c23,12 52,23 64,23c21,0 22,-2 17,-105c-5,-120 0,-133 62,-165c49,-25 70,-25 70,-2c0,24 19,42 46,42c12,0 24,7 28,15c7,18 36,20 36,2c0,-7 -5,-18 -11,-24c-8,-8 -6,-16 10,-29c11,-10 21,-24 21,-31c0,-16 57,-46 71,-37c6,3 18,23 27,43c12,30 15,76 13,267c-2,181 1,233 11,241c7,6 40,18 73,28c116,36 159,79 119,120c-14,13 -31,16 -88,12c-39,-3 -86,-8 -104,-12c-22,-5 -43,-2 -67,9c-32,15 -47,36 -27,36c5,0 17,8 28,18c26,22 61,42 75,42c7,0 17,7 24,16c6,9 23,18 37,19c14,2 50,15 81,31c48,23 57,32 57,53c0,20 -7,29 -30,38c-57,21 -24,100 39,95c19,-1 37,6 54,24c18,18 32,24 44,19c16,-6 16,-8 -5,-18c-18,-8 -22,-16 -17,-35c3,-13 1,-30 -5,-38c-8,-8 -10,-36 -6,-76c3,-35 6,-74 6,-88c0,-159 -2,-203 -10,-252c-31,-180 -30,-170 -9,-200c11,-15 29,-28 39,-28c11,0 31,-12 45,-27c21,-24 27,-26 35,-13c6,8 9,22 8,30c0,8 2,22 5,30c9,24 19,128 22,227c1,50 5,102 8,115c9,32 50,49 103,41c24,-3 49,-1 56,4c7,5 40,16 73,23c33,7 66,18 72,23c7,5 28,9 47,9c26,0 37,5 41,19c8,25 22,24 30,-1c8,-26 15,-25 59,5c20,14 41,25 47,25c5,0 14,11 18,23c5,13 25,32 45,41c20,9 36,19 36,22c0,12 -24,51 -48,77c-29,30 -53,34 -72,12c-7,-9 -21,-13 -35,-9c-22,6 -202,-71 -234,-100c-9,-8 -29,-18 -46,-22c-35,-8 -114,-60 -133,-86c-8,-11 -23,-18 -35,-16c-19,3 -23,11 -27,56c-5,47 -10,57 -49,90c-41,35 -44,41 -37,74c8,43 31,64 69,62c16,0 58,14 94,32c36,19 75,34 86,34c11,0 31,10 44,21c18,18 25,20 38,9c20,-17 40,0 55,46c15,44 11,54 -37,87c-35,24 -42,26 -73,16c-65,-21 -85,-34 -99,-67c-9,-18 -20,-31 -27,-28c-7,3 -15,0 -17,-7c-3,-9 -9,-9 -26,1c-11,6 -23,12 -26,12c-3,0 -5,-6 -5,-12c0,-12 -20,-26 -95,-70c-16,-9 -42,-17 -57,-18c-18,0 -28,-5 -28,-15c0,-20 -58,-20 -87,0c-11,8 -37,14 -57,13c-30,-1 -37,-6 -43,-27c-3,-14 -11,-33 -18,-41c-7,-8 -25,-40 -39,-72c-15,-31 -33,-59 -41,-62c-8,-3 -15,-16 -15,-30c0,-32 -12,-39 -36,-22c-15,12 -17,18 -7,37c6,13 17,40 24,59c7,19 21,47 31,62c23,34 23,41 -2,33c-14,-5 -20,-2 -20,10c0,20 11,32 73,73c26,18 47,39 47,47c0,8 9,15 21,15c11,0 30,5 42,11c12,7 30,12 41,13c12,1 22,9 24,21c2,11 11,28 20,38c21,23 8,46 -38,69c-31,16 -37,16 -57,3c-25,-17 -70,-19 -92,-6c-11,7 -11,15 -1,44c7,19 10,42 7,51c-9,23 -128,76 -168,75c-19,-1 -47,-8 -62,-16zm620,-365c-3,-8 -6,-5 -6,6c-1,11 2,17 5,13c3,-3 4,-12 1,-19zm-33,-59c-3,-5 -10,-7 -15,-3c-5,3 -7,10 -3,15c3,5 10,7 15,3c5,-3 7,-10 3,-15zm-459,-54c0,-13 -8,-21 -22,-23c-19,-3 -23,1 -23,23c0,22 4,26 23,23c14,-2 22,-10 22,-23zm-35,-50c0,-8 -7,-15 -15,-15c-8,0 -15,7 -15,15c0,8 7,15 15,15c8,0 15,-7 15,-15zm-17,-552c3,-5 8,-59 11,-121c4,-62 9,-118 12,-125c5,-14 -44,-47 -70,-47c-20,0 -38,35 -34,68c3,24 0,27 -24,24c-22,-2 -37,7 -72,44c-43,45 -44,46 -26,64c11,11 32,26 47,35c15,9 46,27 68,40c40,24 80,31 88,18z"/>
-    <path stroke="null" id="svg_571" d="m4835.98194,1179.423975c0,-5 5,-7 10,-4c6,3 10,8 10,11c0,2 -4,4 -10,4c-5,0 -10,-5 -10,-11z"/>
-    <path stroke="null" id="svg_572" d="m5559.98194,832.423975c-11,-7 -11,-82 0,-462c2,-96 7,-237 10,-312l6,-138l-25,-16c-26,-17 -32,-42 -16,-72c5,-9 12,-24 15,-32c20,-51 67,-102 81,-88c9,8 11,290 5,721c-4,355 -4,359 -26,383c-24,25 -32,28 -50,16z"/>
-    <path stroke="null" id="svg_573" d="m4937.98194,492.423975c-8,-6 -10,-22 -6,-54c5,-36 16,-55 49,-90c92,-93 108,-97 123,-38c13,54 1,96 -42,146c-29,33 -42,41 -73,42c-21,1 -44,-2 -51,-6z"/>
-   </g>
-  </g>
-  <metadata transform="matrix(0.8209457681767987,0,0,0.8209457681767987,0,0) ">Created by potrace 1.16, written by Peter Selinger 2001-2019</metadata>
-  <g stroke="null" id="svg_583">
-   <g id="svg_578" fill="#000000" transform="matrix(0.11217711637176751,0,0,-0.11217711637176751,-308.6286094222228,166.9081064036169) ">
-    <path stroke="null" id="svg_579" d="m9030.770172,1100.509844c0,-11 11,-36 25,-54c14,-18 25,-39 25,-46c0,-17 66,-110 85,-121c8,-4 15,-13 15,-20c0,-7 9,-18 20,-25c35,-21 25,-56 -30,-102c-47,-39 -73,-52 -150,-70c-19,-5 -66,-18 -105,-29c-38,-11 -80,-21 -93,-21c-13,0 -37,-7 -55,-17c-54,-27 -162,-35 -254,-18l-43,8l0,-37c0,-29 7,-45 31,-68l30,-31l110,6c99,5 113,8 140,31c17,14 38,26 47,26c10,0 49,12 87,26c39,14 84,30 102,35c18,6 35,14 38,19c4,6 16,10 29,10c12,0 26,3 30,7c13,13 82,33 116,33c20,0 47,8 60,17c44,31 411,62 543,47c66,-9 86,-8 104,4c49,31 35,81 -37,130c-39,26 -105,29 -138,6c-13,-9 -31,-14 -41,-11c-10,2 -51,-6 -91,-19c-92,-30 -140,-32 -147,-4c-3,11 -14,20 -24,20c-26,0 -32,16 -18,54c15,42 4,61 -42,70c-28,5 -30,9 -27,43c3,35 1,38 -25,41c-18,2 -32,12 -39,27c-15,34 -50,50 -75,34c-17,-10 -24,-9 -44,4c-16,12 -44,17 -91,17c-63,0 -68,-2 -68,-22z"/>
-    <path stroke="null" id="svg_580" d="m9450.770172,554.509844c-14,-1 -43,-11 -65,-22c-22,-10 -60,-25 -84,-33c-23,-8 -55,-25 -70,-39c-26,-25 -52,-32 -168,-44c-40,-4 -63,-11 -63,-19c0,-22 33,-54 80,-79c27,-15 44,-31 44,-41c-2,-17 18,-14 68,11c15,8 49,14 76,14c50,0 100,19 122,45c7,8 16,13 20,10c13,-8 62,17 96,48c26,25 30,35 28,74c-2,25 -4,46 -6,47c-36,23 -58,31 -78,28z"/>
-    <path stroke="null" id="svg_581" d="m9435.770172,276.509844c-44,-11 -83,-29 -138,-66c-32,-21 -63,-38 -68,-38c-5,0 -33,-12 -61,-26c-34,-17 -60,-24 -79,-20c-20,4 -29,1 -34,-12c-6,-14 -11,-12 -36,18c-34,40 -50,32 -52,-26c-1,-31 5,-42 38,-71c37,-31 42,-33 118,-33c45,0 94,4 111,10c17,5 43,12 57,14c14,3 38,17 55,31c16,14 38,25 49,25c29,0 136,54 161,82c25,27 36,84 19,98c-13,11 -111,21 -140,14z"/>
-    <path stroke="null" id="svg_582" d="m9525.770172,-29.490156c-22,-11 -48,-24 -57,-29c-10,-5 -24,-9 -31,-9c-8,0 -22,-9 -32,-20c-10,-11 -29,-20 -42,-20c-12,0 -23,-4 -23,-9c0,-15 -68,-50 -104,-54c-19,-2 -42,-10 -52,-18c-30,-25 -76,-18 -117,18c-38,34 -61,40 -87,23c-13,-8 -12,-13 3,-40c11,-17 16,-38 13,-47c-4,-9 1,-26 9,-39c9,-14 20,-55 25,-92c9,-66 24,-116 48,-159c13,-24 80,-63 107,-63c8,0 15,-4 15,-10c0,-5 11,-10 25,-10c26,0 33,18 14,37c-15,15 18,47 67,64c37,12 145,17 229,11c49,-4 101,6 114,22c6,7 3,24 -9,49c-10,21 -22,51 -25,68c-4,16 -15,35 -26,42c-24,15 -25,47 -1,54c19,5 92,146 92,179c0,25 -26,50 -60,56c-14,3 -32,8 -40,11c-8,3 -33,-4 -55,-15zm-230,-239c102,2 116,-6 86,-48c-12,-17 -33,-34 -46,-37c-13,-3 -33,-17 -46,-30c-12,-13 -28,-24 -35,-24c-7,0 -33,27 -59,61c-51,67 -54,96 -7,84c15,-3 63,-6 107,-6z"/>
-   </g>
-  </g>
- </g>
 </svg>

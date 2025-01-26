@@ -81,26 +81,29 @@ import { uploadFile, UploadFile } from "./nextchat/fileUpload";
 import { DocxPopoverItem, PDFPopoverItem } from "./document-docx";
 import { AudioPopoverItem } from "./audio";
 import { ClientApi, useApiConfig } from "../client/api";
-import { SelectPromptModal } from "./nextchat/mask";
-import { KnowledgeBaseButton } from "./knowledge";
+// import { SelectPromptModal } from "./nextchat/mask";
+// import { KnowledgeBaseButton } from "./knowledge";
 import { Markdown } from "../components/markdown";
-import { SideBar } from "../components/sidebar";
+// import { SideBar } from "../components/sidebar";
 import { runPyodide } from "../pyodide/pyodide";
 
-import { Avatar, Button, Checkbox, Col, Dropdown, Flex, Input, Layout, List, Menu, message, Modal, Row, Select, Typography } from 'antd';
+import { Avatar, Button, Checkbox, Col, Collapse, Drawer, Dropdown, Flex, Input, Layout, List, Menu, message, Modal, Row, Select, Space, Typography } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import { Attachments, Bubble, BubbleProps, Conversations, Prompts, Sender } from '@ant-design/x';
 import { GPTVis } from '@antv/gpt-vis';
 import { AddIcon } from "@chakra-ui/icons";
 import Title from "antd/es/typography/Title";
 import { DocumentMessage } from "../message/DocumentMessage";
-import { ArrowsAltOutlined, CheckOutlined, CloudDownloadOutlined, DownCircleOutlined, DownloadOutlined, DownOutlined, EditOutlined, EllipsisOutlined, FullscreenExitOutlined, FullscreenOutlined, GlobalOutlined, MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined } from '@ant-design/icons'
+import { ArrowsAltOutlined, CheckOutlined, CloudDownloadOutlined, DownCircleOutlined, DownloadOutlined, DownOutlined, EditOutlined, EllipsisOutlined, FullscreenExitOutlined, FullscreenOutlined, GlobalOutlined, MenuFoldOutlined, MenuOutlined, MenuUnfoldOutlined, SettingOutlined } from '@ant-design/icons'
 import { FileFrame } from "../file-frame/file-frame";
 import { ImageMessage } from "../message/ImageMessage";
 import confirm from "antd/es/modal/confirm";
 import localforage from "localforage";
+import { Dialog } from "./nextchat/dialog";
+import { Sidebar } from "./nextchat/sidebar";
+import { ModelConfig } from "./nextchat/model-config";
 
-function _Chat() {
+function Chat_() {
 
   const chatStore = useChatStore();
   const session = chatStore.currentSession();
@@ -119,11 +122,12 @@ function _Chat() {
   const [chatPromise, setChatPromise] = useState(undefined as ControllablePromise<any> | undefined)
 
   const doSubmit = (userInput: string) => {
+    setCollapseSidebar(true)
     const sessionId = session.id
-    const getCurrentSession = ()=>{return chatStore.sessions.find(s=>s.id==sessionId)!}
-    const updateCurrentSession = (cb:(sess)=>void)=>{
-      chatStore.update(({sessions, currentSessionIndex})=>{
-        cb(sessions.find(s=>s.id==sessionId))
+    const getCurrentSession = () => { return chatStore.sessions.find(s => s.id == sessionId)! }
+    const updateCurrentSession = (cb: (sess) => void) => {
+      chatStore.update(({ sessions, currentSessionIndex }) => {
+        cb(sessions.find(s => s.id == sessionId))
       })
     }
     let _messages = getCurrentSession().messages.slice()
@@ -150,39 +154,40 @@ function _Chat() {
       {
         model: useSmart ? "smart" : "regular",
         tools: [
-          {type:"function", function:{name:"vision"}},
-          {type:"function", function:{name:"long_context"}},
+          { type: "function", function: { name: "vision" } },
+          { type: "function", function: { name: "long_context" } },
           {
             type: "function",
-            function:{
+            function: {
               name: "generate_image",
               description: "调用绘画模型生成图片",
               parameters: {
                 type: "object",
-                properties:{
+                properties: {
                   "positive_prompt": {
-                    type:"string",
+                    type: "string",
                     description: "正向提示词，用来指定希望模型生成的内容"
                   },
-                  "negative_prompt":{
-                    type:"string",
+                  "negative_prompt": {
+                    type: "string",
                     description: "反向提示词，用来指定不希望模型生成的内容"
                   },
-                  "file_name":{
-                    type:"string",
+                  "file_name": {
+                    type: "string",
                     description: "生成的图片的文件名，注意不要和历史记录中已有的图片重名"
                   }
-                }
+                },
+                required: ["positive_prompt", "negative_prompt", "file_name"]
               },
-              required: ["positive_prompt", "negative_prompt", "file_name"]
             },
-            async call(params: {positive_prompt:string, negative_prompt:string, file_name:string}){
+            async call(params: { positive_prompt: string, negative_prompt: string, file_name: string }) {
               updateCurrentSession(sess => {
                 sess.messages = [
                   ..._messages,
-                  { type: "text", role: "assistant", content: `\`\`\` toolcall
+                  {
+                    type: "text", role: "assistant", content: `\`\`\` toolcall
                     ${JSON.stringify([{
-                      title:"正在绘制图片",
+                      title: "正在绘制图片",
                       status: "pending",
                       description: params.positive_prompt
                     }])}
@@ -199,32 +204,33 @@ function _Chat() {
             }
           },
           {
-            type:"function",
-            function:{
-              name:"web_search",
-              description:"搜索网络内容，或是用户说的你不理解的事物",
-              parameters:{
-                type:"object",
-                properties:{
-                  "query":{
-                    type:"string",
+            type: "function",
+            function: {
+              name: "web_search",
+              description: "搜索网络内容，或是用户说的你不理解的事物",
+              parameters: {
+                type: "object",
+                properties: {
+                  "query": {
+                    type: "string",
                     description: "你要查询的内容"
                   },
-                  "count":{
-                    type:"number",
-                    description:"要查询的条数"
+                  "count": {
+                    type: "number",
+                    description: "要查询的条数"
                   }
-                }
+                },
+                required: ["query"]
               },
-              required: ["query"]
             },
-            async call(params:{query: string, count?: number}){
+            async call(params: { query: string, count?: number }) {
               updateCurrentSession(sess => {
                 sess.messages = [
                   ..._messages,
-                  { type: "text", role: "assistant", content: `\`\`\` toolcall
+                  {
+                    type: "text", role: "assistant", content: `\`\`\` toolcall
                     ${JSON.stringify([{
-                      title:"正在搜索",
+                      title: "正在搜索",
                       status: "pending",
                       description: params.query
                     }])}
@@ -286,37 +292,132 @@ function _Chat() {
   const [isShowingWhatsThis, setIsShowingWhatsThis] = useState(false)
 
   const [isShowingConfigProviders, setIsShowingConfigProviders] = useState(false)
-  const apiConfig = useApiConfig()
-
-  const RenderMarkdown: BubbleProps['messageRender'] = (content) => <div style={{ userSelect: "text" }}><Markdown content={content} /></div>;
 
   const { width, height } = useWindowSize()
 
   const [collapseSidebar, setCollapseSidebar] = useState(false)
 
-  const [showMoreOptions, setShowMoreOptions] = useState(false)
-
-  const [modifiedMessage, setModifiedMessage] = useState("")
-
   const [managingMessages, setManagingMessages] = useState(false)
   const [selectedMessages, setSelectedMessages] = useState([] as string[])
   function clearSelectedMessages() { setSelectedMessages([]) }
-  function addSelectedMessage(id: string) { setSelectedMessages((prev) => [...prev, id]) }
-  function removeSelectedMessage(id: string) { setSelectedMessages((prev) => prev.filter((item) => item !== id)) }
-  function isMessageSelected(id: string) { return selectedMessages.includes(id) }
-  function isSelectedAllMessages() { return selectedMessages.length === chatStore.sessions.length }
-  function selectAllMessages() { setSelectedMessages(chatStore.sessions.map((item) => item.id)) }
-  function isNoneMessageSelected() { return selectedMessages.length === 0 }
 
-  // const sidebarWidth = width > 900 ? 300 : 270
-  const sidebarWidth = 300
+  const isMobileScreen = useMobileScreen()
+
+  const sidebarWidth = width > 900 ? 300 : 220
   const bodyWidth = width - sidebarWidth
-  const chatWidth = bodyWidth > 3 * sidebarWidth
+  const desktopChatWidth = bodyWidth > 3 * sidebarWidth
     ? bodyWidth * 0.8
     : collapseSidebar ? width - 150 : bodyWidth - 50
+  const mobileChatWidth = width - 50
+  const chatWidth = isMobileScreen ? mobileChatWidth : desktopChatWidth
   const quickStartCount = Math.floor(chatWidth / 300)
   const quickStartWidth = chatWidth / quickStartCount * 0.9
   const maxMsgWidth = chatWidth * 0.8
+
+  const SelectLanguage = (props: { mobile?}) => {
+    return <Select
+      style={{ userSelect: "none", width: props.mobile ? "100%" : undefined }}
+      prefix={"🌐"}
+      popupMatchSelectWidth={false}
+      defaultValue={ALL_LANG_OPTIONS[getLang()]}
+      options={Object.values(ALL_LANG_OPTIONS).map(o => { return { value: o, label: o } })}
+      onChange={(value) => {
+        changeLang(Object.values(ALL_LANG_OPTIONS).reduce((acc, key, index) => Object.assign(acc, { [key]: Object.keys(ALL_LANG_OPTIONS)[index] }), {})[value])
+      }}
+    />
+  }
+
+  const [mobileTab, setMobileTab] = useState<"chat" | "menu">("chat")
+
+  if (isMobileScreen) {
+    return <>
+      {mobileTab == "chat" && <Layout style={{ height: "100%", userSelect: "text" }}>
+        <Header style={{ background: "#f5f5f5", paddingLeft: 24, paddingRight: 24 }}>
+          <Row style={{ height: "100%" }}>
+            <Col span={10}>
+              <Flex style={{ width: "100%", height: "100%" }} align="center" justify="start" >
+                <Button type="text" icon={<MenuOutlined />} onClick={() => {
+                  setMobileTab("menu")
+                }}>{Locale.NextChat.SideBar.ChatList}</Button>
+              </Flex>
+            </Col>
+            <Col span={8}>
+              <Flex style={{ height: "100%" }} align="center">
+                <Title level={5} style={{ userSelect: "none" }}>{session.topic.length == 0 ? Locale.NextChat.ChatArea.DefaultTopic : session.topic}</Title>
+              </Flex>
+            </Col>
+            <Col span={6} />
+          </Row>
+        </Header>
+        <Content style={{ padding: "32px", justifyItems: "center", paddingTop: 0 }}>
+          <Dialog
+            chatWidth={chatWidth} maxMsgWidth={maxMsgWidth} quickStartWidth={quickStartWidth}
+            doSubmit={doSubmit}
+            useUserInput={[userInput, setUserInput]}
+            useChatPromise={[chatPromise, setChatPromise]}
+            useUseSmart={[useSmart, setUseSmart]}
+          />
+        </Content>
+      </Layout>}
+      {mobileTab == "menu" && <Layout style={{ height: "100%" }}>
+        <Content style={{ padding: 12, height: "100%" }}>
+          <Flex vertical gap={"middle"} style={{ height: "100%" }}>
+            <Flex align="center" justify="center">
+              <NNCHATBanner height={"32"} width={"128"} style={{ userSelect: "none" }} />
+            </Flex>
+            <Sidebar
+              useSelectedMessages={[selectedMessages, setSelectedMessages]}
+              useManagingMessages={[managingMessages, setManagingMessages]}
+              useChatPromise={[chatPromise, setChatPromise]}
+              useUseSmart={[useSmart, setUseSmart]}
+              useMobileTab={[mobileTab, setMobileTab]}
+            />
+            <Row gutter={8}>
+              <Col span={12}>
+                <Button icon={<OnnxIcon />} style={{ width: "100%" }} onClick={() => { setIsShowingConfigProviders(true) }}>
+                  模型设置
+                </Button>
+                <Drawer
+                  styles={{
+                    body:{
+                      padding: 0
+                    }
+                  }}
+                  style={{ userSelect: "none" }}
+                  height={height*0.7}
+                  title="模型设置"
+                  placement="bottom"
+                  closable={false}
+                  onClose={() => { setIsShowingConfigProviders(false) }}
+                  open={isShowingConfigProviders}
+                  extra={<Button type="primary" icon={<CheckOutlined />} onClick={() => { setIsShowingConfigProviders(false) }}>完成</Button>}
+                >
+                  <Collapse
+                    style={{borderRadius: 0}}
+                    bordered={false}
+                    defaultActiveKey={["providers", "settings"]}
+                    items={[
+                      {
+                        key: "providers",
+                        children: <ModelConfig.Providers/>
+                      },
+                      {
+                        key: "settings",
+                        children: <ModelConfig.Models/>
+                      }
+                    ]}
+                  />
+                </Drawer>
+              </Col>
+              <Col span={12}>
+                <SelectLanguage mobile />
+              </Col>
+            </Row>
+          </Flex>
+        </Content>
+      </Layout>}
+    </>
+  }
 
   return <Layout style={{ height: "100%", userSelect: "text" }}>
     <Sider width={sidebarWidth} collapsed={collapseSidebar} style={{
@@ -324,152 +425,28 @@ function _Chat() {
       padding: 12,
     }}>
       {!collapseSidebar && <Flex vertical gap={"middle"} style={{ height: "100%" }}>
-        <Flex style={{ width: "100%", paddingTop: 8 }}>
-          <Row style={{ width: "100%" }}>
-            <Col span={18}>
-              <Flex gap={"small"} style={{ paddingLeft: 8 }}>
-                <NNCHATBanner height={"32"} width={"128"} style={{ userSelect: "none" }} />
-              </Flex>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={6} style={{ paddingRight: 36 }}>
-              <Button type="text" icon={<MenuFoldOutlined />} iconPosition={"end"}
+        <table>
+          <tr>
+            <td>
+              <NNCHATBanner height={"32"} width={"128"} style={{ userSelect: "none" }} />
+            </td>
+            <td align="right">
+              <Button variant="link" color="default" icon={<MenuFoldOutlined />} iconPosition={"end"}
                 onClick={() => {
                   setCollapseSidebar(true)
                   clearSelectedMessages()
                   setManagingMessages(false)
                 }}
               >收起</Button>
-            </Col>
-          </Row>
-        </Flex>
-        {!managingMessages && <Flex gap={"small"}>
-          <Button icon={<AddIcon />} onClick={() => {
-            chatStore.newSession()
-          }}>
-            {Locale.NextChat.SideBar.NewChat}
-          </Button>
-          <Button icon={<SettingOutlined />} onClick={() => { clearSelectedMessages(); setManagingMessages(true); }}>
-            {Locale.NextChat.SideBar.Manage}
-          </Button>
-        </Flex>}
-        {managingMessages && <Flex gap={"small"} align="center" style={{ paddingLeft: 8 }}>
-          <Checkbox
-            checked={isSelectedAllMessages()}
-            indeterminate={!isNoneMessageSelected() && !isSelectedAllMessages()}
-            onClick={() => { isSelectedAllMessages() ? clearSelectedMessages() : selectAllMessages() }}
-          >全选</Checkbox>
-          <Dropdown
-            disabled={isNoneMessageSelected()}
-            menu={{
-              items: [
-                {
-                  key: 'delete',
-                  label: "删除选中对话",
-                  danger: true,
-                  icon: <DeleteIcon />,
-                  onClick: () => {
-                    confirm({
-                      title: '确认要删除这些对话吗？',
-                      okCancel: true,
-                      okText: "确认",
-                      cancelText: "取消",
-                      onOk: () => {
-                        let sessions = chatStore.sessions.map(sess => sess.id).slice()
-                        for (let id of selectedMessages) {
-                          let idx = 0
-                          for (let i = 0; i < sessions.length; i++) {
-                            if (sessions[i] == id) {
-                              idx = i
-                              break
-                            }
-                          }
-                          chatStore.deleteSession(idx, true)
-                          sessions = sessions.filter(s => s != id)
-                        }
-                        clearSelectedMessages()
-                        setManagingMessages(false)
-                      },
-                      onCancel: () => {
-                        clearSelectedMessages()
-                        setManagingMessages(false)
-                      }
-                    })
-                  }
-                }
-              ]
-            }}
-            arrow
-          >
-            <Button icon={<EllipsisOutlined />}>选项</Button>
-          </Dropdown>
-          <Button onClick={() => { setManagingMessages(false); clearSelectedMessages() }}>完成</Button>
-        </Flex>}
-        <Conversations
-          activeKey={!managingMessages ? session.id : undefined}
-          items={chatStore.sessions.map(sess => {
-            return {
-              key: sess.id,
-              label: sess.topic.length == 0 ? Locale.NextChat.ChatArea.DefaultTopic : sess.topic,
-              icon: managingMessages ? <Checkbox checked={isMessageSelected(sess.id)} onClick={() => {
-                isMessageSelected(sess.id) ? removeSelectedMessage(sess.id) : addSelectedMessage(sess.id)
-              }} /> : (sess.emoji ?? "✨"),
-            }
-          })}
-          style={{
-            background: "white",
-            borderRadius: 12,
-            userSelect: "none"
-          }}
-          menu={!managingMessages ? (c) => {
-            return {
-              items: [
-                {
-                  key: "delete",
-                  label: Locale.NextChat.ChatArea.Delete,
-                  icon: <DeleteIcon />,
-                  danger: true,
-                }
-              ],
-              onClick: (info) => {
-                const id = c.key
-                if (info.key == "delete") {
-                  let idx = 0
-                  for (let i = 0; i < chatStore.sessions.length; i++) {
-                    if (chatStore.sessions[i].id == id) {
-                      idx = i
-                      break
-                    }
-                  }
-                  chatStore.deleteSession(idx)
-                }
-              }
-            }
-          } : undefined}
-          onActiveChange={async (v) => {
-            if (managingMessages) return
-            setModifiedMessage("")
-            setSelectedMessages([])
-            setUseSmart(false)
-            setShowMoreOptions(false)
-            chatStore.updateCurrentSession(session => {
-              for (let message of session.messages) {
-                message["modify"] = false;
-                message["expand"] = false;
-              }
-            })
-            chatPromise?.abort()
-            setChatPromise(undefined)
-            let idx = 0
-            for (let i = 0; i < chatStore.sessions.length; i++) {
-              if (chatStore.sessions[i].id == v) {
-                idx = i
-                break
-              }
-            }
-            chatStore.selectSession(idx)
-          }}
+            </td>
+          </tr>
+        </table>
+        <Sidebar
+          useSelectedMessages={[selectedMessages, setSelectedMessages]}
+          useManagingMessages={[managingMessages, setManagingMessages]}
+          useChatPromise={[chatPromise, setChatPromise]}
+          useUseSmart={[useSmart, setUseSmart]}
+          useMobileTab={[mobileTab, setMobileTab]}
         />
       </Flex>}
       {
@@ -543,541 +520,26 @@ function _Chat() {
               >
                 <Row>
                   <Col span={12} style={{ padding: 12, height: height - 300, overflowY: "scroll" }}>
-                    <div style={{ height: 20 }} />
-                    <Title level={3}>账户信息</Title>
-                    <hr />
-                    {apiConfig.getFields().map(p => <>
-                      <div style={{ height: 16 }} />
-                      <Title level={4}>{apiConfig.getProviderName(p.provider)}</Title>
-                      <List
-                        itemLayout="horizontal"
-                        dataSource={p.fields}
-                        renderItem={(item, idx) => <List.Item>
-                          <List.Item.Meta
-                            title={<b>{item + ":"}</b>}
-                          />
-                          <Input
-                            value={apiConfig.getField(p.provider, item) ?? ""}
-                            onChange={(e) => { apiConfig.setField(p.provider, item, e.currentTarget.value) }}
-                          />
-                        </List.Item>}
-                      />
-                      <hr />
-                    </>)}
+                    <ModelConfig.Providers />
                   </Col>
                   <Col span={12} style={{ padding: 12, height: height - 300, overflowY: "scroll" }}>
-                    <div style={{ height: 20 }} />
-                    <Title level={4}>文字模型</Title>
-                    <List
-                      header={<Title level={5}>常规模型</Title>}
-                      dataSource={[
-                        {
-                          name: "服务商：",
-                          elem: <Select
-                            popupMatchSelectWidth={false}
-                            options={[
-                              ...(apiConfig.getProvider("chat") ? [] : [undefined]),
-                              ...apiConfig.getProviders("chat")
-                            ].map(t => { return { value: t ?? "", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
-                            value={apiConfig.getProvider("chat") ?? ""}
-                            onChange={(v) => {
-                              if (v == "") return
-                              apiConfig.setProvider("chat", v)
-                            }}
-                          />
-                        },
-                        ...(apiConfig.getProvider("chat") ? [{
-                          name: "模型：",
-                          elem: <Select
-                            popupMatchSelectWidth={false}
-                            options={apiConfig.getModels("chat").map(t => { return { value: t, label: t } })}
-                            value={apiConfig.getModel("chat")}
-                            onChange={(v) => { apiConfig.setModel("chat", v) }}
-                          />
-                        }] : [])
-                      ]}
-                      renderItem={(item) => <List.Item>
-                        <List.Item.Meta
-                          title={<b>{item.name}</b>}
-                        />
-                        {item.elem}
-                      </List.Item>}
-                    />
-                    <List
-                      header={<Title level={5}>高级模型</Title>}
-                      dataSource={[
-                        {
-                          name: "服务商：",
-                          elem: <Select
-                            popupMatchSelectWidth={false}
-                            options={[
-                              ...(apiConfig.getProvider("chat-smart") ? [] : [undefined]),
-                              ...apiConfig.getProviders("chat-smart")
-                            ].map(t => { return { value: t ?? "", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
-                            value={apiConfig.getProvider("chat-smart") ?? ""}
-                            onChange={(v) => {
-                              if (v == "") return
-                              apiConfig.setProvider("chat-smart", v)
-                            }}
-                          />
-                        },
-                        ...(apiConfig.getProvider("chat-smart") ? [{
-                          name: "模型：",
-                          elem: <Select
-                            popupMatchSelectWidth={false}
-                            options={apiConfig.getModels("chat-smart").map(t => { return { value: t, label: t } })}
-                            value={apiConfig.getModel("chat-smart")}
-                            onChange={(v) => { apiConfig.setModel("chat-smart", v) }}
-                          />
-                        }] : [])
-                      ]}
-                      renderItem={(item) => <List.Item>
-                        <List.Item.Meta
-                          title={<b>{item.name}</b>}
-                        />
-                        {item.elem}
-                      </List.Item>}
-                    />
-                    <List
-                      header={<Title level={5}>长文本模型</Title>}
-                      dataSource={[
-                        {
-                          name: "服务商：",
-                          elem: <Select
-                            popupMatchSelectWidth={false}
-                            options={[
-                              ...(apiConfig.getProvider("chat-long") ? [] : [undefined]),
-                              ...apiConfig.getProviders("chat-long")
-                            ].map(t => { return { value: t ?? "", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
-                            value={apiConfig.getProvider("chat-long") ?? ""}
-                            onChange={(v) => {
-                              if (v == "") return
-                              apiConfig.setProvider("chat-long", v)
-                            }}
-                          />
-                        },
-                        ...(apiConfig.getProvider("chat-long") ? [{
-                          name: "模型：",
-                          elem: <Select
-                            popupMatchSelectWidth={false}
-                            options={apiConfig.getModels("chat-long").map(t => { return { value: t, label: t } })}
-                            value={apiConfig.getModel("chat-long")}
-                            onChange={(v) => { apiConfig.setModel("chat-long", v) }}
-                          />
-                        }] : [])
-                      ]}
-                      renderItem={(item) => <List.Item>
-                        <List.Item.Meta
-                          title={<b>{item.name}</b>}
-                        />
-                        {item.elem}
-                      </List.Item>}
-                    />
-                    <div style={{ height: 20 }} />
-                    <Title level={4}>视觉模型</Title>
-                    <List
-                      dataSource={[
-                        {
-                          name: "服务商：",
-                          elem: <Select
-                            popupMatchSelectWidth={false}
-                            options={[
-                              ...(apiConfig.getProvider("caption") ? [] : [undefined]),
-                              ...apiConfig.getProviders("caption")
-                            ].map(t => { return { value: t ?? "", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
-                            value={apiConfig.getProvider("caption") ?? ""}
-                            onChange={(v) => {
-                              if (v == "") return
-                              apiConfig.setProvider("caption", v)
-                            }}
-                          />
-                        },
-                        ...(apiConfig.getProvider("caption") ? [{
-                          name: "模型：",
-                          elem: <Select
-                            popupMatchSelectWidth={false}
-                            options={apiConfig.getModels("caption").map(t => { return { value: t, label: t } })}
-                            value={apiConfig.getModel("caption")}
-                            onChange={(v) => { apiConfig.setModel("caption", v) }}
-                          />
-                        }] : [])
-                      ]}
-                      renderItem={(item) => <List.Item>
-                        <List.Item.Meta
-                          title={<b>{item.name}</b>}
-                        />
-                        {item.elem}
-                      </List.Item>}
-                    />
-                    <div style={{ height: 20 }} />
-                    <Title level={4}>绘画模型</Title>
-                    <List
-                      dataSource={[
-                        {
-                          name: "服务商：",
-                          elem: <Select
-                            popupMatchSelectWidth={false}
-                            options={[
-                              ...(apiConfig.getProvider("paint") ? [] : [undefined]),
-                              ...apiConfig.getProviders("paint")
-                            ].map(t => { return { value: t ?? "", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
-                            value={apiConfig.getProvider("paint") ?? ""}
-                            onChange={(v) => {
-                              if (v == "") return
-                              apiConfig.setProvider("paint", v)
-                            }}
-                          />
-                        },
-                        ...(apiConfig.getProvider("paint") ? [{
-                          name: "模型：",
-                          elem: <Select
-                            popupMatchSelectWidth={false}
-                            options={apiConfig.getModels("paint").map(t => { return { value: t, label: t } })}
-                            value={apiConfig.getModel("paint")}
-                            onChange={(v) => { apiConfig.setModel("paint", v) }}
-                          />
-                        }] : [])
-                      ]}
-                      renderItem={(item) => <List.Item>
-                        <List.Item.Meta
-                          title={<b>{item.name}</b>}
-                        />
-                        {item.elem}
-                      </List.Item>}
-                    />
-                    <div style={{ height: 20 }} />
-                    <Title level={4}>搜索接口</Title>
-                    <List
-                      dataSource={[
-                        {
-                          name: "服务商：",
-                          elem: <Select
-                            popupMatchSelectWidth={false}
-                            options={[
-                              ...(apiConfig.getProvider("search") ? [] : [undefined]),
-                              ...apiConfig.getProviders("search")
-                            ].map(t => { return { value: t ?? "", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
-                            value={apiConfig.getProvider("search") ?? ""}
-                            onChange={(v) => {
-                              if (v == "") return
-                              apiConfig.setProvider("search", v)
-                            }}
-                          />
-                        }
-                      ]}
-                      renderItem={(item) => <List.Item>
-                        <List.Item.Meta
-                          title={<b>{item.name}</b>}
-                        />
-                        {item.elem}
-                      </List.Item>}
-                    />
+                    <ModelConfig.Models />
                   </Col>
                 </Row>
               </Modal>
-              <Select
-                style={{ userSelect: "none" }}
-                prefix={"🌐"}
-                popupMatchSelectWidth={false}
-                defaultValue={ALL_LANG_OPTIONS[getLang()]}
-                options={Object.values(ALL_LANG_OPTIONS).map(o => { return { value: o, label: o } })}
-                onChange={(value) => {
-                  changeLang(Object.values(ALL_LANG_OPTIONS).reduce((acc, key, index) => Object.assign(acc, { [key]: Object.keys(ALL_LANG_OPTIONS)[index] }), {})[value])
-                }}
-              />
+              <SelectLanguage />
             </Flex>
           </Col>
         </Row>
       </Header>
       <Content style={{ padding: "32px", justifyItems: "center", paddingTop: 0 }}>
-        <Flex justify={"center"} align={"center"} vertical gap={"middle"} style={{ height: "100%", width: chatWidth, margin: "auto" }}>
-          <Bubble.List
-            style={{ width: "100%" }}
-            roles={{
-              system: {
-                placement: "start",
-                avatar: { icon: <SettingOutlined />, style: { background: "none", color: "darkgray" } },
-                variant: "borderless",
-                messageRender: RenderMarkdown,
-              },
-              assistant: {
-                placement: "start",
-                avatar: { icon: <NNCHATIcon width={32} height={32} />, style: { background: "none" } },
-                variant: "borderless",
-                messageRender: RenderMarkdown,
-              },
-              user: {
-                placement: "end",
-                // avatar: { icon: "👤" },
-                messageRender: RenderMarkdown,
-                variant: "filled",
-                shape: "corner",
-              },
-            }}
-            items={
-              [
-                ...(session.messages.length == 0 && userInput.trim().length == 0 ? [{ type: "text", role: "assistant", content: Locale.NextChat.ChatArea.Greeting, greeting: true }] : []),
-                ...session.messages,
-                ...(userInput.trim().length > 0 ? [{ type: "text", role: "user", content: userInput, userInput: true }] : [])
-              ].map(
-                (msg, idx) => {
-                  const footer = msg.role=="assistant" && idx == session.messages.length - 1 && chatPromise 
-                  ? <Button type="text" size="small" icon={<StopIcon />} onClick={()=>{chatPromise.abort()}} style={{opacity: 0.7}}>停止</Button>
-                  : <Flex gap={"small"} style={{ opacity: 0.7 }}>
-                    {["text", "image"].includes(msg.type) && <Button
-                      type="text" size="small" icon={<CopyIcon />}
-                      onClick={() => {
-                        copyMessage(msg as Message)
-                      }}
-                    >{Locale.NextChat.ChatArea.Copy}</Button>}
-                    {["document", "image"].includes(msg.type) && <Button
-                      type="text" size="small" icon={<DownloadIcon />}
-                      onClick={async ()=>{
-                        const data = await (await fetch((msg as ImageMessage | DocumentMessage).src)).blob()
-                        const url = URL.createObjectURL(data)
-                        const a = document.createElement("a")
-                        a.href = url
-                        a.download = (msg as ImageMessage | DocumentMessage).fileName??""
-                        a.click()
-                      }}
-                    >下载</Button>}
-                    <Button
-                      type="text" size="small" icon={<DeleteIcon />}
-                      onClick={() => {
-                        chatStore.updateCurrentSession(session => {
-                          session.messages.splice(idx, 1)
-                        })
-                      }}
-                    >
-                      {Locale.NextChat.ChatArea.Delete}
-                    </Button>
-                    {msg.role == "user" && <Button
-                      type="text" size="small" icon={<EditOutlined />}
-                      onClick={() => {
-                        chatStore.updateCurrentSession(session => {
-                          for (let idx = 0; idx < session.messages.length; idx++) {
-                            session.messages[idx]["modify"] = false
-                          }
-                          session.messages[idx]["modify"] = true
-                        })
-                        setModifiedMessage(msg.content)
-                      }}
-                    >修改</Button>}
-                    {msg.role == "assistant" && <Button
-                      type="text" size="small" icon={<ResetIcon />}
-                      onClick={() => {
-                        chatStore.updateCurrentSession(session => { session.messages = session.messages.slice(0, idx) })
-                        const userMsgs = session.messages.filter(msg => msg.role == "user")
-                        const input = userMsgs[userMsgs.length - 1]?.content ?? ""
-                        chatStore.updateCurrentSession(session => { session.messages = session.messages.slice(0, session.messages.length - 1) })
-                        doSubmit(input)
-                      }}
-                    >{Locale.NextChat.ChatArea.Retry}</Button>}
-                  </Flex>
-                  if (msg.type == "document") {
-                    return {
-                      role: msg.role,
-                      content: JSON.stringify({
-                        fileName: (msg as DocumentMessage).fileName,
-                        src: (msg as DocumentMessage).src
-                      }),
-                      footer: footer,
-                      messageRender: (content) => {
-                        const { fileName, src } = JSON.parse(content)
-                        if (msg["expand"]) {
-                          return <div style={{ width: maxMsgWidth, height: height / 2, borderRadius: 16, overflow: "hidden", position: "relative" }}>
-                            <div style={{ width: "100%", height: "100%", overflow: "scroll" }}>
-                              <FileFrame src={src} name={fileName} />
-                            </div>
-                            <Button
-                              style={{ position: "absolute", right: 24, bottom: 16 }} size="small" variant="filled" color="primary" shape="round" icon={<FullscreenExitOutlined />} iconPosition="end"
-                              onClick={() => {
-                                chatStore.updateCurrentSession(session => {
-                                  session.messages[idx]["expand"] = false
-                                })
-                              }}
-                            >
-                              收起
-                            </Button>
-                          </div>
-                        }
-                        return <Attachments.FileCard style={{ userSelect: "none", width: 236 }} item={{
-                          uid: `${idx}`,
-                          name: fileName,
-                          description: <Flex justify="right" style={{ width: 165 }}>
-                            <Button
-                              style={{ width: 72 }} type="text" shape="round" iconPosition="end" size="small" icon={<FullscreenOutlined />}
-                              onClick={() => {
-                                chatStore.updateCurrentSession(session => {
-                                  session.messages[idx]["expand"] = true
-                                })
-                              }}
-                            >
-                              展开
-                            </Button>
-                          </Flex>
-                        }} />
-                      }
-                    }
-                  } else if (msg.type == "image") {
-                    return {
-                      role: msg.role,
-                      content: JSON.stringify({
-                        src: (msg as ImageMessage).src,
-                        fileName: (msg as ImageMessage).fileName
-                      }),
-                      footer: footer,
-                      messageRender: (content) => {
-                        const { fileName, src } = JSON.parse(content)
-                        return <div style={{ borderRadius: 16, maxWidth: chatWidth / 2, pointerEvents: "none", userSelect: "none", overflow: "hidden", background: "white" }}>
-                          <FileFrame src={src} name={fileName} />
-                        </div>
-                      }
-                    }
-                  } else {
-                    return {
-                      role: msg.role,
-                      content: msg.content,
-                      ...(msg["greeting"] || msg["userInput"] || msg["modify"] ? { footer: undefined } : { footer }),
-                      loading: chatPromise && idx == session.messages.length - 1 && msg.role == "assistant" && msg.content.trim().length == 0,
-                      ...(msg["modify"] ? {
-                        messageRender: (msg) => {
-                          return <Flex vertical gap={"small"}>
-                            <Input.TextArea value={modifiedMessage} onChange={(e) => { setModifiedMessage(e.currentTarget.value) }} autoSize={{ minRows: 3, maxRows: Math.max(3, height / 3 / 24) }} style={{ width: chatWidth }} />
-                            <Flex justify="end" gap={"middle"}>
-                              <Button onClick={() => {
-                                setModifiedMessage("")
-                                chatStore.updateCurrentSession(session => { session.messages[idx]["modify"] = false })
-                              }}>取消</Button>
-                              <Button type="primary" onClick={() => {
-                                chatStore.updateCurrentSession(session => { session.messages = session.messages.slice(0, idx - 2) })
-                                doSubmit(modifiedMessage)
-                                setModifiedMessage("")
-                              }}>发送</Button>
-                            </Flex>
-                          </Flex>
-                        }, variant: "borderless"
-                      } : {}),
-                    }
-                  }
-                }
-              )
-            }
-          />
-          {session.messages.length == 0 && <Prompts
-            style={{ maxHeight: height / 3, overflowY: "scroll", userSelect: "none" }}
-            title={<Flex gap={"small"}>
-              <Title level={4}>🚀</Title>
-              <Flex vertical>
-                <Title level={4}>{Locale.NextChat.ChatArea.QuickStart}</Title>
-                <Typography.Text>{Locale.NextChat.ChatArea.YouCanSeeInMore}</Typography.Text>
-              </Flex>
-            </Flex>}
-            items={[
-              {
-                key: "1",
-                label: Locale.NextChat.ChatArea.UploadFile,
-                icon: "📤",
-                description: Locale.NextChat.ChatArea.UploadDesc,
-                children: [
-                  {
-                    key: "1-1",
-                    label: Locale.NextChat.ChatArea.Upload,
-                    icon: <UploadIcon />,
-                  }
-                ],
-              },
-              {
-                key: "2",
-                label: Locale.NextChat.ChatArea.RolePlay,
-                icon: "🎭",
-                description: Locale.NextChat.ChatArea.RolePlayDesc,
-                children: [
-                  {
-                    key: "2-1",
-                    label: Locale.NextChat.ChatArea.SelectRole,
-                    icon: <RolePlayIcon />
-                  },
-                  {
-                    key: "2-2",
-                    label: Locale.NextChat.ChatArea.NewRole,
-                    icon: <MoreIcon />
-                  }
-                ]
-              },
-              {
-                key: "3",
-                label: Locale.NextChat.ChatArea.ChatPlugins,
-                icon: "🧩",
-                description: Locale.NextChat.ChatArea.PluginDesc,
-                children: [
-                  {
-                    key: "3-1",
-                    label: Locale.NextChat.ChatArea.EnablePlugin,
-                    icon: <PluginIcon style={{ transform: "rotate(45deg)", scale: "1.15" }} />
-                  }
-                ]
-              },
-            ]}
-            onItemClick={(info) => {
-              switch (info.data.key) {
-                case "1-1":
-                  uploadFile(chatStore)
-                  break
-              }
-            }}
-            wrap
-            styles={{
-              item: {
-                flex: 'none',
-                width: quickStartWidth,
-                border: 0,
-              },
-            }}
-          />}
-          <Sender
-            onSubmit={(msg) => {
-              setUserInput("")
-              doSubmit(msg)
-            }}
-            value={userInput}
-            onChange={(v) => {
-              setUserInput(v)
-            }}
-            header={<Sender.Header title={<Flex style={{ width: "100%", height: "100%" }} gap={"small"} wrap>
-              <Button size="small" shape="round"
-                icon={useSmart ? <AdvancedModelIcon /> : <RegularModelIcon />}
-                onClick={() => {
-                  message.open({
-                    content: Locale.NextChat.ChatArea.SwitchedToModel(useSmart ? "regular" : "smart"),
-                    icon: <div style={{ width: 16, height: 16, marginRight: 8 }}>{!useSmart ? <AdvancedModelIcon /> : <RegularModelIcon />}</div>,
-                  })
-                  setUseSmart(!useSmart)
-                }}
-              >{Locale.NextChat.ChatArea.SwitchModel}</Button>
-              <Button size="small" shape="round" icon={<UploadIcon />} onClick={() => { uploadFile(chatStore) }}>{Locale.NextChat.ChatArea.UploadFile}</Button>
-              <Button size="small" shape="round" icon={<BreakIcon style={{ fill: "red", opacity: "0.8" }} />} onClick={() => { chatStore.deleteSession(chatStore.currentSessionIndex); }}>{Locale.NextChat.ChatArea.DeleteChat}</Button>
-              <Button size="small" shape="round" icon={<DeleteIcon style={{ fill: "red", opacity: "0.8" }} />} onClick={async () => {
-                confirm({
-                  title: Locale.NextChat.ChatArea.ClearDataPrompt,
-                  okCancel: true,
-                  okText: "确认",
-                  cancelText: "取消",
-                  okButtonProps: {danger: true},
-                  onOk: async () => {
-                    localStorage.clear();
-                    await localforage.clear()
-                    location.reload();
-                  }
-                })
-              }}>{Locale.NextChat.ChatArea.ClearData}</Button>
-            </Flex>} open={showMoreOptions} onOpenChange={() => { setShowMoreOptions(!showMoreOptions) }} />}
-            prefix={<Button icon={showMoreOptions ? <DownOutlined /> : <AddIcon />} type="default" shape="circle" onClick={() => { setShowMoreOptions(!showMoreOptions) }} />}
-            placeholder={Locale.NextChat.ChatArea.SendPrompt}
-            loading={chatPromise&&true}
-            onCancel={()=>{chatPromise?.abort()}}
-          />
-        </Flex>
+        <Dialog
+          chatWidth={chatWidth} maxMsgWidth={maxMsgWidth} quickStartWidth={quickStartWidth}
+          doSubmit={doSubmit}
+          useUserInput={[userInput, setUserInput]}
+          useChatPromise={[chatPromise, setChatPromise]}
+          useUseSmart={[useSmart, setUseSmart]}
+        />
       </Content>
     </Layout>
   </Layout>
@@ -1403,7 +865,7 @@ export function NextChat() {
     // }
   })
 
-  return <_Chat key={sessionIndex} />
+  return <Chat_ key={sessionIndex} />
 
   // return <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: isRtlLang() ? "row-reverse" : "row" }}>
   //   <div>

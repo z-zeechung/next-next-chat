@@ -46,7 +46,7 @@ export function AuthPage() {
   const navigate = useNavigate()
 
   return <>
-    <div className={styles["auth-page"]}>
+    {/* <div className={styles["auth-page"]}>
       <List>
         {error&&<ListItem>
           <Badge colorScheme="red" size={"xs"}>用户名或密码无效</Badge>
@@ -76,7 +76,7 @@ export function AuthPage() {
           </ButtonGroup>
         </ListItem>
       </List>
-    </div>
+    </div> */}
   </>
 
   // return (
