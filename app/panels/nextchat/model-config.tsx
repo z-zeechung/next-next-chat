@@ -1,5 +1,5 @@
 import { useApiConfig } from "@/app/client/api"
-import { Input, List, Select, Typography } from "antd"
+import { Input, List, Select, Tooltip, Typography } from "antd"
 
 export const ModelConfig = {
     Providers() {
@@ -55,7 +55,10 @@ export const ModelConfig = {
                         name: "模型：",
                         elem: <Select
                             popupMatchSelectWidth={false}
-                            options={apiConfig.getModels("chat").map(t => { return { value: t, label: t } })}
+                            options={apiConfig.getModels("chat").map(t => { return { value: t.name, label: <>
+                                {t.name}
+                                {t["search"]&&<Tooltip title="这个模型自带网络搜索能力">🔍</Tooltip>}
+                            </> } })}
                             value={apiConfig.getModel("chat")}
                             onChange={(v) => { apiConfig.setModel("chat", v) }}
                         />
@@ -90,7 +93,10 @@ export const ModelConfig = {
                         name: "模型：",
                         elem: <Select
                             popupMatchSelectWidth={false}
-                            options={apiConfig.getModels("chat-smart").map(t => { return { value: t, label: t } })}
+                            options={apiConfig.getModels("chat-smart").map(t => { return { value: t.name, label: <>
+                                {t.name}
+                                {t["search"]&&<Tooltip title="这个模型自带网络搜索能力">🔍</Tooltip>}
+                            </> } })}
                             value={apiConfig.getModel("chat-smart")}
                             onChange={(v) => { apiConfig.setModel("chat-smart", v) }}
                         />
@@ -125,7 +131,10 @@ export const ModelConfig = {
                         name: "模型：",
                         elem: <Select
                             popupMatchSelectWidth={false}
-                            options={apiConfig.getModels("chat-long").map(t => { return { value: t, label: t } })}
+                            options={apiConfig.getModels("chat-long").map(t => { return { value: t.name, label: <>
+                                {t.name}
+                                {t["search"]&&<Tooltip title="这个模型自带网络搜索能力">🔍</Tooltip>}
+                            </> } })}
                             value={apiConfig.getModel("chat-long")}
                             onChange={(v) => { apiConfig.setModel("chat-long", v) }}
                         />
@@ -161,7 +170,7 @@ export const ModelConfig = {
                         name: "模型：",
                         elem: <Select
                             popupMatchSelectWidth={false}
-                            options={apiConfig.getModels("caption").map(t => { return { value: t, label: t } })}
+                            options={apiConfig.getModels("caption").map(t => { return { value: t.name, label: t.name } })}
                             value={apiConfig.getModel("caption")}
                             onChange={(v) => { apiConfig.setModel("caption", v) }}
                         />
@@ -197,7 +206,7 @@ export const ModelConfig = {
                         name: "模型：",
                         elem: <Select
                             popupMatchSelectWidth={false}
-                            options={apiConfig.getModels("paint").map(t => { return { value: t, label: t } })}
+                            options={apiConfig.getModels("paint").map(t => { return { value: t.name, label: t.name } })}
                             value={apiConfig.getModel("paint")}
                             onChange={(v) => { apiConfig.setModel("paint", v) }}
                         />

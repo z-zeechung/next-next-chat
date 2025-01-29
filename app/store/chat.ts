@@ -25,7 +25,7 @@ import { collectModelsWithDefaultModel } from "../utils/model";
 import { useAccessStore } from "./access";
 import { create } from "domain";
 import { contentOfVecDB, createVecDB, deleteVecDB } from "../utils/vectordb";
-import emoji from "../emoji.json"
+// import emoji from "../emoji.json"
 import { Message, revokeMessage } from "../message/Message";
 // import { MarkdownMessage } from "../message/TextMessage";
 import { ControllablePromise } from "../utils/controllable-promise";

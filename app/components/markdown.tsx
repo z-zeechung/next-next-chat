@@ -16,8 +16,9 @@ import { useDebouncedCallback } from "use-debounce";
 import { showImageModal } from "./ui-lib";
 import { renderToString } from "react-dom/server";
 import { ThoughtChain } from "@ant-design/x";
-import { CheckOutlined, LoadingOutlined } from "@ant-design/icons";
-import { Button, Flex } from "antd";
+import { CheckOutlined, CopyOutlined, DownloadOutlined, LoadingOutlined } from "@ant-design/icons";
+import { Button, Flex, message, Modal } from "antd";
+import { DownloadIcon } from "@chakra-ui/icons";
 
 export function Mermaid(props: { code: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -50,19 +51,62 @@ export function Mermaid(props: { code: string }) {
     return null;
   }
 
-  return (
+  return <div>
     <div
-      className="no-dark mermaid"
+      // className="no-dark mermaid"
       style={{
-        cursor: "pointer",
+        // cursor: "pointer",
         overflow: "auto",
+        display:"inline-block"
       }}
       ref={ref}
-      onClick={() => viewSvgInNewWindow()}
+      // onClick={() => viewSvgInNewWindow()}
     >
       {props.code}
     </div>
-  );
+    <Flex gap={"small"}>
+      <Button icon={<DownloadOutlined />} color="default" variant="filled" size="small" shape="round" onClick={async ()=>{
+        const svg = ref.current?.querySelector("svg");
+        if (!svg) return;
+        const canvas = document.createElement('canvas');
+        const img = document.getElementById('outputImage');
+
+        const svgData = new XMLSerializer().serializeToString(svg);
+        const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+        function blobToDataURL(blob, type): Promise<string> {
+          return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => {
+                  resolve(reader.result as string);
+              };
+              reader.onerror = () => {
+                  reject(reader.error);
+              };
+              reader.readAsDataURL(new File([blob], "", { type }));
+          });
+        }
+        const url = await blobToDataURL(svgBlob, 'image/svg+xml;charset=utf-8');
+        const imgElement = new Image();
+        imgElement.onload = function() {
+            canvas.width = svg.width.baseVal.value;
+            canvas.height = svg.height.baseVal.value;
+            const ctx = canvas.getContext('2d')!;
+            ctx.drawImage(imgElement, 0, 0);
+            const pngDataUrl = canvas.toDataURL('image/png');
+            const a = document.createElement('a');
+            a.href = pngDataUrl;
+            a.download = 'image.png';
+            a.click();
+            URL.revokeObjectURL(url); // 释放内存
+        };
+        imgElement.src = url;
+      }}>下载图片</Button>
+      <Button icon={<CopyOutlined />} color="default" variant="filled" size="small" shape="round" onClick={()=>{
+        navigator.clipboard.writeText(props.code)
+        message.success("已复制Mermaid代码到剪贴板")
+      }}>复制代码</Button>
+    </Flex>
+  </div>
 }
 
 function ToolCall(props:{code}){
@@ -85,7 +129,10 @@ function Code(props: {children, className?}){
   }else if(props.className == "hljs language-toolcall"){
     return <ToolCall code={props.children}/>
   }
-  return <code className={props.className??"hljs"}>{props.children}</code>
+  try{
+    if(props?.children?.[0]?.includes("\n")) {return <code className={props.className??"hljs"}>{props.children}</code>}
+  }catch{}
+  return <code className={props.className}>{props.children}</code>
 }
 
 export function PreCode(props: { children: any }) {
@@ -193,8 +240,51 @@ function MarkDownContent_(props: { content: string }) {
           return <a {...aProps} target={target} />;
         },
         img: (props:{src?})=>{
-          return <div style={{ borderRadius: 16, maxWidth: "50%", pointerEvents: "none", userSelect: "none", overflow: "hidden", background: "white" }}>
-            <img src={props.src}/>
+          return <div style={{display:"flex", flexDirection:"column", gap: 8}}>
+            <div style={{ borderRadius: 16, maxWidth: "50%", pointerEvents: "none", userSelect: "none", overflow: "hidden", background: "white" }}>
+              <img src={props.src}/>
+            </div>
+            <Flex gap={"small"}>
+              {/* <Button color="default" variant="filled" size="small" onClick={()=>{
+                Modal.confirm({
+                  title: "查看图片",
+                  icon: <></>,
+                  content: <img src={props.src} style={{zoom:2}}/>
+                })
+              }}>查看</Button> */}
+              <Button icon={<DownloadOutlined/>} shape="round" color="default" variant="filled" size="small" onClick={async ()=>{
+                const arr = await (await fetch(props.src)).arrayBuffer()
+                const blob = new Blob([arr])
+                function blobToDataURL(blob): Promise<string> {
+                  return new Promise((resolve, reject) => {
+                      const reader = new FileReader();
+                      reader.onload = () => {
+                          resolve(reader.result as string);
+                      };
+                      reader.onerror = () => {
+                          reject(reader.error);
+                      };
+                      reader.readAsDataURL(new File([blob], ""));
+                  });
+                }
+                let suffix = "png"
+                if(arr[0]==0x89 && arr[1]==0x50){
+                  suffix = "png"
+                }else if(arr[0]==0xff && arr[1]==0xd8){
+                  suffix = "jpg"
+                }else if(arr[0]==0x52 && arr[1]==0x49 && arr[2]==0x46 && arr[3]==0x46){
+                  suffix="webp"
+                }else if(arr[0]==0x42&&arr[1]==0x4d){
+                  suffix="bmp"
+                }
+                const url = await blobToDataURL(blob)
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "image."+suffix;
+                a.click();
+                a.remove();
+              }}>下载</Button>
+            </Flex>
           </div>
         }
       }}

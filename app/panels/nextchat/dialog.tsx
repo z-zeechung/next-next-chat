@@ -1,14 +1,14 @@
 import { Markdown } from "@/app/components/markdown";
-import { DownOutlined, EditOutlined, FullscreenExitOutlined, FullscreenOutlined, SettingOutlined } from "@ant-design/icons"
+import { DownOutlined, EditOutlined, EnterOutlined, FullscreenExitOutlined, FullscreenOutlined, PictureOutlined, SearchOutlined, SettingOutlined, UploadOutlined } from "@ant-design/icons"
 import { Attachments, Bubble, BubbleProps, Prompts, Sender } from "@ant-design/x"
-import { Button, Flex, Input, message, Typography } from "antd"
+import { Button, Flex, Input, Layout, message, Modal, Typography } from "antd"
 import Locale, { ALL_LANG_OPTIONS, changeLang, getLang, isRtlLang } from "../../locales";
 import confirm from "antd/es/modal/confirm";
 import { copyMessage, Message } from "@/app/message/Message";
 import { ImageMessage } from "@/app/message/ImageMessage";
 import { DocumentMessage } from "@/app/message/DocumentMessage";
 import { FileFrame } from "@/app/file-frame/file-frame";
-import { useWindowSize } from "@/app/utils";
+import { useMobileScreen, useWindowSize } from "@/app/utils";
 import { uploadFile } from "./fileUpload";
 import localforage from "localforage";
 import { AddIcon } from "@chakra-ui/icons";
@@ -57,7 +57,8 @@ function Dialog_(props:{
     doSubmit, 
     useUserInput, 
     useChatPromise, 
-    useUseSmart
+    useUseSmart,
+    useSearchPlugin, usePaintPlugin
 }) {
     const chatStore = useChatStore()
     const session = chatStore.currentSession()
@@ -66,12 +67,55 @@ function Dialog_(props:{
         doSubmit, 
         useUserInput: [userInput, setUserInput], 
         useChatPromise: [chatPromise, setChatPromise],
-        useUseSmart: [useSmart, setUseSmart]
+        useUseSmart: [useSmart, setUseSmart],
+        useSearchPlugin: [searchPlugin, setSearchPlugin],
+        usePaintPlugin: [paintPlugin, setPaintPlugin]
     } = props
     const {width, height} = useWindowSize()
     const [modifiedMessage, setModifiedMessage] = useState("")
     const [showMoreOptions, setShowMoreOptions] = useState(false)
+    const [expandFile, setExpandFile] = useState<{src, fileName}|undefined>(undefined)
+    const isMobileScreen = useMobileScreen()
     return <Flex justify={"center"} align={"center"} vertical gap={"middle"} style={{ height: "100%", width: chatWidth, margin: "auto" }}>
+        {expandFile&&(!isMobileScreen)&&<Modal
+            width={1000}
+            styles={{
+                body: {
+                    height: height - 280,
+                    overflowY: "scroll"
+                }
+            }}
+            title={expandFile?.fileName}
+            open={true}
+            onCancel={() => { setExpandFile(undefined) }}
+            footer={<Button type="primary" icon={<FullscreenExitOutlined />} onClick={() => {setExpandFile(undefined)}}>收起</Button>}
+        >
+            <FileFrame src={expandFile?.src} name={expandFile?.fileName} />
+        </Modal>}
+        {expandFile&&isMobileScreen&&<Layout style={{
+            position:"fixed",
+            zIndex: 1000,
+            width,
+            height,
+            top: 0,
+            left: 0,
+        }}>
+            <Layout.Header style={{background: "#f5f5f5", position:"relative"}}>
+                <Button icon={<EnterOutlined />} style={{
+                    position:"absolute",
+                    left:10,
+                    top:10
+                }} onClick={()=>{setExpandFile(undefined)}}>返回</Button>
+                <Flex align="center" justify="center" style={{paddingTop:15}}>
+                    <Typography.Title level={5}>
+                        {expandFile.fileName}    
+                    </Typography.Title>    
+                </Flex>    
+            </Layout.Header>    
+            <Layout.Content style={{zoom: 0.618, overflow:"scroll"}}>
+                <FileFrame src={expandFile?.src} name={expandFile?.fileName} />
+            </Layout.Content>
+        </Layout>}
         <Bubble.List
             style={{ width: "100%" }}
             roles={{
@@ -93,6 +137,12 @@ function Dialog_(props:{
                     messageRender: RenderMarkdown,
                     variant: "filled",
                     shape: "corner",
+                    styles:{
+                        content:{
+                            maxHeight: height / 2,
+                            overflowY:"scroll"
+                        }
+                    }
                 },
             }}
             items={
@@ -165,23 +215,23 @@ function Dialog_(props:{
                                 footer: footer,
                                 messageRender: (content) => {
                                     const { fileName, src } = JSON.parse(content)
-                                    if (msg["expand"]) {
-                                        return <div style={{ width: maxMsgWidth, height: height / 2, borderRadius: 16, overflow: "hidden", position: "relative" }}>
-                                            <div style={{ width: "100%", height: "100%", overflow: "scroll" }}>
-                                                <FileFrame src={src} name={fileName} />
-                                            </div>
-                                            <Button
-                                                style={{ position: "absolute", right: 24, bottom: 16 }} size="small" variant="filled" color="primary" shape="round" icon={<FullscreenExitOutlined />} iconPosition="end"
-                                                onClick={() => {
-                                                    chatStore.updateCurrentSession(session => {
-                                                        session.messages[idx]["expand"] = false
-                                                    })
-                                                }}
-                                            >
-                                                收起
-                                            </Button>
-                                        </div>
-                                    }
+                                    // if (msg["expand"]) {
+                                    //     return <div style={{ width: maxMsgWidth, height: height / 2, borderRadius: 16, overflow: "hidden", position: "relative" }}>
+                                    //         <div style={{ width: "100%", height: "100%", overflow: "scroll" }}>
+                                    //             <FileFrame src={src} name={fileName} />
+                                    //         </div>
+                                    //         <Button
+                                    //             style={{ position: "absolute", right: 24, bottom: 16 }} size="small" variant="filled" color="primary" shape="round" icon={<FullscreenExitOutlined />} iconPosition="end"
+                                    //             onClick={() => {
+                                    //                 chatStore.updateCurrentSession(session => {
+                                    //                     session.messages[idx]["expand"] = false
+                                    //                 })
+                                    //             }}
+                                    //         >
+                                    //             收起
+                                    //         </Button>
+                                    //     </div>
+                                    // }
                                     return <Attachments.FileCard style={{ userSelect: "none", width: 236 }} item={{
                                         uid: `${idx}`,
                                         name: fileName,
@@ -189,8 +239,8 @@ function Dialog_(props:{
                                             <Button
                                                 style={{ width: 72 }} type="text" shape="round" iconPosition="end" size="small" icon={<FullscreenOutlined />}
                                                 onClick={() => {
-                                                    chatStore.updateCurrentSession(session => {
-                                                        session.messages[idx]["expand"] = true
+                                                    setExpandFile({
+                                                        src, fileName
                                                     })
                                                 }}
                                             >
@@ -245,80 +295,47 @@ function Dialog_(props:{
                 )
             }
         />
-        {session.messages.length == 0 && <Prompts
-            style={{ maxHeight: height / 3, overflowY: "scroll", userSelect: "none" }}
-            title={<Flex gap={"small"}>
-                <Typography.Title level={4}>🚀</Typography.Title>
-                <Flex vertical>
-                    <Typography.Title level={4}>{Locale.NextChat.ChatArea.QuickStart}</Typography.Title>
-                    <Typography.Text>{Locale.NextChat.ChatArea.YouCanSeeInMore}</Typography.Text>
-                </Flex>
-            </Flex>}
-            items={[
-                {
-                    key: "1",
-                    label: Locale.NextChat.ChatArea.UploadFile,
-                    icon: "📤",
-                    description: Locale.NextChat.ChatArea.UploadDesc,
-                    children: [
-                        {
-                            key: "1-1",
-                            label: Locale.NextChat.ChatArea.Upload,
-                            icon: <UploadIcon />,
-                        }
-                    ],
-                },
-                {
-                    key: "2",
-                    label: Locale.NextChat.ChatArea.RolePlay,
-                    icon: "🎭",
-                    description: Locale.NextChat.ChatArea.RolePlayDesc,
-                    children: [
-                        {
-                            key: "2-1",
-                            label: Locale.NextChat.ChatArea.SelectRole,
-                            icon: <RolePlayIcon />
-                        },
-                        {
-                            key: "2-2",
-                            label: Locale.NextChat.ChatArea.NewRole,
-                            icon: <MoreIcon />
-                        }
-                    ]
-                },
-                {
-                    key: "3",
-                    label: Locale.NextChat.ChatArea.ChatPlugins,
-                    icon: "🧩",
-                    description: Locale.NextChat.ChatArea.PluginDesc,
-                    children: [
-                        {
-                            key: "3-1",
-                            label: Locale.NextChat.ChatArea.EnablePlugin,
-                            icon: <PluginIcon style={{ transform: "rotate(45deg)", scale: "1.15" }} />
-                        }
-                    ]
-                },
-            ]}
-            onItemClick={(info) => {
-                switch (info.data.key) {
-                    case "1-1":
-                        uploadFile(chatStore)
-                        break
-                }
-            }}
-            wrap
-            styles={{
-                item: {
-                    flex: 'none',
-                    width: quickStartWidth,
-                    border: 0,
-                },
-            }}
-        />}
+        {session.messages.length == 0 && <Flex style={{width:"100%", paddingBottom: 32}}>
+            <Prompts
+                items={[
+                    {
+                        key: "UploadFile",
+                        label: Locale.NextChat.ChatArea.UploadFile,
+                        icon: <UploadOutlined />
+                    },
+                    {
+                        key: "SearchPlugins",
+                        label: "联网搜索",
+                        icon: searchPlugin?<>🔍</>:<SearchOutlined />
+                    },
+                    {
+                        key: "PaintPlugins",
+                        label: "图像生成",
+                        icon: paintPlugin?<>🏞️</>:<PictureOutlined />
+                    }
+                ]}
+                onItemClick={(info) => {
+                    switch (info.data.key) {
+                        case "UploadFile":
+                            uploadFile(chatStore)
+                            break
+                        case "SearchPlugins":
+                            message.info(`已${searchPlugin?"停用":"启用"}联网搜索`)
+                            setSearchPlugin(!searchPlugin)
+                            break
+                        case "PaintPlugins":
+                            message.info(`已${paintPlugin?"停用":"启用"}图像生成`)
+                            setPaintPlugin(!paintPlugin)
+                            break
+                    }
+                }}
+                wrap
+            />
+        </Flex>}
         <Sender
             onSubmit={(msg) => {
                 setUserInput("")
+                setShowMoreOptions(false)
                 doSubmit(msg)
             }}
             value={userInput}
@@ -337,6 +354,8 @@ function Dialog_(props:{
                     }}
                 >{Locale.NextChat.ChatArea.SwitchModel}</Button>
                 <Button size="small" shape="round" icon={<UploadIcon />} onClick={() => { uploadFile(chatStore) }}>{Locale.NextChat.ChatArea.UploadFile}</Button>
+                <Button color={searchPlugin?"primary":undefined} variant={searchPlugin?"filled":undefined} size="small" shape="round" icon={<SearchOutlined />} onClick={() => { message.info(`已${searchPlugin?"停用":"启用"}联网搜索`); setSearchPlugin(!searchPlugin) }}>联网搜索</Button>
+                <Button color={paintPlugin?"primary":undefined} variant={paintPlugin?"filled":undefined} size="small" shape="round" icon={<PictureOutlined />} onClick={() => { message.info(`已${paintPlugin?"停用":"启用"}图像生成`); setPaintPlugin(!paintPlugin) }}>图像生成</Button>
                 <Button size="small" shape="round" icon={<BreakIcon style={{ fill: "red", opacity: "0.8" }} />} onClick={() => { chatStore.deleteSession(chatStore.currentSessionIndex); }}>{Locale.NextChat.ChatArea.DeleteChat}</Button>
                 <Button size="small" shape="round" icon={<DeleteIcon style={{ fill: "red", opacity: "0.8" }} />} onClick={async () => {
                     confirm({

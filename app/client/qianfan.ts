@@ -1,9 +1,10 @@
 import { resolve } from "path";
 import { Message } from "../message/Message";
-import { Tool } from "../typing";
+import { JsonSchema, Tool } from "../typing";
 import { ControllablePromise } from "../utils/controllable-promise";
 import { Provider, resizeImage } from "./api";
 import axios, { AxiosResponse } from "axios";
+import { jsonSchemaWrapper, toolCallWrapper } from "./api-wrappers";
 
 export const Qianfan: Provider = {
     name: "Qianfan (百度千帆)",
@@ -13,22 +14,27 @@ export const Qianfan: Provider = {
             {
                 name: "ERNIE-4.0-8K",
                 context: 20000,
+                search: true
             },
             {
                 name: "ERNIE-4.0-Turbo-8K",
-                context: 20000
+                context: 20000,
+                search: true
             },
             {
                 name: "ERNIE-3.5-8K",
-                context: 20000
+                context: 20000,
+                search: true
             },
             {
                 name: "ERNIE-4.0-Turbo-128K",
-                context: 516096
+                context: 516096,
+                search: true
             },
             {
                 name: "ERNIE-3.5-128K",
-                context: 516096
+                context: 516096,
+                search: true
             },
             {
                 name: "ERNIE-Speed-Pro-128K",
@@ -59,13 +65,26 @@ export const Qianfan: Provider = {
         defaultSmart: "ERNIE-4.0-8K",
         defaultLong: "ERNIE-Speed-128K",
         getApi(options: { API_Key, Secret_Key, model }) {
+            const api = (
+                messages: Message[],
+                onUpdate?: (message: string) => void,
+                tools?: Tool[],
+                schema?: JsonSchema
+            ) => {
+                const model = name2id[options.model]
+                return chat(messages, (onUpdate ?? (() => { })), { ...options, model, schema })
+            }
             return (
                 messages: Message[],
                 onUpdate?: (message: string) => void,
-                tools?: Tool[]
-            ) => {
-                const model = name2id[options.model]
-                return chat(messages, (onUpdate ?? (() => { })), { ...options, model })
+                tools?: Tool[],
+                schema?: JsonSchema
+            )=>{
+                if(tools?.find(tool=>tool.function.name=="web_search")){
+                    messages[0]["search"] = true    // a very hacky way to pass search flag. whatever, qianfan api is naturally messy
+                    tools = tools?.filter(tool=>tool.function.name!="web_search")
+                }
+                return toolCallWrapper(jsonSchemaWrapper(api))(messages, onUpdate, tools, schema)
             }
         }
     },
@@ -146,36 +165,52 @@ async function getAccessToken(AK, SK) {
     }
 }
 
-function chat(messages: Message[], onUpdate: (message: string) => void, options: { model: string, API_Key, Secret_Key }): ControllablePromise<string> {
+function chat(messages: Message[], onUpdate: (message: string) => void, options: { model: string, schema?: JsonSchema, API_Key, Secret_Key }): ControllablePromise<string> {
     return new ControllablePromise(async (resolve, reject, abort) => {
         try {
             const accessToken = await getAccessToken(options?.API_Key, options?.Secret_Key);
             const url = `https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/${options.model}?access_token=${accessToken}`;
             const payload = {
                 messages: preprocess_msg(JSON.parse(JSON.stringify(messages))),
-                stream: true
+                stream: true,
+                response_format: options.schema?"json_object":"text",
+                disable_search: messages[0]["search"]?false:true,
+                enable_citation: messages[0]["search"]?true:false,
+                enable_trace: messages[0]["search"]?true:false,
             };
             fetch(url, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload),
             }).then(response => {
                 if (!response.ok) { throw new Error('网络异常'); }
                 const reader = response.body?.getReader()
                 const decoder = new TextDecoder()
                 let chunk = ""
+                const searchRef = new Map<number, {url: string, title: string}>()
                 async function read() {
                     reader?.read().then(({ done, value }) => {
                         const response = decoder.decode(value)
                         //console.log(`[CHUNK] ${response??"[ERROR]"}`)
+                        const searchInfo = JSON.parse(response.match(/\{.*\}/)?.[0] ?? '{}')
+                        searchInfo?.search_info?.search_results?.map(r=>{
+                            searchRef.set(r.index, {url: r.url, title: r.title})
+                        })
                         let text = JSON.parse(response.match(/\{.*\}/)?.[0] ?? '{"result":""}').result
                         chunk += text
+                        chunk = chunk.replace(/\^(\[[0-9]+\])+\^/g, "<sup>$1</sup>")
                         onUpdate?.(
                             chunk
                         )
                         if (done || abort(chunk)) {
+                            if(searchRef.size > 0){
+                                const reference = `
+${[...((searchRef.keys() as any).map(k=>`> ${k}. [${searchRef.get(k)?.title}](${searchRef.get(k)?.url})`))].join("\n")}
+                                `
+                                chunk += "\n"+reference
+                            }
                             resolve(chunk)
                         } else {
                             read()
@@ -196,9 +231,18 @@ function preprocess_msg(msg: Message[]) {
     for (let m of msg) {
         if (m.role == "system") {
             m.role = "user"
+            m.content = "system prompt: "+m.content
             ret.push(m)
-            ret.push({ type: "text", role: "assistant", content: "ok" })
+            ret.push({ type: "text", role: "assistant", content: "`placeholder message`" })
+        } else if(m.role == "tool") {
+            m.role = "user"
+            m.content = "function call result: "+m.content
+            ret.push(m)
+            ret.push({ type: "text", role: "assistant", content: "`placeholder message`" })
         } else {
+            if(m.content.trim() == ""){
+                m.content = "`empty message`"
+            }
             ret.push(m)
         }
     }
@@ -212,10 +256,10 @@ function preprocess_msg(msg: Message[]) {
         }
     }
     if (ret2[0].role == "assistant") {
-        ret2 = [{ type: "text", role: "user", content: "..." }, ...ret2]
+        ret2 = [{ type: "text", role: "user", content: "`empty message`" }, ...ret2]
     }
     if (ret2[ret2.length - 1].role == "assistant") {
-        ret2.push({ type: "text", role: "user", content: "..." })
+        ret2.push({ type: "text", role: "user", content: "`empty message`" })
     }
 
     return ret2
