@@ -7,7 +7,7 @@ import { readDocument, readDocx } from "../utils/readfile"
 import { createPersistStore } from "../utils/store"
 import { getOpenAiApi } from "./openai"
 import { ControllablePromise } from "../utils/controllable-promise"
-import { Tool } from "../typing"
+import { JsonSchema, Tool } from "../typing"
 import { ImageMessage } from "../message/ImageMessage"
 import { Tongyi } from "./tongyi"
 import { DeepSeek } from "./deepseek"
@@ -15,6 +15,7 @@ import { BochaAI } from "./bochaai"
 import { Qianfan } from "./qianfan"
 import { Moonshot } from "./moonshot"
 import { Spark } from "./spark"
+import { Exa } from "./exa"
 
 export interface Provider {
     name: string,
@@ -32,14 +33,7 @@ const Providers = new Map<string, Provider>([
     ["moonshot", Moonshot],
     ["spark", Spark],
     ["bochaai", BochaAI],
-    ["exa", {
-        name: "Exa",
-        fields: []
-    }],
-    ["duckduckgo", {
-        name: "DuckDuckGo",
-        fields: []
-    }]
+    ["exa", Exa],
 ])
 
 
@@ -52,12 +46,14 @@ interface ChatProvider {
 }
 interface ChatModel {
     name: string,
-    context: number
+    context: number,
+    search?: boolean
 }
 export type ChatApi = (
     messages: Message[],
     onUpdate?: (message: string) => void,
-    tools?: Tool[]
+    tools?: Tool[],
+    schema?: JsonSchema
 ) => ControllablePromise<string>
 
 const ChatProviders = new Map<string, ChatProvider>([
@@ -115,7 +111,8 @@ export type SearchApi = (
     count: number
 ) => Promise<{ url: string, digest: string }[]>
 const SearchProviders = new Map<string, SearchProvider>([
-    ["bochaai", BochaAI.search!]
+    ["bochaai", BochaAI.search!],
+    ["exa", Exa.search!],
 ])
 
 
@@ -256,13 +253,13 @@ export const useApiConfig = createPersistStore(
         },
         getModels(api: "chat" | "chat-smart" | "chat-long" | "caption" | "paint") {
             if (api == "caption") {
-                return CaptionProviders.get(get().caption.provider!)!.models.map(model => model.name)
+                return CaptionProviders.get(get().caption.provider!)!.models
             } else if (api == "paint") {
-                return PaintProviders.get(get().paint.provider!)!.models.map(model => model.name)
+                return PaintProviders.get(get().paint.provider!)!.models
             }
             const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong" }[api]
             const provider = get()[name].provider
-            return ChatProviders.get(provider)!.models.map(model => model.name)
+            return ChatProviders.get(provider)!.models
         },
         setField(provider: string, field: string, value: string) {
             const _fields = JSON.parse(JSON.stringify(get().fields))
@@ -316,6 +313,7 @@ export class ClientApi {
         options?: {
             model?: "regular" | "smart" | "long"
             tools?: Tool[]
+            schema?: JsonSchema
         }
     ): ControllablePromise<string> {
         const state: typeof DEFAULT_STATE = localStorage.getItem(STORAGE_NAME) ? JSON.parse(localStorage.getItem(STORAGE_NAME)!).state : DEFAULT_STATE
@@ -323,6 +321,28 @@ export class ClientApi {
         const provider = state[name].provider
         const fields = state.fields[provider]
         fields["model"] = state[name].model!
+        
+        let context = ChatProviders.get(provider)?.models.find(m=>m.name==state[name].model)?.context ?? 8000
+        context -= 2000
+        const systemMessages: Message[] = []
+        for(let i=0;i<messages.length;i++) {
+            if(messages[i].role=="system"){
+                systemMessages.push(messages[i])
+                context -= messages[i].content.length
+            }else{
+                messages = messages.slice(i)
+                break
+            }
+        }
+        let dialog: Message[] = []
+        for(let i=messages.length-1;i>=0;i--){
+            dialog.push(messages[i])
+            context -= messages[i].content.length
+            if(context<=0 || dialog.length>=15){
+                break
+            }
+        }
+        messages = [...systemMessages, ...dialog.reverse()]
 
         const api = ChatProviders.get(provider)?.getApi(fields)
 
@@ -387,7 +407,8 @@ export class ClientApi {
                     }
                     onUpdate?.(m)
                 },
-                tools
+                tools,
+                options?.schema
             )!
             if (typeof resp != "string") {
                 try {
@@ -464,7 +485,7 @@ export class ClientApi {
                                 ])}
 \`\`\`                     `)
                             },
-                            { model: "long" }
+                            { model: "long", schema: options?.schema },
                         ))
                     } else {
                         const result = await tools.find(tool => tool.function.name == resp["toolName"])!.call!(resp)
@@ -477,7 +498,7 @@ export class ClientApi {
                             type: "text", role: "tool", content: `调用${resp["toolName"]}工具的返回结果：${result}`,
                             tool_call_id: resp["toolName"]
                         } as any)
-                        resolve(ClientApi.chat(
+                        resolve(await api?.(
                             _messages,
                             (m) => {
                                 if (abort(m)) {
@@ -485,8 +506,9 @@ export class ClientApi {
                                 }
                                 onUpdate?.(m)
                             },
-                            { model: options?.model }
-                        ))
+                            undefined,
+                            options?.schema
+                        )??"")
                     }
                 } catch(e) {
                     console.log("[TOOLCALL ERROR]", e)
@@ -497,7 +519,9 @@ export class ClientApi {
                                 return
                             }
                             onUpdate?.(m)
-                        }
+                        },
+                        [],
+                        options?.schema
                     ) ?? "")
                 }
             } else {

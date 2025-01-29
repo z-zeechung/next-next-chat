@@ -43,6 +43,8 @@ import DownloadIcon from "../icons/bootstrap/download.svg"
 import OnnxIcon from "../icons/onnx.svg"
 import NNCHATIcon from "../icons/nnchat.svg"
 import NNCHATBanner from "../icons/nnchat-banner.svg"
+import NextNextCHATBanner from "../icons/nnchat-banner-fullname.svg"
+import NNCHATBannerZh from "../icons/nnchat-banner-zh.svg"
 
 import RegularModelIcon from "../icons/nnchat-regular-model.svg"
 import AdvancedModelIcon from "../icons/nnchat-advanced-model.svg"
@@ -102,6 +104,8 @@ import localforage from "localforage";
 import { Dialog } from "./nextchat/dialog";
 import { Sidebar } from "./nextchat/sidebar";
 import { ModelConfig } from "./nextchat/model-config";
+import emojiList from "./nextchat/emoji-list.json"
+import { Tool } from "../typing";
 
 function Chat_() {
 
@@ -156,7 +160,7 @@ function Chat_() {
         tools: [
           { type: "function", function: { name: "vision" } },
           { type: "function", function: { name: "long_context" } },
-          {
+          ...(paintPlugin?[{
             type: "function",
             function: {
               name: "generate_image",
@@ -202,8 +206,8 @@ function Chat_() {
                 图片尚未插入到对话记录中，你可以通过(${params.file_name})[${lfsUrl}]来向用户展示图片。
               `
             }
-          },
-          {
+          } as Tool]:[]),
+          ...(searchPlugin?[{
             type: "function",
             function: {
               name: "web_search",
@@ -240,7 +244,7 @@ function Chat_() {
               const result = await ClientApi.search(params.query, params.count)
               return JSON.stringify(result)
             }
-          }
+          } as Tool]:[])
         ]
       }
     )
@@ -254,16 +258,30 @@ function Chat_() {
         ]
       })
       if (session.topic.length <= 0) {
-        const emojiRe = /((\ud83c[\udf00-\udfff])|(\ud83d[\udc00-\ude4f])|(\ud83d[\ude80-\udeff]))(.*)/
-        const topic = await ClientApi.chat([
-          ...(session.messages),
-          { type: "text", role: "system", content: Locale.NextChat.ChatArea.MakeTopicPrompt }
-        ], undefined, { model: "smart" })
-        updateCurrentSession(sess => {
-          const matchResult = emojiRe.exec(topic)
-          const emoji = matchResult?.[1] ?? topic[0]
-          const _topic = matchResult?.[5] ?? topic
-          sess.topic = _topic
+        const {title, emoji} = JSON.parse(await ClientApi.chat(
+          [..._messages, { type: "text", role: "assistant", content: msg }, { type: "text", content: '给以上对话起标题，并选取一个符合对话内容的emoji。', role: "system" }],
+          undefined,
+          {
+            schema: {
+              title: '对话起标题与emoji选择',
+              type: "object",
+              properties: {
+                title: {
+                  type: "string",
+                  description: "对话的标题，不得超过15个汉字",
+                  maxLength: ["zh_Hans", "zh_Hant"].includes(getLang()) ? 15 : 30
+                },
+                emoji: {
+                  type: "string",
+                  description: "**单个**emoji，必须为有效的emoji",
+                  enum: emojiList
+                }
+              }
+            }
+          }
+        ))
+        updateCurrentSession(async sess => {
+          sess.topic = title
           sess.emoji = emoji
         })
       }
@@ -303,7 +321,8 @@ function Chat_() {
 
   const isMobileScreen = useMobileScreen()
 
-  const sidebarWidth = width > 900 ? 300 : 220
+  const narrowSidebar = width < 900
+  const sidebarWidth = !narrowSidebar ? 300 : 220
   const bodyWidth = width - sidebarWidth
   const desktopChatWidth = bodyWidth > 3 * sidebarWidth
     ? bodyWidth * 0.8
@@ -334,19 +353,19 @@ function Chat_() {
       {mobileTab == "chat" && <Layout style={{ height: "100%", userSelect: "text" }}>
         <Header style={{ background: "#f5f5f5", paddingLeft: 24, paddingRight: 24 }}>
           <Row style={{ height: "100%" }}>
-            <Col span={10}>
+            <Col span={4}>
               <Flex style={{ width: "100%", height: "100%" }} align="center" justify="start" >
                 <Button type="text" icon={<MenuOutlined />} onClick={() => {
                   setMobileTab("menu")
                 }}>{Locale.NextChat.SideBar.ChatList}</Button>
               </Flex>
             </Col>
-            <Col span={8}>
-              <Flex style={{ height: "100%" }} align="center">
-                <Title level={5} style={{ userSelect: "none" }}>{session.topic.length == 0 ? Locale.NextChat.ChatArea.DefaultTopic : session.topic}</Title>
+            <Col span={16}>
+              <Flex style={{ height: "100%" }} align="center" justify="center">
+                <Title level={5} style={{ userSelect: "none", whiteSpace: "nowrap" }}>{session.topic.length == 0 ? Locale.NextChat.ChatArea.DefaultTopic : session.topic}</Title>
               </Flex>
             </Col>
-            <Col span={6} />
+            <Col span={4} />
           </Row>
         </Header>
         <Content style={{ padding: "32px", justifyItems: "center", paddingTop: 0 }}>
@@ -356,6 +375,8 @@ function Chat_() {
             useUserInput={[userInput, setUserInput]}
             useChatPromise={[chatPromise, setChatPromise]}
             useUseSmart={[useSmart, setUseSmart]}
+            useSearchPlugin={[searchPlugin, setSearchPlugin]}
+            usePaintPlugin={[paintPlugin, setPaintPlugin]}
           />
         </Content>
       </Layout>}
@@ -363,7 +384,12 @@ function Chat_() {
         <Content style={{ padding: 12, height: "100%" }}>
           <Flex vertical gap={"middle"} style={{ height: "100%" }}>
             <Flex align="center" justify="center">
-              <NNCHATBanner height={"32"} width={"128"} style={{ userSelect: "none" }} />
+              {
+                // ["zh_Hans", "zh_Hant"].includes(getLang())
+                false
+                  ? <NNCHATBannerZh height={"32"} width={"108.8"} />
+                  : <NextNextCHATBanner height={"32"} width={"198"} style={{ userSelect: "none" }} />
+              }
             </Flex>
             <Sidebar
               useSelectedMessages={[selectedMessages, setSelectedMessages]}
@@ -379,12 +405,12 @@ function Chat_() {
                 </Button>
                 <Drawer
                   styles={{
-                    body:{
+                    body: {
                       padding: 0
                     }
                   }}
                   style={{ userSelect: "none" }}
-                  height={height*0.7}
+                  height={height * 0.7}
                   title="模型设置"
                   placement="bottom"
                   closable={false}
@@ -393,17 +419,17 @@ function Chat_() {
                   extra={<Button type="primary" icon={<CheckOutlined />} onClick={() => { setIsShowingConfigProviders(false) }}>完成</Button>}
                 >
                   <Collapse
-                    style={{borderRadius: 0}}
+                    style={{ borderRadius: 0 }}
                     bordered={false}
                     defaultActiveKey={["providers", "settings"]}
                     items={[
                       {
                         key: "providers",
-                        children: <ModelConfig.Providers/>
+                        children: <ModelConfig.Providers />
                       },
                       {
                         key: "settings",
-                        children: <ModelConfig.Models/>
+                        children: <ModelConfig.Models />
                       }
                     ]}
                   />
@@ -428,7 +454,16 @@ function Chat_() {
         <table>
           <tr>
             <td>
-              <NNCHATBanner height={"32"} width={"128"} style={{ userSelect: "none" }} />
+              {
+                // ["zh_Hans", "zh_Hant"].includes(getLang()) 
+                false
+                  ? <NNCHATBannerZh height={"32"} width={"108.8"} />
+                  :
+                  <>
+                    {!narrowSidebar && <NextNextCHATBanner height={"32"} width={"198"} style={{ userSelect: "none" }} />}
+                    {narrowSidebar && <NNCHATBanner height={"32"} width={"128"} style={{ userSelect: "none" }} />}
+                  </>
+              }
             </td>
             <td align="right">
               <Button variant="link" color="default" icon={<MenuFoldOutlined />} iconPosition={"end"}
@@ -539,6 +574,8 @@ function Chat_() {
           useUserInput={[userInput, setUserInput]}
           useChatPromise={[chatPromise, setChatPromise]}
           useUseSmart={[useSmart, setUseSmart]}
+          useSearchPlugin={[searchPlugin, setSearchPlugin]}
+          usePaintPlugin={[paintPlugin, setPaintPlugin]}
         />
       </Content>
     </Layout>

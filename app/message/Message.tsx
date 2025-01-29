@@ -10,7 +10,12 @@ import { readHTML } from "../utils/readfile";
 import { notification } from "antd";
 import { message as antdMessage } from 'antd';
 
-export type Message = (TextMessage | ImageMessage | DocumentMessage | CompositeMessage)
+export type Message = (
+    | TextMessage 
+    | ImageMessage 
+    | DocumentMessage 
+    // | CompositeMessage
+)
     &
 {
     /** @deprecated */
@@ -31,7 +36,7 @@ export function MessageElement(props: {
         case "text": return <TextMessageElement message={props.message} />
         case "image": return <ImageMessageElement message={props.message} getLfsData={props.getLfsData} />
         case "document": return <DocumentMessageElement message={props.message} getLfsData={props.getLfsData} />
-        case "composite": return <CompositeMessageElement message={props.message} />
+        // case "composite": return <CompositeMessageElement message={props.message} />
     }
 }
 

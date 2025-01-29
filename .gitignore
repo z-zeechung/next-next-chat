@@ -3,3 +3,9 @@
 /.vscode
 /next-env.d.ts
 /app/panels/testpage.tsx
+
+# Neutralino
+/src-neutralino/dist
+/src-neutralino/static
+/src-neutralino/neutralinojs.log
+/src-neutralino/*/.tmp

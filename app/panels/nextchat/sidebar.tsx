@@ -81,9 +81,9 @@ function Sidebar_(props: {
                 </Button>
             </Col>
         </Row>}
-        {managingMessages && <Row gutter={4}>
+        {managingMessages && <Row gutter={8}>
             <Col span={8}>
-                <Flex style={{ height: "100%", width: "100%" }} align="center" justify="center">
+                <Flex style={{ height: "100%", width: "100%", paddingLeft:8.3, whiteSpace:"nowrap" }} align="center">
                     <Checkbox
                         checked={isSelectedAllMessages()}
                         indeterminate={!isNoneMessageSelected() && !isSelectedAllMessages()}

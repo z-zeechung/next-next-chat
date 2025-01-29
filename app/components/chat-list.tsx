@@ -20,7 +20,7 @@ import { useRef, useEffect } from "react";
 import { showConfirm } from "./ui-lib";
 import { useMobileScreen } from "../utils";
 import { ChatCard, Footer, InfoCard, Left, Right, Row, TinyButton } from "../themes/theme";
-import emoji from "../emoji.json"
+// import emoji from "../emoji.json"
 
 export function ChatItem(props: {
   onClick?: () => void;

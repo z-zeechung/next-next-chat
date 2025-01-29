@@ -11,6 +11,7 @@ console.log("[Next] build with chunk: ", !disableChunk);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  distDir: 'artifacts/static',
   webpack(config) {
 
     config.module.rules.push({

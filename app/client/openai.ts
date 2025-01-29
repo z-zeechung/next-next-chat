@@ -1,26 +1,35 @@
 import OpenAI from "openai";
 import { Message } from "../message/Message";
-import { Tool } from "../typing";
+import { JsonSchema, Tool } from "../typing";
 import { ControllablePromise } from "../utils/controllable-promise";
 import { ChatApi } from "./api";
+import { jsonSchemaWrapper } from "./api-wrappers";
 
 export function getOpenAiApi(
     baseUrl: string,
     apiKey: string,
-    model: string
+    model: string,
+    search?: boolean    // has search ability
 ): ChatApi {
     const openai = new OpenAI({ baseURL: baseUrl, apiKey: apiKey, dangerouslyAllowBrowser: true })
-    return (
+    const api = (
         messages: Message[],
         onUpdate?: (message: string) => void,
-        tools?: Tool[]
+        tools?: Tool[],
+        schema?: JsonSchema
     )=>{
-        return new ControllablePromise(async (resolve, reject, abort)=>{
+        return new ControllablePromise<string>(async (resolve, reject, abort)=>{
+            const enableSearch = search&&tools?.find(tool=>tool.function.name=="web_search")
+            if(search){tools = tools?.filter(tool=>tool.function.name!="web_search")}
             const completion = await openai.chat.completions.create({
                 model: model,
                 messages: messages as any,
                 stream: true,
-                tools: tools?.length??0>=1?tools:undefined
+                tools: tools?.length??0>=1?tools:undefined,
+                response_format: {type: schema?"json_object":"text"},
+                ...(enableSearch?{
+                    enable_search:true
+                }:{})
             })
             let toolcall: string | undefined = undefined
             let fullContent = ""
@@ -53,4 +62,5 @@ export function getOpenAiApi(
             }
         })
     }
+    return jsonSchemaWrapper(api)
 }

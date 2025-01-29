@@ -1,1 +1,0 @@
-self.__BUILD_MANIFEST={__rewrites:{afterFiles:[],beforeFiles:[{has:void 0,source:"/:path*/ort-wasm-simd.wasm",destination:"/ort-wasm-simd.wasm"}],fallback:[]},"/_error":["static/chunks/pages/_error-c79a299625391bbb.js"],sortedPages:["/_app","/_error"]},self.__BUILD_MANIFEST_CB&&self.__BUILD_MANIFEST_CB();

@@ -9,29 +9,33 @@ export const Tongyi: Provider = {
         models: [
             {
                 name: "qwen-max",
-                context: 32768
+                context: 32768,
+                search: true
             },
             {
                 name: "qwen-plus",
-                context: 131072
+                context: 131072,
+                search: true
             },
             {
                 name: "qwen-turbo",
-                context: 1000000
+                context: 1000000,
+                search: true
             },
             {
                 name: "qwen-long",
                 context: 10000000
             }
         ],
-        default: "qwen-plus",
+        default: "qwen-turbo",
         defaultSmart: "qwen-max",
         defaultLong: "qwen-long",
         getApi(options: { apiKey: string, model: string }) {
             return getOpenAiApi(
                 "https://dashscope.aliyuncs.com/compatible-mode/v1",
                 options.apiKey,
-                options.model
+                options.model,
+                ["qwen-max", "qwen-plus", "qwen-turbo"].includes(options.model)
             )
         },
     },

@@ -13,7 +13,7 @@ export const TTS_API_URL = "http://127.114.51.4:19198/tts"
  * LEGACY
  */
 
-import emoji from "./emoji.json"
+// import emoji from "./emoji.json"
 
 export const OWNER = "Yidadaa";
 export const REPO = "ChatGPT-Next-Web";
@@ -142,7 +142,7 @@ export const DEFAULT_SYSTEM_TEMPLATE = `
 要嵌入LaTeX块，请使用e.g. $$e=mc^2$$
 `
 
-export const DEFAULT_EMOJI = emoji["2728"].html
+export const DEFAULT_EMOJI = "✨"
 
 export const SUMMARIZE_MODEL = "gpt-3.5-turbo";
 export const GEMINI_SUMMARIZE_MODEL = "gemini-pro";
