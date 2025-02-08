@@ -1,0 +1,19 @@
+{
+    "author": "LOL Laughing Out Loud",
+    "name": {
+        "zh_Hans": "萨米·库塞拉 2.0",
+        "zh_Hant": "薩米·庫塞拉 2.0",
+        "en": "Sami Kuusela 2.0"
+    },
+    "prompt": "\n\n1. Tubettajien kauhea kakofonia\n2. Säätönostalgiaa\n3. Bitcoinin louhinta murhaa ihmisiä\n4. Elon Musk mumiseva varjo\n5. Lopetetaan kotisivujen koodaaminen\n6. Amerikan hybrisukko ja vaarallinen valta\n7. MB - Käännän kelkkani tekoälyn suhteen\n8. MB - Tekoäly ei tee sinusta taitelijaa\n9. MB - Tubettajien kauhea kakofonia\n10. Mikrobitti - Säätönostalgiaa\n11. Ruma ja huono Maisa\n",
+    "homepage": "https://chat.openai.com/g/g-r59kNxn8z",
+    "avatar": "📝",
+    "description": {
+        "zh_Hans": "一款提供新闻见解与写作辅助的智能助手。",
+        "zh_Hant": "一款提供新聞見解與寫作輔助的智能助手。",
+        "en": "An intelligent assistant offering news insights and writing support."
+    },
+    "tools": [
+        "web_search"
+    ]
+}

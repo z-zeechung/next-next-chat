@@ -8,25 +8,15 @@ export function DevTools(){
             await pyodide.runPythonAsync(`
                 import micropip
 
-                await micropip.install("ssl")
-                micropip.uninstall("packaging"); await micropip.install("packaging<25,>=23.2")
-                await micropip.install("typing-extensions>=4.12.2")
+                # compat
+                await micropip.install("certifi<2025.0.0,>=2024.7.4")
+                await micropip.install("typing-extensions<5,>=4.11")
+                await micropip.install("/pyodide/wheels/tiktoken-0.8.0-cp311-cp311-emscripten_3_1_46_wasm32.whl")
+                await micropip.install("/pyodide/wheels/jiter-0.8.2-cp311-cp311-emscripten_3_1_46_wasm32.whl")
                 await micropip.install("/pyodide/wheels/pydantic_core-2.27.2-cp311-cp311-emscripten_3_1_46_wasm32.whl")
-                await micropip.install("tenacity<9.0.0,>=8.2.3")
-                await micropip.install("/pyodide/wheels/orjson-3.9.14-cp311-cp311-emscripten_3_1_46_wasm32.whl")
-                await micropip.install("/pyodide/wheels/tiktoken-0.7.0-cp311-cp311-emscripten_3_1_46_wasm32.whl")
-                await micropip.install("/pyodide/wheels/jiter-0.4.0-cp311-cp311-emscripten_3_1_46_wasm32.whl")
-                await micropip.install('httpx<0.28.0,>=0.27.0')
 
-                await micropip.install('langchain')    
-                await micropip.install('langchain-community')
-                await micropip.install('langchain-anthropic')
-                await micropip.install('langchain-openai')
-                await micropip.install('langchain-groq')
-                await micropip.install('langchain-ollama')
-                await micropip.install('qianfan')
-                await micropip.install('dashscope')
-                await micropip.install('httpx-sse'); await micropip.install('PyJWT'); await micropip.install('pyjwt')  # ZHIPU AI
+                # llamaindex
+                await micropip.install("llama-index")
                 
                 print("done")
             `)

@@ -9,12 +9,12 @@ import Locale from "../locales";
 import BotIcon from "../icons/bot.svg";
 import { useEffect, useState } from "react";
 import { getClientConfig } from "../config/client";
-import { Button, ButtonGroup, List, ListItem, TextArea } from "../themes/theme";
+// import { Button, ButtonGroup, List, ListItem, TextArea } from "../themes/theme";
 
 import SendIcon from "../icons/bootstrap/send.svg"
 import RegisterIcon from "../icons/bootstrap/person.svg"
 import { ClientApi } from "../client/api";
-import { Badge } from "@chakra-ui/react";
+// import { Badge } from "@chakra-ui/react";
 import { useAccount } from "../store/account";
 
 export function AuthPage() {

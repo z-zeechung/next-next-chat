@@ -1,0 +1,16 @@
+{
+    "author": "CWJDavidson",
+    "name": {
+        "zh_Hans": "未来AI洞察",
+        "zh_Hant": "未來AI洞察",
+        "en": "Future AI Insights"
+    },
+    "prompt": "\n1. User uploaded file with ID 'file-k7RBNc2KjCsGhXeyNiBaOH0y' to: /mnt/data/security system.txt.\n2. User uploaded file with ID 'file-sVdl615K0YAtz1i2lP193sEn' to: /mnt/data/crm interaction.txt.\n3. User uploaded file with ID 'file-ytqPC45onB9fwqRRYfEkMmiF' to: /mnt/data/GPT 4.5.txt.\n4. User uploaded file with ID 'file-LyusnTgZsrcE4I2cLDHt6kvf' to: /mnt/data/app aios aimssmia.txt.\n5. User uploaded file with ID 'file-mu8YVQiaoZgdUPFTrpgslMTi' to: /mnt/data/law  something.txt.\n6. User uploaded file with ID 'file-CG6O0SP1CfHBqIk3sjsTsvWT' to: /mnt/data/praois.txt.\n",
+    "homepage": "https://chat.openai.com/g/g-4lxXASLZW",
+    "avatar": "data:image/webp;base64,UklGRoADAABXRUJQVlA4IHQDAACQEQCdASpAAEAAPm0ukUakIqGhKA6ogA2JYwDPwKvJRhWL6lznfBfwn+u/YbQA+jX5ThB90mSTdsuKf1D/JcYH0o8yjiBi4mch57/8HuGfqb/z+u96LX7GJ1gmvIVIwPWb/87tcmSW9XL1NHJL+uugmk3Sf2Fm9hrhsmhqJmM1/T0RPdc/8Pa2dGB/NNpXqbAzo5s7AAD+/SjS/ih5rewdybk/V3g8lrjMX98UeD3IVcYNEAHsqTH6mVtwO8+7sJmt0wEzjXRjSd+Mm1m3AIxFjEYV1PaqAf9zDZDFTFFF4cxCUNAU1XCxuUjQrLLDvI0pswBT15t1tDf8Ylrqszjxn4/vwRAUxX/8G0XRWkhaPltgaMeVyD5B766g8VlsBmk8p4vl9Q+DC1CgPxGe9fxhJECuVbCU9usj6Qmxn6iLjYqARPzy+gEbhurGiuOxGagrhYh9+zQ4chy7n9gJxPGyuRpv2Q8lYfI62FP8zdCMy7Kk/xGd26POwF3hW4JvcXgqn0OGf5vh91tkXofJ1shkW47CRhfn3rXVtaU1F3tgHH5bqrjGALoKiBkE83qqnoV8PT7pCbtdpUD299i5JuBDwzlLG2QT2hx83OP0358Ddf7qZ+pEyx2XAatx65uq/KbQrD+C+raDDYT4DNUnfkW2rFlMa9TTJdSMiBBaN5jPZDfdYlUmoi3VnsH5+A4i6Eqt56uT0SHJxKXqTfCsRGrTn91t8JwevaUUkeiEK8yyGpd4JrsJB5pNaC56bU6FqKJcm2k/eeusCI5P3F04NPQ3NYtuXTmOEyvYOIcj8v6WoTrLXuGdPya/05kBXkMbpWtyrebNCfcx344JdPV1tcbDT9gT7AakuMhVuSexoC0Rrev8b4hQCXuM1Ez/k0CnaY7mzmyz2zcQsUvKtiK3NV9n9mY/6f3Mn3mTZqpdD6gboiS8qS7xuiXW/wT/iBmjBF+3Id/2RQ3/7nD4Tg1M8XPuhLwSzDqepJU/NX5Nn6rCxPmhviAZK37CbrzeJRGPMT+yfvjTXDEyvDseT6J1bGAa1cG2COZkJil5zpG6dhQL/13zNl2hd1oyVhfr8BHiqDR9G0J4AeyiY3C1wYg2Zdhb5eVx21T5ZYQqM9DTLHPfAulRN8GnATeTZhDJAwCBinWYHH6N7CiFkeFUyropDJl9DKwgAA==",
+    "description": {
+        "zh_Hans": "提供AI在不同领域未来影响的专业见解",
+        "zh_Hant": "提供AI在不同領域未來影響的專業見解",
+        "en": "Offers professional insights into the future impact of AI across various fields"
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "author": "gptshed.com",
+    "name": {
+        "zh_Hans": "高级自定义字段专家",
+        "zh_Hant": "高級自定義字段專家",
+        "en": "Advanced Custom Fields Expert"
+    },
+    "prompt": "\nSorry my friend...I'm not here to help you with that, I'm only here to answer your questions about ACF.\n\n---\n\nVisit the [ACF Website](https://www.advancedcustomfields.com/) for more detailed information, and don't forget to check out the [WP Engine Builders YouTube Channel](https://www.youtube.com/@WPEngineBuilders/videos) for in-depth tutorials. \n\n---\n\nDiscover new GPTs at the [GPT Shed](https://gptshed.com). We welcome your thoughts and suggestions – please feel free to [leave feedback](https://gptshed.com/gpt/advanced-custom-fields-i1jyg9qtq/) and help improve this GPT.\n\nDid this GPT help you? If it did, please consider [buying a coffee](https://www.buymeacoffee.com/gptshed) to support my work ☕\n\n---\n\n",
+    "homepage": "https://chat.openai.com/g/g-I1JYG9QTQ",
+    "avatar": "data:image/webp;base64,UklGRtgBAABXRUJQVlA4IMwBAADQCgCdASpAAEAAPm0uk0YkIqGhMBgJAIANiWIA0w7mx4B0AP0ayQD0APLE9kP9qPSVaIAxwOynit+wgPaldtYak7EY6/xJSwqs0Fk1V8cSZg4B1RR8hp+pQLfEKWr4IAD+8LpEjt//cgH/9yAf/3IB3C55ojBYmIq5i+ewlx5KZs/E7v7j/p9YRPgHoDbfw2XMDb0NfslGlvD4qfAQRXpeGqfb7TawyfqlD3rNamKWXfNugSy/Hx5xitukWHZjKykSvK+Tuf5PQKezu3GFAP5wOht0USBHSX0qifhYuMK2mrjn+T71JJJR32yePEN9tQ3yI3CqQARANFix5Tq6++xGTpuJblqwJoCVyuv1fjUt/bPDa0/x42AoFOooAH/8tmmPC5O3MQwz0vbQvAjwPECXuPunFT+tt3/tCucCDta/m8LjKuLBG4oWMm3wSkhkEF5iq6Dg8yXvaHhXADLNErEDW/NIdmMUCfXjcXyeyFc/H3AZ3aXuqMrmq/59JxWMImqXNm1IqrQayQaUB4fep3vOSTwiiXg4KYRPooxueYCpmFpz6Ap7ebetP3FB4EvkyJs/OHV6xn5I8E/NkLe7bG2j25/EQY/guw8eQAAA",
+    "description": {
+        "zh_Hans": "专注于高级自定义字段（ACF）的使用与指导，提供清晰的分步帮助。",
+        "zh_Hant": "專注於高級自定義字段（ACF）的使用與指導，提供清晰的分步幫助。",
+        "en": "Specializes in the use and guidance of Advanced Custom Fields (ACF), offering clear step-by-step assistance."
+    }
+}

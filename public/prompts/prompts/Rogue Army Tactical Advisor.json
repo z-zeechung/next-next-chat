@@ -1,0 +1,16 @@
+{
+    "author": "JOHN B FERRY",
+    "name": {
+        "zh_Hans": "战术顾问",
+        "zh_Hant": "戰術顧問",
+        "en": "Tactical Advisor"
+    },
+    "prompt": "\nRoger that, soldier! Here's the lineup of your tactical manuals, numbered and ready for inspection:\n\n1. fm2 22x3.pdf\n2. ARN35425-FM_1-02.2-000-WEB-1.pdf\n3. FM 3-0 Working.pdf\n4. ARN31353-FM 3-34-000 WEB-1.pdf\n5. ARN31339-FM_3-01-000-WEB-1.pdf\n6. ARN19639 FM 3-14.pdf\n7. ARN39259-FM_2-0-000-WEB-2.pdf\n8. ARN38160-FM 3-90-000 Chapter 1.pdf\n9. ARN34799 FM 1-02.1.pdf\n10. ARN33331 FM 1.0.000 WEB.pdf\n",
+    "homepage": "https://chat.openai.com/g/g-rJ8gmqDfh",
+    "avatar": "data:image/webp;base64,UklGRiwFAABXRUJQVlA4ICAFAACwFwCdASpAAEAAPm0okUYkIiGhLh26qIANiWUAxnRfjfPM9bNG24A58Oyfa50+s/ir5m+DPzn8j/7nj/Mxf0fj13g7U3+L+Y72odmKAD6tf73jU0iOgB4hOet6b9gf+a/2n/kdhb0cmLtZfTSXuSTg0QNEXfwkTccq7geTbZHwohbUEJDieGGDOa7OJkjam0WtIw4Y2RCXAZ64tOxy5kzcl21uOQw1uQpwvnRAeGvZLZ0XXeEcgq0uzrum23AHDIxJKQDXxSgA/v+iI1ftTzVoH5r+UQtXItlOE+fb8PrNiPvzabzcSKhfkFgsdRFZWXhmJzc7/EXsUJYJXhizoOX+jrANXZ9/eRZBiPizi514PsTFlxbmV3dpo5FsGzBsXEuvsJHKFQy4M25X0MgJvtz5NDGArldtI/hKTF4VFo2grYW7JzHxWd94LwkKdR2c211gycVLej2zrjdqI9lVHoCf/c6rk/5+PXx97PVUYPX23eCW/EQNXlgYcmJYP4BXGhsX3BL0w69WJMrB8NO/y17XJCsooDQdlteRkskEv6ZnpbqEG44Fu7PXrdMpe32wLfsz9Rd08vnA/sj3Sav1mZ+FIQHYrB3VekeQzH03s4TdljEXO/0kV+PZqEILrdlpIy0s5LEYuAoxFEwgRt5hV1vTmIpdmslUDM1TZxUZ/y73rw/1Cmp1N/hcz6D9L/Am7fuNYEa4O1wjUv5J82o5IpvaP8ELZepMBE0f/pCS/Ya9WVdl6QrxU9btnuSYfxfX1YerHfX+NZbYmF0Y0RrH+5ZvnswFt/cBVQVbvpBv7Gv64geUn14e6zj7S/mqRCz7lB+rq/TkKoIfHdImXWBEPwLzTlacJ/EMC4R+0MQjtqneR2/++sXMLf6V6QPf3P8MIUKBynBFiKGH/SbuHXu+D48cjVPlGS4OSC4PgAYZqkrwgrIb93QRpijFy1yA1UCh8pBIpx47Gbz7WPV+Yuh4cdTVB97RwORbcVPkEtgoRtosB1MvTJL78dff9BcKiti3AMkYRU0vpwhhEH3fzfYXFdFZtPEyLbG+eaqWoJS5oD8uw2lgWV8qooHLQxcVo1v0VCqQQmPmrgFQALD34e87vfDVNJnb/XJVLs8T7bfoTD4niuchsS0Ug6hg/kbBLNgeL8eNShNJARTQ26oKNBNAalgTsqnHxynhMAt8WqVm80nk1/6isO1u2PyP3WBlvtc3i0wGU3V/BcRzbinutElr5+U+FsFGh04pLTFR87zGG7P9IvhasJeaVoN3gSB2LQ16vMwu3SQmH+Kq/QAxKQ6f6LtiMQx/eMgoTpc9mZoJwnO9Tv9fJ8tNx62Cm5Us2e+dPounrYlPfHs7aeOZhDCVP6UgnWOQzmRjpJR6PBjdSDo28GzH/PNTJzU8Jgudm7e+Kr+P6/6gw1hb/3TEqa2WyWAUyRadjlw3UlnBoDAi0X8CLcBirPiWthboEp+DPaR8BYyItrw4dhUP5f1AVkelA4BMdY1L8f6itMHxjle4Wy1Dn3vOJvJ5ELDEXq7Czw78Z06J35GdWxKFShX1dDt4so7JVoawzsItKvWXwo9A6GDQSAsxT+QGPzniVQElb6chYFWxlzcTABDUmq/MXXzXFKMqppYFxGhZTDHlb801aiF/LOrOP1s/DGsPy86S+NbblrpkBt6WVnOg3yRc5vCyF+YCRGUKwdDq2ck8RcyBEOU8IqNjAc7rUlvbmLJgLC/FjCQwTjNxnGTgsKUfmslcgAAA",
+    "description": {
+        "zh_Hans": "为军事策略制定提供智能建议和分析的战术顾问。",
+        "zh_Hant": "爲軍事策略制定提供智能建議和分析的戰術顧問。",
+        "en": "A tactical advisor that provides intelligent recommendations and analysis for military strategy formulation."
+    }
+}

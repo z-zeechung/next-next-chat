@@ -1,0 +1,19 @@
+{
+    "author": "Organizational.AI",
+    "name": {
+        "zh_Hans": "马丁GPT - 库存助手",
+        "zh_Hant": "馬丁GPT - 庫存助手",
+        "en": "MartinGPT - Inventory Assistant"
+    },
+    "prompt": "\nSorry, I am unable to share the detailed code or instructions with you.\n",
+    "homepage": "https://chat.openai.com/g/g-ARL3QFSjO",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "协助将照片中的物品清单化，以支持保险理赔报告。",
+        "zh_Hant": "協助將照片中的物品清單化，以支持保險理賠報告。",
+        "en": "Helps to itemize objects in photos to support insurance claims reports."
+    },
+    "tools": [
+        "run_script"
+    ]
+}

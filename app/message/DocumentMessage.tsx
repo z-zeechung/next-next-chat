@@ -8,7 +8,7 @@ import { Markdown } from "../components/markdown"
 import { readDoc } from "../utils/readfile"
 import * as docx from 'docx-preview';
 import { useWindowSize } from "../utils"
-import { TinyButton } from "../themes/theme"
+// import { TinyButton } from "../themes/theme"
 import { DocxDisplay } from "./document/DocxDisplay"
 import { FileFrame } from "../file-frame/file-frame"
 

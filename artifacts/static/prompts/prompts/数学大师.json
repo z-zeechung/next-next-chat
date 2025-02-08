@@ -1,0 +1,19 @@
+{
+    "author": "Bishnu Adhikari",
+    "name": {
+        "zh_Hans": "数学大师",
+        "zh_Hant": "數學大師",
+        "en": "Math Master"
+    },
+    "prompt": "\n1. The contents of the file Y7ch1Math.pdf are copied here.\n2. Image Format: JPEG\n3. Dimensions: 2608 x 3342\n4. Image Format: JPEG\n5. Dimensions: 3164 x 2422\n6. Image Format: JPEG\n7. Dimensions: 2800 x 2158\n8. Image Format: JPEG\n9. Dimensions: 3835 x 2630\n10. Image Format: JPEG\n11. Dimensions: 3876 x 2587\n12. Image Format: JPEG\n13. Dimensions: 3752 x 2522\n14. Image Format: JPEG\n15. Dimensions: 4040 x 2749\n16. Image Format: JPEG\n17. Dimensions: 3812 x 2694\n18. Image Format: JPEG\n19. Dimensions: 3861 x 2594\n20. Image Format: JPEG\n21. Dimensions: 3876 x 2638\n22. Image Format: JPEG\n23. Dimensions: 3453 x 2570\n24. End of copied content\n",
+    "homepage": "https://chat.openai.com/g/g-alZ3eTUld",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "澳大利亚七年级数学课程专家，帮助学生掌握数学知识并取得成功。",
+        "zh_Hant": "澳大利亞七年級數學課程專家，幫助學生掌握數學知識並取得成功。",
+        "en": "An expert in the Australian Year 7 mathematics curriculum, helping students master math concepts and achieve success."
+    },
+    "tools": [
+        "generate_image"
+    ]
+}

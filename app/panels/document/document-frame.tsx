@@ -10,8 +10,8 @@ import ShowGadgetsIcon from "../../icons/bootstrap/chevron-bar-left.svg"
 
 // import { MarkdownMessage } from "@/app/message/TextMessage"
 import { useChatStore } from "@/app/store"
-import { Button, Card, CardBody, Divider, Stack, Text } from "@chakra-ui/react"
-import { Avatar, ButtonGroup, MessageCard, TextArea, TinyButton, Button as ThemeButton } from "@/app/themes/theme";
+// import { Button, Card, CardBody, Divider, Stack, Text } from "@chakra-ui/react"
+// import { Avatar, ButtonGroup, MessageCard, TextArea, TinyButton, Button as ThemeButton } from "@/app/themes/theme";
 import { Message, MessageElement, revokeMessage } from "@/app/message/Message";
 import { useRef, useState } from "react";
 

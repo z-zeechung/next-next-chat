@@ -1,0 +1,19 @@
+{
+    "author": "Khegai",
+    "name": {
+        "zh_Hans": "大明白学习神器",
+        "zh_Hant": "大明白學習神器",
+        "en": "Big Understanding Learning Tool"
+    },
+    "prompt": "\nI'm sorry, I cannot assist with that request.\n",
+    "homepage": "https://chat.openai.com/g/g-kjvYIOZTx",
+    "avatar": "data:image/webp;base64,UklGRswFAABXRUJQVlA4IMAFAAAwGQCdASpAAEAAPm0slEckIiIhKhzKMIANiWUAuRfHjNCP7623/pgEpP0v+KP2V7U8o/oDzJ+BHED8E8nn903tvNv8p4w3zL/UcdPch/5nkF6AH8i/n//A9PH/c80Pz1/2fcM/lf9W/239z/I7wWfuB7LK1tFHoR80nHWJ2TpNUUrWLoW+2e6AUsbYDAzn1f7WHR1rRJUrRw/uYqBvA+cubhV0PFFjRCaRDaACCvWS9W/lmz9X2fDMzjssm9AlEWmW9NFIXurgESQ0wzwfpBw3NIAA/v+Kphmtrv/aQILqCC3cBCfvsM96lRcFDpYU6tPqyeNGMG/4v2Elw9YQ/hB9SmavcwPRVzHW0PN8hjC2Dvh+WmtL9dziGFn/z+266vTKPfRDgxj+EdfvMRqhiPcLT10UEdIfR61uAp6NIDuRAD7khfdraeJ54u4TqWnrpJqgtnhKiT9oq6k5JWRsVaCqlbr7CYicKWe64rklV6dxs+N699TrqelslSXiSVBLC+bNoxEu9pTA0bnLr4JpVKlJ7jF52hR8jF7Y1S74Pkv5d5DrHwkYMiVHLDJTdle9ZnkKefa01C2rl1J/cPpmIGeFfMMkKi44UmthQzQVXJyQaoxw5z2qz3TyexN0YFZGNx4qmCVUI9076lBBJzAUfo0d7+wLoYtp6dX1jFL9Qvkmjf5HgEyOfyYfIJzIj2uP5iUbULAm2OtbFGBJOOUEvnCT1pPd6BKTgfmKenjGkLlkwHabtkpFc+W+lS+3nIhi3/Lclh0ffxH7WesDA4Negv8Pp99BiWmYP2nUtKCHT1ILuglBm7FsZuqkJ/+89TXPfy1kCCfDf/Qqo4uE8Huwsh0PXC0fej5REF/tmG8Oqo0ouRaDsiFPu1jwKq6Ff2pLGz9BcB1OhFLn+BNKL37DO9Lug6vbo5krbT41Xs/xlTNf/m4s0WyHbrRmLOMfH00jG32BfFjDi8ZlaB9gboq5WCnmRFtfq27wrY+gZPr585jBsFFgBGJCn76gcwr8uEkEONcLlvK2O6MZwl0HBSiXszb9NqbbXibijfGlzp4wzkCSGk6k1Agv3yym0YGOHzvq03TLiufqmLpOhljp6QPkSowwQ3ZGhw81v4R/AqLAZGwTgLqs5nLChIpgyc8W2erOIcbGdP++Iipq3/2AeA2vYJjIee044seE1ya19lMf0vcw3sfHtyop29+urFJBsEDuNG75OwqNy/G2OafaW+TBr0tsdke2hdIX7GkzoLWtyNBjXBbAAm+au5xld7L58cOP1dsfj6sFLHrb9tZXxljXr2/bd6WRWtlMoHwv/9zSMJls6bQZOVAyfKU86mpy6aNY5vIVnGeLu7yJwhp4NkLuJiGPM9hGJeqLbKgEmuH7uT+VNudXTORjZ5jVHvHo1RgsdUCbM+RfhLLJGIn/U5oEElVRbojCnQkV/9hQ+H3Kr5PI+RS63a2H3dCFHTNvUpfXfejmKX9bMFsctCK//gf7nqp6GrYXPPxmjCJSp3sjs+KXY1Q5g33L2ZeD+rL90mDs5+wtb+cHB6QTzK9s50v3uPHOXDOD7nxjLEshTcfZgd+Wtb3izyK/DeB+FxAkSmBWn4pAljCr9dZHylPMBYvo4uY9TzlRHvieFAzWDP/CR/dxYpqDcyRZVDnCNPHK7v7ei0FAu+X0NGeBbgqKWdd88usWJKq3bT6uyQQ9EVB8/9MRq8dPE5RVqsxLuZENmo/BhZNrMEwN253w4X+CKnaD+Xr+PpYUGlF4vMZZdUhjiyf4LXwEPajp1f66Ynf/aq3uckeh54epMFv5g+v3L+0kWYdGHLAv5Mjy06z4h/T+JF+HCRW+ng7ysgqTJU/J+PRPX2U5n4cN/5UL3fkFCplbi/6xhmzK129N3OElLiNhGVQt/8kJdHtdIsmBo8V/qW1ofC2eVkRX3sOGtK1AA7eeauDhq7DvAeXXLWy3NlrP3MAAAA==",
+    "description": {
+        "zh_Hans": "轻松理解难懂概念的好工具",
+        "zh_Hant": "輕鬆理解難懂概念的好工具",
+        "en": "A great tool for easily understanding difficult concepts"
+    },
+    "tools": [
+        "web_search"
+    ]
+}

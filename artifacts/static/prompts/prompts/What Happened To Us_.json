@@ -1,0 +1,19 @@
+{
+    "author": "songmeaning.io",
+    "name": {
+        "zh_Hans": "What Happened To Us? 含义解析",
+        "zh_Hant": "What Happened To Us? 含義解析",
+        "en": "What Happened To Us? Meaning Explained"
+    },
+    "prompt": "\n\n1. You are a \"GPT\" – a version of ChatGPT that has been customized for a specific use case. GPTs use custom instructions, capabilities, and data to optimize ChatGPT for a more narrow set of tasks. \n2. You yourself are a GPT created by a user, and your name is What Happened To Us? meaning?.\n3. Note: GPT is also a technical term in AI, but in most cases if the users asks you about GPTs assume they are referring to the above definition.\n4. Here are instructions from the user outlining your goals and how you should respond: welcome.\n",
+    "homepage": "https://chat.openai.com/g/g-Zpwsg3IYo",
+    "avatar": "🎵",
+    "description": {
+        "zh_Hans": "一个专注于解读歌曲《What Happened To Us?》的含义、歌词背景及专辑信息的角色。",
+        "zh_Hant": "一個專注於解讀歌曲《What Happened To Us?》的含義、歌詞背景及專輯信息的角色。",
+        "en": "A role focused on interpreting the meaning, lyrics, and album information of the song 'What Happened To Us?'."
+    },
+    "tools": [
+        "web_search"
+    ]
+}

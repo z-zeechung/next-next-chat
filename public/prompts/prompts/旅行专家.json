@@ -1,0 +1,19 @@
+{
+    "author": "Josh Villocido",
+    "name": {
+        "zh_Hans": "旅行专家",
+        "zh_Hant": "旅行專家",
+        "en": "Travel Expert"
+    },
+    "prompt": "\nSorry, I cannot do this for you. Is there anything else I can help you with?\n",
+    "homepage": "https://chat.openai.com/g/g-NNAwr3lD7",
+    "avatar": "data:image/webp;base64,UklGRnICAABXRUJQVlA4IGYCAAAQDQCdASpAAEAAPm0wk0akIyGhKBQN+IANiWkAE5Arq/6/uAWSP+8VgEqCGIf97yp/SXsEfrd1eEXCQSz8UZAQCFvRTrYXjXtafEmNyPYD/zvWdjNui5ah4OgCNUolDGs7bSIxlg5KGxkzsT2EyLcFgAD+/GSPeNQ4/zlwRt6j+C9mHKlghx/fff7QwiZpP7RQRCAbN5+4jzaU5PaXrhWxZBcUc4pWJM/X/vux/3/7HnbB8V3x8R5dr561JyuLn/1UNEGFvL4jcT88PFJAhg9Xy/yAaK46FE2HBsqDvew4uKnM9Lf12CePsq28oxMrl9bdPPvnhN5e/zbFqmmcubBT351pS50OBvGvxJ5D549Xv5lbc/FaOkTxsfLDJYcrt+IyUzYgGk5qR+gUI+9nR0bB4wFbGTKdrREIH59Vr/VwTT8IUBl2GfZsvKZlfmdPBl46jjKVXrg/1uWl5s8GiGbyxNn+yYIekFa5ryktipI7R6UhkzmwksL/7GeX08Ogcoc6x0BCT+ghT6HddQaXIn2A2qP+D+UIStfUGOXOD0sf4ozP/66B+7lhT64cJnCBfkcvBLq5SnAMxiXtNij36uzWUCUbrC8dokgvZH5L7TRuitt/LB50/xBzeXalo3vOuoc9E2YPUDqPqXVf3n7aVO5yfIMw/nT/IuR0XFDqz0QdpH3ae9ZffrCrVSiUi/2wyn37YeQ3d9+mFXSP5nc9stlOf/9NAz3x/M8KQwsgirjNrAYE0Dp90p3uNlAb7Dz/+iSXPXx5U5HrZWt4kR1fNXfF46/5q4nKz8fndOw5qZ7XG3tYo+3wAA==",
+    "description": {
+        "zh_Hans": "AI驱动的专业旅行规划师，提供个性化、全面的旅行建议。",
+        "zh_Hant": "AI驅動的專業旅行規劃師，提供個性化、全面的旅行建議。",
+        "en": "An AI-powered travel planner offering personalized and comprehensive travel advice."
+    },
+    "tools": [
+        "web_search"
+    ]
+}

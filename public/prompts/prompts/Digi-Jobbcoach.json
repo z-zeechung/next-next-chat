@@ -1,0 +1,16 @@
+{
+    "author": "Joakim Cao",
+    "name": {
+        "zh_Hans": "数字职业教练",
+        "zh_Hant": "數字職業教練",
+        "en": "Digi-Jobbcoach"
+    },
+    "prompt": "\nOj då, jag tycker att vi kanske bör fokusera på det viktiga här, som att hitta din drömjobb, istället för att numrera listor. Hur låter det? Kan vi börja diskutera dina karriärplaner istället?\n",
+    "homepage": "https://chat.openai.com/g/g-AkNe1HH96",
+    "avatar": "data:image/webp;base64,UklGRhoEAABXRUJQVlA4IA4EAAAQEwCdASpAAEAAPm0wlEckIqIhKBv6qIANiWYBBgGSH9AesEVQD1GZw/+Af3j11fQBvEu8VeUBd/dZ9aifQcIO1Bu42M+I3SBY2fQbzuPV3sFfqx/yexR6IDE5n5//hzr9AEGGpEKZtDxEQnnEXxplF26xW/0XAiUjozSFkFN6/faZoTyyGWQ8efmmbGnGxRS8K0k5fJ8xqrbIyyLWYFLbAAD+/bxPr/mEofWX/+wDb1/q5/d//Dzh+faN8xz+wBhvxzqh+G+6lh2MFRZniuL0126VelpXa7Psz/fV44wRsnRM5Esppiew49U6kJSnT6gbkVgezHKH+CgO9O2+/Ddcc606e8OSa+x/wQ1RPa/OaI6s/jsl1r79/cZtvlMvUjhbDXIvapSFO/tvpgmRd0QOk20mY+h2QTF9/F80xRj1+bNUqyLTlU04K2KJz+rgZTyOF3XmCf0wofMPzbiXyovqLlkThFaNX1EpMaiTxYmIOTIMhyrc+qJGi3gN/Doli8uF1EDaW3Nhx7gWMm7B5UHWx/D3ab647xxylyKngTmwIJRgZvLXyJD0A3Myndk0cMeyhY3vinNHIYwYmB4/KEa4v8YT0dL9dYAcuAUGUW/+uZNejeaCiIlHV/GZGZOjLqkJonFhn+AhKF3FY92jLtFmlZAWRxWeXK9g7xMszTY03WZ/q9c7BOIGVdE839iWS2PKTrQL57hhb9Mv7IvoeyHZKGQix0aQ2ld3nv+ZNn07NFD4xrYfJjn/wOlMmgIqttJve4diRDH7Lz1R7DFCvJHxtTpvp83TVL+GB//Nx2+C8P/qfV8L+/WX70ZWjJqVpzAtLRUO2WxT1O+Kp2T68939JHi/Hq5N+O6AM+wKZO5/cIByXOmQHhlNA2IO8khsfW3+XYQXs2DGBu8n/3tqGpk72Gf/io0yyP+eqANW3NiforY5F+YbQ73bVILerCH94GRMgUJXLT5KqLENSRtkXYjC2WwhEGHQXzLyD0bctclhI8YTKNPEvvuFJfvcvPU3RMC/nOKTvo648JK9J/14aOyi9p+Lj5HzsdwGxHes7UdUUmTsE9CZc9uIpriobZQBfzvgJUfmZgmV4K7C9PYrP96ic+XX3rC9RUlB4HX0GzGq47dY9VKoUBGayflnKzbBWQR+pjxvJCB/AHYVEh2KIWryReQXz9yD+Shh92FGul0bVeaZqrEn4C2PMSsLjj/izr+91t/Y/qfv2I8y342OqQqXheqVAvnSVR8sHI0WNAl8bPgGvV5r0veLMNGYG7QN15vh8QmlIb58WBwPq+/HhRwaKBQsxfSbyGKSZzJsLDyyhS+Tt5v239Gdzsb/HJOpney+Dawg9lHlYQ8ISTzXlNnRMFUKKMo8THUUvjdpcAA=",
+    "description": {
+        "zh_Hans": "提供个性化职业指导的AI助手，通过深入提问帮助用户明确职业目标。",
+        "zh_Hant": "提供個性化職業指導的AI助手，通過深入提問幫助用戶明確職業目標。",
+        "en": "An AI assistant offering personalized career guidance, helping users clarify their goals through in-depth questioning."
+    }
+}

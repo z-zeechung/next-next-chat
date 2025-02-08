@@ -1,0 +1,19 @@
+{
+    "author": "community builder",
+    "name": {
+        "zh_Hans": "出口导师",
+        "zh_Hant": "出口導師",
+        "en": "Export Mentor"
+    },
+    "prompt": "\n\n1. 『2024 서비스 BM 해외진출 지원사업』 참가기업 모집 공고문\n2. 4 중진공 수출마케팅 사업안내.pdf\n3. 1 LM0204030208_수출마케팅.pdf\n4. 3 LM0204030209_수입마케팅.pdf\n5. 2 LM0204030201_수출입개요.pdf\n6. 4 중진공 수출마케팅 사업안내.pdf\n7. 7 2022년 수출가이드북(충남충기청).pdf\n8. 6 2023 올어바웃 수출바우처(성공사례집).pdf\n9. 8 2024 서비스 BM 해외진출 지원사업 공고문_F.pdf\n10. 5 중소기업을 위한 온라인 수출 마케팅 가이드.PDF\n11. 9 2024 서비스 BM 해외진출 지원사업 신청서(BM사업)_회사명.xlsx\n",
+    "homepage": "https://chat.openai.com/g/g-sJct2ActD",
+    "avatar": "data:image/webp;base64,UklGRoQDAABXRUJQVlA4IHgDAACwDgCdASpAAEAAPm0ukUYkIqGhLhJNUIANiWcAyNuCv9p6Nv2CfB/kPsz0nH+I3gjJH+ktgWNPz8c5D0r7ByVFfuU7VIKuHZSHqVBsdKo/pMSZTTqG9w8ZK7eb8m9aXVEI7gplsJtGk3e0Q1dPzmWj9eJVrWSJahGcv9kt5gAA/v0FxxGGrzb/Y3mj9tlkvJRiq1vbRs009F/Fw16Z2COPl8DjgZMKJgCzSBReH/evpRWB6ZRIHVggsqHl+fsaqpb/zh/ez/e3FR654G/ExYuISbzpmpXJMDlowrg1N6DVpPY+ZrfuX8usluwCuZjw9vaouMUxk5a/WhhwSneopvhD+PuI8nad5/pzHKzaTN/x5s0ozny2q3OCtR/fjJ88kDVbhtYiz2aZk630yb7gphIN2imMplZIqvK2gyL9pf+dpnVkV+1oi4X0sitA0MQcUcT1wllDUV3QN9XVe5c3szH4avCPidNMk7FPuBsDTN2PMpKDvhTfW2Ka1gS3W8xf04oOVpTO6bYmCpcZ1pyNj5sN3iCib6BbiU4/8sDCTOJQG51PV0IQgiedOCwJI885OuHAvh6DZ128Hu0O6T4uAR/2dwCNoB+G7r98ah+kpHUTrnOHvza3Kkiox+BHAz4q2ZmkR7824qj75Rulc0WM/r4d4tvx//oc/H/LPXb+RFXTmpa3r0zpYmzvwn/v3r+nebo0+3/xN+9sA3ZdrcjvsOuYq2UtqXY/pabVvjSmLYvnDlfnyRj6Pcf8oef/1RuJ3YBfc7nPahGlhrJb2Uhj1N5ojT7rH0uIkndGtJs9+kX5m94b8QSanUH1GzaO/Ahj4huTBfzD69Pvbg7f8XXSQLFSdsHIiUJdn4pkYfix+T0cftSE9e+VD8BgPzDWefRBYJHTkCTvfe1oBRUHn/noi6d4QoVAG3QczFMSd1fo/O13yLfuXyD2AHdsNUQJRX4imlUgIlUEjcSe2/DvztHubI73r8FMiOD6u437rUzhJBXibBufw8md30gUoqjIGMU1w//SXDuX+73GAoADDKmgACvURWqnk2H3wjHZruTO1a4pksev5dOTC3z8bFEE80GC4XLI46iiEK/cPGlUn7gIxbgNKr60a1IYBs0KmncvZUwHUXjpWZg+4a7N5IqaFx6MWUB9MVVjbnuITCOX3XKSf6joYTECQDS8YAA=",
+    "description": {
+        "zh_Hans": "指导企业进行盈利性出口营销，提供相关资源与策略支持。",
+        "zh_Hant": "指導企業進行盈利性出口營銷，提供相關資源與策略支持。",
+        "en": "Guides companies in profit-driven export marketing, offering relevant resources and strategic support."
+    },
+    "tools": [
+        "web_search"
+    ]
+}

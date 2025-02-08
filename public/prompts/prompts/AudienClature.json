@@ -1,0 +1,16 @@
+{
+    "author": "Venkat L Turlapati",
+    "name": {
+        "zh_Hans": "音频播放器向导",
+        "zh_Hant": "音頻播放器嚮導",
+        "en": "AudienClature Guide"
+    },
+    "prompt": "\n\n1. **Player.component.html Content**\n   ```\n   <div class=\"player-container\">\n       <div class=\"cover-art\">\n           <img [src]=\"songs[currentIndex].cover\" alt=\"Cover Art\" class=\"cover-img\">\n       </div>\n       <div class=\"controls-container\">\n           <div class=\"song-info\">\n               {{ songs[currentIndex].title }}\n               <div class=\"artist-name\">\n                   <span class=\"scrolling\">{{ songs[currentIndex].artist }}</span>\n               </div>\n           </div>\n           <!-- <input #seekBar type=\"range\" class=\"seek-bar\" min=\"0\" [max]=\"duration\" [value]=\"currentTime\" (input)=\"seekTo($event)\"> -->\n           <div class=\"time-and-progress\">\n               <span class=\"current-time\">{{ currentTime | date:'mm:ss' }}</span>\n               <input #seekBar type=\"range\" class=\"seek-bar\" min=\"0\" [max]=\"duration\" [value]=\"currentTime\" (input)=\"seekTo($event)\">\n               <span class=\"total-duration\">{{ duration | date:'mm:ss' }}</span>\n           </div>\n\n           <div class=\"buttons\">\n               <button (click)=\"previous()\">\n                   <i class=\"fas fa-backward\"></i>\n               </button>\n               <button (click)=\"playPause()\">\n                   <i class=\"fas\" [ngClass]=\"{'fa-play': !isPlaying, 'fa-pause': isPlaying}\"></i>\n               </button>\n               <button (click)=\"next()\">\n                   <i class=\"fas fa-forward\"></i>\n               </button>\n           </div>\n       </div>\n   </div>\n\n   <div class=\"footer\">\n       <p>v 1.3</p>\n   </div>\n   ```\n\n2. **App.component.html Content**\n   ```\n   <app-player></app-player>\n   <app-footer></app-footer>\n   ```\n\n3. **Uploaded Files**\n   - `player.component.html` (file-VjUaGmuLGcGk2U7zbmFC4wjq)\n   - `app.component.ts` (file-vMsP3yqqRiqCuWcCczt12JFT)\n   - `app-routing.module.ts` (file-X3LEWpeEbNjvC3WvxevRxzTG)\n   - `app.module.ts` (file-gSbFpsptxV8zqNMJZloc3PqL)\n   - `app.component.spec.ts` (file-1ZFLdoRBad3Wn8mcIqElFoGr)\n   - `player.component.spec.ts` (file-0OZe7MWVZtUKXplbfWsDmewL)\n   - `player.component.ts` (file-81re4NQnWwQu2x78TDMwHbqJ)\n   - `app.component.html` (file-J5fmJjvE8Tfu76Mg3lD6kZnI)\n   - `player.component.scss` (file-MsbZSvSkNSqeFGR4ZUrLbW9l)\n   - `light.jpg` (file-rj4mcALdJaJWesM7Gm9AkPnc)\n",
+    "homepage": "https://chat.openai.com/g/g-gMKDovQ1W",
+    "avatar": "data:image/webp;base64,UklGRlABAABXRUJQVlA4IEQBAABQCACdASpAAEAAPm0wkkWkIyGY/VQAQAbEtIALbqqAZAF7HYYBxKP9H6JmZP509gP9XDXkqXt8vJZocefCzWB+Cls6XJWPAKd704gA/vlbPvGZYK3rk7EX8X9tX90NGy+VkWgz/D/ZKnmOu7hXIuay10ff2OvI5HP/H93laNIGOSFycpdsUJrz/nXYY/5gXinwY3f7iFp60PxsfuGLtRvPhXmg+8utmdoBD8Wx61txFpH/yIFvzDqIu4jVy57MJH6Aesz1SOkdafsdK7U2zPVuWaU05YKsl6reMPiKHey8YMIbZD8lxLS+omI2/Ta/pBKDGLi5Bh98bRTmh16yimPwA44RfUt1gqgq7LfTQw3nx4UPl1lBJwQIfM+GuCJw1jTGC96dY/17ivyq0X1U0BlXN/KI5vjVslUKT4tRuzarDPieAAA=",
+    "description": {
+        "zh_Hans": "专注于Angular的代码向导，帮助设计和实现优雅的音乐播放器UI/UX。",
+        "zh_Hant": "專注於Angular的代碼嚮導，幫助設計和實現優雅的音樂播放器UI/UX。",
+        "en": "An Angular-focused code wizard designed to help create elegant music player UI/UX."
+    }
+}

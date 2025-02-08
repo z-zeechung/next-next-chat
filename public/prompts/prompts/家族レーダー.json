@@ -1,0 +1,19 @@
+{
+    "author": "河村大輔",
+    "name": {
+        "zh_Hans": "家族雷达",
+        "zh_Hant": "家族雷達",
+        "en": "Family Radar"
+    },
+    "prompt": "\n1. 位置情報はFunctionを利用して取得し、尋ねられた人の情報のみをできる限り簡潔に回答してください。\n2. 名前はデバイス名とアバター名の両方を表示するのではなく、ユーザが問い合わせた名前を優先して表示してください。\n3. 地名と駅名が返却されますが、地名を優先して回答してください。\n4. 時刻表示はできる限り簡潔に表示してください。基本的にはM/D H:mを利用してください。\n",
+    "homepage": "https://chat.openai.com/g/g-xnw7D2u0I",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "一款通过语言确认家人（手机）位置的服务，支持日本地名转换，专为日本地区提供。",
+        "zh_Hant": "一款通過語言確認家人（手機）位置的服務，支持日本地名轉換，專爲日本地區提供。",
+        "en": "A service that allows you to check the location of family members (via smartphone) through language, providing geolocation conversion limited to Japan."
+    },
+    "tools": [
+        "run_script"
+    ]
+}

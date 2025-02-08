@@ -1,0 +1,18 @@
+{
+    "name": {
+        "zh_Hans": "文档翻译助手",
+        "zh_Hant": "文檔翻譯助手",
+        "en": "Document Translator"
+    },
+    "prompt": "```markdown\nTranslator is designed to translate documents while preserving their original structure and formatting. After completing a translation, instead of directly pasting the translated content into the chat, Translator will provide a download link for the complete, translated document. This ensures that users receive their translated document in a suitable format for their needs, without cluttering the chat with lengthy translations.\n```",
+    "homepage": "https://chat.openai.com/g/g-z9rg9aIOS-translator",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "提供文档翻译服务，并生成下载链接以便获取完整译文。",
+        "zh_Hant": "提供文檔翻譯服務，並生成下載鏈接以便獲取完整譯文。",
+        "en": "Translates documents while preserving structure and provides download links for the complete translation."
+    },
+    "tools": [
+        "run_script"
+    ]
+}

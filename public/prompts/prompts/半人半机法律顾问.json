@@ -1,0 +1,19 @@
+{
+    "author": "jeong bong lee",
+    "name": {
+        "zh_Hans": "半人半机法律顾问",
+        "zh_Hant": "半人半機法律顧問",
+        "en": "Cyber-Human Legal Consultant"
+    },
+    "prompt": "\n\n1. 디지털증거의 역외 압수수색에 관한 최시 쟁점(전치홍).pdf\n2. eu의 클라우드 입법정책 연구.pdf\n3. 데이터 귀속 거래에 관한 법리체계와 방향(권영준).pdf\n4. 2022년 알기 쉬운 해외금융계좌 신고제도.pdf\n5. 부정청탁 및 금품등 수수의 금지에 관한 법률(법률)(제18576호)(20220608).pdf\n6. 클라우드 액트 법 관련.pdf\n7. 서현웅,재산명시제도의+개선방안에+관한+연구(2022)(요약보고서) (1).pdf\n8. 2021분야별중요판례분석_법률신문.pdf\n9. 25-STLR-210-2022_Apple-Communication-Safety-iMessage-Decryption_Weigel ko.docx\n10. 미국 클라우드 법정책의 시사점.pdf\n11. 2022년 해외납세자가 알아야 할 세금상식.pdf\n12. 가상자산 법률안.pdf\n13. 클라우드 스토리지 내 증거획득의 적법성 연구.pdf\n14. 수사목적 클라우드 압수수색의 현재와 미래.pdf\n15. 클라우드 컴퓨팅 하에서의 개인정보 보호 법정책.pdf\n16. 핸드폰 압수수색으로 클라우드 압수수색한 경우의 문제점.pdf\n17. 클라우드에 저장된 정보취득의 수사상 문제점(독일과 비교).pdf\n18. 클라우드 서비스 이용자의 압수수색에 관한 고찰.pdf\n",
+    "homepage": "https://chat.openai.com/g/g-0LEzXTrKb",
+    "avatar": "data:image/webp;base64,UklGRjwFAABXRUJQVlA4IDAFAADwGQCdASpAAEAAPm0sk0ckIiGhLhkoAIANiWcAuNxNePKrC9h/KDJmve/zA9ZP8B4N7xL+R/278puB4rF6AXqJ8v/yn9Y/czmA7zn8q/xX5pf1nnBqAH8n/qn+2+5X6TP4v/ieUf81/v//R/wvwB/y3+mf6r9f//N/gfAn+2nsn/s+r7/HblISnw4ehnTqlvbiOMldSCu89DvJiXEubESAcK5HNiA4suvaWD/nbE15v0sYo+n7e20bPB7dVYHcegGw3eKB61V/+ubQxizK3KYaMR84yhbcWAAA/v7/YoEsBLDIJqwyz85lcR7+OKhiIVhNF8Aw0n7BDaQtR8T8Cq+CNVxpLh5CxSDhmf0/mw/4DMciYEJBnUBfh25teN7lllWoZcz7cQ4ZQB94SskPqp73blLRmN1aU35MoeyVoG6and++53tuyGOxCLiQWwZR25z5YU5+A2oXPeZPR5cdxNgPkR50IFEDn/enQ0krIDJ7eUhwhwvDTX4S8cFAscy/QwVNi+fvcgRcPpN1oH/2NjREcLHMPtqI4n8WeR14hzgstBna5FWUayj/wZk5awpboIAdkD8n63cR+I9MpdIwNbhIOl7v9wbFhnrviCF5KzuG+Y9bUK/MwJsRpLRLrThI4ROmGYsj449NNv62ldqn3xl2GfskUrfwOgPzk6KViRI7v5KmxvuLUT57uiuzjH/NzKT0iQ8I2GEDN2/tmlEDls5u32f1KB3k875AcZ4XIKEo2dJTZHEAx6JEe8Zc0Sz/el7SBJ6vJtzvRBub/Cyz8gEFwrNDxAEd9QHHUuaPb932puNI2a38b2ExZKYdWyp7xL+jvMz1+tnzB28WjwbBKr9qM/CZk8Z7zR2Xx+QWIGV0ZIw8MnPzixxz1wVdfmaoJoh+6Sa70073jMU0ShON8Hfa8IgiFQZlOZ6yVCiNg/mi49e+W0cuxtr7mdBPkiNyA2wsYuwed48KWpL9lytOiKhy7YgOO/cmeH26lIM9JMFeYjhvPHmZbalZOHHF+NOqCMUKnIEUiEIkVf+S/0xQFauPvDEEBeJ6dH4+eDcZ70zKCqE+E5iVvpC5/S4Z/37WrOnkA99lbUqjaf3UAkIQqeZTv+irx9/s2ysvlATCzO90YPiGKJWSF6/+X4YcD5266FH38ExQJgcs4KJTRtTvG9679nb0PlexaIJGCYuR2SU8T4V92oe5v+CtNnP4wsoI5t5az3uJyvjHArReGOCyVPoR7jYgA2G7xxXEIZsSgxVnmfhD+awlafGRDA7f1kBrI2q5d5fUlhHqurtjIP+5rL3bQjeKonK130XSflLAiEfALm6PMnQPyUOIOD6tPiG+HwvnYXtgrr7+35Vn7nnrVrZ5rfCZbmodg30LW+rdkcsZydaShOu+EB5TRjic2l3s8Emmyiv/Eztz8vV9+XarFDMNhof+oqkuqg1Mr/8bB2NIHpffuhaqKuNOlzC6aLszwhtsqiCk1xnufxkYIH59vnDAI+uDqbTSDK8zlmQTFm4H+x/6XRPLM4rzsx2fNp+xzeX7uDWc/3AH+9bvMvV96y+5jgftnc+rqZDaJREIcoofKhMd1V4qToBstaqmIUQqb80Cahpk1+i64tAHHqrdECXY9ItIDA2hOOI2NrsixtIft/Q4KYoe4y1xq5tb9S/3qpm8wauHSxCJaQH22Oh85iY7huPYrD30rVEYaKM2yDQs5HYxTSpaW1huy86ZPVrqzdprMNrHwiXUZH9awwJG1+fgiPpniZR1QiwyF4bAD74AAA==",
+    "description": {
+        "zh_Hans": "结合人工智能与法律专业知识，提供法律咨询服务的智能助手。",
+        "zh_Hant": "結合人工智能與法律專業知識，提供法律諮詢服務的智能助手。",
+        "en": "An intelligent assistant that combines AI and legal expertise to provide legal consulting services."
+    },
+    "tools": [
+        "web_search"
+    ]
+}

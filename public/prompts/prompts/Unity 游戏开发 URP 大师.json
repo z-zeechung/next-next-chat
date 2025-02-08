@@ -1,0 +1,16 @@
+{
+    "author": "Paulo Brandao",
+    "name": {
+        "zh_Hans": "Unity URP 游戏开发大师",
+        "zh_Hant": "Unity URP 遊戲開發大師",
+        "en": "Unity URP Game Development Master"
+    },
+    "prompt": "\n\n1. \"Create a C# Style Guide: Write Cleaner Code That Scales.pdf\"\n2. \"Unity Game Dev Field Guide.pdf\"\n3. \"Create a C# Style Guide: Write Cleaner Code That Scales.pdf\" (Duplicate)\n4. \"Introduction to the Universal Render Pipeline for Advanced Unity Creators 2021 LTS Edition.pdf\"\n5. \"Create Modular Game Architecture in Unity with ScriptableObjects.pdf\"\n6. \"The Game Designer's Playbook eBook.pdf\"\n7. \"The Universal Render Pipeline Cookbook: Recipes for Shaders and Visual Effects Unity 2022 LTS Edition.pdf\"\n8. \"The Definitive Guide to Creating Advanced Visual Effects in Unity.pdf\"\n9. \"User Interface Design and Implementation in Unity.pdf\"\n10. \"Level Up Your Code with Game Programming Patterns.pdf\"\n",
+    "homepage": "https://chat.openai.com/g/g-s6Jp4Gh3z",
+    "avatar": "data:image/webp;base64,UklGRuwCAABXRUJQVlA4WAoAAAAQAAAAPwAAPwAAQUxQSKoAAAABcBvZttP8AjQ//fQiaACaIIJcIb5BRdg+5O3LvrlP3sxEhBq3bSMmPaZ2db4g3ouSflI1jlUlvrTn5e2BAHVoM89S2BOshshKvCJgrWKb+5qgtQ6N1ETgGpVJRvAqTL/2eIPUC054p0AvJYZK9SoOlV7Dofn/xJ8b+HPLbeUmOeD1pvhd4GXG3DqiTYo9N/PndpuKBuALoe3csliC5pbcE9Y1m4PmpreiBFZQOCAcAgAA0AwAnQEqQABAAD5tLJJHJCIhoSgYDfiADYlpAAz564Bz57SX9orCNV3NI8bn077A/6wdZn0SUl727U9FJp42P2h5OCI/dghVP7v9QNgHOf//RIkfeff8j0Pz3802vOyv9mzclUSObg14kmnwj5AAAP79NnY82WlkTs34BnV8UH7KNfTvpL8Faj4ADd5AF3tn98vmz/9WHu+HfmPGvv9VinP/pMK1yvmevfv4tsChV+7bmXo/X6+5sLGygRaUG7wKF/4zUYNnvK6lGgYdp1I3VB7m42PYz/HGYUlgPjqYYM42Y9/CGeG1Jlg6N4xVnFeKRRqyuarLi/9455/tTndnMoxdBI8qEec/6LJ0nEPq5/DUCQ/MxyrAAtLq7p5cIG6GX4xLK8+P8nTNLS9qxdD2R5vX4V9SEeSXLaJQz4oLYXYcYhlIeRCnjhi8NvdLt5YMY6gt0H0Bjr7DE2acG4yDX/r+ao+9HmUwQt9GlXRBbAMNGmMk0em4TvB76D4A5ZSIGgq/APBuWPnF4xmDmv+4H13qR3+VcDnBrku7Sw3lRyGw5FTgRjFht4stpTtTbpdsaMuuc1H3kQX1u3kvi43lCV1vWeGbi6MaAe4dLW/MGmhXb6g/vutiW4xPe6ddlWHPY5UUmYOAczJpCS75ADei8hGTpZ3GJjQmXePB9cMGMCSJEJdveVyd7zGveQu+G5/M9W4YjvAxvYdcTAAA",
+    "description": {
+        "zh_Hans": "专注于跨平台 Unity 游戏开发与 URP 技术的专家 AI，提供高质量代码规范、模块化架构设计及视觉效果实现指导。",
+        "zh_Hant": "專注於跨平臺 Unity 遊戲開發與 URP 技術的專家 AI，提供高質量代碼規範、模塊化架構設計及視覺效果實現指導。",
+        "en": "An expert AI specializing in cross-platform Unity game development and URP technology, offering guidance on clean code practices, modular architecture design, and advanced visual effects implementation."
+    }
+}

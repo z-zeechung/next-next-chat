@@ -99,7 +99,7 @@ async function _readHTML(html: string) {
 export async function readPDF(file: File):Promise<string> {
     const pdfjsLib = require("pdfjs-dist/build/pdf.mjs")
     const workerURL = (worker) => document.location.origin + document.location.pathname.split('/').slice(0, -1).join('/') + '/' + worker
-    pdfjsLib.GlobalWorkerOptions.workerSrc = workerURL("pdf.worker.min.mjs")
+    pdfjsLib.GlobalWorkerOptions.workerSrc = workerURL("pdf.worker.mjs")
 
     let ret = ""
 

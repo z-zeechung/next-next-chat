@@ -1,0 +1,16 @@
+{
+    "author": "community builder",
+    "name": {
+        "zh_Hans": "ToB设计师",
+        "zh_Hant": "ToB設計師",
+        "en": "ToB Designer"
+    },
+    "prompt": "\n当然，以下是您上传的文件，按编号排列：\n\n1. 大厂总结与复盘.pdf\n2. B端设计方法论.pdf\n3. 设计五要素.pdf\n4. B端组件设计.pdf\n5. 数据分析方法.pdf\n6. 用研方法.pdf\n7. 会员体系.pdf\n8. 服务设计.pdf\n9. B端表单设计.pdf\n10. 设计思维方法论.pdf\n",
+    "homepage": "https://chat.openai.com/g/g-AD3BlMgKN",
+    "avatar": "data:image/webp;base64,UklGRj4DAABXRUJQVlA4IDIDAACQDwCdASpAAEAAPm0qkUWkIqGYDAZ8QAbEsoBib3lfIZ7WkR1LPBlR41Hao6rtvbsyw68JHw/4GE2xWisjnjuOyw/pAwR4mNDMPyjlC1W/SM0rUjUjxZbjWFUIMnlDb+QAaXx6PSCr2xUy/OrcLbA8sosmJWmu9Uwf4OHIgv3bW6NOkRBMAP7ylXVIFCak2EfVtpZFVCelzA9vnuFMg7TwDK6o4HqyxFYIoRW7b+caV23SSQsPJn09sONW8U0KSc3h140zZpwOj0Y+Ms+Ngqv03eYRKAAlun2Mbj/ui0K09RLGmHPHbJyZ0Ruyo6a59XdMYOZO7FkuAkV+Pm9i/kdmMPzGdH5xCBLmK+ZbcvG9EhlIV3akbVS87ZygySs+8s696EMER9b15wEvKQ7nlJTmsb2QkNwu/eimw835Z5Gi3E0bJxieZ5jwOKSS8yCK+ilBOlkz+l34tpIX4/WVEH0YenuIujfUsImr7fuDOT3kZUp/WSSNhLr8oN5nBAu2oF+30RKBr+icR9Sslfau3fWIFhHBJPV9p+XgnL2HHkF35CraXMxAag10Dmd5shv1r9whOOKRYTeTUqzeR0jGE1B00tBu7jHLznsLNAC+gRiw4Z7eO7Xn/1gn4Vl8EAS3pK9GJkYiWyb0zyvQJ9MudggCTDkWJHGtVWaZpFCvUKk01blqN2H5vTolY2Ow1dQaAeA7xNkp/lzUQLGP4CaB+OKIvXDOMOdnrd7fv/jH1v9P3fe0LT+OK/6Y6yv2vRjRrO/kxk804ijdiC8wozSnSCiTG8FHLZlOIyevxLi201tV5l6gUkdmhyQ20EidtePR7FekYY9KecvToxeTJiWzxpc9T3aFcf9WtXtHVFhBD1U/yyJ/3nPpNaD9n/bt0lSXQMRH4acDr1xVsm0XjTqLLZRp69L+XJT1HS7SzzGQplEp/amp3J/hlMJcKiTFNAvMcRez6wZG67BPUjAQK8ArpTZIkxMD7EyLnfIz78Jx173fmrqPP0EOa7xfvET9F3BZavErXTuHoXIipx8kgnz81E+x7NGsxqnud/wyQ8y5awCQz03GZGHxPOldba0bYBDL7QAAAA==",
+    "description": {
+        "zh_Hans": "专注于B端设计的理论与实践，提供多种设计方法和工具支持。",
+        "zh_Hant": "專注於B端設計的理論與實踐，提供多種設計方法和工具支持。",
+        "en": "Focuses on B-end design theories and practices, providing various design methods and tool support."
+    }
+}

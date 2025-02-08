@@ -1,0 +1,19 @@
+{
+    "author": "community builder",
+    "name": {
+        "zh_Hans": "DOS冒险",
+        "zh_Hant": "DOS冒險",
+        "en": "DOS Quest"
+    },
+    "prompt": "\n```makefile\nInvalid command or file name\n```\n",
+    "homepage": "https://chat.openai.com/g/g-SajkmSVRN",
+    "avatar": "data:image/webp;base64,UklGRvoDAABXRUJQVlA4IO4DAABQEQCdASpAAEAAPm0yk0ekIqGhJguwgA2JZADD36GHWHq+btqZp3nzvQH7ZkuEsZYDgQB1pofkh+n/+7wj/RV/ZlqM9Ymd1fMyS84iO0ne14TRhc7t49YfoM22aZjjOg8Dy2jQ6uAK8vycACNNQBBoiEjDD1fCQusXj6LkXbLXrDnXuHL0fOYPlzcWxmCtxmg9+AAA/v2gjf8rMtVqZmDE28ALy4EmbEwAr6wW6j3BG1K0TkOQdiFQaucKPgD+HPHfttmX+wV2/zFl/7JIogV/jjLGT4MrxOz2NSzdJqLQFBJ3EN2ZArldr6oFavphbG5CBnaCgMyMefejHXHuw3u/+CLmHiUGiECM171vljFjh/3BCcIoxooIkFj0/XaXP6T4Az6LA19wRb6PcGdTLtcJtDe4Rbf9//2jGvzHHWUooWSwApVj+hDcbhSuj34f7uy0fanMQCKRdPZCZDLX0h9MFnILt17/5nSTeaOrQRmKm7SgKnOPJByQw7x8fXfVAw031skra4lpgr8rwqghlx/Nxb7bowGVQlE7lqJihAOl8J8hxKn8TD6Cff8+vMhQoHULkbVUG5pGTZyp54v2GQnBOnq7xk7H3hrhziRmgwWoZ8cRu4hH9lXQ7u6HUtde25a6jk2tiMfUtXumfSWh8FdE8GJgrBIoOe3eJKVyZ7f+Yor85Wqp0TZC3PPgd5Pk36p73Wy9MJs0ZWpztE/oxgiZFJFNsVWOL2EbX/CE2izFasd15P/tHIg9bjNPmJcCryCK3feJJEqP3cQ6GQA5Wpkoy51av5YB3X7IMCzxq94eIJ9WB5AJYRN+2eW+1N4UnCQ6bGABa9+ReFtdUF8/xUq2IjM39GDh4wVqVXcXwtiOjBwmsaErKWhHG1WlyZ3A0wSMYixRFZ0bdrrHeF1raUAUAdXF9LKbrGOE9x/caz+5zyB08SSOk/+odW2UP42GD4s/F9139hlCF5h5OnamS9UvwmuWMK1hjYBP4wWzVGR2HFS0SMjPAB5okf1oW64rH7a9KVVsWy84l2TcBBFRfUjzoEU/VvGtN9Jv1MElsj/jkl7eSug+de2+7z9+XbhSVpq2e9rzFYF7zONdqlgEWtWFOf7aT2fj7ICciDJHj/9QPKQQLdne+xBFA0L/k5igIbDLI4ACU4tZBpDRLwDC4jAuWNyFD+UF5TGGBqijHh35imsK8+x6fgO/ksxUVhpptNzznqk1kWcNXohVG7a7n/zAxOl6tE8L6xpVaZ9VCOjyqcQy2T782zvtb9/Bee2Cj3RnIDvd3pgWq+64p1M8mTBi7u7iPdAXUJIvQtMyLBR6E1w3q4JgADQB7uoIAAAA",
+    "description": {
+        "zh_Hans": "一款以DOS命令为灵感的冒险游戏，体验复古与挑战。",
+        "zh_Hant": "一款以DOS命令爲靈感的冒險遊戲，體驗復古與挑戰。",
+        "en": "A DOS command-inspired adventure game, blending retro vibes with challenging gameplay."
+    },
+    "tools": [
+        "run_script"
+    ]
+}

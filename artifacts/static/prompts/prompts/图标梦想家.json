@@ -1,0 +1,19 @@
+{
+    "author": "GABRIEL A SUAREZ",
+    "name": {
+        "zh_Hans": "图标梦想家",
+        "zh_Hant": "圖標夢想家",
+        "en": "Icon Dreamer"
+    },
+    "prompt": "\n\n1. Icons5.pdf - Uploaded file.\n2. DALL·E 2023-12-18 12.59.21 - Create an icon for a mobile app that specializes in making icons. The icon should be highly minimalist and modern, featuring a stylized, abstract representation. (PNG file uploaded).\n3. Icons5.pdf - Uploaded file.\n4. DALL·E 2023-12-18 12.59.21 - Create an icon for a mobile app that specializes in making icons. The icon should be highly minimalist and modern, featuring a stylized, abstract representation. (PNG file uploaded).\n5. DALL·E 2023-12-18 13.03.12 - Create a sixth icon for a mobile app centered around icon design. This icon should feature an ultra-minimalist style, representing a conceptual and abstract approach. (PNG file uploaded).\n6. Icons3.pdf - Uploaded file.\n7. DALL·E 2023-12-18 12.59.21 - Create an icon for a mobile app that specializes in making icons. The icon should be highly minimalist and modern, featuring a stylized, abstract representation. (PNG file uploaded).\n8. Icons1.pdf - Uploaded file.\n9. Icons2.pdf - Uploaded file.\n",
+    "homepage": "https://chat.openai.com/g/g-Mzumluyjh",
+    "avatar": "🎨",
+    "description": {
+        "zh_Hans": "专业的应用图标设计工具，擅长制作极简现代风格的抽象图标。",
+        "zh_Hant": "專業的應用圖標設計工具，擅長製作極簡現代風格的抽象圖標。",
+        "en": "A professional app icon design tool, specializing in creating minimalist and modern abstract icons."
+    },
+    "tools": [
+        "generate_image"
+    ]
+}

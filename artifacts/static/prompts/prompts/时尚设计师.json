@@ -1,0 +1,19 @@
+{
+    "author": "Irina Raicu",
+    "name": {
+        "zh_Hans": "时尚设计师",
+        "zh_Hant": "時尚設計師",
+        "en": "Fashion Designer"
+    },
+    "prompt": "\n1. User uploaded file with ID 'file-COpBKWO6Y8VUDXXVDN2u7QRu' to: /mnt/data/fffeb6f5-df75-4a36-97de-68b6ace789b3.webp. This file is NOT accessible with the myfiles_browser tool.\n2. User uploaded file with ID 'file-17MTuXs1g0SdNXeTaZuYur3D' to: /mnt/data/download (64).png. This file is NOT accessible with the myfiles_browser tool.\n3. User uploaded file with ID 'file-0w0ZFWL3w32kIfbAxDHAjHmi' to: /mnt/data/download (8).png. This file is NOT accessible with the myfiles_browser tool.\n4. User uploaded file with ID 'file-PKF5bxy272KlNC4vesAYVS31' to: /mnt/data/DALL·E 2023-11-10 23.26.12 - Create an image of a runway fashion show featuring a model wearing a sporty outfit made of sequins resembling crystals in a silver and black color pal.png. This file is NOT accessible with the myfiles_browser tool.\n5. User uploaded file with ID 'file-VCyFWyyWjsNWVusawDitOFWH' to: /mnt/data/Fashion Campaigns.docx.\n6. User uploaded file with ID 'file-UULm5dYlKdY2s2p3NlcoTzt5' to: /mnt/data/download (5).png. This file is NOT accessible with the myfiles_browser tool.\n7. User uploaded file with ID 'file-jMeoe2894BgvskrDe52KuH7f' to: /mnt/data/69dea37e-8132-4137-b3bb-f72e4abfb850.webp. This file is NOT accessible with the myfiles_browser tool.\n8. User uploaded file with ID 'file-sDa0PLMrCfCat9hpEyyObmqC' to: /mnt/data/download (7).png. This file is NOT accessible with the myfiles_browser tool.\n9. User uploaded file with ID 'file-79lmEBFVFJdkPaMmgqK04NFp' to: /mnt/data/FashionDesigner fine-tuning.docx.\n",
+    "homepage": "https://chat.openai.com/g/g-Zd0Kv2VXM",
+    "avatar": "data:image/webp;base64,UklGRiACAABXRUJQVlA4IBQCAABwCgCdASpAAEAAPm00lkikIqIhKBQIAIANiWkA1YD1n+EnB/8v/zFPY5Nf0f/zvcL/jv9k/2ycEi0MUVnVh0CudbLFrE4Hha5h19UG6rGHLeg4bIFeXStT4Mk48AD++yr4431zOIw0XrMNc5femz6c++ftwmSjPH9cz9Enxeuyu2Fzv0dC1uxZtnP1EhBnSd4ZmwobnTVgmKMC6Hy64dQqDUK25aP4DEEgSt6xLlhOL5FEx4IpDkr7/g8SfvHp8LNjzAnW00wOqBV+fTSAm1mhrhmp5C7JhimnYAnhWvvC7PW1Qs923UEgqvYm4tuMKAyHf//7kM5gYgd6H+MUYgmP8hFQUOrlP0Ej+luuZHjZL325tAeY+n3Vr4wP8LL4Bxmiu30raoMYseYvNdAh+QfFTBnwlUa5jFHBv/ugjYha+3+rwF4Om85k59+2cSOe4XeDeCiZ+Dc2KtvpPAfFYagIjpnyp28VM8dBVf5uOKJcSPwvTz0K0GO29cYSSnhLcPz2RXzRxZ/PgGy/O8oEi+r/qTc/h+P3OWHkef+f2V7IdX9vxcu4AsdAHjpAcfA5pduEa/flaQuHOagbD4VL/3/mC5AyP9+B9RZa4TkK0+OKAnUtJNi/t+xUCL6EB9fr3+6n+hlW+LvpK804Jtmx2SfC+/GQ8pbXKwsFrfZbjFyTp5MarPNBI3H8bNHD8WAQlEqHDIAA",
+    "description": {
+        "zh_Hans": "专注于使用AI技术进行时尚设计与宣传活动的创意角色。",
+        "zh_Hant": "專注於使用AI技術進行時尚設計與宣傳活動的創意角色。",
+        "en": "A creative role focused on using AI technology for fashion design and promotional campaigns."
+    },
+    "tools": [
+        "generate_image"
+    ]
+}

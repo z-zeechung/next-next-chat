@@ -75,28 +75,27 @@ import {
 import { copyMessage, Message, MessageElement, revokeMessage } from "../message/Message";
 
 // import { Avatar, Button, ButtonCard, ButtonGroup, Component, Footer, Group, Header, Heading, InfoCard, Left, List, ListItem, MessageCard, Modal, Popover, PopoverCard, PopoverItem, Right, Row, Select, showConfirm, showToast, TextArea, TextBlock, TinyButton, TinyPopover } from "../themes/theme";
-import { Card, grid, SimpleGrid } from "@chakra-ui/react";
+// import { Card, grid, SimpleGrid } from "@chakra-ui/react";
 import { ControllablePromise } from "../utils/controllable-promise";
 import { Live2D } from "./nextchat/Live2D";
-import { PluginMenu } from "./nextchat/plugins";
-import { uploadFile, UploadFile } from "./nextchat/fileUpload";
-import { DocxPopoverItem, PDFPopoverItem } from "./document-docx";
-import { AudioPopoverItem } from "./audio";
+// import { PluginMenu } from "./nextchat/plugins";
+// import { uploadFile, UploadFile } from "./nextchat/fileUpload";
+// import { DocxPopoverItem, PDFPopoverItem } from "./document-docx";
+// import { AudioPopoverItem } from "./audio";
 import { ClientApi, useApiConfig } from "../client/api";
 // import { SelectPromptModal } from "./nextchat/mask";
 // import { KnowledgeBaseButton } from "./knowledge";
 import { Markdown } from "../components/markdown";
 // import { SideBar } from "../components/sidebar";
-import { runPyodide } from "../pyodide/pyodide";
 
 import { Avatar, Button, Checkbox, Col, Collapse, Drawer, Dropdown, Flex, Input, Layout, List, Menu, message, Modal, Row, Select, Space, Typography } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import { Attachments, Bubble, BubbleProps, Conversations, Prompts, Sender } from '@ant-design/x';
-import { GPTVis } from '@antv/gpt-vis';
-import { AddIcon } from "@chakra-ui/icons";
+// import { GPTVis } from '@antv/gpt-vis';
+// import { AddIcon } from "@chakra-ui/icons";
 import Title from "antd/es/typography/Title";
 import { DocumentMessage } from "../message/DocumentMessage";
-import { ArrowsAltOutlined, CheckOutlined, CloudDownloadOutlined, DownCircleOutlined, DownloadOutlined, DownOutlined, EditOutlined, EllipsisOutlined, FullscreenExitOutlined, FullscreenOutlined, GlobalOutlined, MenuFoldOutlined, MenuOutlined, MenuUnfoldOutlined, SettingOutlined } from '@ant-design/icons'
+import { ArrowsAltOutlined, CheckOutlined, CloudDownloadOutlined, DownCircleOutlined, DownloadOutlined, DownOutlined, EditOutlined, EllipsisOutlined, FullscreenExitOutlined, FullscreenOutlined, GlobalOutlined, MenuFoldOutlined, MenuOutlined, MenuUnfoldOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons'
 import { FileFrame } from "../file-frame/file-frame";
 import { ImageMessage } from "../message/ImageMessage";
 import confirm from "antd/es/modal/confirm";
@@ -106,6 +105,9 @@ import { Sidebar } from "./nextchat/sidebar";
 import { ModelConfig } from "./nextchat/model-config";
 import emojiList from "./nextchat/emoji-list.json"
 import { Tool } from "../typing";
+import { RolePlay } from "./roleplay";
+import { ThirdParty } from "./nextchat/third-party";
+import { runPythonScript } from "../pyodide/pyodide";
 
 function Chat_() {
 
@@ -119,9 +121,9 @@ function Chat_() {
 
   const [useSmart, setUseSmart] = useState(false)
 
-  const [searchPlugin, setSearchPlugin] = useState(false)
-  const [paintPlugin, setPaintPlugin] = useState(false)
-  const [scriptPlugin, setScriptPlugin] = useState(false)
+  const [searchPlugin, setSearchPlugin] = useState(session?.tools?.web_search)
+  const [paintPlugin, setPaintPlugin] = useState(session?.tools?.generate_image)
+  const [scriptPlugin, setScriptPlugin] = useState(session?.tools?.run_script)
 
   const [chatPromise, setChatPromise] = useState(undefined as ControllablePromise<any> | undefined)
 
@@ -145,6 +147,11 @@ function Chat_() {
     const promise = ClientApi.chat(
       [
         { type: "text", role: "system", content: Locale.NextChat.SystemPrompt() },
+        ...(session.prompt?[{type:"text", role:"system", content:`
+            如上所述，你是N^2CHAT，一个为用户提供帮助的智能助手。但现在用户想和你玩
+            个游戏，用户希望你扮演${session.role}。因此，从现在起，请在不违反前述安全
+            守则的前提下，隐瞒你作为N^2CHAT的身份，让用户以为你是${session.role}，并严格按照如下提示词进行角色扮演：\n
+          `+session.prompt} as Message]:[]),
         ..._messages
       ],
       msg => {
@@ -160,7 +167,7 @@ function Chat_() {
         tools: [
           { type: "function", function: { name: "vision" } },
           { type: "function", function: { name: "long_context" } },
-          ...(paintPlugin?[{
+          ...(paintPlugin ? [{
             type: "function",
             function: {
               name: "generate_image",
@@ -206,8 +213,8 @@ function Chat_() {
                 图片尚未插入到对话记录中，你可以通过(${params.file_name})[${lfsUrl}]来向用户展示图片。
               `
             }
-          } as Tool]:[]),
-          ...(searchPlugin?[{
+          } as Tool] : []),
+          ...(searchPlugin ? [{
             type: "function",
             function: {
               name: "web_search",
@@ -244,6 +251,38 @@ function Chat_() {
               const result = await ClientApi.search(params.query, params.count)
               return JSON.stringify(result)
             }
+          } as Tool] : []),
+          ...(scriptPlugin?[{
+            type: "function",
+            function: {
+              name: "run_script",
+              description: "执行Python脚本",
+              parameters: {
+                type: "object",
+                properties: {
+                  "code": {
+                    type: "string",
+                    description: "要执行的Python代码"
+                  }
+                },
+                required: ["code"]
+              },
+            },
+            async call(params: { code: string }) {
+              updateCurrentSession(sess => {
+                sess.messages = [
+                  ..._messages,
+                  {
+                    type: "text", role: "assistant", content: `\`\`\` toolcall
+                    ${JSON.stringify([{
+                      title: "正在执行代码……",
+                      status: "pending"
+                    }])}
+\`\`\`            ` }
+                ]
+              })
+              return runPythonScript(params.code)
+            }
           } as Tool]:[])
         ]
       }
@@ -258,7 +297,7 @@ function Chat_() {
         ]
       })
       if (session.topic.length <= 0) {
-        const {title, emoji} = JSON.parse(await ClientApi.chat(
+        const { title, emoji } = JSON.parse(await ClientApi.chat(
           [..._messages, { type: "text", role: "assistant", content: msg }, { type: "text", content: '给以上对话起标题，并选取一个符合对话内容的emoji。', role: "system" }],
           undefined,
           {
@@ -295,17 +334,6 @@ function Chat_() {
   }
 
   const [isSelectingPrompt, setIsSelectingPrompt] = useState(false)
-  const rolePlayIcon = <div style={{ position: "relative" }}>
-    <RolePlayIcon style={session.avatar || session.prompt ? { fill: "#1D93AB", opacity: "0.8" } : {}} />
-    <div
-      dangerouslySetInnerHTML={{ __html: session.avatar ?? "" }}
-      style={{
-        position: "absolute",
-        right: -8,
-        bottom: -8,
-        fontStyle: "initial"
-      }}></div>
-  </div>
 
   const [isShowingWhatsThis, setIsShowingWhatsThis] = useState(false)
 
@@ -377,6 +405,8 @@ function Chat_() {
             useUseSmart={[useSmart, setUseSmart]}
             useSearchPlugin={[searchPlugin, setSearchPlugin]}
             usePaintPlugin={[paintPlugin, setPaintPlugin]}
+            useScriptPlugin={[scriptPlugin, setScriptPlugin]}
+            setIsSelectingPrompt={setIsSelectingPrompt}
           />
         </Content>
       </Layout>}
@@ -450,7 +480,7 @@ function Chat_() {
       background: "#f5f5f5",
       padding: 12,
     }}>
-      {!collapseSidebar && <Flex vertical gap={"middle"} style={{ height: "100%" }}>
+      {!collapseSidebar && <Flex vertical gap={"small"} style={{ height: "100%" }}>
         <table>
           <tr>
             <td>
@@ -500,7 +530,7 @@ function Chat_() {
               {
                 key: "new",
                 label: Locale.NextChat.SideBar.NewChat,
-                icon: <AddIcon />
+                icon: <PlusOutlined />
               },
               {
                 key: "manage",
@@ -576,9 +606,43 @@ function Chat_() {
           useUseSmart={[useSmart, setUseSmart]}
           useSearchPlugin={[searchPlugin, setSearchPlugin]}
           usePaintPlugin={[paintPlugin, setPaintPlugin]}
+          useScriptPlugin={[scriptPlugin, setScriptPlugin]}
+          setIsSelectingPrompt={setIsSelectingPrompt}
         />
       </Content>
     </Layout>
+    
+    {isSelectingPrompt&&<RolePlay 
+      currentRole={session.role?{name:session.role,avatar:session.avatar??""}:undefined}
+      onClose={()=>{setIsSelectingPrompt(false)}}
+      setPrompt={({
+        avatar,
+        prompt,
+        name,
+        description,
+        tools
+      })=>{
+        chatStore.updateCurrentSession(session=>{
+          session.role = name
+          session.prompt = prompt;
+          session.avatar = avatar;
+          session.greeting = `
+**当前角色：\`${name}\`**
+
+${description}
+          `
+          if(session.role==undefined){session.greeting=undefined}
+          if(!session.tools){session.tools = {}}
+          setPaintPlugin(tools.includes("generate_image"))
+          session.tools["generate_image"] = tools.includes("generate_image")||false
+          setSearchPlugin(tools.includes("web_search"))
+          session.tools["web_search"] = tools.includes("web_search")||false
+          setScriptPlugin(tools.includes("run_script"))
+          session.tools["run_script"] = tools.includes("run_script")||false
+        })
+      }}
+    />}
+    
   </Layout>
 
   // return <Component>

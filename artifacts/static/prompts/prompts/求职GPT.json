@@ -1,0 +1,16 @@
+{
+    "author": "Kadir Celep",
+    "name": {
+        "zh_Hans": "求职助手",
+        "zh_Hant": "求職助手",
+        "en": "Job Application Assistant"
+    },
+    "prompt": "\n\n1. User uploaded file with ID 'file-sSwBHpBGlYuQtfd4Uybpsyhn' to: /mnt/data/fcb4df5d-738c-45ae-b175-2ffff138f293.png. This file is NOT accessible with the myfiles_browser tool.\n2. User uploaded file with ID 'file-GNtGWhuZMRZBiwOrTMw1XaSi' to: /mnt/data/pp-kc.webp. This file is NOT accessible with the myfiles_browser tool.\n3. User uploaded file with ID 'file-fDNsqQ7XGRBQSYR3DHsorgDr' to: /mnt/data/fcb4df5d-738c-45ae-b175-2ffff138f293.png. This file is NOT accessible with the myfiles_browser tool.\n",
+    "homepage": "https://chat.openai.com/g/g-seIb3wqLn",
+    "avatar": "data:image/webp;base64,UklGRnAGAABXRUJQVlA4IGQGAACQGwCdASpAAEAAPm0skEWkIqGY/HUkQAbEoAnTL7QsyRbo1zY2duj0DbcbnaOeA64DelbO43kfb/A/yQ+l47VxP0dfN/1n9ufYbvj9+WoF7A3q0AH5n/X+IT7BeaT/qvUvwCfsn/A9gD9L+hDn3+n/2a+AvpfeiIaRzanyjaCR+A6HE7klpalDCk73RpXmpRv3OUyUi30oxXGIualwRxduJaBz0FlhsoJzF3lXiIeCJIDhtVfttio1PI13OLDpHN+Fi70UFVq3/6ZoDtqK8J9x1VEE1+jy9/vC+GbkPMcYFf8hoysYAP7990s0L/+ytZH/qTxSEal1Hv5zESu159KOXmodIoT/ybsSbTVj/UwCxhQl59kUJfIfLB2lxu6FY9Zb/NincNG9yo5RYscAYC5PB6EKChO7hBJwsX+wI7Uli1yfaXpbt7Tp6hbI3sPodg2tuEdXHj0wJTYT82fnlp+DXZox0jMkiDg374YtFn3momAa2UUlsBHWH60nn+hNcoz+RkzhXYWjH5PJs9+7vtTme7uBHxtJa8IPsNvnaAkHTG03PyrAW/b3aFP+sFBLYZP5PMhhtf8cNfPmkxkHTcGu4s1KkD0LS+uVebr/PLFOmhyj7/MnobqxMsdHWHJlpxibauvzyLUxfF6B/8bQ0wV4EgtuNSpc5dXvQOWEOwFz34e/SqPCYV0ydLbxq5JSpO9Wxyxo9JBEqbhEvq17p6TLEV7dT8FLzFZW3vFa/C1PdA2aIh/MWQ8RR+x9iIAZ8NIZ7uGvY8o2HO4G6tl/Klkfk+gL5A3jWmPsUho251lgv2CSlQTVX253RC4YHWS/S8hDgW8pquTNZspi5jndQLd+0zyKQbPqrg5ic+HseyO8/0h8qkOLsJPfVjRz6B1IYYXEH4l5PpxDj9md4AiTyQB8ETNVXdO9gRbQxyig8Rqsx9B6pkHfhPyzlIgWQQ/6I671dY+8qkAaaotdywX2ersydtvPDNNMvWaNbIfctKGfm4ywBew3K0nzYfVSz9VnKSva7w7fXfvsgvrRmDzSqd6qbhJId5x87tc5AgO4av8gwBeP21IXKuuzTEe+kL/5oa5Cf4jszpuuxk8MJh1CveeiBl3O5vGQPd4q1Yk/lyPUdBz6+GGrhC+C+ENwhpVADxsnnmmYJKo4Ly+KEvfkZvut8sGajQCd8uOFpSI6hhNtf7eCvxjSaBC2O/qchX+Rj0hBRXxUFafc8xRmPaJl9zBw7IqE8SB1ibFBWbijrcg3G9trsL/s0A7unHh/N5N/d/l5kaR77u6SyPzplJbBqle89x7Qu2KwK2m5zAebgd8F9TnncvCgfcQINWYP6YIij2cM/93McAN0Q+cNcKDvZQdFVgIc44f6Ir4scqr3zyHza+15QobUNR1ASSaWqBH5O1p/AwyLzJHxeYinv/rwV3w+8FypjCJIDN9HxEUNOeRC0nMhBLv8qQET/bNciVO9+tVhM9LfOfrd2jK4UtlAaTYHRf9MW2fEhsJkjxFs+rIFRT6mCK6b5Hf2TgWaUSp6PNH0zoK5RC2+qXOBNw9bVBYIZ84A0UghHsZraqpSWOwKp48hEU5J+/m/B0uCewDbZdWgOq22ZDiky7Kmt9/iEeUM7MiOrKaxKbm7FfaiNFyFUlwCcvS/LxG6BfRP2Lj/iyuZQ/14I0A5l9UAP26o69iOe2uCK4rQj2bdVr9V2Pwl597rZcP0rg7usSNCac8N1/Vjus9vomwgvUaGZ13H0z7ScTmXZO2me5KnsNJG7r3SWJbNYtin/TWX9p3wlaASdD6W3v/+yl/iORSDZz9q1P17y32+3yyZUcY5RA6u/+++R1n554CKMOaLOtBAlUcHh0SAx4h6pLF+CjvxQZ1Ru4hVQapjkZ+r8CGfvf4190aWPYVQXVvGyS47IE6If+UxRNvXwRxAdqlha/NhPtyCXkELEQ2EmPq+IzEqqgBV3d6hEzmJwI/6YPKOE1Tqc5+K+t/19Qx1UOO6vmvG996vmdTiGMV+FIjJaWygnyQRFQZemxp4415AMhn7KSrq1HfKy4qAzxEj+jpX1VC3qg+Dputf8NfxuUQJT95hbgUmc3sDh9UjE4+ff09ZW/cZAdu2MbgtwaxOE6N5mugirpD/aaw4kQhALWxXxQTac8ZQUoXPU++R6LFOUAxf3OvFKY3ufV9tAAAA",
+    "description": {
+        "zh_Hans": "帮助用户根据简历定制特定职位的申请材料。",
+        "zh_Hant": "幫助用戶根據簡歷定製特定職位的申請材料。",
+        "en": "Assists users in customizing job application materials based on their resumes for specific positions."
+    }
+}

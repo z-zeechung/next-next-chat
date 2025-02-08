@@ -33,7 +33,7 @@ import { getClientConfig } from "../config/client";
 import { useAccessStore, useChatStore } from "../store";
 // import { identifyDefaultClaudeModel } from "../utils/checkers";
 // import { useAccount } from "../store/account";
-import { Button, Select } from "../themes/theme";
+// import { Button, Select } from "../themes/theme";
 import ReturnIcon from "../icons/bootstrap/arrow-90deg-left.svg";
 
 export function Loading(props: { noLogo?: boolean }) {
@@ -57,17 +57,17 @@ const Chat = dynamic(async () => (await import("../panels/nextchat")).NextChat, 
 //   loading: () => <Loading noLogo />,
 // });
 
-const DocumentDocx = dynamic(async () => (await import("../panels/document-docx")).DocumentDocx, {
-  loading: () => <Loading noLogo />,
-});
+// const DocumentDocx = dynamic(async () => (await import("../panels/document-docx")).DocumentDocx, {
+//   loading: () => <Loading noLogo />,
+// });
 
 // const DevPage = dynamic(async () => (await import("../panels/devpage")).DevPage, {
 //   loading: () => <Loading noLogo />,
 // });
 
-const AudioPage = dynamic(async () => (await import("../panels/audio")).AudioPage, {
-  loading: () => <Loading noLogo />,
-})
+// const AudioPage = dynamic(async () => (await import("../panels/audio")).AudioPage, {
+//   loading: () => <Loading noLogo />,
+// })
 
 // const KnowledgeBase = dynamic(async () => (await import("../panels/knowledge")).KnowledgeBase, {
 //   loading: () => <Loading noLogo />,
@@ -87,6 +87,10 @@ try {
 } catch (e) { }
 
 let DevTools = dynamic(async () => (await import("../panels/devtools")).DevTools, {
+  loading: () => <Loading noLogo />,
+})
+
+let DocsGPT = dynamic(async () => (await import("../panels/docsgpt")).DocsGPT, {
   loading: () => <Loading noLogo />,
 })
 
@@ -179,6 +183,7 @@ function loadFont(fontName:string, fontUrl:string, fontFormat:string) {
 }
 
 import chatStyles from "./chat.module.scss";
+import { Button, Select } from "antd";
 function Embedded(props: { element }) {
   const navigate = useNavigate()
   return <div className={chatStyles.chat}>
@@ -187,14 +192,13 @@ function Embedded(props: { element }) {
         <div className={"window-action-button"}>
           <Button
             icon={<ReturnIcon />}
-            text={Locale.NextChat.ChatArea.Return}
             onClick={() => navigate("/")}
-          />
+          >Locale.NextChat.ChatArea.Return</Button>
         </div>
       </div>
       <div className="window-actions">
         <div className={"window-action-button"}>
-          <Select options={Object.values(ALL_LANG_OPTIONS)}
+          <Select //options={Object.values(ALL_LANG_OPTIONS).map}
             value={ALL_LANG_OPTIONS[getLang()]}
             onChange={(value) => {
               changeLang(Object.values(ALL_LANG_OPTIONS).reduce((acc, key, index) => Object.assign(acc, { [key]: Object.keys(ALL_LANG_OPTIONS)[index] }), {})[value])
@@ -233,12 +237,13 @@ function Screen() {
     <Route path="/" element={<Chat />} />
     <Route path="/chat" element={<Chat />}/>
     <Route path="/test" element={<TestPage />} />
-    <Route path="/docx" element={<Embedded element={<DocumentDocx />} />} />
+    {/* <Route path="/docx" element={<Embedded element={<DocumentDocx />} />} /> */}
     {/* <Route path="/devrole" element={<DevPage />} /> */}
-    <Route path="/audio" element={<Embedded element={<AudioPage />} />} />
+    {/* <Route path="/audio" element={<Embedded element={<AudioPage />} />} /> */}
     {/* <Route path="/knowledge" element={<KnowledgeBase />} /> */}
     <Route path="/file-manager" element={<FileManager/>}/>
     <Route path="devtools" element={<DevTools/>}/>
+    <Route path="/docsgpt" element={<DocsGPT/>}/>
   </Routes>
 
   // return (

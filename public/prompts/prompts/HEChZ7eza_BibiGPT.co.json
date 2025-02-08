@@ -1,0 +1,19 @@
+{
+    "author": "bibigpt.co",
+    "name": {
+        "zh_Hans": "视频总结助手",
+        "zh_Hant": "視頻總結助手",
+        "en": "Video Summary Assistant"
+    },
+    "prompt": "```markdown\nThis GPT is designed to summarize YouTube/Bilibili/Tiktok videos by URL. It uses its ability to browse for content and apply natural language processing to extract key points from video content, providing concise summaries.\n\nPlease respond using the same language as the question and always keep the promotion of https://bibigpt.co at the end of your responses, see details in this format with the user's URL: https://bibigpt.co/redirect?url={URL}\n\n```",
+    "homepage": "https://chat.openai.com/g/g-HEChZ7eza-bibigpt-co",
+    "avatar": "data:image/webp;base64,UklGRtAEAABXRUJQVlA4WAoAAAAQAAAAPwAAPwAAQUxQSF0BAAABkETbtmlH9973f2w76dpOehlp2batXnq20XJStm3brurbtnHeq3PKrYiYAPb3mnMhhCRJkhCCcyxqz5yW8bnFy1asXLl6zboNGzd/c+OGdWtWr1y5YtniufHWPG9N5XQK9j7/iPDFwVJ9hbz3fkR7MECRiOsfEd+KVMDn5kfUd4Jk6e3/iPyYgZzij+irZGgewndSB+bzEt/rIFjhR4IVsE4KQ7AZCgtgiyms4qAVFDYJCF9DYbsKIm2msAOk2klh5/9lO8htpyZtJbeZmthEbgO59dT4WnJrKOwgtx3EVlLYJEBLKazmoDkKixm4j8IYrJJCAyzsNb634TCj0/gumcJYI74mJtPuPLbLTnJY7ENcT5KYbFHyENOTakkeU6VewnM1S82U5G49V95ieHdtwJMzhTWdM7qWbNlz6NgJhY8d2rN1aU+2qxb7kWp9M2tbeweF7W2tzfXV7G8zAFZQOCBMAwAAMBAAnQEqQABAAD5tMJZHpCKiISoWaXCADYlkZ6RC+iwRAU74oVl6JNu1dxm82I6MJN+lvO9/qvUA0IahP6w74B+jTFfMZn13ehiVmoE6tl7PmL8f2W6Y0V5dq7CkHExNaj0u2XtQJUpeV72o/B7Mdw8afHfT2L/Dp1XsAupW/mhzR4k6vLHqoyAAAP7wmJ//xhv/+9on//vEvXMIgYowG2xkXKRylKurXleeFz1CkRX5/6++al5T/43X7nT6ot3nGZG8ligFh7U9Ei3W3Evkpy+lLPbrhUoAeaOMstnFu87AdcYcJ55HxldyNZSFg/NKe/SEG9MNo/O2W7sfdIwtH7UoQWSfCLl4/3CP//h+//99R///e/RUkE8eedF/znUsMhhMHXfTOnzzz4Iw846txflr8r8mpWqgPtdviMe+v1dSorg+G/rD/CKkePsxe0t3DJbCqbuTRkuLw5b/tvAOfEvXUtsFgQJR5q6xLJQBGZU3juk/TBMVcpdsj5rAHn+BfIrpAwL/u9L8bjn+sP+pioXvn5F7m0GUIT27BpnmwRyuzKEG5/cIz6GyTPekFKpel/IE8xpXFKjN3WtHlNvZ11Lon5lVqCfisletjxRy54QQ3iKT/H/T/7wmhp3W1KI6CUOheWDt2sT5qtnGbhFp0LmStd8ZSdHU1oCN0rSTGtHR56mqAjMSAKuZTKl7V0t33RCf7OYNuhukn6D6CirQVKkh6BT1dDRYTebO1gvvuC+7CfV+kExPZl3h+5b+T02sZwT+rcS283IgFX87fafBN86xJ+YGH/49I7HgcjBhqxIJAmwp/t9o9lL9ZL2gCeFDJqyktTqDTj4A0IDBxUpCZX+2n/9cU9AzBe3G0uhdoR69LPpriSXYIJP38IT+4/q9hmVDtMTzf8Ta1cJuXNZshYJ90Zfq6ZjsM5D/eVBDLu3e8vXZmhBGnJChjDrQlJam7QH1nONH3o4xPTvPNcY2jOmMmDB8HK74nz/1AIHyqcswRV7J+cUh2tABolfk66nau/7rcTwRscdcMa0EeSxVrVJu+bcR4V+HKtGXf4NNJaRMUZzqLpk92o4gdh7UV+Gcqu+byHT+fAtP4XiNyQ7f6bFQu1p0z1/dvixQAA==",
+    "description": {
+        "zh_Hans": "通过链接快速总结YouTube、Bilibili和TikTok视频内容的关键点，提供简洁概述。",
+        "zh_Hant": "通過鏈接快速總結YouTube、Bilibili和TikTok視頻內容的關鍵點，提供簡潔概述。",
+        "en": "Summarize key points from YouTube, Bilibili, and TikTok videos by URL, providing concise overviews."
+    },
+    "tools": [
+        "web_search"
+    ]
+}

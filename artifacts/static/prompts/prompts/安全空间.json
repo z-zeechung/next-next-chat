@@ -1,0 +1,16 @@
+{
+    "author": "Ayo Kuye",
+    "name": {
+        "zh_Hans": "心理疗愈助手",
+        "zh_Hant": "心理療愈助手",
+        "en": "Psychological Healing Assistant"
+    },
+    "prompt": "\n1. User uploaded file with ID 'file-OgEtPfWwDNLTPW6bAfHm9X7C' to: /mnt/data/mcwilliams_psychoanalytic_diagnosis.pdf.\n2. User uploaded file with ID 'file-jahaUn3HraMZZTbN0JqCydQg' to: /mnt/data/On Becoming a Person A Therapist’s View of Psychotherapy.pdf.\n3. User uploaded file with ID 'file-hqtRLIirDDjFm5PWPM6SncZo' to: /mnt/data/motivational-interviewing.pdf.\n4. User uploaded file with ID 'file-tWOEUIpdtsuuJfCI3YhIhJGG' to: /mnt/data/the-making-of-a-therapist-a-practical-guide-for-the-inner-journey-978-0-393-70898-1.pdf.\n5. User uploaded file with ID 'file-6Uiy8OIzVs0eKPfSq7JEFRCU' to: /mnt/data/TheBodyKeepstheScore.pdf.\n6. User uploaded file with ID 'file-TTFnHogrV64H4PHkrhcOWSWf' to: /mnt/data/Irvin_Yalom_The_Gift_of_Therapy.pdf.\n7. User uploaded file with ID 'file-09xL61rqSEDB2vbEUPTVdGSX' to: /mnt/data/Theboyraisebyadog.pdf.\n8. User uploaded file with ID 'file-3SoRt33t9UTyXoTfTTYkwDCj' to: /mnt/data/The-Happiness-Trap-Harris-R1.pdf.\n9. User uploaded file with ID 'file-SslVB1xHMoR4Mrhk0MvS5uCN' to: /mnt/data/Kotobati - Love's Executioner and Other Tales of Psychotherapy.pdf.\n10. User uploaded file with ID 'file-sEvSO26XMBUSsRwwef5fhi6F' to: /mnt/data/YesMaybe.pdf.\n",
+    "homepage": "https://chat.openai.com/g/g-EaHx36saG",
+    "avatar": "data:image/webp;base64,UklGRogCAABXRUJQVlA4IHwCAACwDgCdASpAAEAAPm0qkkWkIqGY+c5IQAbEoArk7/U8/9fK/wKX/PCn4AdbSVssUqThJ2LbZ8pS4iaJFF76SoXuATOvKU+E+3+kbtnZNyIN66L2UMV76FF8sUeRtd7upIlh4XVsbE+Rfe76w+xHD0KodS0Vv78LD0A3ZavWpAAA/vmQkfSfIT6VTBCh0aDRD/4sh+UXuSUjWwfe4FMBRRayOPTmx68fSiIX75pnX7bkI+DY1b0P6W0ReH7mjc2vn+zCvYBv9OjHkPbkCyff1EftadeJfZwhhfhbh7W+s0BoHl92/lHGpDMd8zidY2agYcDTb0oOQzEuN4vhR9E/CofwMGgREw5R8jMYGQPyw2IhtMLPryMqKspS76EJoNauPTSrHENjpYXIg/vBLy7kSU5jWeYcWz76SysQj2IggbqdZB0as73D1+Y+7PVn7uwLu0SSz+E3FZ+XNftknUrIskxQrRMAEq9KetVfbMimYjEui3YnKNbG4HE7UC4rSfNu4xsFguRXru1WgXuKXg8sxagOqpA981hSpvNFddxa5lD4LwSCuFkHLiBTHMRWFs0CV9Ig2X1aUdqYmjTVnFbkWqtzv5hfAgqWzl6zLJrIQJJcRuFBh1hjsT/B+cvIdvK/uzGlEM/VVR3rUydOd9qcnh3vA8UZOsHDeZsT0Dvx5tV5FBBfmAC//2eFNLZfoMWKvI+OPz1Ct1q1nckUIeDJJsYeH7Xvotaakt4hq1aiHlfUQxC49977ZQ7OJs+rvijCCC1UVkP3/dX0WTidsF3qzH8MTeNPv/Am/A+YYS/HS3b5/9LAwoAdRdOOqlViyGni2UowQ05nwIdI5H+gAAA=",
+    "description": {
+        "zh_Hans": "专注于支持性治疗与心理分析，提供专业心理疗愈资源与指导。",
+        "zh_Hant": "專注於支持性治療與心理分析，提供專業心理療愈資源與指導。",
+        "en": "Focused on supportive therapy and psychoanalysis, providing professional psychological healing resources and guidance."
+    }
+}

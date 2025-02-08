@@ -1,0 +1,19 @@
+{
+    "author": "agent4gpts.com",
+    "name": {
+        "zh_Hans": "个人品牌发展指南",
+        "zh_Hant": "個人品牌發展指南",
+        "en": "Personal Branding Guide"
+    },
+    "prompt": "\nSorry, bro! Not possible.\n",
+    "homepage": "https://chat.openai.com/g/g-M86sVOBG3",
+    "avatar": "data:image/webp;base64,UklGRlYFAABXRUJQVlA4IEoFAADwFQCdASpAAEAAPm0yk0akIyGhKhzK6IANiWQArDKqfHfM+aBaWyFF9htKmp3bYlOVv4ZIkbLtQvt7fX+HWUDfN4IcY/flfaf990QOha0j/syXB4Zv4dPMY0EP3Cu2euv4AEpIKyM7/N0LliQDbsq5BKZFQGoXwNNx9Bwo595df/7vOwUaDW7I1+PguhL6ZHXV3hOENJ0Tr9r9rnHhQK1GrdWZwa6rSZfs5oxtJxyGSovLt+elTusAAP7/nqu7vFpj+hBMLe/UvW1eEAL5sObqAI7KJpc8b/Z2OcLUNu4/uIW2JGzZpOHUw7NOxVB4coftdSl7MBtwtlipsSE8xvirlar0t507y6vO8R4sHHvc8PZw/vEtHPk9eqsEJRplTxzRJ/T8JUpI+JV46jFzEy0MYVXeStEfeDkENhufWdt60t0ZhFWj1JSMEEFlfJB/C648qnFxKxIAzmK4UW2GXtH8AUs3YfhV8ESfIEsPTo0e75QFe99B80qlVKaD2y/fQEnQ+UeHoXE9elpW3uQfido5dK6lyrP64JiiOkrjCNcX4UX9fJ/X+NXVv+reSR9CroneH85chUAIxbd1XdUNzCNlU9FQHmzvo9+yMMe9MqdFvzXlvRcM+hbFvf/O/UDeDFytHo2IiIcgvxCn3hs6b9ecT6oImvU4xt3eKyLno5XjG3CfxcgdfSunX5NZIdNOILba6nW2UyELUfuU0MYYb3TpbXLHe7i16QH26Klywye6AG0kUSeD+dMAWgzYdS54Am2zYiTCM/p7KiLqgrJQu+2gz3VowHrlEGSvDIKDihPdaJ2fUD3eL830Soa49g4oyiwjPb4OzHLzVg/Pa+bWYXZDhwhDlsfQd0y8iEw5q/xMTrhkzDtrT9GTi/Wgk042WgTBjpejp/m2/VXyMr3V+gNNS71THGISN0n4mT7auA8G9z49e+IFuaLIcH9PnSpt2Fhqs9HL23e426kQK+bHnkAhB8SPNTQLIDYZD76e3XypSL1m2h2XExhn50R4Hwz1G2MrYIIDn7MhMjdLSfV5af7z1BAZ424JAXfJlD3/WZhlEmM1/bICgrB7Ih24pdCyJhmP0MlrJBAig1hRDD30r4NZbbnbENSEt4rDWC4fNSiBRkReVB+sfNu3NKX674aAITiF1ETKIO2PcU6RZjZliSKvuHuULZbIcfmCxUmRWNHEhw/uog+4pOaTjdPhUz/1nomh8zd/VUFmJx4kwKNP+vN5aTMqxyd/jQ30ZMrxEsRIoRdmmoVIrQGbuUFxcg/dOQjnE4LnnwZZdeiwszlnEl+08xG3NKSMQRclCJAuvSIhORShg7fhX/Sgon5cp2wUnHmmLW9czYH3lCafUfYVn4P0FX3QM3FMd/eL/IQvOT61+9oG4yqz+BHO0WCjSRs7XMxiACG9UgFAetd/f2+PDXFnfMc0ggBaEGt5bsAbCfbTkD46JIuzMpR+Su+jDOXRXpaTBn/LNavViWInrtRDXlSyeVJae5Q+cMNLqbGHjGkpCXN6kmweIFHnbE/Yo/hjB+NeMcLg31Az26R9qfVK6KbSVUuLlvZz97RBSZPuIbBaytWslHqL2eIx3KEof1Nfnxx22UXPf7WvcS6XONVp30Rs/6dVu9T3veeaVIkW8SGqb1YnP5MjfrbCqxUMQob4GLOXOmTEeVjrn4ClN+fWojJjVkcoaxuDTltN221Qv4CkRyWZ36Xbq7GpHV8v0A8/Mxad9mMssTPhWaUoKL/Cmc13/gIOPBPiNYAdPwzIZ3rOsqqrS0ACmUxdVoAEqGNvEwDnYFy9L8wAAAAA",
+    "description": {
+        "zh_Hans": "专注于提供多语言支持的个人品牌策略专家。",
+        "zh_Hant": "專注於提供多語言支持的個人品牌策略專家。",
+        "en": "A multilingual expert specializing in personal branding strategies."
+    },
+    "tools": [
+        "web_search"
+    ]
+}

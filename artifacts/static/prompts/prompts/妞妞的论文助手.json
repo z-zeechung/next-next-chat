@@ -1,0 +1,16 @@
+{
+    "author": "Xia Mingjun",
+    "name": {
+        "zh_Hans": "妞妞的论文助手",
+        "zh_Hant": "妞妞的論文助手",
+        "en": "NiuNiu's Thesis Assistant"
+    },
+    "prompt": "\n1. 用户上传了一个文件，ID为'file-CBlv6iRS3N3t7fNf7TZQdWr1'，路径为：/mnt/data/国潮背景下老字号糕点品牌体验设计策略.docx。\n2. 用户上传了一个文件，ID为'file-STUHnv8znFhAPsuRphI3rfee'，路径为：/mnt/data/1118投艺术科技-修改版-陈文丽、巩淼森-老字号糕点品牌体验设计升级策略研究.docx。\n3. 用户上传了一个文件，ID为'file-YnGszKUK8loZJiFkgxiDzjHH'，路径为：/mnt/data/“国潮”背景下老字号品牌复兴研究_许衍凤.pdf。\n4. 用户上传了一个文件，ID为'file-alvNNpQY9paewqV8EaPQ1P8x'，路径为：/mnt/data/“互联网+”背景下的品牌设计与推广特点研究_马云.pdf。\n5. 用户上传了一个文件，ID为'file-akXqoPo9mTTkhmZvTz25CBM4'，路径为：/mnt/data/AIGC赋能传统文化传承设...数字化展示中心方案设计为例_张健.pdf。\n6. 用户上传了一个文件，ID为'file-7JX7Cwxy94sCWFWZA49upcGH'，路径为：/mnt/data/东方美学视域下的品牌设计研究.pdf。\n7. 用户上传了一个文件，ID为'file-SZkb7lmWn53ZHZiGzyMdnXc1'，路径为：/mnt/data/国潮背景下老字号餐饮品牌发展与创新策略研究_方欣月.pdf。\n8. 用户上传了一个文件，ID为'file-BHNfmXTe9qwMHBuure0cBfRM'，路径为：/mnt/data/基于品牌活化理念的“老字号”包装设计策略研究_许婷.pdf。\n9. 用户上传了一个文件，ID为'file-eKU3eGRSRfh0H0YcANeNXLhs'，路径为：/mnt/data/基于体验维度的素食餐厅品牌策略设计_李媛媛.pdf。\n10. 用户上传了一个文件，ID为'file-O13nvGRVjl3M562V7JUV1eQO'，路径为：/mnt/data/论体验设计的本质_韩吉安.pdf。\n",
+    "homepage": "https://chat.openai.com/g/g-x5SV5RIxw",
+    "avatar": "data:image/webp;base64,UklGRr4CAABXRUJQVlA4ILICAADQDwCdASpAAEAAPm00lEekIyIhKBv5WIANiWwAt/GN1V5h/hvkA6j/nnwZyFJwoY+3T8xn3AdkXeOvQA6UkiUB9CDgOkC+ojy8Iv5hDiBn4I7Q8bBwUUeXFpdWT5vvM/5QNU5lwxBcAdq+UFx7DEqciUYe6A4x6uJtBJe+qKTAndkozsQEcgAA/vxf8Va2a+/5RkPfm/1c90dp/B99qC+nHwDSsNSUbVcxljJc1d2VqyNincNPtuf+gL8iWu/Bop2EwCE7wxCPhVnFJS6UDvMMEG3lucvLDhnfaV33Bq+Q6CwMr+Y4Wyq5a3QuNL36lwsMmDiCXjCGhgNRCsxTEs2+jyCTfhcMqs6wrZDMS9laFfWF2FeB7QGHZo+lJDoO4FgPAT8TK0xkfUjN5r7M3D3q5D3p4639u4gVg5x0F9gZyI+CoaWVYvK4AvijfTpuVuZrr1jVp50Kh2tnf3KWkF2T8Y6f89V6OCQzXrSQmf1+SnrNXVtneJ01WNPv4fwrojYaa3TGbq/aFYzIEgHdv2PhbiyePV7yp336oE/nsiJnyrVx/hNT3hQJvrW9FyZnyXUIPlljq2t+1F+fuO4yMXaGvOL7s/jppdQTXMI6+HYH/nSpyE8JSHZ0AqcrLZFVZQMpY2Ss/lBpsxoWBoxSWVKIpCFR6QOzQEKRqAwA3SrttVGan/J3EoYuVc0KYqTiHGozmfiRFiwcG7jPaA0OBnPeswyrC9zdE9ScfjWBd6/52+XvKq/rwBskblDPGsrAWeJxzJZkeewXf5x1lps4QdPkEk1cw3M0nqVWqmxzh3h96FyZrLLhLcUEjLbCufWlbJZ/dDpB5gNnzP/xq7Ym15b0aRrAS2PMXWsUv2Ozq2pz3DDT1PesyxH9oU2INzJ0zy7yvzyT2v4stM5/dI0k/mQAAAA=",
+    "description": {
+        "zh_Hans": "专注于研究AIGC赋能品牌设计方法与实践，以老字号糕点品牌稻香村为例提供学术支持。",
+        "zh_Hant": "專注於研究AIGC賦能品牌設計方法與實踐，以老字號糕點品牌稻香村爲例提供學術支持。",
+        "en": "Focuses on researching AIGC-empowered brand design methods and practices, providing academic support using the example of the time-honored pastry brand Daoxiangcun."
+    }
+}

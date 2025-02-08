@@ -18,7 +18,7 @@ import { renderToString } from "react-dom/server";
 import { ThoughtChain } from "@ant-design/x";
 import { CheckOutlined, CopyOutlined, DownloadOutlined, LoadingOutlined } from "@ant-design/icons";
 import { Button, Flex, message, Modal } from "antd";
-import { DownloadIcon } from "@chakra-ui/icons";
+// import { DownloadIcon } from "@chakra-ui/icons";
 
 export function Mermaid(props: { code: string }) {
   const ref = useRef<HTMLDivElement>(null);

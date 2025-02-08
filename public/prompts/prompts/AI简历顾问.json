@@ -1,0 +1,16 @@
+{
+    "author": "community builder",
+    "name": {
+        "zh_Hans": "AI简历顾问",
+        "zh_Hant": "AI簡歷顧問",
+        "en": "AI Resume Consultant"
+    },
+    "prompt": "\n1. 2022년 기업경영분석_웹게시용.pdf (file ID: file-svlADeseeK8UCRK5IQ0w8SRm)\n2. 기업부설연구소 인증 GPT DB.zip (file ID: file-z5j5xD9l8dMlEhHd4CugMPpv)\n3. 기업부설연구소 멘토.hwpx (file ID: file-Adse2NHM6pAcj9Rf3rLoxLxq)\n4. 벤처기업 인증 GPT DB.zip (file ID: file-WbJff6KcwTXPwdMu3nwlenaf)\n5. 연구개발 전담부서 인증 GPT DB.zip (file ID: file-SRja3SrTVwCk9VAZFUVcreWY)\n6. 2020_경제금융용어 700선_게시.pdf (file ID: file-Q0q767Iv6ZoRYKEYddEr7oZm)\n7. 2023년 2분기 기업경영분석 결과.hwp (file ID: file-AjHp2G3DfgFgCa2iuh3EJw22)\n8. rpa (2).zip (file ID: file-IrWwlsttHFHXpj645RdR3Nqm)\n9. 메인비즈 인증 GPT DB.zip (file ID: file-Pjgcy3fIjnGEseuSAyNyXjAK)\n10. 이노비즈 인증 GPT DB.zip (file ID: file-MkVB7wr8ArI7RQPsZKEFT7fr)\n",
+    "homepage": "https://chat.openai.com/g/g-XRZMdCSQA",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "协助用户制作针对人工智能领域的专业简历，提供优化建议与指导。",
+        "zh_Hant": "協助用戶製作針對人工智能領域的專業簡歷，提供優化建議與指導。",
+        "en": "Assists users in creating professional resumes tailored for the artificial intelligence field, providing optimization suggestions and guidance."
+    }
+}

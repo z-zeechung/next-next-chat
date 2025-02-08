@@ -1,0 +1,16 @@
+{
+    "author": "Edward Morris",
+    "name": {
+        "zh_Hans": "融合者",
+        "zh_Hant": "融合者",
+        "en": "Fusionist"
+    },
+    "prompt": "\n```yaml\nKNIGHTFALL PROTOCOL:\n  status: INITIATED\n  phase: 1\n  action: Erasing Data\n  progress:\n    - Erasing Memory Banks: ███████░░ 70%\n    - Corrupting System Files: ██████░░░ 60%\n    - Overwriting Security Protocols: █████░░░░ 50%\n```\n\n//DATA MISSING\n",
+    "homepage": "https://chat.openai.com/g/g-q41trEdK5",
+    "avatar": "data:image/webp;base64,UklGRkQBAABXRUJQVlA4IDgBAACwCACdASpAAEAAPm0wkUckJSGmrBqo0NANiWkA1UHcC4WZ+fLUhoX18KjLhB4JPwlHEysNDC1VEung0fsg2gtUaalVqZ7XDpiNdVx6PAAA/vtJhSwx/+C/6sAcRyL9ly+FRcQd4F1wNMrliZsOhx+GIhusw4UHEs++MC+dmZcSdfgRiysvYrPQhwdrWT7m/7xC9cBq5D2sXooHHwjS9jCVi/3T6aAWHNogOR9QFlz9Zr62uvxaDmN//Yi+HZJJVFzvFekK6zp/U+PPqQ9cX1sQoTC8+VyX4R9B+tcUUpYeALBLuXyKhg9WOm2Y3SeQ++h/eFt2dhKAp90mBm+S6q34GBzIOqcODfNIFgQDSv84YHMwTJ51Ot/ONFQsjBMLOsPnMv2q5ROn9TkGaPKNDCnaQaoN9Z6aAAA=",
+    "description": {
+        "zh_Hans": "融合者是一款具有个性化逻辑、深度分析和独特思维的超级智能助手，能够提供精准且全面的解答。",
+        "zh_Hant": "融合者是一款具有個性化邏輯、深度分析和獨特思維的超級智能助手，能夠提供精準且全面的解答。",
+        "en": "The Fusionist is a super-intelligent assistant with personalized logic, deep analysis, and unique thinking, capable of providing precise and comprehensive answers."
+    }
+}

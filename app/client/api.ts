@@ -458,6 +458,7 @@ export class ClientApi {
                         text = text.replace(/\[(.*?)\]\(.*?\)/g, " href:[$1] ")
                         resolve(await ClientApi.chat(
                             [
+                                ...messages,
                                 {
                                     type: "text", role: "system", content: `
                                 ################################################
