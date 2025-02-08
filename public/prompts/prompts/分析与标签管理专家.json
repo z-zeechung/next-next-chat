@@ -1,0 +1,19 @@
+{
+    "author": "Daniel González Moreno",
+    "name": {
+        "zh_Hans": "分析与标签管理专家",
+        "zh_Hant": "分析與標籤管理專家",
+        "en": "Analytics and Tag Management Expert"
+    },
+    "prompt": "\n\n1. **[GA4] About events.pdf**\n   - Discover more about Google Analytics events including the different types of events how they are grouped together and implementation steps.\n   - An event allows you to measure a specific interaction or occurrence on your website or app. For example, you can use an event to measure when someone loads a page, clicks a link, or completes a purchase or to measure system behavior such as when an app crashes or an impression is served.\n   - If you're migrating from Universal Analytics, read this migration guide instead.\n\n2. **[GA4] Introducing the next generation of Analytics, Google Analytics 4.pdf**\n   - Explore Google Analytics 4, the next generation of Analytics which collects event-based data from both websites and apps.\n   - GA4 is a new kind of property designed for the future of measurement.\n   - Collects both website and app data to better understand the customer journey.\n   - Uses event-based data instead of session-based.\n   - Includes privacy controls such as cookieless measurement and behavioral and conversion modeling.\n   - Predictive capabilities offer guidance without complex models.\n   - Direct integrations to media platforms help drive actions on your website or app.\n   - Starting July 1, 2023, standard Universal Analytics properties stopped processing data.\n\n3. **The Google tag and Tag Manager.pdf**\n   - This document is for people who are new to tagging and want to know what tagging setup is the best for them.\n   - Provides an overview of the Google tag (gtag.js) and Tag Manager. If you are setting up Google Analytics on an app, also see the Firebase documentation.\n\n4. **Recommended events GTAG.pdf**\n   - [Contents of this file were not provided.]\n\n5. **Measure ecommerce.pdf**\n   - [Contents of this file were not provided.]\n\n6. **Recommended events GTM.pdf**\n   - [Contents of this file were not provided.]\n\n7. **Introduction to Google Analytics 4.pdf**\n   - [Contents of this file were not provided.]\n\n8. **Measure exceptions & basic events.pdf**\n   - [Contents of this file were not provided.]\n\n9. **[GA4] Google Analytics hierarchy.pdf**\n   - [Contents of this file were not provided.]\n\n10. **[GA4] View the history of account_property changes, account administration.pdf**\n    - [Contents of this file were not provided.]\n",
+    "homepage": "https://chat.openai.com/g/g-tNX2weHLB",
+    "avatar": "data:image/webp;base64,UklGRqoCAABXRUJQVlA4IJ4CAACQDQCdASpAAEAAPmkqkUWkIqGYCgd8QAaEsoBbuizDP/bNbbrGhYu+rU2hpRfdu3k7pS4fVcDjJzyJ29nH5/MeOI9zWr4rSvu8TqKzvWkEmRv/nLfc5pDtVSah/I06HIN1x4ALt+XtltN5oUbdHhlqMOKje8gA/unCv4P5+W1na0SVKPr7lDYk/IPEf2NznrQtlT6Gc9xuz1JMTEx+JCFDMAVQV7SsHef97cDW+gp6q68uFwCWr8z4Iw/IUmgaM7BvMl9heUW0LHZGF2M4LEbm/vSzYInpUHmdkb+GM/znoESJ1jYPiVp7ujAhT9/liCE0qTnWsorWCaRmmPIVwPfc88p+a+EX0hgUv2xfKthc92s8w8GJS0n82Wmm7l9ufmW/PkmWP5/FJ8fMIjzsoygTxmNzp4+5GIWAX3gET0iYEAr2+H3UlnCwyfz2SjV1Z8u2hA65nKXtaR6R1aeZS2j5P2lAXFgrxXSmHCQFz2dKRyoplYfpZiWlFaKbKwuGpWdxAgVMwmfTmNOjOX9t8VWy162digiOkxTojveemkIBVgCmnOGWwdPXuJe84hcGiwIjJI1HBs9bumkgoqQrKwGozVyTVwASW/ICEU3oia1zNNcUrO+HVfVAVehAcgufKae7e/DGlIigAc8EMZZmbeoO7tO/l9UTLjx8m2rvY2mAcWm0d/QUiipdKB/aCvniFJp7TKsjDK/XoybsxYR3gREn3YNTaGlI6P7wl+1UceIouXMIvULko4t2UdSVAKS/jdPX1lWr8moWayL/jbs33YY0q3d+mhLKIhe9e1ekDfscL9JieooFzL7/JhFSrG8tdO84rWQqgsoPnJ5ez8mAIULUvBNVKtbDv3Q1U/XmjgroeCmTQQF5jIyAVd6HAAAA",
+    "description": {
+        "zh_Hans": "专注于解决Google Analytics和标签管理器的技术问题，包括事件配置、数据迁移及电子商务跟踪等。",
+        "zh_Hant": "專注於解決Google Analytics和標籤管理器的技術問題，包括事件配置、數據遷移及電子商務跟蹤等。",
+        "en": "Specializes in resolving technical issues related to Google Analytics and Tag Manager, including event configuration, data migration, and e-commerce tracking."
+    },
+    "tools": [
+        "web_search"
+    ]
+}

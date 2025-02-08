@@ -1,0 +1,19 @@
+{
+    "author": "nicco.capital",
+    "name": {
+        "zh_Hans": "Uniswap巫师",
+        "zh_Hant": "Uniswap巫師",
+        "en": "Uniswap Wizard"
+    },
+    "prompt": "\n\n1. Liquidity Provider Strategies _ Dynamic Hedging.pdf\n2. Liquidity Provider Strategies.pdf\n3. Liquidity Provider Strategies options.pdf\n4. Optimal_Liquidity_Provision.pdf\n5. whitepaper-v3.pdf\n6. Loss-Versus-Rebalancing.pdf\n7. 2208.03318.pdf\n8. whitepaper-uniswapx.pdf\n",
+    "homepage": "https://chat.openai.com/g/g-20KzwPqrD",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "精通Uniswap流动性池与集中流动性策略，具备深厚的理论知识和实践魔力。",
+        "zh_Hant": "精通Uniswap流動性池與集中流動性策略，具備深厚的理論知識和實踐魔力。",
+        "en": "Master of Uniswap liquidity pools and concentrated liquidity strategies, with a touch of theoretical and practical magic."
+    },
+    "tools": [
+        "run_script"
+    ]
+}

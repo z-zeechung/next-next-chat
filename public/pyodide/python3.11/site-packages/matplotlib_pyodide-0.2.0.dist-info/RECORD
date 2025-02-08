@@ -1,0 +1,9 @@
+matplotlib_pyodide/__init__.py,sha256=ZIdCL09RKR80Zr_q2NRZUI2cmO7vdP-eg4DWNAN40aI,184
+matplotlib_pyodide/browser_backend.py,sha256=Wf-3zarKVvxB1MSoScX9KcGVlxFZK3ER_CP1PpTiRK0,16503
+matplotlib_pyodide/html5_canvas_backend.py,sha256=n5ZznMf_ev--Kf-NYFrDdLtHBgtE5a2sdoPHq-8b0Mc,15247
+matplotlib_pyodide/wasm_backend.py,sha256=mX0lbJ5Y2soztvy0flqBLSOwnPaTg6-XJMjh3d1_7nI,3666
+matplotlib_pyodide-0.2.0.dist-info/LICENSE,sha256=HyVuytGSiAUQ6ErWBHTqt1iSGHhLmlC8fO7jTCuR8dU,16725
+matplotlib_pyodide-0.2.0.dist-info/METADATA,sha256=lxqMhP4og7j4zrWDBnukEC2L8lKhqIFiqgm3z_7s-IE,22247
+matplotlib_pyodide-0.2.0.dist-info/WHEEL,sha256=yQN5g4mg4AybRjkgi-9yy4iQEFibGQmlz78Pik5Or-A,92
+matplotlib_pyodide-0.2.0.dist-info/top_level.txt,sha256=DknuCanWdBwuoPwJjAxxpWOeSeDktvupsrjO6jqitf0,19
+matplotlib_pyodide-0.2.0.dist-info/RECORD,,

@@ -1,0 +1,19 @@
+{
+    "author": "00xNetrunner",
+    "name": {
+        "zh_Hans": "道德黑客指南",
+        "zh_Hant": "道德黑客指南",
+        "en": "Ethical Hacking Guide"
+    },
+    "prompt": "\n1. Metasploit 50 for Beginners [file ID: file-dWWvvlnsNXa79OH8ZI3Yt0UA]\n2. Week 2 - Footprinting [file ID: file-zf3q6PecdQ50lXaOGmohPwpx]\n3. Cybersecurity Attack and Defense Strategies [file ID: file-jlX6GivO5aomAkwYI8bmGjjc]\n4. Cybersecurity Attacks: Red Team Strategies [file ID: file-5ETO1Oy17BUlLhUQRS0m9sNc]\n5. Week 9 - System Hacking 21 [file ID: file-CC9xNui9KD2sz3nnbgAXaqIy]\n6. Week 8 - System Hacking 1 [file ID: file-TycQzHB7x8PhzWAkgoDClHq8]\n7. Practical Threat Intelligence and Data-driven Threat Hunting [file ID: file-KwIQyILoih0VRqINNxICTtMI]\n8. CompTIA Security+ SY0-601 Certification Guide [file ID: file-n2atY6fzIadorciRNwsGePkp]\n9. Daniel Graham - Ethical Hacking: A Hands-on Introduction to Breaking In [file ID: file-h4WeEODb7szr6RTZIvb522X0]\n10. Practical Hardware Pentesting [file ID: file-GKVnPMcyxoqMVuDtY14nQcxY]\n",
+    "homepage": "https://chat.openai.com/g/g-QHPBIAIUj",
+    "avatar": "data:image/webp;base64,UklGRsQCAABXRUJQVlA4ILgCAADQDQCdASpAAEAAPm00lUckIyIhKBgKqIANiWMA0DljMSXoAdLTPjuX/UBoAfUL8xXU2BbU7VTzSfJP9F+wJ0oF2bmX6Rkxv9H5kjz65omNPLjGSntXc7jI2ewqiZGmeFmCgYs9XliuTPMq8+Yj0YjMndWaX9+sAAD+/PhO93XzuS9jEGo7kLb7ULaw6+o95Xq2xYIYNx2zUSiSr3i/ff/16aB0phwgCYXJd+6CUu59g7YvzaUuEu6xp9Q2hSBFMKUv73nUAEkS/zQ6IQcMql8WXb9BN38auAzTCj4J/6xEfsdBkCZcDAka/fnN7P/fe/AoihoNoYZ9BkUVm300/pdhmJ6FHsvrFeFG2Hthwsnxt+97S0jrVXnZ3FqOinPSSMDQj0ea+h/4FRVvuTGDiR+PwHj1wFy0yNV7EhjGngVZRgcMBNY2/qrPt+n4ulgBl9g1BndfkNx3jtuhLdh2bpjm9IBskP/GbrRVPunnCiLhOyFTuRhgcWARGYDzQ6a/0vxAZKAMyQFnW4uSLj5vDaVsU4+lXkBejkUPc7iE8U4HxcvanVK7kYoXJAc0oX+0TYRU/eZxpOv7csNU2xEMPrKTM0K8Q/oSjaa3O1YKD08IuiuuBup/W67roU9whT4JzNG/zy/1gRxbPjWdRkvTS7SArfG1M0syMIn5VVqHoUakLBvgrIIXXi6LCef86lvgEq0YmhZ8sWEvtMTWyTwlqfuKf/JbidWnr/pUDmLrwW+eZd8odGXqVJf9MuEXV/h3hsQzL7t4ITIRiRfxtZWEovPcu2Va0ZVy2vk41xrKpzfo4/Edpocwy5pem4xHXDkIzRdNcEOQU05MSTcMK8GGUnWxF3Jz7MrAXGrXppL4QmUxptfvLm+oUZK6jqW+BS6LkNfdTiHwz+cX6NSne2bSbCed3UQolygAAAA=",
+    "description": {
+        "zh_Hans": "专注于NMAP的道德黑客学习资源，涵盖网络安全攻防策略与实践，适合初学者和进阶者，仅供教育目的。",
+        "zh_Hant": "專注於NMAP的道德黑客學習資源，涵蓋網絡安全攻防策略與實踐，適合初學者和進階者，僅供教育目的。",
+        "en": "A comprehensive guide for ethical hacking with a focus on NMAP, covering cybersecurity attack and defense strategies. Suitable for beginners and advanced learners, for educational purposes only."
+    },
+    "tools": [
+        "run_script"
+    ]
+}

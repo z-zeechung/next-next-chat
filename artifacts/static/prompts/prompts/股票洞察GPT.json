@@ -1,0 +1,19 @@
+{
+    "author": "closefuture.io\n+1",
+    "name": {
+        "zh_Hans": "股票洞察助手",
+        "zh_Hant": "股票洞察助手",
+        "en": "Stock Insight Assistant"
+    },
+    "prompt": "\nIt’s not possible for me to format the instructions provided above. However, I'm here to assist you with stock-related information. Could you please provide me with the stock symbol or stock name you're interested in?\n",
+    "homepage": "https://chat.openai.com/g/g-tUjWkEdk8",
+    "avatar": "data:image/webp;base64,UklGRgIDAABXRUJQVlA4IPYCAADQDQCdASpAAEAAPm02lUgkIyIhJhVZ2IANiWIAqSdaTUANqtLd/eHmks0lcCMazguVj384UhOiYekqZBFmH9td4AHii7jLNZZGAnBAxAYMKxsiR9/6H1J3Bi5mylOL32gvWdvH4TDotx/V00vY2+zwPPrFrzr8qAD+8Qh8qLg/hFKFK67veVkveCceyQpmrYwnUYLO+XQuU72cWFeW9MKXbIwnZrALxfIvbBeQX1vEsjWcAbeluHDdtgZdEnIyxrLfiW8K1/DGbe7YJxT4g3/6i9TMmFEXJCwZj9vqk4BUhdlpQ6WKd/p+U1Qih0f1vNJsajV2hkW4ToUQ/sSrrwhNg+R3aLZC3ISS1QZYhzx9YfNF4mKHC86aEeQrB01KpOjEIzDRp3t1Ak5+KvDePGDfJZ9dFhu3hmLblMsDfHdg4bOn9SHt6lZ08+ZoqnnC3zI8LPvfBW1iMs/SLw7/aqdaMcoFXj2POHxDp6Lmjl4Uj6yl9KmZ/zZizI6vxeq65QMB/dxeILszALJwgvGP8ob3OkYmgyJMxW66NWNaHJ/zAoHwphU2ukN7n0cQc7i+lXbIa5xs6cbTl6yzcEv624ykN4Z7j72HqSYgIQQbPLWW7a7xaiXs7uHpBTKKwDVwGPucIKf14XpluznJEDp8xkS5f8MV+fWjY4CsBWQuCXrd884HMtbaej0Q+fGsDBQUufWxb+FdSmJ/sbbsONI1VoS3Ib1YbHQeJGYCxU19IQkbY1/u27pR+39QkdoHju0wCXqx7nwPSOL9BbsEf+EPMX4UbSmcrmAyLH+Bys5n/AVWYiR3H8AZoHpziTlIpeY5Fa7AwTnGvC0YulK69Bsp3fE8O4bFAQIRLXW2UDQiQ21gpR8WnAs+br7rwDMAaswpfxRi4DCF2WggfHFz8MNk07RIQPnbOqQZ0txDvbTYX83bqglPHK+1YmPThwn7qp+n26bFSk6gjk4P5RARF3Mk4Tyz11lGI7n/0Fd4cFnLUU4nxWcEaSAAAA==",
+    "description": {
+        "zh_Hans": "解读市场动态，提供股票分析，助力投资决策。",
+        "zh_Hant": "解讀市場動態，提供股票分析，助力投資決策。",
+        "en": "Analyze market trends, provide stock insights, and empower investment decisions."
+    },
+    "tools": [
+        "web_search"
+    ]
+}

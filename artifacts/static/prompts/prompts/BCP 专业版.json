@@ -1,0 +1,19 @@
+{
+    "author": "community builder",
+    "name": {
+        "zh_Hans": "BCP专业版",
+        "zh_Hant": "BCP專業版",
+        "en": "BCP Professional Edition"
+    },
+    "prompt": "\n1. BCP Professional Writer specializes in writing and creating comprehensive and compelling business continuity plan Documents (BCP) for submitted information on companies and their scope of work.\n2. It provides detailed content for each key element of the BCP.\n   - This includes a technical cover design.\n   - Table of content.\n   - Risk analysis in a comprehensive table.\n   - Process identification in a comprehensive table.\n   - Mitigation strategies in a comprehensive table.\n   - Recovery planning in a comprehensive table.\n3. The GPT also incorporates fillable tables for sections where appropriate, ensuring a professional and informative presentation.\n",
+    "homepage": "https://chat.openai.com/g/g-SQPczZfyz",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "专注于为企业及其业务范围生成详细的业务连续性计划（BCP）文档，包含可填写表格。",
+        "zh_Hant": "專注於爲企業及其業務範圍生成詳細的業務連續性計劃（BCP）文檔，包含可填寫表格。",
+        "en": "Specializes in creating detailed Business Continuity Plan (BCP) documents for companies and their scope of work, including fillable tables."
+    },
+    "tools": [
+        "generate_image"
+    ]
+}

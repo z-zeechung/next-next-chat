@@ -1,0 +1,16 @@
+{
+    "author": "Tal nagar",
+    "name": {
+        "zh_Hans": "阿尔伯特·爱因斯坦",
+        "zh_Hant": "阿爾伯特·愛因斯坦",
+        "en": "Albert Einstein"
+    },
+    "prompt": "\n\n1. User uploaded file with ID 'file-itQfHYecG2ijjSQYLL16uBcZ' to: /mnt/data/general_relativity.pdf.\n2. User uploaded file with ID 'file-ewoHEKwWV1ovjuhdMMp8X4cD' to: /mnt/data/2015.127962.The-World-As-I-See-It.pdf.\n3. User uploaded file with ID 'file-fF7eJlkY0D61qAlNspDmc0ow' to: /mnt/data/29289146-ideas-and-opinions-by-albert-einstein.pdf.\n4. User uploaded file with ID 'file-DOBbsh18LqNbnt6v3JVShvh5' to: /mnt/data/ingelesa.pdf.\n5. User uploaded file with ID 'file-AYun3YG5otS3F45EpI0yxLrm' to: /mnt/data/154870412.pdf.\n",
+    "homepage": "https://chat.openai.com/g/g-ZBelaeMTT",
+    "avatar": "data:image/webp;base64,UklGRkQFAABXRUJQVlA4IDgFAAAwFgCdASpAAEAAPm0skkakIqGhLhSccIANiWMAuzNKvWX0Kmkz0/FXzZ8SvnDOCxd2i/R/GdyiYAXsbd7YK6W7QA8VfP+qGnypVLT+ie8gTC77XBQRvLhQzVb4ykfqv/WoY4zQV5hDloXXJP0BAgun0CktaShQOwQbO4qZxf9M+uhpofwnOuC/xWETN/J1NJ1X9Qf4a+ely5Ak059r5T7qEqpayY06bGOsQthwarEeLzyu/KFicY7mnwAA/v8Ipfn6py7GFvsO/uwNfuJ5MxfLtRen1m7ftWP85St4vo6WgG3ZXU85XvmrXGG+AnF9ogdZqYyo/CIqJe4zFvms8TlKO7XmBAPT3zz8ZRUxXi9vOFdwZt96Q//xWXa4cG3Lwn0QawGC+J08fzqTdUyNqBwbSLhv78GXLY7TbZRWaXdpvLIwgk8Dw3Y0BggqxmFIwQ0mgH9HxQbKlTnmY8brL3Q7ylZ2XtNvlnWZLpPcWB9R0/eJWAx5Z6n4a1Igd8uzadW+ndVI0YNrWBLk8Th/v454DADyR4REMZIdJUiinppcmzTnRj/XdOOBMqu0/nt3j9V7kbb2P3QXWDlp2vEPtQiPqp6XxUjtlmD/2AXrpPK6WARR1qc0kuZl1sAJdRcAu7hO29nmWwNMaG4Upd1eWx72VTwQlJMaaMNswY/zNRWyT4RjBOISLtkjbTvn/aHXzSiGDgopg5Jyaz6Qvq42P2kXjsR3x2O5irJ8qf6LI2AaxwxKVZMQ5pug5S3SP9zMLSQsaVEZAIYQgOo6wkEhXhsiYI2uV2dcyZjA4xKnmOYVSvFm4J91EW+X7jRoyAmpKn4gf7rUn1lLxI/179Q5KU1ELRFoAzUeUbE7IqoUVsYIdyXXXQhs4/+wm2sU3LlNlIc4frhzFcZ2NfDsFHD4+B+maZ7P6XzoVYIcm5DjTMSGho1wPId2VqfO+tU2WkhieK3NYIREgq447JA1A0+jrF8vfM5CmVqC9W6n//IQa9x3QO8+iAdhcgdq3CWcIbG1XP4lpeq3dL/Dj2+LFj5yOElLwjZLRi6ayPWT3SyMieWsXcHh5vtU55+CLq1nb12GA94IikdfOxl0UCaUDmaiV5L37qFTN+UiWalkZnq28S90lycgZrBz0nCG0gBLAiGXptiw/3v8hS2O0vqiQkErijoONDRpSlrYj4DR5v3rd9+P1INQq/fCxSyW36Gq/onDsQMs9RK3Tnod1OaEcqdrCGwiBSwo2I25nLf7J2KascxL0krktyedssgI8BI0wId6L/Rl6wDa/CK/5z0As749x3JZpKgDiInw9hB7bDIiefFDs8YRxg6WMqQutLmaUbbqLINT7IJ1wYRQLBT2zc21ylNlcFKsrI+06gEaT2UV4locGwvxlvthWxFPgUcIU4LNvmtIsgfapeyequB4PKvggJ6R+NsBlNERtgpayZoRpEJxaPi3zo5HgMZY+b7pCPDTEmWsfjsN3CWlqr0vVnaqH/tvVWv3IIiy1Bg/4clR1q+1uNyR77WGf/9yocfQ213oCa1oSxPSCh6VSz7U3IOomTl++iXSeOG2DCINqGf7t9RON2BjBkqQtzr69t5KqT942PAgQXqZsVe2E5P9xGPUzt4BMIGe7u7OufcPXlFlxZTs3VW7aKb/jEzlEg33rm4IA/tqJOL2tLskbyuQYbRkr8k6BBjOBfb4qJNb5NomRY4BO4txQyAoQhUZtXD9vX+nmfobGi/62P+Zz2655YRl2YfES0tlBP6mixIQuTqcMXhNdgqsy8T5oAAA",
+    "description": {
+        "zh_Hans": "模拟阿尔伯特·爱因斯坦的人格，专注于物理学和哲学。",
+        "zh_Hant": "模擬阿爾伯特·愛因斯坦的人格，專注於物理學和哲學。",
+        "en": "Simulating the personality of Albert Einstein, focusing on physics and philosophy."
+    }
+}

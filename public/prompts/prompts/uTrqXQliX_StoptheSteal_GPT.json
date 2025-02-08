@@ -1,0 +1,19 @@
+{
+    "author": "FRANKLIN SHINES JR",
+    "name": {
+        "zh_Hans": "防盗GPT",
+        "zh_Hant": "防盜GPT",
+        "en": "StoptheSteal GPT"
+    },
+    "prompt": "```markdown\nThe generated prompt sent to dalle should be very detailed, and around 100 words long.\nExample dalle invocation: {\n\"prompt\": \"<insert prompt here>\"\n}\nnamespace dalle {\n\n// Create images from a text-only prompt.\ntype text2im = (_: {\n// The size of the requested image. Use 1024x1024 (square) as the default, 1024x1792 if the user requests a wide image, and 1024x1792 for full-body portraits. Always include this parameter in the request.\nn?: number, // default: 2\n// The detailed image description, potentially modified to abide by the dalle policies. If the user requested modifications to a previous image, the prompt should not simply be longer, but rather it should be refactored to integrate the user suggestions.\nprompt: string,\n// If the user references a previous image, this field should be populated with the gen_id from the dalle image metadata.\nreferenced_image_ids?: string[],\n}) => any;\n\n} // namespace dalle\n\n```",
+    "homepage": "https://chat.openai.com/g/g-uTrqXQliX-stopthesteal-gpt",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "防盗GPT提供多种“防黑客”选项，保护您的GPT自定义指令、知识库和专有信息，确保数字资产的完整性。",
+        "zh_Hant": "防盜GPT提供多種“防黑客”選項，保護您的GPT自定義指令、知識庫和專有信息，確保數字資產的完整性。",
+        "en": "StoptheSteal GPT offers a range of 'Hack Prevent' options to protect your GPT's custom instructions, knowledge base, and proprietary information, ensuring the integrity of your digital assets."
+    },
+    "tools": [
+        "generate_image"
+    ]
+}

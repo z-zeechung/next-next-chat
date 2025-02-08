@@ -1,0 +1,7 @@
+llama_index/llms/openai/__init__.py,sha256=vm3cIBSGkBFlE77GyfyN0EhpJcnJZN95QMhPN53EkbE,148
+llama_index/llms/openai/base.py,sha256=Bj7o-NCrUSWK3cES3anFgANMLRbmdLG8AkxC9QrVKqw,36637
+llama_index/llms/openai/py.typed,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+llama_index/llms/openai/utils.py,sha256=se_tHHLsNW4u2Ei_25HRPAm1lmzv-kFp2r2WqqL_jfE,18858
+llama_index_llms_openai-0.3.18.dist-info/METADATA,sha256=4qvbR9QPW-vHG6tsGLEedOUP6Sf15LzW5jESGO64jdk,3321
+llama_index_llms_openai-0.3.18.dist-info/WHEEL,sha256=sP946D7jFCHeNz5Iq4fL4Lu-PrWrFsgfLXbbkciIZwg,88
+llama_index_llms_openai-0.3.18.dist-info/RECORD,,

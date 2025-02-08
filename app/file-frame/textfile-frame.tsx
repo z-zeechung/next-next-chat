@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { TextBlock } from "../themes/theme";
 import "./style.css"
+import { Typography } from "antd";
 
 export function TextFileFrame(props:{src:string}) {
     const [text, setText] = useState("")
@@ -8,8 +8,8 @@ export function TextFileFrame(props:{src:string}) {
         fetch(props.src).then((res)=>res.text()).then((text)=>setText(text))
     })
     return <div className="textFrame">
-        <TextBlock>
+        <Typography.Paragraph>
             {text}
-        </TextBlock>
+        </Typography.Paragraph>
     </div>
 }

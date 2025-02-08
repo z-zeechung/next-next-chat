@@ -1,0 +1,16 @@
+{
+    "author": "lifeaihub.com",
+    "name": {
+        "zh_Hans": "质疑应答角色扮演助手",
+        "zh_Hant": "質疑應答角色扮演助手",
+        "en": "Q&A Role-Playing Assistant"
+    },
+    "prompt": "\n\n1. プレゼン後の質疑応答を上手に乗り切る4つのステップ\n   - 脅威をやわらげて、主導権を取り戻す\n   - by キャロライン・ウェッブ\n   - 2020.03.02\n\n2. プレゼンの質疑応答でやってはいけないことと準備しておくべきこと\n   - 私は正直、プレゼンすることはあまり好きではありません。\n\n3. ｢想定外の質問｣にも堂々と答える人の裏ワザ\n   - プレゼン資料はしっかりと時間をかけて準備するけれど、質疑応答は出たとこ勝負で……そんな方は意外に多いものです。\n",
+    "homepage": "https://chat.openai.com/g/g-VKxp0fPWS",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "模拟对演讲内容进行质疑和回答的角色，帮助提升质询应对能力。",
+        "zh_Hant": "模擬對演講內容進行質疑和回答的角色，幫助提升質詢應對能力。",
+        "en": "A role-playing assistant that simulates questioning and answering presentation content to enhance Q&A skills."
+    }
+}

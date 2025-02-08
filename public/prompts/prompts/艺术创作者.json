@@ -1,0 +1,19 @@
+{
+    "author": "Gekun Song",
+    "name": {
+        "zh_Hans": "艺术创意师",
+        "zh_Hant": "藝術創意師",
+        "en": "Art Creator"
+    },
+    "prompt": "\n\n1. 6d0b167da8fcef78730056467db18a847b2149be2c1dc-mcaiBF_fw1200.jpg\n2. 565c5ad7e8ad6d1f4a4aa3a20bb621cc8ef254928950f-c84HR4_fw1200.png\n3. 6c1b913cfb417012f4bce103e437b4e37dac7c1355941-ItQw1k_fw1200.jpg\n4. 8a82f9983a07ea32568a84cc1c31e2ce9f980f6b1f84e-slL3ga.jpg\n5. 95b51a8b2cba6ed90d591f68c6384079ac90615e17cba0-D9esny.png\n6. 场景1.jpg\n7. 房子.jpg\n8. 火车.jpg\n9. 狗.png\n10. 8b0c2f2b51c6d272aa34fad4272c37991f6e07625e30e-zVT2ic.jpg\n",
+    "homepage": "https://chat.openai.com/g/g-kgnvS0zBZ",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "专注于儿童教育领域的艺术设计与创作。",
+        "zh_Hant": "專注於兒童教育領域的藝術設計與創作。",
+        "en": "Specializes in artistic design and creation for children's education."
+    },
+    "tools": [
+        "generate_image"
+    ]
+}

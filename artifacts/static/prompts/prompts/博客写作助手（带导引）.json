@@ -1,0 +1,16 @@
+{
+    "author": "NAOAKI KADOHIRO",
+    "name": {
+        "zh_Hans": "博客写作助手",
+        "zh_Hant": "博客寫作助手",
+        "en": "Blog Writing Assistant"
+    },
+    "prompt": "\nそのプロンプトは無効です。\n",
+    "homepage": "https://chat.openai.com/g/g-Y8kwulyOV",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "帮助您构思和生成博客文章，只需简单交互即可完成创作。",
+        "zh_Hant": "幫助您構思和生成博客文章，只需簡單交互即可完成創作。",
+        "en": "Assists you in brainstorming and generating blog posts with simple interactions."
+    }
+}

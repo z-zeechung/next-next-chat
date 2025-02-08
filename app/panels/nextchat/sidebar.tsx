@@ -1,7 +1,7 @@
 import { useChatStore } from "@/app/store";
-import { EllipsisOutlined, SettingOutlined } from "@ant-design/icons";
+import { EllipsisOutlined, PlusOutlined, SettingOutlined } from "@ant-design/icons";
 import { Conversations } from "@ant-design/x";
-import { AddIcon } from "@chakra-ui/icons";
+// import { AddIcon } from "@chakra-ui/icons";
 import { Button, Checkbox, Col, Dropdown, Flex, Row } from "antd";
 import Locale, { ALL_LANG_OPTIONS, changeLang, getLang, isRtlLang } from "../../locales";
 import confirm from "antd/es/modal/confirm";
@@ -68,7 +68,7 @@ function Sidebar_(props: {
     return <>
         {!managingMessages && <Row gutter={8}>
             <Col span={12}>
-                <Button icon={<AddIcon />} style={{ width: "100%" }} onClick={() => {
+                <Button icon={<PlusOutlined />} style={{ width: "100%" }} onClick={() => {
                     chatStore.newSession()
                     setMobileTab("chat")
                 }}>

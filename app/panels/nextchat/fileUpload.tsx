@@ -1,16 +1,16 @@
 import { useChatStore } from "@/app/store";
-import { Button, ButtonCard } from "@/app/themes/theme";
+// import { Button, ButtonCard } from "@/app/themes/theme";
 import { nanoid } from "nanoid";
 import UploadIcon from "../../icons/bootstrap/box-arrow-up.svg"
 import Locale from "../../locales"
 import { Message } from "@/app/message/Message";
 
-export function UploadFile() {
-    const chatStore = useChatStore()
-    return <ButtonCard text={Locale.NextChat.ChatArea.UploadFile} icon={<UploadIcon/>} onClick={() => {
-        uploadFile(chatStore)
-    }} />
-}
+// export function UploadFile() {
+//     const chatStore = useChatStore()
+//     return <ButtonCard text={Locale.NextChat.ChatArea.UploadFile} icon={<UploadIcon/>} onClick={() => {
+//         uploadFile(chatStore)
+//     }} />
+// }
 
 export function uploadFile(chatStore){
     var input = document.createElement('input')

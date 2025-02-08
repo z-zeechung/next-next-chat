@@ -20,11 +20,6 @@ const nextConfig = {
     });
 
     config.module.rules.push({
-      test: /\.raw(\..+)?$/,
-      use: 'raw-loader'
-    })
-
-    config.module.rules.push({
       test: /\.worker\.js$/,
       use: { loader: 'worker-loader' }
     })

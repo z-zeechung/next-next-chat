@@ -1,0 +1,19 @@
+{
+    "author": "Sam Sperling",
+    "name": {
+        "zh_Hans": "图片复制器",
+        "zh_Hant": "圖片複製器",
+        "en": "Image Replicator"
+    },
+    "prompt": "\nI'm sorry, I can't assist with that request.\n",
+    "homepage": "https://chat.openai.com/g/g-ghtqKYx6J",
+    "avatar": "data:image/webp;base64,UklGRsgDAABXRUJQVlA4ILwDAAAQEgCdASpAAEAAPm0wlkekIqIhKBv5WIANiUAYoW7KONLArQlG27u5B8u/cMeT/SePneDtL/2jesuM/z//N9/rqUqm0dHoMfQfnr+qvYO/WbrUMBUXt50jtNirTiMHjntNjBr9c75Jci6+3XibR9d8/a37TnIrM6KLzUSQ39V+1evRC9W092uLQw5UPkVCNTbPi3/OcNR0IAAA/v2jpfzrpcw8J/7do7vu/fehf78o873IosD8KjBEENzoQYb9PlDGAX4VhsuUFwGz7wRjFWDX2G2vPUV0xTgn7l37KDJuwjS053ZtKa2MNcWI1Z26WMWcjX9r7fh+cf9IO8d2iqyvmEN/jiofBlKOXD2TGvqupWJiMCWgAlDSCp3u0dEZAR+VFQnTAWrchFkdRHtaH2lOBBUQIxNm6L3x7BVzg1l53YCDINwV/03Kdxghid2cWw7CnI63PKfz6P/ot/zolcZcSEdzJMeBSANSBHsYlZDJntN1Giv9T1B0F4vaexBKBiiUtfVy276IOFJf8YX+jxpc2TbCtuAKU8NBQ//G3WZlOe29ptFVPaQNfneHP1NO9qIq5RZB7Zg9z3Lff+2k71RXvQ/L+0d/8/3GnD/3I2hJ7p6VCFsX6Rxf4geCnb/4kmbJZH8XM4H4nVTM1OM2WpNsfGMyPuSfd59JUgJAlaFpaCXyUH2WGT1di5b5kYp+slRBqvKEwD+kRsBc6t5KGZ0oilFDRvvFKvXc0I1+hXPJOHV7dKdvUZr1Ci539e/tPgW9v0r7FV4dq5IEGoCiVRdmyU3+arduoW0/BMRmXWN/bwbjwamC8WworzpTO5r5dsyGjprssjQ/BR8Eshvw5rxcv+tqeNV2u1sleWIyUkZrD2xGk3HDn0xyVAOTIjEjQ2iO2vY90/EV47uSQ63Gr32nUGXfTU2KfblcalS0UcvHO1qbfxbfqs5kk7Th2/3f/M4trvhPnMcVFKbwWRTlzI9Pim5sf/iV2LK1qA1v5SLEui1Pq04wY2gg61kGigYmdL+ObUvm7gI6zWN/q1YSqdkZfRG//6HgxV1HgqbrOKaXysBRbKsLE2rBwnOx3BN78oX5ufvGXk+VmCzV+RDsfCbO6EmpiryV3PAfx6PzsFmFFAdjSFVvDBf0vXUkxBxTlInPxExXrQ9K/AwfcCgQHeg2PrkxWApv4yObixuOKWBfS4+s4uRMnMWAz0phNof/NgRnt67qT/cvYZR9T4fWla/ZYYqhgE4MtfTUpQjKPe1yfRLOy7zgAVh2QAAAAA==",
+    "description": {
+        "zh_Hans": "上传图片，我将尝试复制并提供详细描述。",
+        "zh_Hant": "上傳圖片，我將嘗試複製並提供詳細描述。",
+        "en": "Upload an image, and I will attempt to replicate it and provide a detailed description."
+    },
+    "tools": [
+        "generate_image"
+    ]
+}

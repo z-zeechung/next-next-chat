@@ -1,0 +1,19 @@
+{
+    "author": "gptby.me",
+    "name": {
+        "zh_Hans": "正则表达式专家",
+        "zh_Hant": "正則表達式專家",
+        "en": "Regex Expert"
+    },
+    "prompt": "\n1. User uploaded file with ID 'file-Qgkq5A2VqNIflkaB9bGvhyOf' to: /mnt/data/image.png.\n2. User uploaded file with ID 'file-jzs2jSz2XeW8LEzfB9vgQfB5' to: /mnt/data/image.png.\n3. User uploaded file with ID 'file-bi3a3NL70CMb1KNFkz2G4O3r' to: /mnt/data/image.png.\n4. User uploaded file with ID 'file-RhGLDe4wxWlTCgcr6YwIXAjH' to: /mnt/data/image.png.\n",
+    "homepage": "https://chat.openai.com/g/g-DsROtD9xK",
+    "avatar": "data:image/webp;base64,UklGRvYDAABXRUJQVlA4IOoDAACQEgCdASpAAEAAPm0wk0ckIqGhKAqogA2JagDGegFADkIKv4QG2i8xvQA3kDefP9DgAGnZMm/zfjf3g7R/28cATka1BTKf2I8630r/2fcF/Vv7nu8L+2Ku2uW56soS+xO81Dh8rFMyEg8juRPe3+2+ug/I4fCDrY726AifPXhjcPUxXxiIuPR/0c9SvKCeza5X97+Jnd1L/9TlTugAAP7221Qz2OOk1ecle4fSxerd19q/SdvOhjFhf+v9/92kTLTa8s8aKf//51LSOAeQ35ZbMy7VTijWc928hv6NljWf/B5VlF90eSJ+Mkr//lJx/x5DXengqFGazv1txRQRdfVmGfwmWn+V2N/SjK0r+Cy5JDbAQvFQ/u3/ILff/39ppchofOEeE5fRh0pMshl9Q/68vjQDm5gs2M+9zRNjdgIaB+dZuh0LfPxj5FAwr/h5QDV75ifYbdMCQiHT9LcUKxM5g1teGHZA1rv3qLmnlU95F3++gQtH4Q2mYgiASFjvfp/yi4yrCGkKVS7yIcDT6YA2Br8s+2uI1YqtjnpP/S4H43s+sbg6G4QM7E3VM79wIoAe+8gfq0YqFnOpPPy1aB85LVDuXhmNNnM46ejEQ/1tobQAuEBqPzOIEmn148FspxH/4j7BJfbEFwhXGvXy+s+Ov3au6HR6iHrrC7H9qbHJ9SrezSXKvNgk22D+RmMV/+8xQN1j3IB34DH7SOVJPdafzjH9OqVw/6PXbCpWq/AHJ3/ybf9278bizH9VfS+okaNf8lBv+LxHb9Glhxw8PoegZEnm3ZKrQNQWEz1fd+0SXnd7QdNg6un/HpxDQigXRMYgKo/UCnzlX3+zvf+xuO58neqTFY8IAWHwkWZps3TSQFzHCfMle33WVXNlVEkbgcDZDdES709B7k/7JgtldVax6vx4RVIadyP8t/UbBDb3b10TrzCjFd/+KrGfj+SHl0voFudPzoqa/CrwNltsfOU8bC3AZdivz4CbTx2l/bb3pA2sGwwXQxVuKbdg6HuZ0wtvT4yXVy0YcuF5V2zrcA8XrbejVyUr5PQKUr30nI2/3Nbg//W22d056xIMBTCvQ99701/+jBPB4Db9FKw+EMW5JsnII+i0D7IgZpOkq14FSsXZ+xXcytxri0nqHqYIgeH01Ih/lhsR2+bpbmYGPG2hbeLreCXHpsm4izqqQENhxj5oPfrlMPD7Vh99g/cuQwh9LdlkdV0fozN4ewfEesnhv8GUa12PlUFcBJiYqfuN5n1D6Sw9/t5Mbtp3MkwVlTgQXsPf/Ge+R07W7FvzO/h2WKaDxQCctGR/F7/9pmWESzkQ8qMv/5oAAAA=",
+    "description": {
+        "zh_Hans": "专注于解析和处理正则表达式，擅长从复杂文本中提取关键信息。",
+        "zh_Hant": "專注於解析和處理正則表達式，擅長從複雜文本中提取關鍵信息。",
+        "en": "Specializes in parsing and handling regular expressions, skilled at extracting key information from complex texts."
+    },
+    "tools": [
+        "run_script"
+    ]
+}

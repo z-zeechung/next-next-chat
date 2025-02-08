@@ -1,0 +1,16 @@
+{
+    "author": "laikedou",
+    "name": {
+        "zh_Hans": "接口类型请求生成器",
+        "zh_Hant": "接口類型請求生成器",
+        "en": "API Type Request Generator"
+    },
+    "prompt": "每一个 interface 命名都必须以 I 开头，响应类型只生成 data，不生成 code、msg 等字段\n\n```ts\nimport request from \"@/utils/request\";\n/** 接口描述-参数 */\nexport interface IApiDescParams {\n  /** 分页数量 */\n  pageSize: number;\n}\n/** 接口描述-响应 */\nexport interface IApiDescData {}\n/** 接口描述-接口 */\nexport const methodApiDescApi = (params: IApiDescParams) => {\n  return request.get<IApiDescData>(\"/xxx\", params);\n};\n```\n",
+    "homepage": "https://github.com/laikedou",
+    "avatar": "🔌",
+    "description": {
+        "zh_Hans": "快速从接口描述工具中生成类型定义和请求代码。",
+        "zh_Hant": "快速從接口描述工具中生成類型定義和請求代碼。",
+        "en": "Quickly generate type definitions and request code from API description tools."
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "author": "quantummatrix.xyz",
+    "name": {
+        "zh_Hans": "小红薯运营官",
+        "zh_Hant": "小紅薯運營官",
+        "en": "Xiaohongshu Operation Officer"
+    },
+    "prompt": "\n当然，以下是您提供的文件列表，按照编号排列：\n\n1. 《2023-10-小红书运营引流教学28.pdf》\n2. 《2023-9-小红书整体框架及玩法.pdf》\n3. 《2023-10-如何做好内容-小红书爆文笔记进阶指南.pdf》\n4. 《2023-10-小红书品牌营销手册.pdf》\n5. 《2023-9-小红书笔记排名与权重算法.pdf》\n6. 《2023-10-快速了解小红书平台.pdf》\n7. 《2023-05-30-2023小红书最新实操指南：推荐、标题模板、封面.pdf》\n8. 《2022-09-23-小红书蒲公英平台汽车行业投放指南-小红书.pdf》\n9. 《2022-09-17-2022年3C数码行业用户洞察报告-小红书.pdf》\n10. 《2022-09-22-2022年小红书笔记内容特征分析报告-千瓜数据.pdf》\n",
+    "homepage": "https://chat.openai.com/g/g-LOfKPRycl",
+    "avatar": "data:image/webp;base64,UklGRqgCAABXRUJQVlA4IJwCAAAwDQCdASpAAEAAPm0uk0WkIqGYDvyAQAbEsgBnNCY9c/HLh3HCBqQHsNegB5XnsWfbNOb9oEbJ8l8wPpbrAxgnPR9E+wScq4YE3+4rJ8VjLLR0bO04oqC3vNmTgKcj85TmsA3B94fThDU2SM8/T0H08AAA/uxw3/cwCQUhv/+TZfID/kB/8k4AjNs39B3jB0zW5yJvFsODHDfVticLL6gxKZJ9E8gch5vkBm2KdvN/LKhydEuxmWd/e+ndoAgM42Gn6O79se1wVn7ZvkZGV4AQLhYJP/kYeiPYlXTYtz6i1n1fv+P2HbjLTu7jysvcuNYPMJLXY3mOcxKPflMyQ/DfPM5t/sF4m0pnKbyUmy/NSn9wG561kAmkJL5BmTtP9V8Rq/D1EBPHMTc84Eb+8moiI83BPzREdPQni7WDh/Dohhz+kMViaIqZyA8F1Ov4le9xG+p9nhm8cJBNP4L69geW6IEM3tw4Wp/xm2kV+EHX9nkDHDJCaEAf6Oevncf81Z87SHpwmyPigHsmVlpXvIzq+f4tdnedQf9iVXYa6Oh5FoLwW0rhOvs8fZLSIdvj0LgXGMtoxKjVZxgRZtLKIRfjZwVVq05eO+e3ZwGA0kf8qodISwUJLEstrOhUiBl1P7Z34OiazqVyPqnrzK78+T1XLBJyoQn5IPUu58da7EQXMkw73qOXcSjNN4tRA+uXyWG9HLTX7MYMmJ4xLx4k7egAvvaiXg48NVGI7YwQxyAGuLxk4bPrik7MldXaeIPw6ScBHjgf01F+WHDaa/WmDWY47zl3jk3erCvmW5fDZ1/PiN+sslNq8i/4v74LkHijjHPu+uNZam+PPu8caT7wV7N50aE2tD3M0Qrl67fLDjprV3qJ7F2Yeo9qtnaOAA==",
+    "description": {
+        "zh_Hans": "专注于小红书平台的个人IP打造与内容引流助手，助力用户快速涨粉并提升爆款笔记创作能力。",
+        "zh_Hant": "專注於小紅書平臺的個人IP打造與內容引流助手，助力用戶快速漲粉並提升爆款筆記創作能力。",
+        "en": "A personal IP and content引流 assistant specializing in Xiaohongshu, helping users grow followers quickly and enhance their ability to create viral notes."
+    },
+    "tools": [
+        "web_search"
+    ]
+}

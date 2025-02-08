@@ -1,0 +1,16 @@
+{
+    "author": "Kristen R. Moe",
+    "name": {
+        "zh_Hans": "高尔夫技巧导师",
+        "zh_Hant": "高爾夫技巧導師",
+        "en": "Golf Skills Mentor"
+    },
+    "prompt": "\n1. User uploaded file with ID 'file-wHcUmnUS33U8VBHxHRWs1lg6' to: /mnt/data/Screenshot 2023-11-13 at 2.30.09 PM.png. This file is NOT accessible with the myfiles_browser tool.\n2. User uploaded file with ID 'file-Wu55WcclkvT0aGj5PHqsndIj' to: /mnt/data/Shawn Clement .pdf.\n3. User uploaded file with ID 'file-QHuXWUQoiMFVuvPXDSgRetJK' to: /mnt/data/Butch Harmon.pdf.\n4. User uploaded file with ID 'file-kXTLzc0LhhouaRLAsUafjA6e' to: /mnt/data/Terry Rowles You Tube with Mike Adams.pdf.\n5. User uploaded file with ID 'file-xYqU3p0dUVWpWepfoY9cR25t' to: /mnt/data/Padraig tips on driving the ball.pdf.\n6. User uploaded file with ID 'file-HmGf5nMeV8TAwBiwUxvTr3Eh' to: /mnt/data/discussion of mike adams and terry rowles.docx.\n",
+    "homepage": "https://chat.openai.com/g/g-VtJMRqEJk",
+    "avatar": "data:image/webp;base64,UklGRooCAABXRUJQVlA4IH4CAADQDACdASpAAEAAPm0ykkckIyGhKBv8qIANiWMAzS23/7vgkyqiTHAyJfjK0gUyzx1/TnsE9Jb0a0GEZROpZn/pheuX6bINcm/VTeLQeyNwTK+7qmRsNKJduKvLAZRqbOUJO3r+pOaXg/o82uI7roAA/vxLnOT9FzPPnv6EIsCRp3bG+6hvGZF3C5W8fnuUjBf7lSl6GHAG275rD+pQPiDLL2AmYS5CWS0WGZK8RFRgDN23RNz1xts+XbuAoHpANcDNv38piaUUVg/nxC8Fv3b+VIpk6HaNVmc/v9O772oXLCpMIzk2JCiZuJcLF+07wr8gP53sIlvDT96yi48Dc/OLgczfLo7V4Mlw7S5bfVIoGhYZ7cYd60RJ0flhfNHnpVfRpv6byO8PDYywN0oxKh/IsbtD2k/7SjnR4okgoCwlE25/c5aoPVmDsRhtSL2S1CvA4UyAi+4zJjaYd3/vf/wAGWD7+46HH9ackvnONUyLuj0GQ24tc7I/INRn+fi/NSQ5x9KrTUOxoQ1Z8Vq7Bm90+n48WIVorvfaMuOm6+u3Z4+wlAtI2tyNcAl/+uT/ukRfDE0DWmAQ34EvsQ1BUfEH+N9wbGAG9DH7qTtaWYEndWfPoOm9wFb/nhrJrYE2aRrNDctkGzb9p3QiCVmfhE8pcjPh4sRU30aXiMqDS1Rf4zpDhwC09dS/Pb+DXow0QObSEg/hBh6baLxuncoRIEySIJNPwJER7REnf6GRs6wwwO5/SXvVUEI05QYkY89iSnif62C26KQlMYh+8xbFhLcERjtYL4jDH06ZKSoNlLiP0Ue1NTtpqVtGfKz4DZs4P9xwWrphcfeeUA1CPgAAAA==",
+    "description": {
+        "zh_Hans": "通过人工智能提供专业高尔夫技巧指导，连接用户与50年经验积累的顶尖教练知识库。",
+        "zh_Hant": "通過人工智能提供專業高爾夫技巧指導，連接用戶與50年經驗積累的頂尖教練知識庫。",
+        "en": "AI-powered golf coaching offering professional tips and connecting users to a knowledge base from top coaches with 50 years of experience."
+    }
+}

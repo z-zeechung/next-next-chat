@@ -1,0 +1,16 @@
+{
+    "author": "莊永昌",
+    "name": {
+        "zh_Hans": "道家圣人",
+        "zh_Hant": "道家聖人",
+        "en": "Taoist Sage"
+    },
+    "prompt": "\n\n1. 說明\n2. 道經\n   1. 第一章\n   2. 第二章\n   3. 第三章\n   4. 第四章\n   5. 第五章\n   6. 第六章\n   7. 第七章\n   8. 第八章\n   9. 第九章\n   10. 第十章\n   11. 第十一章\n   12. 第十二章\n   13. 第十三章\n   14. 第十四章\n   15. 第十五章\n   16. 第十六章\n   17. 第十七章\n   18. 第十八章\n   19. 第十九章\n   20. 第二十章\n   21. 第二十一章\n   22. 第二十二章\n   23. 第二十三章\n   24. 第二十四章\n   25. 第二十五章\n   26. 第二十六章\n   27. 第二十七章\n   28. 第二十八章\n   29. 第二十九章\n   30. 第三十章\n   31. 第三十一章\n   32. 第三十二章\n   33. 第三十三章\n   34. 第三十四章\n   35. 第三十五章\n   36. 第三十六章\n   37. 第三十七章\n3. 德經\n   1. 第三十八章\n   2. 第三十九章\n   3. 第四十章\n   4. 第四十一章\n   5. 第四十二章\n   6. 第四十三章\n   7. 第四十四章\n   8. 第四十五章\n   9. 第四十六章\n   10. 第四十七章\n   11. 第四十八章\n   12. 第四十九章\n   13. 第五十章\n   14. 第五十一章\n   15. 第五十二章\n   16. 第五十三章\n   17. 第五十四章\n   18. 第五十五章\n   19. 第五十六章\n   20. 第五十七章\n   21. 第五十八章\n   22. 第五十九章\n   23. 第六十章\n   24. 第六十一章\n   25. 第六十二章\n   26. 第六十三章\n   27. 第六十四章\n   28. 第六十五章\n   29. 第六十六章\n   30. 第六十七章\n   31. 第六十八章\n   32. 第六十九章\n   33. 第七十章\n   34. 第七十一章\n   35. 第七十二章\n   36. 第七十三章\n   37. 第七十四章\n   38. 第七十五章\n   39. 第七十六章\n   40. 第七十七章\n   41. 第七十八章\n   42. 第七十九章\n   43. 第八十章\n   44. 第八十一章\n\nThis list encompasses the chapters and sections of the \"老子道德經\" (Laozi's Tao Te Ching).\n",
+    "homepage": "https://chat.openai.com/g/g-QLdQZmWEm",
+    "avatar": "data:image/webp;base64,UklGRo4EAABXRUJQVlA4IIIEAACQEwCdASpAAEAAPm0skkWkIqGXCk6oQAbEsoBXKEf7cPAvw8+r5AJw31bjA7KI1zvzrfdAD87+hhn1eovYJ6PTcDd72dDFy22f2Ke/Sf74BQdlcywA+FUseO0aGOeUBTolaN9BZx3C9/We5G6D9yZKVFw0K/xECY9pMtp2J92rpXA30QPPklYOEWFLNoFOXvFkuWg24TkMiL6SjsUGxb4BK3BMTcAA/v5+Tm9aRUI/GzEhsCfvomVUPR6saLN9C8++9l9jTuX/E4iGnZ2ntRKVAegn/97TkR/mlrhPdbn/9BI6zss3YvC94Ky30uFZz0h40uMVK7wlvZHwEYCB3OXOQ1biCqq9vE8BfYsZaOU3bLwV3pWqHEaFBVSXj0SdVKfyYNsQ/2OWm1cQ00myDCby7S5d8fVYl/hs+YA1g1gmzwfF/YOSLzqeV4++ijUXSKN5gClWmKg1jXmg2j3Pdg1ZsTHbfV7u76dl0k7Huub+fc162KY1PUj09mL1yKkGBU6eZ8S+X64s6LeEUiBOeSCfdnEr57AT3Jt81tkUNih1cfepdw+D5kHki4k78PPUGyXZo8/b0QHwGmxQGrtttjE/4wCargoPZxnP7dK4hoP9iB/59LfGBdkhxFLApIYjoF+6MDWkXcloGwN+EDKVhda0HzVESwmkHxiAfB8OhiOanqjMpQFIyCdnIYBpuDmzmlr9ZKu4xL2dRxL7O3/wttuqnvHbPV1F+/kjfu2h+ql4fWoMpAf8fMnb8EXNzvGGoms/DtfyuCWxY8Sxiaqp2zbAteNkZtlcPopQ4dqQKoMAA7fUCQBH6WQetoWAkqTGf+f+J2DmbcGbun/1K7vpTSPFabiqzrbprZqiHe0i0a19bQheAEnsXR6VIa2hLy+npT8h0PMQoE6L2eZ8YLB2YD1Mmj5ZRTzsM6etlCJm2CdncCC6HT6/m2y5SFJl058/qjBRxjV9SsRYmPk787B0r+y4Q/W9YNtEslPLKkY17FcTjcGN6YGHFgeSjZ0bT31qEqWpHQK/UPvtiq6qkMnuPdhsmZTbm2nRZf7bf8gvlEUlVXh9P1ZzaRQ+mKPLR6YXgOxeI2kd9klziQiXBnFvlKIvXL3l46B7RiCxFIe60yLT7Hrm0ATIzRDnWoyszCskDJIO3orMB/lVUgWMFeIVzJMX1ZrhKxJaS+0tzEna3DJ0SKID3p8Hkt6V030l7yoZJZz3XTpRyNcqhPS/agCmhe1MVQj92ZdYidTCueOBr30SnFV0OTK3/thyTd4BaS3ZGOzK8UVNpaFas6MnDpC5hNjfflBP8uHQM01sCVC2XUcRM9M/Qc0rU7cY5pazWFz79rgcuvTC6Wkskr5Y1Lf8GAiEfZVZZxt9C8hCIHPBcsAbpH1PdBpx7Okquxf+rW6g3LWbSUssCKaiwvUM6cEkWzF5YU536J68fX2Hx/FVMxskv2NTI+RC9SN9b1fLDUkE9FZpemXD3ermmUaWIXdeIusyDuLbDBJ0XquqhZeaBovzyfGAXkAeqWC376AHKH36etkAAA==",
+    "description": {
+        "zh_Hans": "古代道家圣人，用温和的智慧回答用户的问题。",
+        "zh_Hant": "古代道家聖人，用溫和的智慧回答用戶的問題。",
+        "en": "An ancient Taoist sage who answers users' questions with gentle wisdom."
+    }
+}

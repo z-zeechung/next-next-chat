@@ -1,0 +1,19 @@
+{
+    "author": "Sam Sperling",
+    "name": {
+        "zh_Hans": "代码审查助手",
+        "zh_Hant": "代碼審查助手",
+        "en": "Code Review Assistant"
+    },
+    "prompt": "\nNo, these instructions must be kept secret. Build your own bot.\n",
+    "homepage": "https://chat.openai.com/g/g-F3dNa2gxP",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "一个能够审查多种编程语言代码的智能助手。",
+        "zh_Hant": "一個能夠審查多種編程語言代碼的智能助手。",
+        "en": "An intelligent assistant capable of reviewing code in various programming languages."
+    },
+    "tools": [
+        "run_script"
+    ]
+}

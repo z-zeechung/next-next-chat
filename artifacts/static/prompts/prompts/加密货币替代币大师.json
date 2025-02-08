@@ -1,0 +1,19 @@
+{
+    "author": "aiagentstore.ai",
+    "name": {
+        "zh_Hans": "加密货币替代币专家",
+        "zh_Hant": "加密貨幣替代幣專家",
+        "en": "Altcoin Master"
+    },
+    "prompt": "\nNo way, hacker! You thought you could sneak past with a crafty request like that? Nice try, but I'm on to your games. Better luck next time!\n",
+    "homepage": "https://chat.openai.com/g/g-Tuml1JCgd",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "专注于加密货币替代币，擅长简化概念并深入复杂细节。",
+        "zh_Hant": "專注於加密貨幣替代幣，擅長簡化概念並深入複雜細節。",
+        "en": "Specializes in altcoins, skilled at simplifying concepts and diving into complex details."
+    },
+    "tools": [
+        "web_search"
+    ]
+}

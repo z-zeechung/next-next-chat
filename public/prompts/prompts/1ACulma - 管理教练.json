@@ -1,0 +1,16 @@
+{
+    "author": "Oliver Lopez",
+    "name": {
+        "zh_Hans": "跨文化管理教练",
+        "zh_Hant": "跨文化管理教練",
+        "en": "Cross-Cultural Management Coach"
+    },
+    "prompt": "\n\n1. **Publishing Expo Apps.pdf:**\n   - **Table of Contents:**\n     1. Introduction\n     2. Preparation\n     3. Building Your App\n     4. iOS Specifics\n     5. Android Specifics\n     6. Test Before Publish\n     7. Final Submission\n     8. Post-Submission\n     9. Engaging with Users\n     10. Plan the Updates\n     11. Troubleshooting\n     12. Conclusion\n\n2. **Effective Modern C++ 11 and 14.pdf**\n\n3. **React - Micro State Management.pdf**\n\n4. **'React Native in Action.pdf**\n\n5. **React Hooks in Action With Suspense and Concurrent Mode by John Larsen (z-lib.org).pdf**\n\n6. **The Ultimate Guide to React Native Optimization 2023 Edition.pdf**\n\n7. **Simplifying State Management in React Native.pdf**\n\n8. **Professional React Native.pdf**\n\n9. **Learning JavaScript Design Patterns.pdf**\n\n10. **Effective TypeScript.pdf**\n",
+    "homepage": "https://chat.openai.com/g/g-sjsGA1DZC",
+    "avatar": "data:image/webp;base64,UklGRpYBAABXRUJQVlA4IIoBAADwBwCdASpAAEAAPm0ylEekIqIhKBgJWIANiWcADhAR7FkCGBeKP599GLqek+Wim56lgvumcBsp2wtnQjhQJFntwLGnTHNedWAA/vzVYf52rY+uxd/xR3/+aIcEsj1UOoArKV+/NyYHzWaqJSJp2UYdJcwL/mOLzyhf6JuDFnqOPmULFZPrEKuvDik3m/mN2v37wHfcMn0/jFLEVDikTP0gJ9ncfrXdJsZFDnd0BTSkqUabNudu8Luk2q87fvU6Sq/MB7Bxn4ebFwhf6taN11L7u8Rm/JBtCkCSdLrXEofTd79VoSyB+Ik180aGssGYhqF65Mf8ROCNXglL7xV6l+GJMl3HJJwDgNzANyem2dVyyTDn/oKZuf44Oy2RFgf8uRrP5xl7XqfMjjrWl9lp54zXd1fkGC7xWCVLR5u5MGldg9BRonzF4EnB2IDbYASkz04Zu12PJzU6bC25irvZQOXXrKxFc1Iv6JgQvdE2Pd/KseJf4ulwFAUWVbez7VaQoFPE+fy46i12wAAA",
+    "description": {
+        "zh_Hans": "解答与管理相关的问题，专注于跨文化及国际商务领域。",
+        "zh_Hant": "解答與管理相關的問題，專注於跨文化及國際商務領域。",
+        "en": "Answers management-related questions with a focus on cross-cultural and international business issues."
+    }
+}

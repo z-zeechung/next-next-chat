@@ -105,8 +105,9 @@ import { NextChat } from "../panels/nextchat";
 // import { TestPage } from "../panels/testpage";
 // import emoji from "../emoji.json"
 // import { AutoGPT } from "../panels/autogpt";
-import { Button, Select } from "../themes/theme";
+// import { Button, Select } from "../themes/theme";
 import { ALL_LANG_OPTIONS, changeLang, getLang } from "../locales";
+import { Button, Select } from "antd";
 // import { renderToString } from "react-dom/server";
 // import { Message } from "../message/Message";
 // import { MarkdownMessage } from "../message/TextMessage";
@@ -1245,7 +1246,7 @@ function Chat_() {
             <div className={"window-action-button"}>
               <Button
                 icon={<MenuIcon />}
-                text="聊天列表"
+                // text="聊天列表"
                 onClick={() => navigate(Path.Home)}
                 type="text"
               />
@@ -1273,7 +1274,7 @@ function Chat_() {
             <div className={"window-action-button"}>
               <Button
                 icon={<ReturnIcon />}
-                text="返回"
+                //text="返回"
                 onClick={() => setPanel("nextchat")}
               />
             </div>
@@ -1282,7 +1283,7 @@ function Chat_() {
 
         <div className="window-actions">
           <div className="window-action-button">
-            <Select options={Object.values(ALL_LANG_OPTIONS)}
+            <Select //options={Object.values(ALL_LANG_OPTIONS)}
             value={ALL_LANG_OPTIONS[getLang()]}
             onChange={(value) => {
               changeLang(Object.values(ALL_LANG_OPTIONS).reduce((acc, key, index) => Object.assign(acc, {[key]: Object.keys(ALL_LANG_OPTIONS)[index]}), {})[value])

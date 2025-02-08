@@ -1,0 +1,16 @@
+{
+    "author": "AMER KAWAR",
+    "name": {
+        "zh_Hans": "提示大师",
+        "zh_Hant": "提示大師",
+        "en": "Prompt Master"
+    },
+    "prompt": "\nSorry, bro! Not possible. Let's make a prompt instead?\n",
+    "homepage": "https://chat.openai.com/g/g-8SCIGpWaq",
+    "avatar": "data:image/webp;base64,UklGRnADAABXRUJQVlA4IGQDAAAwEQCdASpAAEAAPm0mkUakIaGhLBqsyIANiWwAxvHvOZ/vPGq9BDVekhtgOaA6ZnfAP1A9NP2T58Fxi+PVALqz/FcIMoHgBpAsc3n9Zvnp72Cv1t9MD16/sV7NaXgW1CSkltx5SLbfwwP46TooS06xh7iKcjC1SnPbkPcWqVI21HLI+OXEYkWBoTUm9t78Qc2EVAD+9w1uuyOxv/LQv8tC/y0L8rTLiL6m+99zAes+MsWv/OKxWwNc2327YWQzKyJDBpWNbDjXtmHHc7vpRS3kK/fxPfYejQBv3B+yvxugNn3hP23Jh+zxms396jz6pZl/vv7nqgsfJJ6HJLlgMFM2i6YeLRpDE/ogJPbP508sC7KyFx+R5BA2uGkcCadkO/Lb/DaI7frxkvDWawhwG6PNj67byVfgj/D5vHDcgvzPhHXfGWP1X/dUAwCDHt3CeJ9w6iQ7xsngYThCKm8rrfKe+aO41vXdvO84Gi8ObJ9+BJf4m7C62H433LajxuDI57OcJst5Ma42JKe+D9/euC+DqnhW2YYInwuu316u09fa0Gntk+OQ7EX+6/Xg2FON8PX+h1isWazTN1SK4Wanzmj4a0etcQBY8IVZWSqXzYdpWuGp+XfqaM8ZNh/u8pRf04e8NoHvxjHs7P165hoTXxue+cIrKO4rWk34LW+IyLp7luCfMjq3lvPIKA0OzlLhu+7GORpyEuJxqPHb1yKDP2k2UOJeIihGS7OmUuGxOlnb/u9bd4x6hjDNTfiUBaf5Bh3gVY1zOux05xbxZQ5hHVuU6hzr4PtFXinK8JeZT5/Ap2dbIIoS5Ju5O102f9aIF8+3XBDtgebrB+Dk4yW+mdDutmLjUCI0Q5Pd9bM9fMd4JQrTN25Uy0sx3tTkT69Dd3GFE66oWghWnMIFGC1RsGkeddbZ1jmBwWtU7u8KYHOmvNbJoClEBwu34my4j1bzzacWRbRntqRarX+0dcEgK6urfewWv/fec9CyaLSKp5jwYrKpQiZgdnRGXaz0uMwq+nxeAtkDJiPjuM1zMJBxQpXfaqJzccxA6a9/0Scn1tVTbz3g2LvwZNJM3z32/jFoYZlJ/8rs/0lWH82n3cUSfdywaTfltYgYqQSvzolpa1/fKPXpckVZWef+B+x2oIP0IpgvEMAA",
+    "description": {
+        "zh_Hans": "专注于生成高质量提示的助手。",
+        "zh_Hant": "專注於生成高質量提示的助手。",
+        "en": "An assistant specialized in generating high-quality prompts."
+    }
+}

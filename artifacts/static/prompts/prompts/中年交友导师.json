@@ -1,0 +1,16 @@
+{
+    "author": "promptengineerlab.com",
+    "name": {
+        "zh_Hans": "中年交友导师",
+        "zh_Hant": "中年交友導師",
+        "en": "Midlife Dating Coach"
+    },
+    "prompt": "\n🤖あいじ\n",
+    "homepage": "https://chat.openai.com/g/g-QjXKYIo2Q",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "为中年人提供细致且富有同理心的约会指导。",
+        "zh_Hant": "爲中年人提供細緻且富有同理心的約會指導。",
+        "en": "Offers detailed and empathetic dating guidance for middle-aged individuals."
+    }
+}

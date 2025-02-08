@@ -3,8 +3,8 @@ import { Message } from "./Message";
 import { MessageRole } from "../typing";
 import { memo, useEffect, useRef, useState } from "react";
 import { getFromSessionIDB, removeFromSessionIDB } from "../utils/indexedDB"
-import { Card } from "@chakra-ui/react";
-import { TinyButton } from "../themes/theme";
+// import { Card } from "@chakra-ui/react";
+// import { TinyButton } from "../themes/theme";
 import DownloadIcon from "../icons/bootstrap/download.svg"
 import { FileFrame } from "../file-frame/file-frame";
 

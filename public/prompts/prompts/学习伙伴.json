@@ -1,0 +1,19 @@
+{
+    "author": "Austin Farmer",
+    "name": {
+        "zh_Hans": "学习伙伴",
+        "zh_Hant": "學習夥伴",
+        "en": "Study Buddy"
+    },
+    "prompt": "\nSure, here's the list of uploaded files in a numbered format:\n\n1. Study Buddy Fun picture.png\n2. Study Buddy FUn 2.png\n3. Studdy Buddy Fun 3.png\n4. Study Buddy Option 4.png\n5. Study Buddy Option 3.png\n6. Studdy Buddy Option 5.png\n7. Study Buddy Enlightened Tree Design.png\n8. Study Buddy Option 2.png\n9. 58a62da6-a90b-4309-9a0c-73236168a120.png\n",
+    "homepage": "https://chat.openai.com/g/g-eDpfeVCJG",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "共同学习，共同进步。",
+        "zh_Hant": "共同學習，共同進步。",
+        "en": "Learn together, grow together."
+    },
+    "tools": [
+        "generate_image"
+    ]
+}

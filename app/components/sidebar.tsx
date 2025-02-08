@@ -32,8 +32,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { isIOS, useMobileScreen, useWindowSize } from "../utils";
 import dynamic from "next/dynamic";
 import { showConfirm, showToast } from "./ui-lib";
-import { Avatar, Button, ChatHistory, Component, Footer, Header, Heading, Left, Modal, Right, Row } from "../themes/theme";
-import { Box, Card, CardBody, CardHeader, Flex, Text, useStatStyles } from "@chakra-ui/react";
+// import { Avatar, Button, ChatHistory, Component, Footer, Header, Heading, Left, Modal, Right, Row } from "../themes/theme";
+// import { Box, Card, CardBody, CardHeader, Flex, Text, useStatStyles } from "@chakra-ui/react";
 
 const ChatList = dynamic(async () => (await import("./chat-list")).ChatList, {
   loading: () => null,
@@ -292,7 +292,7 @@ export function SideBar(props: { /*className?: string*/ show?: boolean }) {
       onMouseEnter={() => { setIsHovered(true) }}
       onMouseLeave={() => { setIsHovered(false) }}
     >
-      <Component type="primary">
+      {/* <Component type="primary">
         <Header>
           <Row>
             <Left>
@@ -335,7 +335,7 @@ export function SideBar(props: { /*className?: string*/ show?: boolean }) {
             </Right>
           </Row>
         </Footer>
-      </Component>
+      </Component> */}
     </div>
   </>);
 }

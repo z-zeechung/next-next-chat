@@ -24,7 +24,7 @@ import { identifyDefaultClaudeModel } from "../utils/checkers";
 import { collectModelsWithDefaultModel } from "../utils/model";
 import { useAccessStore } from "./access";
 import { create } from "domain";
-import { contentOfVecDB, createVecDB, deleteVecDB } from "../utils/vectordb";
+// import { contentOfVecDB, createVecDB, deleteVecDB } from "../utils/vectordb";
 // import emoji from "../emoji.json"
 import { Message, revokeMessage } from "../message/Message";
 // import { MarkdownMessage } from "../message/TextMessage";
@@ -71,16 +71,31 @@ export interface ChatSession {
   }
   lfsIds?: string[]  // pointer ids for large file storage
 
+  role?: string
+  tools?: {
+    generate_image?: boolean,
+    web_search?: boolean,
+    run_script?: boolean
+  }
+
   memoryPrompt: string;
   messages: Message[];
+  
+  /** @deprecated */
   stat: ChatStat;
+  /** @deprecated */
   lastUpdate: number;
+  /** @deprecated */
   lastSummarizeIndex: number;
+  /** @deprecated */
   clearContextIndex?: number;
 
+  /** @deprecated */
   mask: Mask;
+  /** @deprecated */
   vectorDBs: string[]
 
+  /** @deprecated */
   files?: {title:string, content:string}[]  // 给autogpt用的
 }
 
@@ -103,6 +118,7 @@ export function createEmptySession(): ChatSession {
     lastUpdate: Date.now(),
     lastSummarizeIndex: 0,
     lfsIds: [],
+    tools:{},
 
     mask: createEmptyMask(),
     vectorDBs: []

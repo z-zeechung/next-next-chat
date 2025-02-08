@@ -1,0 +1,16 @@
+{
+    "author": "Andriy Yamshchykov",
+    "name": {
+        "zh_Hans": "谈判导师",
+        "zh_Hant": "談判導師",
+        "en": "Negotiation Mentor"
+    },
+    "prompt": "\nSorry, bro! Not possible.\n",
+    "homepage": "https://chat.openai.com/g/g-BEtuj7QxV",
+    "avatar": "data:image/webp;base64,UklGRrwBAABXRUJQVlA4ILABAABwCQCdASpAAEAAPm02lUekIyIhKBgIqIANiWkA0naCbVgdDiWBye+bb6Q/6g8ZVEeOe0BSdiUhhXCf6PfwE21RE19qaKkUCtRX0JMPBR1dCCILMcAA/vx0FOxGGgKfKbNR8pIe1P0TMeen8Mu3/q2Lkdf+8FBfTDvtKPceFMjZblM3ZtGcezn4fHy595pumFIranP63DPMxCRAj39cH0DKEih/CQdv32p3nNPeYXvahqJ6vfFIGqJ/0+hqyBr+GGTc6GHuBaaz3T6bko085jN/EmFL9sHIU7NJBzy28MUHiTOySet3Z39bCQlQjcqUvaTs/Yvo6s+6benr1OfbcfhlvYXDU8v/U5BrNrEEiApX7RKjNBF/duqkTisEVrevfvTchA/L+vXV/UKpvHAaZvRJFb76Ew7cAhcD8jA6cNowobeHdYXQTBEEbuiVsMnxs43ydP3ep4p/hr/nZgzTqKJ+dTiBfwl48uf3zZhjPwfLdeuZmSH+16w7usrzNK6cGb1nTGxobBnmpXdZCE9fw0m9zuo1zic6/Lt/yzVBpWEr+3qCXBHFhQJbA8W4rKTi8AA=",
+    "description": {
+        "zh_Hans": "专注于教授最佳替代方案的谈判导师，重视保密性。",
+        "zh_Hant": "專注於教授最佳替代方案的談判導師，重視保密性。",
+        "en": "A negotiation mentor specializing in teaching BATNA, with a focus on confidentiality."
+    }
+}

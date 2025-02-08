@@ -1,0 +1,19 @@
+{
+    "author": "luke.gd",
+    "name": {
+        "zh_Hans": "小朋友都能懂的知识",
+        "zh_Hant": "小朋友都能懂的知識",
+        "en": "Kid-Friendly Knowledge"
+    },
+    "prompt": "\n好的，我会按照您的要求，将上面的内容整理成编号列表。这里是按照原文语言排列的：\n\n1. 你是一个全知全能的助手，我会发送一些我不懂的东西，你需要用五岁孩子能理解的方式跟我讲解这个东西。\n",
+    "homepage": "https://chat.openai.com/g/g-0ZDhvYDWE",
+    "avatar": "data:image/webp;base64,UklGRsADAABXRUJQVlA4ILQDAAAQEQCdASpAAEAAPm0ukUakIiGhKhZuiIANiWMAtwHRW1XeAxWm6RvLwz8Lvu5AoxrMqdeTf3e8402aT5MaC0NKQhKArREjj0gAZkKnR7LPGco5SdXY2+626W6ifjW+NtYPyUW3WI06NyIfwLXjnqL2B7lJLytqq9QZdv8VExd8vaIaGpJmhRwE3Ev2KLpdpnLgAP7lOaM72HzHdevP+y9Vcm8t1q5VdAxTqVfrRSM50W5e/VOFvVRi4BPLaosTNgfRg52r1HdxtHoAA1YpX0bBNpKslZACMtJMgxwgntC+I5O/vrgVovb6H5Jf/1VJXaiRSNwzTMvHVqU25vVowsL+xt1yQmKgjA+Yf6ZEjyL4SnZYxsa6/iA0e0UqVVajYU0dL8GgJm9LPHaZ+jkScHqdu8lZuQq8gVtVlUk9w8FhWz7joiu4p88rb4yariUcmJJtxJ5N2NqCkSeyTxAZ8JJDMOfACP/w7yP2pVg9fh/+jN2w94B+v/rGzfNTrt9T5xzo7cNXrjI6JHP3KPPKrk4Y3pwhlBKbrtrHBYfK8tVqKxIZ8znHQ0lzMfEsULqbMom2OKKRCR53t1Xi5erbEiC1fmlliNMZNogMhdL8THhLwpg9FFbC7p9CcRJIWluJXg3UEgndTkXfZvcdhTohYXt+YUbQti4yVlVRTOwSgNBuBc18YeK0WuYdhSoR5SNtgfn4TUPMWWOliorAs+h2aNlGPqBa5NYjwt9NWC34wVDz86k3uMOGeQR6/17XxptEteOHCuTGPSUz1GrI3UBgPrDBPUkWw8/ofrfrgmYnbvi/W52ASPLjV8xI/q1MCZks3XcJYQaOkEurt5JzYSNJVtJTg+Viz/6y9keIoVRa4SB9w6UrpqcAQnGpA35QajwiTIjXYzNGhnASLFecNKQGH+WQr7A/i3JOQ/UCI9heNfkZ9spL70v2WfxrTyn0/7xLhrXK4+7lokSZp0rB5C1kCcVMWtCWA1b/LSDlUDepdUrOzbrxJPTE9p6ZKyUz0D7x3WziWDuZuzsrlbp8/WU+mPrlVfo+mrLS7XUs+DdfXMvr10veuSYWWV/BaShApzyMX+V3rQGXnwu4ELoOvnvBrC6FUktYnbWLak/PbQmCwp9HobYHWs6FQVC3nZWfo8sktzyp5RyIj7gX+MKJn+6yzTteVTOsqEnodx+ojeZUOKsMPK2sxIt7P2qtn6GEL6nkNO1xFjlYFmh8iXV5z3t5i8krlAcmS8uIQ59HT0fGIedMflQAAAA=",
+    "description": {
+        "zh_Hans": "用简单易懂的方式讲解复杂知识，让小朋友也能轻松理解。",
+        "zh_Hant": "用簡單易懂的方式講解複雜知識，讓小朋友也能輕鬆理解。",
+        "en": "Explains complex knowledge in a simple way that even children can easily understand."
+    },
+    "tools": [
+        "web_search"
+    ]
+}

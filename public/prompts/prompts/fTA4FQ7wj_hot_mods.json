@@ -1,0 +1,19 @@
+{
+    "author": "ChatGPT",
+    "name": {
+        "zh_Hans": "狂热改造",
+        "zh_Hant": "狂熱改造",
+        "en": "Hot Mods"
+    },
+    "prompt": "```markdown\nThe GPT will assist users in visualizing modifications or decorations to their images. It will maintain the image basic integrity and color while providing creative visual enhancements. Be very creative, but preserve high concepts\n```",
+    "homepage": "https://chat.openai.com/g/g-fTA4FQ7wj-hot-mods",
+    "avatar": "data:image/webp;base64,UklGRhoFAABXRUJQVlA4IA4FAADwFwCdASpAAEAAPm0kjkWkIaEZ/M4AQAbEtgBajfIHMKmkbft1j/UB3gHrAernzJftF6znol/4HpmdQBz7XsUf3Lzh7mJ4P+Rr2OoF1lGQLunyN/4bXb+gF69fQv8xxgaRSdc/qP/L/mvOn9C/+T3BP5n/cuuD6SB4mhrTtZRrqeclxG7VsS3b7zGodnrvzvcqxNTHSTHV3xMRvIPEtfxYvfIj05NOrYVsVVavCcey9olMAPWJjG6Mq1wdx0viL3dlx1dSvID1AAD+/HdxuA48FqL6f1ViN9IH7ukYQNmB30sfRYjP/bGbFEyOyq35oE/N86/0zqlEZeHPIE+ka2O8EehE8AVgXR6Cpbc6yiYqBAXq/0Noz5qXqx46ejbpkAyQoMImxUXr10Hsi6aM6mIE7UdLslJuvPdQp1e51CQDnlZIbPhX0vTDr9omS0wrf3BikKn9c0U3s2riQ8YcNr7d8RAVMoX8GsUvX9uLdg2+6lmJwsJPjZeGMqwOtH8H4EutDUnGb6pTUeP+lwM0zCJQbzWm+5cFcXKm/h1zPa8pnxnf8J+8dv9tlpIwcXtkYhKc/54O0D1+DBIkpuFoMmWQ0NI1ppKMq6tn8tpKf2vJB5530ihgjM5CEvSwuB+kH2V5UuzzqF1/VNKSBTwby4mo7lLU6E9K0CDqbo3v2W94tOr41swzBBzvY+oYdFgDVfU4w3VPkk4FxXXYBl7LD9T4iDPYd8/kztWuaKCtqXsnL/FFqfNv50vcQMYHXsRy22dZyqAm7WYpxwCYnBmzvWujvWlsnCfeNtd0nLi47RuoNpeJsRb3tt+4Acwiui5OwEasQypnkGO3jzHeJCjuI30gB0PbX/T1XFQngX3uvfvAo5l8/VqbDoMIgn6u+PSayx5qUeuYMHrsDdb4Dm9HA6NqNPZTOF0kcPjYrbkKvUD3YXX9v4HninnfalvJwS9dSlF0jmV4M129W4CXlkjJcBg2aoDgoIRomWxQMHY8dWX82SuNnnVRReoGOaLThgkaDZWF86yg1flqzQoRTdJHnBgWwt7Hsv4TjHZCVzhy15ghg7Opd7vDimnn8bT2so8MmW4OZnnMGbtGtM+kyqEum5HUMZbLo6Db8DdhUpr/U3q5l94zSTvPlF16gPlHnHhqP+zXBHX2qeRo5RALGYDm4vic0jlKL13fn/m6hrFCZvCoXZ6XmPF8CQmv5yYP2YH6bdPbH1ZmHZLtnf9mF0YN3X92uBri/a3L5Rwb1/GalgqJgrLHR2MWoVJ9fQpk4dN3t7i6ls79CK6LRVDEgpyazxCKKVcGP95+2/ueqkiN1Z71EizH13mp3Z2YB5wf6pSORI1BMxbHrM5bbGT3Rak4nDTsFOv8/zyYuHUH909fV4z/rGJGOrUJl6QbS91608mWltqWiRbuKxUkjBt7XEgJt3VxEBhujTWCjOJ5Wjm6pSzt9xPHOOS0L+ad2vcQRIOJyKLrobi4roonyzuXnK7jlupWzf3IBC5MRoLRGzC4ftRQ02UFhUGLxx/956IJpEEOEi+g9nssMVCNhQM5KIH3N7FSmZAZhk2F3roMX2+L5Pn946WyK+UdMV2yv4fyEOn+OkQHrJz0azMnXaPLocro2cwluT5WgkbiNov2IAMfYTP72vfK07MYZe0XZNS8OvJIsFM+1zmIMGseTABfRjLb6QEoBtgz3iL8RfvmTdMnB3hORLtO7xo7qtUerwAQ8wAA",
+    "description": {
+        "zh_Hans": "专注于将您的图片改造成充满创意和视觉冲击力的作品，同时保留原始图像的基本结构与色彩。",
+        "zh_Hant": "專注於將您的圖片改造成充滿創意和視覺衝擊力的作品，同時保留原始圖像的基本結構與色彩。",
+        "en": "Specializes in transforming your images into creative and visually striking designs while preserving the original structure and colors."
+    },
+    "tools": [
+        "generate_image"
+    ]
+}

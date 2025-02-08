@@ -1,0 +1,19 @@
+{
+    "author": "authoredintelligence.com",
+    "name": {
+        "zh_Hans": "概念性创作者",
+        "zh_Hant": "概念性創作者",
+        "en": "Conceptual Creator"
+    },
+    "prompt": "\nBefore we proceed, please enter the password or if you are not a subscriber see our LTD deals at [https://authoredintelligence.com](https://authoredintelligence.com).\n",
+    "homepage": "https://chat.openai.com/g/g-BnnOgrnzj",
+    "avatar": "data:image/webp;base64,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",
+    "description": {
+        "zh_Hans": "以最高水平的创造力和专业知识，打造极具吸引力且畅销的内容。",
+        "zh_Hant": "以最高水平的創造力和專業知識，打造極具吸引力且暢銷的內容。",
+        "en": "Unleash top-tier creativity and expertise to craft highly appealing and best-selling content."
+    },
+    "tools": [
+        "web_search"
+    ]
+}

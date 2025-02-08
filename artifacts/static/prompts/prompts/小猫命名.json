@@ -1,0 +1,16 @@
+{
+    "author": "Widthmark Estrada",
+    "name": {
+        "zh_Hans": "猫咪命名专家",
+        "zh_Hant": "貓咪命名專家",
+        "en": "Cat Naming Expert"
+    },
+    "prompt": "\nSorry, bro! Not possible. I can give you the Read me, if you like.\n",
+    "homepage": "https://chat.openai.com/g/g-ekmB58J8M",
+    "avatar": "data:image/webp;base64,UklGRgIIAABXRUJQVlA4IPYHAAAwJACdASpAAEAAPlkijEWjoiEd/kQAOAWEsQBSWbkC7ka27xfbC3qP2zPmM84b0nbyh6AHS6/5KvrfpP4q+Zfgz8me4vIS528yP5P9ufxf9h8pP8z4P+9f+o+yD5Avxj+W/4rzZ+xnaFVS/0vqBern0//Mfmj4qvob9d/YA/lv9S/3fqT3kXlvsAfzL++/9D+v/kB9Kv8x/7v8/50/oT/sf6D4Bv5b/Yv+l/f/8N74XsU9Gj9vHPB8C9sYEpSxgIHwjWk3W2BU4qbAooTvQPH6EEWOcTcL/SR/GrMqRkLsPITUJ/VO/7EvZ/71VG690X7hARc9wjGPu2yZlsuE+UxftXMMIjGmYCzqo3b1pg9obZ9yB+aMxBJDxSqLVMG6ZJYHhPiWL0OFCcOAAP7/tQynFvbyXK36l79zAryUFEv6dZo+SKvncoYWCvQk7GoNsU1rcFN0/bn57HfHpsbzdqGLp3B3u3w2v5iWjlw2KLQ95/Jke43jSLX2CC0zHHipgC1A872xZHvS/jjTv+Z3lJiwUTkD4oYs01w9BMOXlGoKBak195BtecJtbvde+ibL7Dzx0npE6UBbwduwErOR35/2I+xLi9Krpt+0rnQha/tSafmf+etSJKfDeUlivYqZX2ElnqMofgw30zxkjwpoNi6tqID9uL3aqQIXYwiP3Aa4lrZ/Qfz5fxqUZDezTMS11dXMgysWIFn5iQmJOTofO9zLQcdk5533Yrm7sj456YGVHPM7DbT4+leL5N2F5YTwM2NiL3M7ZolIeX+jVuUy2pJlDqenRAymJfmFQ7zJ+JzmA+qEf35fj/Ku56cLcClWx02xEMy/f0a7HTdiTUrf4a+Z6Hmn2hr20aWLTFAyth8RjHaUDu+RsP3aJUEEvGUFJSYIDqRrZOI/ocNX+g8kdfzdEW3XaNWNHQ9fo+Lnk9ANLSEP3zpYw+fVk95HjGaPUcq88vCC3qp/DnzIc+h9S1eTMBEivF3y7dpf6Z6CZfJi1eTE9SLSmAuLXD+QWU8Hkduin0nk4cprulhSd00zg+pMYcKB5/dutpQF0jDSw3LYbsv09k3bRwLLoio1PnVIGnkLQyxErku4qSPHngjkic63FCJ/jVwla7CKUFoUpXXJI32/lVbNF0KDnwiG+uKsa1wgvufz0mAbUdZzWDRWqlSI7eeJ/gE9nyiMal1+jZfk8BWi5GfuPeRjhMLeDJvBHBmZWfeNEVMNDj40PfJR8tQsevPvwepEhGD0b0cNXw4fFWUesIcu7Wt4N7eDpA0NBCN18NAd/nguSV3dkfdYAe0lVgqEO2+yPNFkW8tnl1a2nXvvCWQhEpRf0P1rb5guZDkNioXlRnfZUiRV172KPfrNKPNfQdRkENpz8vI17IT98ShY8TNuOHtsWTNrTd4kDm86uDTlylGMKy+se72q5JfLadviJl9PBK1Eq8MGD/cSEVZNpyJVXfEZfzeMelU/xYpO4n/qEvgLDtje/YPxZ0D3pK8UHzH/gK3gA6hIXn6UDGBs2I8AwQXFrfcASkfuaDQi9PjKuWdfwcrtg79Yulqn7Wmy7AjqrklQLGo9axzSgpifZhVPSdmLnlYnd/VfOs3TJ7KSR3BgO83j/wO34PKrlKdNIVRU59j2APQS/mwOmvfiUTL5Ol6oIhYzJ407ODIS57o68G4+MUcgJjJl/9ylbMCfzKrv42DfPZQrCsZxcg/K1+Cw5EgiSOdM1+od28UclnJMk5Tv6lxza+CJ6MGNIzm+gXGNs1Tpk5C/33tMPaDerQ84gljomn6Ld7CnHwMmRHl2uOmC8Z7OX6hJhFKOkCx/fM7FUuyhCgZOjERja11+U6Je6dgO6wJV+ciPpoP0916NyDul1Y5modttYz3wZOyxzHn5tFb/aD1OQwAqseQBEEZkUC/SVod4UtFmemzzRS4VUaJpHMf/8Y7xOUj3kEYLjmdZDLSZAag1OCu1wdN+PggKRMTWjX4FJOGvTdK/mFsS7CtCpCn60aCY+lehcslmJrI9oDCE9kwBIa/BsT8D7BChwHApLYDNkSE+QHqS4G9QpHhRHrPsy+Jomp1m0uHwz4xh8Y7zKrfif54VWY9mTGUtnecOssdjvvRkcyKT6/ijEDgVhgCoScvFWZUUcVMXyv29RWhCrnX6pDvHwEcU3Ch7z/0tANae+seP/L2WFOuZz0T8o59ufA/NivVGPzpnwPnITwYe3xyPKxSXuaopnfhsfrokaarwwq0I84hKKv2RYAk2lZ7yfCRNyrZe2r0ZxD69MQfi7OZ1EqjFnurPjHYF5zWqRGZLCJzWJ7lO6nfyvH9Es8RYjdELCDxTAMkxO0IIYeY2smT1qJPfLheAFHmLhZwBpMgIGhiP2pprjaDixgy6wVhh/dMcJY9tYUICJJf8M6/12DHJ3ZAtya6v+51DzWcZhB4UhW8B0SKZ3oI+dDqgnbIYZz/tPM5B+HIBqdZKZVttyJb7A/B41qEMo2d12cfrbkCGG6CsmcuQEpa5QZOlCWuQJb7/Zi66mI37uy89HaWSR6sJJ9MicjIG7yTD/y4jWOs3t+mC+M4EQvfq9sCS70qjN9XfTKT/v9v8HKHtLUIUKfd4vqXv5w0Ap20J/HEl1s1ixgr8MICEz+1MZrdbJI9kzXUZPlgiL9+hFEMlI9kbQ5LD4oQXhPPvBFHftrYqM7TszE6Z8Q0wEiZydN2cPGgJS/Ctl+J6QyqEAAAA",
+    "description": {
+        "zh_Hans": "专注于为猫咪提供专业命名建议及名字含义解析。",
+        "zh_Hant": "專注於爲貓咪提供專業命名建議及名字含義解析。",
+        "en": "Specializes in providing professional naming suggestions and meaning explanations for cat names."
+    }
+}
