@@ -4,6 +4,7 @@ export function DevTools(){
             await loadScript("https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js");
             const pyodide = await loadPyodide();
             await pyodide.loadPackage("micropip")
+            await pyodide.loadPackage("ssl")
 
             await pyodide.runPythonAsync(`
                 import micropip
@@ -11,9 +12,10 @@ export function DevTools(){
                 # compat
                 await micropip.install("certifi<2025.0.0,>=2024.7.4")
                 await micropip.install("typing-extensions<5,>=4.11")
+                await micropip.install("/pyodide/wheels/pydantic_core-2.27.2-cp311-cp311-emscripten_3_1_46_wasm32.whl")
+                await micropip.install("pydantic==2.10.4")
                 await micropip.install("/pyodide/wheels/tiktoken-0.8.0-cp311-cp311-emscripten_3_1_46_wasm32.whl")
                 await micropip.install("/pyodide/wheels/jiter-0.8.2-cp311-cp311-emscripten_3_1_46_wasm32.whl")
-                await micropip.install("/pyodide/wheels/pydantic_core-2.27.2-cp311-cp311-emscripten_3_1_46_wasm32.whl")
 
                 # llamaindex
                 await micropip.install("llama-index")

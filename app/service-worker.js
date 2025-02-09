@@ -29,21 +29,6 @@ self.addEventListener('fetch', function(event) {
                 return new Response(item, {headers: {'Content-Type': 'application/json'}})
             })());
         }
-    }else if(url.hostname==="docsgpt.nnchat.sw"){
-        // if(url.pathname=="/api/upload"){
-        //     console.log(event.request.body)
-        // }else{
-        //     event.respondWith((async()=>{
-        //         let payload = event.request.body
-        //         if (payload && payload.constructor.name === 'ReadableStream') {
-        //             payload = await readStream(payload);
-        //         }
-        //         console.log(event.request.method, url.pathname, payload)
-        //         const resp = await docsgptRoute(event.request.method, url.pathname, payload, waitUntilLoaded)
-        //         console.log(resp)
-        //         return new Response(resp, {headers: {'Content-Type': 'application/json'}})
-        //     })())
-        // }
     }
   });
 
