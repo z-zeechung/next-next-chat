@@ -23,7 +23,13 @@ export function RolePlay(props:{
             setBodySize([bodyRef.current.clientWidth, bodyRef.current.clientHeight])
         }
     }, [bodyRef.current])
-    const [roleList, setRoleList] = useState<{file:string, name: string}[]>([])
+    const [_roleList, setRoleList] = useState<{file:string, name: string}[]>([])
+    // const roleList = [
+    //     ...(props.currentRole?[{currentRole:true, name:props.currentRole.name, avatar:props.currentRole.avatar}]:[]),
+    //     ..._roleList
+    // ]
+    const [roleQuery, setRoleQuery] = useState("")
+    const roleList = getRoleList(_roleList, roleQuery, props.currentRole)
     useEffect(()=>{
         fetch("/prompts/index.json").then(async res=>{
             const json = await res.json()
@@ -48,19 +54,41 @@ export function RolePlay(props:{
         open={true}
         footer={<Pagination total={roleList.length} pageSize={pageSize} showSizeChanger={false} onChange={(page, pageSize)=>{setOffset((page-1)*pageSize)}} />}
     >
+        <div style={{width:"100%", justifyContent:"center", alignItems:"center", display:"flex"}}>
+            <Input
+                placeholder="搜索角色……"
+                value={roleQuery}
+                onChange={(e)=>{
+                    setRoleQuery(e.target.value)
+                    setOffset(0)
+                }}
+            />
+        </div>
         <div style={{width: "100%", height: "100%"}} ref={bodyRef}>
             <CardGrid 
                 width={bodySize[0]} 
-                height={bodySize[1]} 
-                list={[
-                    ...(props.currentRole?[{currentRole:true, name:props.currentRole.name, avatar:props.currentRole.avatar}]:[]),
-                    ...roleList
-                ].slice(offset, offset+pageSize)} 
+                height={bodySize[1] - 28} 
+                list={roleList.slice(offset, offset+pageSize)} 
                 setPageSize={setPageSize} 
                 setPrompt={props.setPrompt} 
                 onClose={props.onClose}/>
         </div>
     </Modal>
+}
+
+function getRoleList(roleList, roleQuery, currentRole){
+    const list:any[] = []
+    if(currentRole){
+        list.push({
+            currentRole:true, name:currentRole.name, avatar:currentRole.avatar
+        })
+    }
+    if(roleQuery.trim()!=""){
+        list.push(...roleList.filter(r=>r.name.includes(roleQuery)))
+    }else{
+        list.push(...roleList)
+    }
+    return list
 }
 
 function CardGrid(props:{width, height, list: {file?:string, name: string, currentRole?: boolean, avatar?:string}[], setPageSize, setPrompt, onClose}){

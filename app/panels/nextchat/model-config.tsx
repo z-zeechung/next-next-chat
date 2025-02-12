@@ -1,5 +1,5 @@
 import { useApiConfig } from "@/app/client/api"
-import { Input, List, Select, Tooltip, Typography } from "antd"
+import { Button, Input, List, Select, Tooltip, Typography } from "antd"
 
 export const ModelConfig = {
     Providers() {
@@ -10,7 +10,19 @@ export const ModelConfig = {
             <hr />
             {apiConfig.getFields().map(p => <>
                 <div style={{ height: 16 }} />
-                <Typography.Title level={4}>{apiConfig.getProviderName(p.provider)}</Typography.Title>
+                <Typography.Title level={4} style={{position:"relative"}}>
+                    {apiConfig.getProviderName(p.provider)}
+                    <Button
+                        style={{
+                            position: "absolute",
+                            right: 2,
+                            top: 4
+                        }}
+                        size="small"
+                        shape="round"
+                        onClick={()=>{window.open(apiConfig.getProviderSite(p.provider))}}
+                    >获取 API KEY</Button>
+                </Typography.Title>
                 <List
                     itemLayout="horizontal"
                     dataSource={p.fields}

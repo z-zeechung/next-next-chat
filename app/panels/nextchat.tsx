@@ -328,6 +328,33 @@ function Chat_() {
     setUserInput("");
   }
 
+  const setRolePlayPrompt=({
+    avatar,
+    prompt,
+    name,
+    description,
+    tools
+  })=>{
+    chatStore.updateCurrentSession(session=>{
+      session.role = name
+      session.prompt = prompt;
+      session.avatar = avatar;
+      session.greeting = `
+**当前角色：\`${name}\`**
+
+${description}
+      `
+      if(session.role==undefined){session.greeting=undefined}
+      if(!session.tools){session.tools = {}}
+      setPaintPlugin(tools.includes("generate_image"))
+      session.tools["generate_image"] = tools.includes("generate_image")||false
+      setSearchPlugin(tools.includes("web_search"))
+      session.tools["web_search"] = tools.includes("web_search")||false
+      setScriptPlugin(tools.includes("run_script"))
+      session.tools["run_script"] = tools.includes("run_script")||false
+    })
+  }
+
   const [showOption, setShowOption] = useState(false);
   function handleShowOption(shown: boolean) {
     setShowOption(shown)
@@ -409,6 +436,11 @@ function Chat_() {
             setIsSelectingPrompt={setIsSelectingPrompt}
           />
         </Content>
+        {isSelectingPrompt&&<RolePlay 
+          currentRole={session.role?{name:session.role,avatar:session.avatar??""}:undefined}
+          onClose={()=>{setIsSelectingPrompt(false)}}
+          setPrompt={setRolePlayPrompt}
+        />}
       </Layout>}
       {mobileTab == "menu" && <Layout style={{ height: "100%" }}>
         <Content style={{ padding: 12, height: "100%" }}>
@@ -610,39 +642,12 @@ function Chat_() {
           setIsSelectingPrompt={setIsSelectingPrompt}
         />
       </Content>
-    </Layout>
-    
+    </Layout>   
     {isSelectingPrompt&&<RolePlay 
       currentRole={session.role?{name:session.role,avatar:session.avatar??""}:undefined}
       onClose={()=>{setIsSelectingPrompt(false)}}
-      setPrompt={({
-        avatar,
-        prompt,
-        name,
-        description,
-        tools
-      })=>{
-        chatStore.updateCurrentSession(session=>{
-          session.role = name
-          session.prompt = prompt;
-          session.avatar = avatar;
-          session.greeting = `
-**当前角色：\`${name}\`**
-
-${description}
-          `
-          if(session.role==undefined){session.greeting=undefined}
-          if(!session.tools){session.tools = {}}
-          setPaintPlugin(tools.includes("generate_image"))
-          session.tools["generate_image"] = tools.includes("generate_image")||false
-          setSearchPlugin(tools.includes("web_search"))
-          session.tools["web_search"] = tools.includes("web_search")||false
-          setScriptPlugin(tools.includes("run_script"))
-          session.tools["run_script"] = tools.includes("run_script")||false
-        })
-      }}
-    />}
-    
+      setPrompt={setRolePlayPrompt}
+    />} 
   </Layout>
 
   // return <Component>

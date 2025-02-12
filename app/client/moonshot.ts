@@ -5,6 +5,7 @@ import { getOpenAiApi } from "./openai";
 export const Moonshot: Provider = {
     name: "Moonshot (月之暗面)",
     fields: ["api_key"],
+    site:"https://platform.moonshot.cn/console/api-keys",
     chat: {
         models: [
             { name: "moonshot-v1-8k", context: 8 * 1024 },

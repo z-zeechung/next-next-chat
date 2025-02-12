@@ -20,6 +20,7 @@ import { Exa } from "./exa"
 export interface Provider {
     name: string,
     fields: string[],
+    site: string,
     chat?: ChatProvider,
     caption?: CaptionProvider,
     paint?: PaintProvider,
@@ -212,6 +213,9 @@ export const useApiConfig = createPersistStore(
         },
         getProviderName(id) {
             return Providers.get(id)?.name
+        },
+        getProviderSite(id){
+            return Providers.get(id)?.site
         },
         setModel(api: "chat" | "chat-smart" | "chat-long" | "caption" | "paint", model: string) {
             if (api == "caption") {

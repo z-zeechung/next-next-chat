@@ -3,6 +3,7 @@ import { Provider } from "./api";
 export const BochaAI: Provider = {
     name: "BochaAI (博查)",
     fields: ["apiKey"],
+    site:"https://open.bochaai.com/api-keys",
     search: {
         getApi(options: { apiKey: string }) {
             return (

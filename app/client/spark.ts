@@ -7,6 +7,7 @@ import { getOpenAiApi } from "./openai";
 export const Spark: Provider = {
     name: "Spark (讯飞星火)",
     fields: ["api_key"],
+    site: "",
     chat: {
         models: [
             { name: "Spark Lite", context: 8 * 1024 },

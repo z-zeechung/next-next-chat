@@ -4,6 +4,7 @@ import EXA from 'exa-js';
 export const Exa: Provider = {
     name:"Exa",
     fields:["apiKey"],
+    site: "https://dashboard.exa.ai/playground",
     search:{
         getApi(options: { apiKey: string }) {
             return async (

@@ -69,9 +69,9 @@ const Chat = dynamic(async () => (await import("../panels/nextchat")).NextChat, 
 //   loading: () => <Loading noLogo />,
 // })
 
-// const KnowledgeBase = dynamic(async () => (await import("../panels/knowledge")).KnowledgeBase, {
-//   loading: () => <Loading noLogo />,
-// })
+const KnowledgeBase = dynamic(async () => (await import("../panels/knowledge")).KnowledgeBase, {
+  loading: () => <Loading noLogo />,
+})
 
 const FileManager = dynamic(async () => (await import("../panels/file-manager")).FileManager, {
   loading: () => <Loading noLogo />,
@@ -240,7 +240,7 @@ function Screen() {
     {/* <Route path="/docx" element={<Embedded element={<DocumentDocx />} />} /> */}
     {/* <Route path="/devrole" element={<DevPage />} /> */}
     {/* <Route path="/audio" element={<Embedded element={<AudioPage />} />} /> */}
-    {/* <Route path="/knowledge" element={<KnowledgeBase />} /> */}
+    <Route path="/knowledge" element={<KnowledgeBase />} />
     <Route path="/file-manager" element={<FileManager/>}/>
     <Route path="devtools" element={<DevTools/>}/>
     <Route path="/docsgpt" element={<DocsGPT/>}/>

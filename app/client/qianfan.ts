@@ -9,6 +9,7 @@ import { jsonSchemaWrapper, toolCallWrapper } from "./api-wrappers";
 export const Qianfan: Provider = {
     name: "Qianfan (百度千帆)",
     fields: ["API_Key", "Secret_Key"],
+    site:"https://console.bce.baidu.com/qianfan/ais/console/applicationConsole/application/v1",
     chat: {
         models: [
             {

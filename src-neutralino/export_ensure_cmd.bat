@@ -1,0 +1,1 @@
+cmd /c "src-neutralino\export.bat"

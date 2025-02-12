@@ -1,10 +1,12 @@
 import { ControllablePromise } from "../utils/controllable-promise";
 import { blobToDataURL, Provider, resizeImage } from "./api";
+import { toolCallWrapper } from "./api-wrappers";
 import { getOpenAiApi } from "./openai";
 
 export const Tongyi: Provider = {
     name: "Tongyi (通义千问)",
     fields: ["apiKey"],
+    site:"https://bailian.console.aliyun.com/?apiKey=1#/api-key",
     chat: {
         models: [
             {
@@ -25,18 +27,27 @@ export const Tongyi: Provider = {
             {
                 name: "qwen-long",
                 context: 10000000
+            },
+            {
+                name: "deepseek-v3",
+                context: 57344
             }
         ],
         default: "qwen-turbo",
         defaultSmart: "qwen-max",
         defaultLong: "qwen-long",
         getApi(options: { apiKey: string, model: string }) {
-            return getOpenAiApi(
+            const api = getOpenAiApi(
                 "https://dashscope.aliyuncs.com/compatible-mode/v1",
                 options.apiKey,
                 options.model,
                 ["qwen-max", "qwen-plus", "qwen-turbo"].includes(options.model)
             )
+            if(options.model=="deepseek-v3"){
+                return toolCallWrapper(api)
+            }else{
+                return api
+            }
         },
     },
     caption: {
