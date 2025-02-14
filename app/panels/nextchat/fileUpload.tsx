@@ -28,7 +28,7 @@ export function uploadFile(chatStore){
                 ]))
             )
         }
-        reader.readAsArrayBuffer(file)
+        reader.readAsDataURL(file)
     }
     input.click()
 }

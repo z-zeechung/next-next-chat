@@ -86,6 +86,7 @@ export const Qianfan: Provider = {
                     tools = tools?.filter(tool=>tool.function.name!="web_search")
                 }
                 return toolCallWrapper(jsonSchemaWrapper(api))(messages, onUpdate, tools, schema)
+                // return api(messages, onUpdate, tools, schema)
             }
         }
     },
@@ -195,27 +196,31 @@ function chat(messages: Message[], onUpdate: (message: string) => void, options:
                     reader?.read().then(({ done, value }) => {
                         const response = decoder.decode(value)
                         //console.log(`[CHUNK] ${response??"[ERROR]"}`)
-                        const searchInfo = JSON.parse(response.match(/\{.*\}/)?.[0] ?? '{}')
-                        searchInfo?.search_info?.search_results?.map(r=>{
-                            searchRef.set(r.index, {url: r.url, title: r.title})
+                        response.split("\n").map((response)=>{
+                            try{
+                                const searchInfo = JSON.parse(response.match(/\{.*\}/)?.[0] ?? '{}')
+                                searchInfo?.search_info?.search_results?.map(r=>{
+                                    searchRef.set(r.index, {url: r.url, title: r.title})
+                                })
+                                let text = JSON.parse(response.match(/\{.*\}/)?.[0] ?? '{"result":""}').result
+                                chunk += text
+                                chunk = chunk.replace(/\^(\[[0-9]+\])+\^/g, "<sup>$1</sup>")
+                                onUpdate?.(
+                                    chunk
+                                )
+                                if (done || abort(chunk)) {
+                                    if(searchRef.size > 0){
+                                        const reference = `
+        ${[...((searchRef.keys() as any).map(k=>`> ${k}. [${searchRef.get(k)?.title}](${searchRef.get(k)?.url})`))].join("\n")}
+                                        `
+                                        chunk += "\n"+reference
+                                    }
+                                    resolve(chunk)
+                                } else {
+                                    read()
+                                }
+                            }catch{}
                         })
-                        let text = JSON.parse(response.match(/\{.*\}/)?.[0] ?? '{"result":""}').result
-                        chunk += text
-                        chunk = chunk.replace(/\^(\[[0-9]+\])+\^/g, "<sup>$1</sup>")
-                        onUpdate?.(
-                            chunk
-                        )
-                        if (done || abort(chunk)) {
-                            if(searchRef.size > 0){
-                                const reference = `
-${[...((searchRef.keys() as any).map(k=>`> ${k}. [${searchRef.get(k)?.title}](${searchRef.get(k)?.url})`))].join("\n")}
-                                `
-                                chunk += "\n"+reference
-                            }
-                            resolve(chunk)
-                        } else {
-                            read()
-                        }
                     })
                 }
                 read()

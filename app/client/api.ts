@@ -16,6 +16,7 @@ import { Qianfan } from "./qianfan"
 import { Moonshot } from "./moonshot"
 import { Spark } from "./spark"
 import { Exa } from "./exa"
+import localforage from "localforage"
 
 export interface Provider {
     name: string,
@@ -332,7 +333,7 @@ export class ClientApi {
         for(let i=0;i<messages.length;i++) {
             if(messages[i].role=="system"){
                 systemMessages.push(messages[i])
-                context -= messages[i].content.length
+                context -= messages[i]?.content?.length??0
             }else{
                 messages = messages.slice(i)
                 break
@@ -341,7 +342,7 @@ export class ClientApi {
         let dialog: Message[] = []
         for(let i=messages.length-1;i>=0;i--){
             dialog.push(messages[i])
-            context -= messages[i].content.length
+            context -= messages[i]?.content?.length??0
             if(context<=0 || dialog.length>=15){
                 break
             }
@@ -425,7 +426,7 @@ export class ClientApi {
                             "description": ${JSON.stringify(resp["prompt"])}
                         }]
 \`\`\`              `)
-                        const url = (messages.find(m => m.type == "image" && m.fileName == resp["image"]) as ImageMessage).src
+                        const url = (await localforage.getItem((messages.find(m => m.type == "image" && m.fileName == resp["image"]) as ImageMessage).src)) as any
                         resolve(await ClientApi.caption(
                             url,
                             resp["prompt"],
@@ -455,8 +456,10 @@ export class ClientApi {
                             "description": ${JSON.stringify(resp["prompt"])}
                         }]
 \`\`\`              `)
-                        const url = (messages.find(m => m.type == "document" && m.fileName == resp["doc"]) as DocumentMessage).src
+                        const src = (messages.find(m => m.type == "document" && m.fileName == resp["doc"]) as DocumentMessage).src
+                        const url = (await localforage.getItem(src)) as any
                         const blob = (await (await fetch(url)).blob())
+                        URL.revokeObjectURL(url)
                         let text = await readDocument(new File([blob], resp["doc"]))
                         text = text.replace(/\!\[(.*?)\]\(.*?\)/g, " image:[$1] ")
                         text = text.replace(/\[(.*?)\]\(.*?\)/g, " href:[$1] ")
@@ -566,9 +569,10 @@ export class ClientApi {
         const api = PaintProviders.get(provider)?.getApi(fields)
 
         return new Promise<string>(async resolve => {
-            resolve(await api!(
+            const url = await api!(
                 prompt, negativePrompt
-            ))
+            )
+            resolve(url)
         })
     }
     static search(

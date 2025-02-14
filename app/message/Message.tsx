@@ -9,6 +9,7 @@ import { Markdown } from "../components/markdown";
 import { readHTML } from "../utils/readfile";
 import { notification } from "antd";
 import { message as antdMessage } from 'antd';
+import localforage from "localforage";
 
 export type Message = (
     | TextMessage 
@@ -53,7 +54,7 @@ export async function copyMessage(message: Message) {
             break
         case "image":
             const imgElement = document.createElement("img")
-            imgElement.src = message.src
+            imgElement.src = (await localforage.getItem(message.src) as any)
             await imgElement.decode()
             const canvas = document.createElement('canvas');
             canvas.width = imgElement.naturalWidth;

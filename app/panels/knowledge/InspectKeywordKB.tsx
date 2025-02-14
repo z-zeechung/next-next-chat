@@ -3,14 +3,7 @@ import type { GraphOptions } from '@antv/g6';
 import { Graph as G6Graph } from '@antv/g6';
 
 import { register, ExtensionCategory } from '@antv/g6';
-import { Sphere, Line3D, Light, Plane } from '@antv/g6-extension-3d';
-import { renderer } from '@antv/g6-extension-3d';
 import { getInspectDataOfKB } from "@/app/knowledgebase/knowledgebase";
-
-register(ExtensionCategory.NODE, 'sphere', Sphere);
-register(ExtensionCategory.NODE, 'plane', Plane);
-register(ExtensionCategory.EDGE, 'line3d', Line3D);
-register(ExtensionCategory.PLUGIN, 'light', Light);
 
 
 export const InspectKeywordKB = memo(InspectKeywordKB_);

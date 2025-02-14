@@ -13,7 +13,7 @@ import { uploadFile } from "./fileUpload";
 import localforage from "localforage";
 // import { AddIcon } from "@chakra-ui/icons";
 import { useChatStore } from "@/app/store";
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import emojiList from "../nextchat/emoji-list.json"
 
 import SendWhiteIcon from "../../icons/send-white.svg";
@@ -175,8 +175,7 @@ function Dialog_(props:{
                                 {["document", "image"].includes(msg.type) && <Button
                                     type="text" size="small" icon={<DownloadIcon />}
                                     onClick={async () => {
-                                        const data = await (await fetch((msg as ImageMessage | DocumentMessage).src)).blob()
-                                        const url = URL.createObjectURL(data)
+                                        const url = await localforage.getItem((msg as ImageMessage | DocumentMessage).src) as any
                                         const a = document.createElement("a")
                                         a.href = url
                                         a.download = (msg as ImageMessage | DocumentMessage).fileName ?? ""
@@ -224,42 +223,7 @@ function Dialog_(props:{
                                     src: (msg as DocumentMessage).src
                                 }),
                                 footer: footer,
-                                messageRender: (content) => {
-                                    const { fileName, src } = JSON.parse(content)
-                                    // if (msg["expand"]) {
-                                    //     return <div style={{ width: maxMsgWidth, height: height / 2, borderRadius: 16, overflow: "hidden", position: "relative" }}>
-                                    //         <div style={{ width: "100%", height: "100%", overflow: "scroll" }}>
-                                    //             <FileFrame src={src} name={fileName} />
-                                    //         </div>
-                                    //         <Button
-                                    //             style={{ position: "absolute", right: 24, bottom: 16 }} size="small" variant="filled" color="primary" shape="round" icon={<FullscreenExitOutlined />} iconPosition="end"
-                                    //             onClick={() => {
-                                    //                 chatStore.updateCurrentSession(session => {
-                                    //                     session.messages[idx]["expand"] = false
-                                    //                 })
-                                    //             }}
-                                    //         >
-                                    //             收起
-                                    //         </Button>
-                                    //     </div>
-                                    // }
-                                    return <Attachments.FileCard style={{ userSelect: "none", width: 236 }} item={{
-                                        uid: `${idx}`,
-                                        name: fileName,
-                                        description: <Flex justify="right" style={{ width: 165 }}>
-                                            <Button
-                                                style={{ width: 72 }} type="text" shape="round" iconPosition="end" size="small" icon={<FullscreenOutlined />}
-                                                onClick={() => {
-                                                    setExpandFile({
-                                                        src, fileName
-                                                    })
-                                                }}
-                                            >
-                                                展开
-                                            </Button>
-                                        </Flex>
-                                    }} />
-                                }
+                                messageRender: (content) => <FileMessageRenderer content={content} idx={idx} setExpandFile={setExpandFile}/>
                             }
                         } else if (msg.type == "image") {
                             return {
@@ -269,12 +233,7 @@ function Dialog_(props:{
                                     fileName: (msg as ImageMessage).fileName
                                 }),
                                 footer: footer,
-                                messageRender: (content) => {
-                                    const { fileName, src } = JSON.parse(content)
-                                    return <div style={{ borderRadius: 16, maxWidth: chatWidth / 2, pointerEvents: "none", userSelect: "none", overflow: "hidden", background: "white" }}>
-                                        <FileFrame src={src} name={fileName} />
-                                    </div>
-                                }
+                                messageRender: (content) => <ImageMessageRenderer content={content} chatWidth={chatWidth} />
                             }
                         } else {
                             return {
@@ -376,4 +335,42 @@ function Dialog_(props:{
             onCancel={() => { chatPromise?.abort() }}
         />
     </Flex>
+}
+
+
+
+function ImageMessageRenderer(props:{content, chatWidth}){
+    const { fileName, src } = JSON.parse(props.content)
+    const [url, setUrl] = useState("")
+    useEffect(() => {
+        localforage.getItem(src).then(async (url:any)=>{
+            setUrl(url)
+        })
+    }, [src])
+    return <div style={{ borderRadius: 16, maxWidth: props.chatWidth / 2, pointerEvents: "none", userSelect: "none", overflow: "hidden", background: "white" }}>
+        {url&&<FileFrame src={url} name={fileName} />}
+    </div>
+}
+
+function FileMessageRenderer(props:{content, idx, setExpandFile}){
+    const { fileName, src } = JSON.parse(props.content)
+    return <Attachments.FileCard style={{ userSelect: "none", width: 236 }} item={{
+        uid: `${props.idx}`,
+        name: fileName,
+        // description: <Flex justify="right" style={{ width: 165 }}>
+        //     <Button
+        //         style={{ width: 72 }} type="text" shape="round" iconPosition="end" size="small" icon={<FullscreenOutlined />}
+        //         onClick={() => {
+        //             localforage.getItem(src).then(async (url:any)=>{
+        //                 console.log(url)
+        //                 props.setExpandFile({
+        //                     url, fileName
+        //                 })
+        //             })
+        //         }}
+        //     >
+        //         展开
+        //     </Button>
+        // </Flex>
+    }} />
 }

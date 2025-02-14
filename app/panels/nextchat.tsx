@@ -206,11 +206,11 @@ function Chat_() {
                 ]
               })
               const url = await ClientApi.paint(params.positive_prompt, params.negative_prompt)
-              const blob = await (await fetch(url)).blob()
-              const lfsUrl = await chatStore.setLfsData(await blob.arrayBuffer())
+              const lfsUrl = await chatStore.setLfsData(url)
+              console.log(lfsUrl, url)
+              _messages.push({type:"image", role:"system", src: lfsUrl, fileName:params.file_name+".png"} as Message)
               return `
-                已成功生成图片“${params.file_name}”！
-                图片尚未插入到对话记录中，你可以通过(${params.file_name})[${lfsUrl}]来向用户展示图片。
+                图片已成功生成，且已经被展示给用户，请告知用户查看
               `
             }
           } as Tool] : []),
@@ -281,7 +281,16 @@ function Chat_() {
 \`\`\`            ` }
                 ]
               })
-              return runPythonScript(params.code)
+              const result = await runPythonScript(params.code)
+              _messages.push({type:"text", role:"system", content:`
+\`\`\` python
+${params.code}
+
+
+>>> ${result}
+\`\`\`  
+              `})
+              return result
             }
           } as Tool]:[])
         ]
@@ -401,7 +410,7 @@ ${description}
     />
   }
 
-  const [mobileTab, setMobileTab] = useState<"chat" | "menu">("chat")
+  const [mobileTab, setMobileTab] = useState<"chat" | "menu">("menu")
 
   if (isMobileScreen) {
     return <>
@@ -415,7 +424,7 @@ ${description}
                 }}>{Locale.NextChat.SideBar.ChatList}</Button>
               </Flex>
             </Col>
-            <Col span={16}>
+            <Col span={16} style={{pointerEvents:"none"}}>
               <Flex style={{ height: "100%" }} align="center" justify="center">
                 <Title level={5} style={{ userSelect: "none", whiteSpace: "nowrap" }}>{session.topic.length == 0 ? Locale.NextChat.ChatArea.DefaultTopic : session.topic}</Title>
               </Flex>

@@ -24,7 +24,6 @@
     "@ant-design/pro-components": "^2.8.2",
     "@ant-design/x": "^1.0.4",
     "@antv/g6": "^5.0.42",
-    "@antv/g6-extension-3d": "^0.1.16",
     "@capacitor/android": "^6.1.0",
     "@capacitor/core": "^6.1.0",
     "@contextco/context-node": "^0.14.0",
@@ -149,6 +148,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^6.1.0",
     "@tauri-apps/cli": "1.5.11",
     "@types/cookie": "^0.6.0",
