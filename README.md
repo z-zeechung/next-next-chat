@@ -18,6 +18,7 @@
 |---|---|---|
 |国内镜像（Gitee）|[N²CHAT.zip](https://gitee.com/Zee-Chung/next-next-chat-release/raw/main/win64/N%C2%B2CHAT.zip)|[N²CHAT.apk](https://gitee.com/Zee-Chung/next-next-chat-release/raw/main/android/N%C2%B2CHAT.apk)|
 |Github|[N²CHAT.zip](https://raw.githubusercontent.com/z-zeechung/next-next-chat-release/refs/heads/main/win64/N%C2%B2CHAT.zip)|[N²CHAT.apk](https://raw.githubusercontent.com/z-zeechung/next-next-chat-release/refs/heads/main/android/N%C2%B2CHAT.apk)|
+
 *安卓端目前存在一些问题，建议使用电脑端*
 
 
