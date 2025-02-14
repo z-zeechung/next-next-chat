@@ -16,8 +16,9 @@
 ## 下载 *N*<sup>2</sup>CHAT
 || Windows 10 及以上 | 安卓 |
 |---|---|---|
-|国内镜像（Gitee）|[N²CHAT.zip]()|[N²CHAT.apk]()|
-|Github|[N²CHAT.zip]()|[N²CHAT.apk]()|
+|国内镜像（Gitee）|[N²CHAT.zip](https://gitee.com/Zee-Chung/next-next-chat-release/raw/main/win64/N%C2%B2CHAT.zip)|[N²CHAT.apk](https://gitee.com/Zee-Chung/next-next-chat-release/raw/main/android/N%C2%B2CHAT.apk)|
+|Github|[N²CHAT.zip](https://raw.githubusercontent.com/z-zeechung/next-next-chat-release/refs/heads/main/win64/N%C2%B2CHAT.zip)|[N²CHAT.apk](https://raw.githubusercontent.com/z-zeechung/next-next-chat-release/refs/heads/main/android/N%C2%B2CHAT.apk)|
+*安卓端目前存在一些问题，建议使用电脑端*
 
 
 ## 配置 *N*<sup>2</sup>CHAT
@@ -65,7 +66,9 @@ npm run export
 npm run export:win64
 
 // 导出 android apk
-// TODO
+npx cap sync
+npx cap open android
+/** 然后在 Android Studio 手动导出apk */
 ```
 
 # Acknowledgment
@@ -74,6 +77,7 @@ npm run export:win64
 - [**Pyodide**](https://github.com/pyodide/pyodide)
 - [**LangChain**](https://js.langchain.com/docs/introduction/)
 - [**NeutralinoJS**](https://neutralino.js.org/)
+- [**Capacitor**](https://capacitorjs.com/)
 - [**Ant Design**](https://ant.design/)
 - [**PlexPt/awesome-chatgpt-prompts-zh**](https://github.com/PlexPt/awesome-chatgpt-prompts-zh)
 - [**LouisShark/chatgpt_system_prompt**](https://github.com/LouisShark/chatgpt_system_prompt)
