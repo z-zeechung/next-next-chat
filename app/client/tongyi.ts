@@ -1,6 +1,7 @@
 import { ControllablePromise } from "../utils/controllable-promise";
 import { blobToDataURL, Provider, resizeImage } from "./api";
 import { toolCallWrapper } from "./api-wrappers";
+import { getDeepseekR1Api } from "./deepseek";
 import { getOpenAiApi } from "./openai";
 
 export const Tongyi: Provider = {
@@ -31,12 +32,30 @@ export const Tongyi: Provider = {
             {
                 name: "deepseek-v3",
                 context: 57344
+            },
+            {
+                name: "deepseek-r1",
+                context: 57344,
+                reason: true
+            },
+            {
+                name: "deepseek-r1-distill-qwen-32b",
+                context: 32768,
+                reason: true
             }
         ],
         default: "qwen-turbo",
         defaultSmart: "qwen-max",
         defaultLong: "qwen-long",
+        defaultReason: "deepseek-r1",
         getApi(options: { apiKey: string, model: string }) {
+            if(["deepseek-r1", "deepseek-r1-distill-qwen-32b"].includes(options.model)){
+                return getDeepseekR1Api(
+                    "https://dashscope.aliyuncs.com/compatible-mode/v1",
+                    options.apiKey,
+                    options.model,
+                )
+            }
             const api = getOpenAiApi(
                 "https://dashscope.aliyuncs.com/compatible-mode/v1",
                 options.apiKey,

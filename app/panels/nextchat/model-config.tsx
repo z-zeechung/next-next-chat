@@ -84,6 +84,44 @@ export const ModelConfig = {
                 </List.Item>}
             />
             <List
+                header={<Typography.Title level={5}>推理模型</Typography.Title>}
+                dataSource={[
+                    {
+                        name: "服务商：",
+                        elem: <Select
+                            popupMatchSelectWidth={false}
+                            options={[
+                                ...(apiConfig.getProvider("chat-reason") ? [] : [undefined]),
+                                ...apiConfig.getProviders("chat-reason")
+                            ].map(t => { return { value: t ?? "", label: apiConfig.getProviderName(t) ?? "选择服务商……" } })}
+                            value={apiConfig.getProvider("chat-reason") ?? ""}
+                            onChange={(v) => {
+                                if (v == "") return
+                                apiConfig.setProvider("chat-reason", v)
+                            }}
+                        />
+                    },
+                    ...(apiConfig.getProvider("chat-reason") ? [{
+                        name: "模型：",
+                        elem: <Select
+                            popupMatchSelectWidth={false}
+                            options={apiConfig.getModels("chat-reason").map(t => { return { value: t.name, label: <>
+                                {t.name}
+                                {t["reason"]&&<Tooltip title="这个模型具有原生推理能力">🐋</Tooltip>}
+                            </> } })}
+                            value={apiConfig.getModel("chat-reason")}
+                            onChange={(v) => { apiConfig.setModel("chat-reason", v) }}
+                        />
+                    }] : [])
+                ]}
+                renderItem={(item) => <List.Item>
+                    <List.Item.Meta
+                        title={<b>{item.name}</b>}
+                    />
+                    {item.elem}
+                </List.Item>}
+            />
+            {/* <List
                 header={<Typography.Title level={5}>高级模型</Typography.Title>}
                 dataSource={[
                     {
@@ -120,7 +158,7 @@ export const ModelConfig = {
                     />
                     {item.elem}
                 </List.Item>}
-            />
+            /> */}
             <List
                 header={<Typography.Title level={5}>长文本模型</Typography.Title>}
                 dataSource={[
@@ -145,7 +183,7 @@ export const ModelConfig = {
                             popupMatchSelectWidth={false}
                             options={apiConfig.getModels("chat-long").map(t => { return { value: t.name, label: <>
                                 {t.name}
-                                {t["search"]&&<Tooltip title="这个模型自带网络搜索能力">🔍</Tooltip>}
+                                {/* {t["search"]&&<Tooltip title="这个模型自带网络搜索能力">🔍</Tooltip>} */}
                             </> } })}
                             value={apiConfig.getModel("chat-long")}
                             onChange={(v) => { apiConfig.setModel("chat-long", v) }}

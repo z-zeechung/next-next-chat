@@ -120,6 +120,7 @@ function Chat_() {
   const navigate = useNavigate();
 
   const [useSmart, setUseSmart] = useState(false)
+  const [useReason, setUseReason]  = useState(false)
 
   const [searchPlugin, setSearchPlugin] = useState(session?.tools?.web_search)
   const [paintPlugin, setPaintPlugin] = useState(session?.tools?.generate_image)
@@ -163,7 +164,7 @@ function Chat_() {
         })
       },
       {
-        model: useSmart ? "smart" : "regular",
+        model: useReason ? "reason" : "regular",
         tools: [
           { type: "function", function: { name: "vision" } },
           { type: "function", function: { name: "long_context" } },
@@ -439,6 +440,7 @@ ${description}
             useUserInput={[userInput, setUserInput]}
             useChatPromise={[chatPromise, setChatPromise]}
             useUseSmart={[useSmart, setUseSmart]}
+            useUseReason={[useReason, setUseReason]}
             useSearchPlugin={[searchPlugin, setSearchPlugin]}
             usePaintPlugin={[paintPlugin, setPaintPlugin]}
             useScriptPlugin={[scriptPlugin, setScriptPlugin]}
@@ -645,6 +647,7 @@ ${description}
           useUserInput={[userInput, setUserInput]}
           useChatPromise={[chatPromise, setChatPromise]}
           useUseSmart={[useSmart, setUseSmart]}
+          useUseReason={[useReason, setUseReason]}
           useSearchPlugin={[searchPlugin, setSearchPlugin]}
           usePaintPlugin={[paintPlugin, setPaintPlugin]}
           useScriptPlugin={[scriptPlugin, setScriptPlugin]}

@@ -15,6 +15,7 @@ export const Moonshot: Provider = {
         default: "moonshot-v1-8k",
         defaultSmart: "moonshot-v1-8k",
         defaultLong: "moonshot-v1-128k",
+        defaultReason: "moonshot-v1-32k",
         getApi(options: { api_key, model }) {
             return getOpenAiApi(
                 "https://api.moonshot.cn/v1",

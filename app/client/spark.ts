@@ -19,6 +19,7 @@ export const Spark: Provider = {
         ].reverse(),
         default: "Spark Max-32K",
         defaultSmart: "Spark4.0 Ultra",
+        defaultReason: "Spark Pro-128K",
         defaultLong: "Spark Pro-128K",
         getApi(options: { api_key, model }) {
             return (

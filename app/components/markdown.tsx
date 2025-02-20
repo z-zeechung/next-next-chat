@@ -17,7 +17,7 @@ import { showImageModal } from "./ui-lib";
 import { renderToString } from "react-dom/server";
 import { ThoughtChain } from "@ant-design/x";
 import { CheckOutlined, CopyOutlined, DownloadOutlined, LoadingOutlined } from "@ant-design/icons";
-import { Button, Flex, message, Modal } from "antd";
+import { Button, Collapse, Flex, message, Modal } from "antd";
 // import { DownloadIcon } from "@chakra-ui/icons";
 
 export function Mermaid(props: { code: string }) {
@@ -128,6 +128,14 @@ function Code(props: {children, className?}){
     return <Mermaid code={props.children}/>
   }else if(props.className == "hljs language-toolcall"){
     return <ToolCall code={props.children}/>
+  }else if(props.className == "hljs language-think"){
+    return <div style={{all:"initial"}}>
+      <Collapse style={{fontSize:"0.8em"}} size="small" bordered={false} defaultActiveKey={['1']} items={[{
+        key: '1',
+        label: "深度思考",
+        children: props.children
+      }]}/>
+    </div>
   }
   try{
     if(props?.children?.[0]?.includes("\n")) {return <code className={props.className??"hljs"}>{props.children}</code>}

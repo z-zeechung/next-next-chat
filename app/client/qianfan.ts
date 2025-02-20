@@ -64,6 +64,7 @@ export const Qianfan: Provider = {
         ],
         default: "ERNIE-4.0-Turbo-8K",
         defaultSmart: "ERNIE-4.0-8K",
+        defaultReason: "ERNIE-4.0-Turbo-128K",
         defaultLong: "ERNIE-Speed-128K",
         getApi(options: { API_Key, Secret_Key, model }) {
             const api = (

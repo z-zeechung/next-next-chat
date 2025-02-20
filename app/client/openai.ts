@@ -9,7 +9,8 @@ export function getOpenAiApi(
     baseUrl: string,
     apiKey: string,
     model: string,
-    search?: boolean    // has search ability
+    search?: boolean,    // has search ability
+    messagesCallback?: (messages: Message[]) => Message[]
 ): ChatApi {
     const openai = new OpenAI({ baseURL: baseUrl, apiKey: apiKey, dangerouslyAllowBrowser: true })
     const api = (
@@ -18,6 +19,9 @@ export function getOpenAiApi(
         tools?: Tool[],
         schema?: JsonSchema
     )=>{
+        if(messagesCallback){
+            messages = messagesCallback(messages)
+        }
         return new ControllablePromise<string>(async (resolve, reject, abort)=>{
             const enableSearch = search&&tools?.find(tool=>tool.function.name=="web_search")
             if(search){tools = tools?.filter(tool=>tool.function.name!="web_search")}
@@ -26,6 +30,7 @@ export function getOpenAiApi(
                 messages: messages as any,
                 stream: true,
                 tools: tools?.length??0>=1?tools:undefined,
+                tool_choice: "auto",
                 response_format: {type: schema?"json_object":"text"},
                 ...(enableSearch?{
                     enable_search:true

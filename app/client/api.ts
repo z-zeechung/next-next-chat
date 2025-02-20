@@ -17,6 +17,9 @@ import { Moonshot } from "./moonshot"
 import { Spark } from "./spark"
 import { Exa } from "./exa"
 import localforage from "localforage"
+import { QianfanV2 } from "./qianfan-v2"
+import { iFlytekStars } from "./iflytek-stars"
+import { VolcanoArk } from "./volcano-ark"
 
 export interface Provider {
     name: string,
@@ -31,11 +34,13 @@ export interface Provider {
 const Providers = new Map<string, Provider>([
     ["tongyi", Tongyi],
     ["deepseek", DeepSeek],
-    ["qianfan", Qianfan],
+    ["qianfan", QianfanV2],
     ["moonshot", Moonshot],
     ["spark", Spark],
     ["bochaai", BochaAI],
     ["exa", Exa],
+    ["iflytek-stars", iFlytekStars],
+    ["volcano", VolcanoArk]
 ])
 
 
@@ -44,12 +49,14 @@ interface ChatProvider {
     default: string,
     defaultSmart: string,
     defaultLong: string,
+    defaultReason: string,
     getApi: (options?: any) => ChatApi
 }
 interface ChatModel {
     name: string,
     context: number,
-    search?: boolean
+    search?: boolean,
+    reason?: boolean,
 }
 export type ChatApi = (
     messages: Message[],
@@ -61,9 +68,11 @@ export type ChatApi = (
 const ChatProviders = new Map<string, ChatProvider>([
     ["tongyi", Tongyi.chat!],
     ["deepseek", DeepSeek.chat!],
-    ["qianfan", Qianfan.chat!],
+    ["qianfan", QianfanV2.chat!],
     ["moonshot", Moonshot.chat!],
+    ["iflytek-stars", iFlytekStars.chat!],
     // ["spark", Spark.chat!]
+    ["volcano", VolcanoArk.chat!]
 ])
 
 
@@ -82,7 +91,6 @@ export type CaptionApi = (
 ) => ControllablePromise<string>
 const CaptionProviders = new Map<string, CaptionProvider>([
     ["tongyi", Tongyi.caption!],
-    ["qianfan", Qianfan.caption!],
     ["moonshot", Moonshot.caption!]
 ])
 
@@ -101,7 +109,6 @@ export type PaintApi = (
 ) => Promise<string>
 const PaintProviders = new Map<string, PaintProvider>([
     ["tongyi", Tongyi.paint!],
-    ["qianfan", Qianfan.paint!]
 ])
 
 
@@ -132,6 +139,10 @@ const DEFAULT_STATE = {
         provider: undefined as string | undefined,
         model: undefined as string | undefined,
     },
+    chatReason:{
+        provider: undefined as string | undefined,
+        model: undefined as string | undefined,
+    },
     caption: {
         provider: undefined as string | undefined,
         model: undefined as string | undefined,
@@ -150,7 +161,7 @@ const STORAGE_NAME = "nnchat-client-api-states"
 export const useApiConfig = createPersistStore(
     DEFAULT_STATE,
     (set, get) => ({
-        setProvider: (api: "chat" | "chat-smart" | "chat-long" | "caption" | "paint" | "search", provider: string) => {
+        setProvider: (api: "chat" | "chat-smart" | "chat-long" | "chat-reason" | "caption" | "paint" | "search", provider: string) => {
             if (api == "caption") {
                 set({
                     ...(get()),
@@ -178,7 +189,7 @@ export const useApiConfig = createPersistStore(
                 })
                 return
             }
-            const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong" }[api]
+            const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong", "chat-reason": "chatReason" }[api]
             const current = get()[name].provider
             if (current == provider) {
                 return
@@ -187,11 +198,11 @@ export const useApiConfig = createPersistStore(
                 ...(get()),
                 [name]: {
                     provider,
-                    model: ChatProviders.get(provider)![{ "chat": "default", "chat-smart": "defaultSmart", "chat-long": "defaultLong" }[api]]
+                    model: ChatProviders.get(provider)![{ "chat": "default", "chat-smart": "defaultSmart", "chat-long": "defaultLong", "chat-reason": "defaultReason" }[api]]
                 },
             })
         },
-        getProvider(api: "chat" | "chat-smart" | "chat-long" | "caption" | "paint" | "search") {
+        getProvider(api: "chat" | "chat-smart" | "chat-long" | "chat-reason" | "caption" | "paint" | "search") {
             if (api == "caption") {
                 return get().caption.provider
             } else if (api == "paint") {
@@ -199,10 +210,10 @@ export const useApiConfig = createPersistStore(
             } else if (api == "search") {
                 return get().search.provider
             }
-            const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong" }[api]
+            const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong", "chat-reason": "chatReason" }[api]
             return get()[name].provider
         },
-        getProviders(api: "chat" | "chat-smart" | "chat-long" | "caption" | "paint" | "search"): string[] {
+        getProviders(api: "chat" | "chat-smart" | "chat-long" | "chat-reason" | "caption" | "paint" | "search"): string[] {
             if (api == "caption") {
                 return Array.from(CaptionProviders.keys()).sort()
             } else if (api == "paint") {
@@ -218,7 +229,7 @@ export const useApiConfig = createPersistStore(
         getProviderSite(id){
             return Providers.get(id)?.site
         },
-        setModel(api: "chat" | "chat-smart" | "chat-long" | "caption" | "paint", model: string) {
+        setModel(api: "chat" | "chat-smart" | "chat-long" | "chat-reason" | "caption" | "paint", model: string) {
             if (api == "caption") {
                 set({
                     ...(get()),
@@ -238,7 +249,7 @@ export const useApiConfig = createPersistStore(
                 })
                 return
             }
-            const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong" }[api]
+            const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong", "chat-reason": "chatReason"}[api]
             set({
                 ...(get()),
                 [name]: {
@@ -247,24 +258,28 @@ export const useApiConfig = createPersistStore(
                 },
             })
         },
-        getModel(api: "chat" | "chat-smart" | "chat-long" | "caption" | "paint") {
+        getModel(api: "chat" | "chat-smart" | "chat-long" | "chat-reason" | "caption" | "paint") {
             if (api == "caption") {
                 return get().caption.model
             } else if (api == "paint") {
                 return get().paint.model
             }
-            const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong" }[api]
+            const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong", "chat-reason": "chatReason" }[api]
             return get()[name].model
         },
-        getModels(api: "chat" | "chat-smart" | "chat-long" | "caption" | "paint") {
+        getModels(api: "chat" | "chat-smart" | "chat-long" | "chat-reason" | "caption" | "paint") {
             if (api == "caption") {
                 return CaptionProviders.get(get().caption.provider!)!.models
             } else if (api == "paint") {
                 return PaintProviders.get(get().paint.provider!)!.models
             }
-            const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong" }[api]
+            const name = { chat: "chat", "chat-smart": "chatSmart", "chat-long": "chatLong", "chat-reason": "chatReason"}[api]
             const provider = get()[name].provider
-            return ChatProviders.get(provider)!.models
+            let models = ChatProviders.get(provider)!.models
+            if(["chat", "chat-smart", "chat-long"].includes(api)){
+                models = models.filter(m=>!m.reason)
+            }
+            return models
         },
         setField(provider: string, field: string, value: string) {
             const _fields = JSON.parse(JSON.stringify(get().fields))
@@ -285,6 +300,9 @@ export const useApiConfig = createPersistStore(
             }
             if (get().chatSmart.provider) {
                 ret.push({ provider: get().chatSmart.provider!, fields: Providers.get(get().chatSmart.provider!)!.fields })
+            }
+            if (get().chatReason.provider) {
+                ret.push({ provider: get().chatReason.provider!, fields: Providers.get(get().chatReason.provider!)!.fields })
             }
             if (get().chatLong.provider) {
                 ret.push({ provider: get().chatLong.provider!, fields: Providers.get(get().chatLong.provider!)!.fields })
@@ -316,13 +334,13 @@ export class ClientApi {
         messages: Message[],
         onUpdate?: (message: string) => void,
         options?: {
-            model?: "regular" | "smart" | "long"
+            model?: "regular" | "smart" | "long" | "reason"
             tools?: Tool[]
             schema?: JsonSchema
         }
     ): ControllablePromise<string> {
         const state: typeof DEFAULT_STATE = localStorage.getItem(STORAGE_NAME) ? JSON.parse(localStorage.getItem(STORAGE_NAME)!).state : DEFAULT_STATE
-        const name = { "regular": "chat", "smart": "chatSmart", "long": "chatLong" }[options?.model ?? "regular"]
+        const name = { "regular": "chat", "smart": "chatSmart", "long": "chatLong", "reason": "chatReason" }[options?.model ?? "regular"]
         const provider = state[name].provider
         const fields = state.fields[provider]
         fields["model"] = state[name].model!
@@ -350,6 +368,54 @@ export class ClientApi {
         messages = [...systemMessages, ...dialog.reverse()]
 
         const api = ChatProviders.get(provider)?.getApi(fields)
+
+        if(name == "chatReason"){
+            if(ChatProviders.get(provider)?.models.find(m=>m.name==state[name].model)?.reason)
+                return api!(messages, onUpdate, [], undefined)
+            else{
+                return new ControllablePromise(resolve=>{
+                    let ret = "``` think\n"
+                    api!(
+                        [
+                            ...(messages.slice(0, -1)),
+                            {type:"text", role:"system", content:`
+                                请对用户提出的问题进行推理。推理时，首先分析用户的需求，包括显性需求
+                                和隐藏需求。然后根据用户需求，分析解决用户需求需要怎么做，并罗列出步
+                                骤。之后依照罗列出的步骤，依次进行推理。在推理每个子步骤时，时刻进行
+                                反思，如果发现当前推理过程存在问题，则输出“等等，”，并回滚至先前步
+                                骤。当你完成所有推理后，进行反思检查，确保推理过程无误，且用户需求已
+                                被充分满足。你必须确保用户需求已经充分满足才能进行后续步骤，否则回
+                                滚。在这之后，总结推理过程。
+                                你应当尽可能的利用现有资源，通过自己的力量满足用户的需求，避免寻求用
+                                户帮助。
+                                你的推理过程的输出必须以“嗯，”或“好的，”开头。在推理过程中，使用第一
+                                人称进行自言自语，模拟人类思考过程。禁止以第二人称形式输出面向用户的
+                                内容。
+                                推理过程中只允许使用人称代词“我”，禁止使用“你”作为人称代词。
+                            `},
+                            messages[messages.length-1]
+                        ],
+                        (m)=>{
+                            onUpdate?.("``` think\n"+m)
+                        }
+                    ).then(async (r)=>{
+                        ret = "``` think\n"+r+"\n```\n"
+                        onUpdate?.(ret)
+                        const r2 = await api!(
+                            [
+                                ...messages,
+                                {type:"text", role:"assistant", content:r},
+                                {type:"text", role:"user", content:"继续"}
+                            ],
+                            (m)=>{
+                                onUpdate?.("``` think\n"+r+"\n```\n"+m)
+                            }
+                        )
+                        resolve("``` think\n"+r+"\n```\n"+r2)
+                    })
+                })
+            }
+        }
 
         let tools: Tool[] = options?.tools ?? []
         if (options?.tools?.find(tool => tool.function.name == "vision")) {

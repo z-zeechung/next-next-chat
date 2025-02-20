@@ -1,7 +1,7 @@
 import { Markdown } from "@/app/components/markdown";
 import { CodeOutlined, DownOutlined, EditOutlined, EnterOutlined, FullscreenExitOutlined, FullscreenOutlined, PictureOutlined, PlusOutlined, SearchOutlined, SettingOutlined, UploadOutlined } from "@ant-design/icons"
 import { Attachments, Bubble, BubbleProps, Prompts, Sender } from "@ant-design/x"
-import { Avatar, Button, Flex, Input, Layout, message, Modal, theme, Typography } from "antd"
+import { Avatar, Button, Dropdown, Flex, Input, Layout, message, Modal, theme, Typography } from "antd"
 import Locale, { ALL_LANG_OPTIONS, changeLang, getLang, isRtlLang } from "../../locales";
 import confirm from "antd/es/modal/confirm";
 import { copyMessage, Message } from "@/app/message/Message";
@@ -30,7 +30,7 @@ import MoreIcon from "../../icons/bootstrap/plus-lg.svg"
 import UserIcon from "../../icons/bootstrap/person.svg"
 import AssistantIcon from "../../icons/bootstrap/robot.svg"
 import SystemIcon from "../../icons/bootstrap/gear.svg"
-import PluginIcon from "../../icons/bootstrap/puzzle.svg"
+import PluginIcon from "../../icons/hammer_and_wrench_high_contrast.svg"
 import UploadIcon from "../../icons/bootstrap/upload.svg"
 import CustomIcon from "../../icons/bootstrap/code-slash.svg"
 import SearchIcon from "../../icons/bootstrap/search.svg"
@@ -48,6 +48,8 @@ import NNCHATBanner from "../../icons/nnchat-banner.svg"
 import RegularModelIcon from "../../icons/nnchat-regular-model.svg"
 import AdvancedModelIcon from "../../icons/nnchat-advanced-model.svg"
 import RolePlayIcon from "../../icons/performing_arts_high_contrast.svg"
+import ReasonIcon from "../../icons/whale_high_contrast.svg"
+import ReasonActivatedIcon from "../../icons/whale_color.svg"
 
 const RenderMarkdown: BubbleProps['messageRender'] = (content) => <div style={{ userSelect: "text" }}><Markdown content={content} /></div>;
 
@@ -59,6 +61,7 @@ function Dialog_(props:{
     useUserInput, 
     useChatPromise, 
     useUseSmart,
+    useUseReason,
     useSearchPlugin, usePaintPlugin, useScriptPlugin
     setIsSelectingPrompt
 }) {
@@ -70,6 +73,7 @@ function Dialog_(props:{
         useUserInput: [userInput, setUserInput], 
         useChatPromise: [chatPromise, setChatPromise],
         useUseSmart: [useSmart, setUseSmart],
+        useUseReason: [useReason, setUseReason],
         useSearchPlugin: [searchPlugin, setSearchPlugin],
         usePaintPlugin: [paintPlugin, setPaintPlugin],
         useScriptPlugin: [scriptPlugin, setScriptPlugin],
@@ -266,8 +270,8 @@ function Dialog_(props:{
             }
         />
         {session.messages.length == 0 && userInput.trim()=="" && <Flex style={{width:"100%", paddingBottom: 32}} gap={"small"} wrap>
-            <Button shape="round" icon={<UploadOutlined />} onClick={()=>{uploadFile(chatStore)}}>{Locale.NextChat.ChatArea.UploadFile}</Button>
-            <Button 
+            <Button shape="round" icon={<UploadOutlined width={16} height={16} />} onClick={()=>{uploadFile(chatStore)}}>{Locale.NextChat.ChatArea.UploadFile}</Button>
+            {/* <Button 
                 shape="round" 
                 icon={<div style={{width:14, height:14, position:"relative"}}>
                     <div style={{width:16, height:16, position:"absolute", top:-1, left:-1}}>
@@ -281,11 +285,54 @@ function Dialog_(props:{
                     })
                     setUseSmart(!useSmart)
                 }}
-            >{Locale.NextChat.ChatArea.SwitchModel}</Button>
-            <Button shape="round" icon={<RolePlayIcon width={14} height={14}/>} onClick={() => { props.setIsSelectingPrompt(true) }}>角色扮演</Button>
-            <Button color={searchPlugin?"primary":undefined} variant={searchPlugin?"filled":undefined} shape="round" icon={<SearchOutlined />} onClick={() => { message.info(`已${searchPlugin?"停用":"启用"}联网搜索`); setSearchPlugin(!searchPlugin) }}>联网搜索</Button>
-            <Button color={paintPlugin?"primary":undefined} variant={paintPlugin?"filled":undefined} shape="round" icon={<PictureOutlined />} onClick={() => { message.info(`已${paintPlugin?"停用":"启用"}图像生成`); setPaintPlugin(!paintPlugin) }}>图像生成</Button>
-            <Button color={scriptPlugin?"primary":undefined} variant={scriptPlugin?"filled":undefined} shape="round" icon={<CodeOutlined />} onClick={() => { message.info(`已${scriptPlugin?"停用":"启用"}脚本执行`); setScriptPlugin(!scriptPlugin) }}>脚本执行</Button>
+            >{Locale.NextChat.ChatArea.SwitchModel}</Button> */}
+            <Button color={useReason?"primary":undefined} variant={useReason?"filled":undefined} shape="round"
+                icon={useReason?<ReasonActivatedIcon width={16} height={16} viewBox="0 0 32 32"/>:<ReasonIcon width={16} height={16} viewBox="0 0 32 32"/>}
+                onClick={() => {setUseReason(!useReason)}}
+            >深度思考</Button>
+            <Button shape="round" icon={<RolePlayIcon width={16} height={16}/>} onClick={() => { props.setIsSelectingPrompt(true) }}>角色扮演</Button>
+            <Dropdown menu={{
+                items:[
+                    {
+                        key: "search",
+                        icon: <SearchOutlined width={16} height={16} />,
+                        label: "联网搜索",
+                        extra: searchPlugin?"已启用":""
+                    },
+                    {
+                        key: "paint",
+                        icon: <PictureOutlined width={16} height={16}/>,
+                        label: "图像生成",
+                        extra: paintPlugin?"已启用":""
+                    },
+                    {
+                        key:"script",
+                        icon:<CodeOutlined width={16} height={16}/>,
+                        label: "脚本执行",
+                        extra: scriptPlugin?"已启用":""
+                    }
+                ],
+                onClick:(info)=>{
+                    switch(info.key){
+                        case "search":
+                            message.info(`已${searchPlugin?"停用":"启用"}联网搜索`); setSearchPlugin(!searchPlugin)
+                            break
+                        case "paint":
+                            message.info(`已${paintPlugin?"停用":"启用"}图像生成`); setPaintPlugin(!paintPlugin)
+                            break
+                        case "script":
+                            message.info(`已${scriptPlugin?"停用":"启用"}脚本执行`); setScriptPlugin(!scriptPlugin)
+                            break
+                    }
+                }
+            }}>
+                <Button shape="round" icon={<PluginIcon width={16} height={16} viewBox="0 0 32 32"/>}>
+                    启用工具
+                    {searchPlugin&&<SearchOutlined width={14} height={14} style={{opacity:0.7}}/>}
+                    {paintPlugin&&<PictureOutlined width={14} height={14} style={{opacity:0.7}}/>}
+                    {scriptPlugin&&<CodeOutlined width={14} height={14} style={{opacity:0.7}}/>}
+                </Button>
+            </Dropdown>
         </Flex>}
         <Sender
             onSubmit={(msg) => {
@@ -298,7 +345,7 @@ function Dialog_(props:{
                 setUserInput(v)
             }}
             header={<Sender.Header title={<Flex style={{ width: "100%", height: "100%" }} gap={"small"} wrap>
-                <Button size="small" shape="round"
+                {/**<Button size="small" shape="round"
                     icon={useSmart ? <AdvancedModelIcon /> : <RegularModelIcon />}
                     onClick={() => {
                         message.open({
@@ -307,12 +354,55 @@ function Dialog_(props:{
                         })
                         setUseSmart(!useSmart)
                     }}
-                >{Locale.NextChat.ChatArea.SwitchModel}</Button>
+                >{Locale.NextChat.ChatArea.SwitchModel}</Button>*/}
+                <Button color={useReason?"primary":undefined} variant={useReason?"filled":undefined} size="small" shape="round"
+                    icon={useReason?<ReasonActivatedIcon width={14} height={14} viewBox="0 0 32 32"/>:<ReasonIcon width={14} height={14} viewBox="0 0 32 32"/>}
+                    onClick={() => {setUseReason(!useReason)}}
+                >深度思考</Button>
                 <Button size="small" shape="round" icon={<UploadIcon width="14" height="14" viewBox="0 0 16 16"/>} onClick={() => { uploadFile(chatStore) }}>{Locale.NextChat.ChatArea.UploadFile}</Button>
                 <Button size="small" shape="round" icon={<RolePlayIcon />} onClick={() => { props.setIsSelectingPrompt(true) }}>{Locale.NextChat.ChatArea.RolePlay}</Button>
-                <Button color={searchPlugin?"primary":undefined} variant={searchPlugin?"filled":undefined} size="small" shape="round" icon={<SearchOutlined />} onClick={() => { message.info(`已${searchPlugin?"停用":"启用"}联网搜索`); setSearchPlugin(!searchPlugin) }}>联网搜索</Button>
-                <Button color={paintPlugin?"primary":undefined} variant={paintPlugin?"filled":undefined} size="small" shape="round" icon={<PictureOutlined />} onClick={() => { message.info(`已${paintPlugin?"停用":"启用"}图像生成`); setPaintPlugin(!paintPlugin) }}>图像生成</Button>
-                <Button color={scriptPlugin?"primary":undefined} variant={scriptPlugin?"filled":undefined} size="small" shape="round" icon={<CodeOutlined />} onClick={() => { message.info(`已${scriptPlugin?"停用":"启用"}脚本执行`); setScriptPlugin(!scriptPlugin) }}>脚本执行</Button>
+                <Dropdown menu={{
+                    items:[
+                        {
+                            key: "search",
+                            icon: <SearchOutlined />,
+                            label: "联网搜索",
+                            extra: searchPlugin?"已启用":""
+                        },
+                        {
+                            key: "paint",
+                            icon: <PictureOutlined/>,
+                            label: "图像生成",
+                            extra: paintPlugin?"已启用":""
+                        },
+                        {
+                            key:"script",
+                            icon:<CodeOutlined/>,
+                            label: "脚本执行",
+                            extra: scriptPlugin?"已启用":""
+                        }
+                    ],
+                    onClick:(info)=>{
+                        switch(info.key){
+                            case "search":
+                                message.info(`已${searchPlugin?"停用":"启用"}联网搜索`); setSearchPlugin(!searchPlugin)
+                                break
+                            case "paint":
+                                message.info(`已${paintPlugin?"停用":"启用"}图像生成`); setPaintPlugin(!paintPlugin)
+                                break
+                            case "script":
+                                message.info(`已${scriptPlugin?"停用":"启用"}脚本执行`); setScriptPlugin(!scriptPlugin)
+                                break
+                        }
+                    }
+                }}>
+                    <Button size="small" shape="round" icon={<PluginIcon width={14} height={14} viewBox="0 0 32 32"/>}>
+                        启用工具
+                        {searchPlugin&&<SearchOutlined width={14} height={14} style={{opacity:0.7}}/>}
+                        {paintPlugin&&<PictureOutlined width={14} height={14} style={{opacity:0.7}}/>}
+                        {scriptPlugin&&<CodeOutlined width={14} height={14} style={{opacity:0.7}}/>}
+                    </Button>
+                </Dropdown>
                 <Button size="small" shape="round" icon={<BreakIcon style={{ fill: "red", opacity: "0.8" }} width="14" height="14" viewBox="0 0 16 16" />} onClick={() => { chatStore.deleteSession(chatStore.currentSessionIndex); }}>{Locale.NextChat.ChatArea.DeleteChat}</Button>
                 <Button size="small" shape="round" icon={<DeleteIcon style={{ fill: "red", opacity: "0.8" }} width="14" height="14" viewBox="0 0 16 16" />} onClick={async () => {
                     confirm({
