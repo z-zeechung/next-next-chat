@@ -1,38 +1,66 @@
 package io.zeechung.nnchat;
 
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.util.Base64;
-import android.webkit.CookieManager;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.getcapacitor.Bridge;
 import com.getcapacitor.BridgeActivity;
-import com.getcapacitor.CapacitorWebView;
-import com.getcapacitor.Logger;
-import com.getcapacitor.BridgeWebViewClient;
-import com.getcapacitor.ProcessedRoute;
-import com.getcapacitor.UriMatcher;
-import com.getcapacitor.WebViewLocalServer;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+public class MainActivity extends BridgeActivity {
 
-public class MainActivity extends BridgeActivity {}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // 初始化 WebView
+        WebView webView = getBridge().getWebView();
+
+        // 注入 JavaScript 代码
+        webView.post(() -> {
+            webView.evaluateJavascript(
+                    """
+                        window["nnchat"] = {originalFetch: undefined, capacitorFetch:undefined, useNativeOrCapacitorHTTP: undefined};
+                        
+                        window.nnchat.useNativeOrCapacitorHTTP = (url) => {
+                            const whiteList = [
+                                "api.deepseek.com/v1",
+                                "platform.moonshot.cn/console/api-keys",
+                                "qianfan.baidubce.com/v2",
+                                "dashscope.aliyuncs.com/compatible-mode/v1"
+                            ]
+                            for(let whiteUrl of whiteList){
+                                if(url.includes(whiteUrl)) return true;
+                            }
+                            return false;
+                        }
+                        
+                        window.nnchat.originalFetch = window.fetch;
+                        window.fetch = null;
+                        function cb() {
+                            if(window.fetch == null) {
+                                setTimeout(cb, 100);
+                            }
+                            window.nnchat.capacitorFetch = window.fetch;
+                            window.fetch = function(input, init) {
+                                const url = typeof input === 'string' ? input : input.url;
+                                if (window.nnchat.useNativeOrCapacitorHTTP(url)){
+                                    const polyfilledFetch = window.fetch
+                                    try{
+                                        window.fetch = window.nnchat.originalFetch
+                                        const resp = window.fetch(input, init)
+                                        window.fetch = polyfilledFetch
+                                        return resp
+                                    }catch{
+                                        window.fetch = polyfilledFetch
+                                    }
+                                }else{
+                                    return window.nnchat.capacitorFetch(input, init)
+                                }
+                            };
+                        };
+                        cb();
+                    """,
+                    null
+            );
+        });
+    }
+}

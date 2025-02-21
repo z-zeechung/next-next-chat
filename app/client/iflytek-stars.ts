@@ -42,13 +42,13 @@ export const iFlytekStars: Provider = {
             }[options.model]!
             if (["xdeepseekr1", "xdeepseekr1llama70b"].includes(options.model)) {
                 return getDeepseekR1Api(
-                    "http://maas-api.cn-huabei-1.xf-yun.com/v1",
+                    "https://maas-api.cn-huabei-1.xf-yun.com/v1",
                     options.apiKey,
                     options.model,
                 )
             }
             const api = getOpenAiApi(
-                "http://maas-api.cn-huabei-1.xf-yun.com/v1",
+                "https://maas-api.cn-huabei-1.xf-yun.com/v1",
                 options.apiKey,
                 options.model,
                 false,
